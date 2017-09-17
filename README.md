@@ -7,4 +7,4 @@
 * SimplePointView(一个模仿QQ小红点拖动效果的控件)
 
 
-by popli 
+by popli
