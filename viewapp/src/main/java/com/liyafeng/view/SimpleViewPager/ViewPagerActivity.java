@@ -32,6 +32,12 @@ public class ViewPagerActivity extends Activity {
 //                textView.setText("view-"+position);
 //                textView.setBackgroundColor(Color.RED);
                 TextView tv_pager = (TextView) inflate.findViewById(R.id.tv_pager);
+                View ll_pager = inflate.findViewById(R.id.ll_pager);
+                int color = Color.RED;
+                if(position%2==0){
+                    color = Color.YELLOW;
+                }
+                ll_pager.setBackgroundColor(color);
                 tv_pager.setTextColor(Color.BLACK);
                 tv_pager.setText("pager-"+position);
                 container.addView(inflate);

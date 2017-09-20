@@ -2,9 +2,14 @@ package com.liyafeng.view.SimpleViewPager;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Scroller;
+
+import static com.liyafeng.view.MainActivity.TAG;
 
 /**
  * Created by liyafeng on 2017/9/20.
@@ -13,24 +18,27 @@ import android.view.ViewGroup;
 public class SimpleViewPager extends ViewGroup {
     private SimplePagerAdapter adapter;
     private float rawX;
+    private Scroller scroller;
+    private VelocityTracker velocityTracker;
 
     public SimpleViewPager(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
 
     public SimpleViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public SimpleViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
+        scroller = new Scroller(context);
     }
 
     @Override
@@ -82,24 +90,75 @@ public class SimpleViewPager extends ViewGroup {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
+
+
+        if (velocityTracker == null) {
+            velocityTracker = VelocityTracker.obtain();
+        }
+        velocityTracker.addMovement(event);
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 rawX = event.getRawX();
+                if (!scroller.isFinished()) {
+                    scroller.abortAnimation();
+                }
+
                 break;
             case MotionEvent.ACTION_MOVE:
-                float dx = event.getRawX() - rawX;
+                int dx = (int) (event.getRawX() - rawX);
 
-                scrollBy((int) -dx,0);
+                int x = getScrollX() - dx;
+                if (x < 0) {
+                    x = 0;
+                } else if (x > (adapter.getCount() - 1) * getWidth()) {
+                    x = (adapter.getCount() - 1) * getWidth();
+                }
+
+                scrollTo(x, 0);
 
                 rawX = event.getRawX();
                 break;
             case MotionEvent.ACTION_UP:
+
+                int scrollX = getScrollX();
+                int halfwidth = getWidth() / 2;
+                int index = (scrollX + halfwidth) / getWidth();
+                velocityTracker.computeCurrentVelocity(1000);
+                float xVelocity = velocityTracker.getXVelocity();
+//                Log.i(TAG, "onTouchEvent: "+index);
+                smoothScrollTo(index, xVelocity);
                 break;
         }
         return true;
     }
 
 
+    private void smoothScrollTo(int itemIndex, float xVelocity) {
+
+        if (itemIndex >= 0 && itemIndex < adapter.getCount()) {
+            int scrollX = getScrollX();
+//            Log.i(TAG, "onTouchEvent: "+scrollX);
+            int dx = (itemIndex * getWidth()) - scrollX;
+            xVelocity = Math.abs(xVelocity);
+            int duration = 600;
+            if (xVelocity > 0) {
+//                duration = (int) Math.abs(dx / xVelocity) ;
+                Log.i(TAG, "smoothScrollTo: " + dx + "  " + xVelocity+ " "+(dx / xVelocity)*1000);
+            }
+            scroller.startScroll(scrollX, getScrollY(), dx, getScrollY(), duration);
+            invalidate();
+        }
+    }
+
+    @Override
+    public void computeScroll() {
+        boolean b = scroller.computeScrollOffset();
+        if (b) {
+            scrollTo(scroller.getCurrX(), scroller.getCurrY());
+            invalidate();
+        }
+
+    }
 
     public abstract static class SimplePagerAdapter {
         public abstract int getCount();
