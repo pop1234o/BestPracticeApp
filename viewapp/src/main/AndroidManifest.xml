@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".slidingmenu.SlidingMenuActivity" />
         <activity android:name=".redpoint.RedPointActivity" />
-        <activity android:name=".drag.DragActivity"></activity>
+        <activity android:name=".drag.DragActivity" />
+        <activity android:name=".SimpleViewPager.ViewPagerActivity"></activity>
     </application>
 
 </manifest>
