@@ -6,5 +6,6 @@
 * SimpleSlidingMenu(一个简单的滑动侧边栏，支持三种模式，支持自定义)
 * SimplePointView(一个模仿QQ小红点拖动效果的控件)
 * SimpleViewPager(模仿support-v4包中ViewPager的实现，里面描述了ViewPager的主要实现原理)
+* CardViewPager(一个卡片式的ViewPager，带缩放效果)
 
 by popli 
