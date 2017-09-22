@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.liyafeng.view.SimpleViewPager.CardPagerActivity">
+    tools:context="com.liyafeng.view.viewpager.CardPagerActivity">
 
 
-    <com.liyafeng.view.SimpleViewPager.CardViewPager
+    <com.liyafeng.view.viewpager.CardViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

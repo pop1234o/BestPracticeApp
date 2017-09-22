@@ -1,4 +1,4 @@
-package com.liyafeng.view.SimpleViewPager;
+package com.liyafeng.view.viewpager;
 
 import android.content.Context;
 import android.util.AttributeSet;

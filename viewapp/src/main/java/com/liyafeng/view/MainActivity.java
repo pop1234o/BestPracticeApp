@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.liyafeng.view.SimpleViewPager.CardPagerActivity;
-import com.liyafeng.view.SimpleViewPager.ViewPagerActivity;
+import com.liyafeng.view.viewpager.CardPagerActivity;
+import com.liyafeng.view.viewpager.ViewPagerActivity;
 import com.liyafeng.view.drag.DragActivity;
 import com.liyafeng.view.redpoint.RedPointActivity;
 import com.liyafeng.view.slidingmenu.SlidingMenuActivity;

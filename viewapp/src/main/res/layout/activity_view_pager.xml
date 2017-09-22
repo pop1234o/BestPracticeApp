@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.liyafeng.view.SimpleViewPager.ViewPagerActivity">
+    tools:context="com.liyafeng.view.viewpager.ViewPagerActivity">
 
    <!--<android.support.v4.view.ViewPager-->
        <!--android:id="@+id/viewpager"-->
@@ -12,8 +12,8 @@
        <!--android:layout_width="match_parent"-->
        <!--android:layout_height="match_parent"></android.support.v4.view.ViewPager>-->
 
-   <com.liyafeng.view.SimpleViewPager.SimpleViewPager
+   <com.liyafeng.view.viewpager.SimpleViewPager
        android:id="@+id/viewpager"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"></com.liyafeng.view.SimpleViewPager.SimpleViewPager>
+       android:layout_height="match_parent"></com.liyafeng.view.viewpager.SimpleViewPager>
 </RelativeLayout>
