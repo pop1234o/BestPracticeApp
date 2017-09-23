@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.liyafeng.view.swipecard.SwipeCardActivity;
 import com.liyafeng.view.viewpager.CardPagerActivity;
 import com.liyafeng.view.viewpager.ViewPagerActivity;
 import com.liyafeng.view.drag.DragActivity;
@@ -24,7 +25,8 @@ public class MainActivity extends Activity {
             "slidingmenu",
             "redpoint",
             "viewpager",
-            "cardpager"
+            "cardpager",
+            "swipecardlayout"
 
     };
 
@@ -34,6 +36,7 @@ public class MainActivity extends Activity {
             RedPointActivity.class,
             ViewPagerActivity.class,
             CardPagerActivity.class,
+            SwipeCardActivity.class,
 
             };
 

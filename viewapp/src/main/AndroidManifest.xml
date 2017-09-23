@@ -20,7 +20,8 @@
         <activity android:name=".redpoint.RedPointActivity" />
         <activity android:name=".drag.DragActivity" />
         <activity android:name=".viewpager.ViewPagerActivity" />
-        <activity android:name=".viewpager.CardPagerActivity"></activity>
+        <activity android:name=".viewpager.CardPagerActivity" />
+        <activity android:name=".swipecard.SwipeCardActivity"></activity>
     </application>
 
 </manifest>
