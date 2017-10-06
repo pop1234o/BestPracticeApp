@@ -21,7 +21,8 @@
         <activity android:name=".drag.DragActivity" />
         <activity android:name=".viewpager.ViewPagerActivity" />
         <activity android:name=".viewpager.CardPagerActivity" />
-        <activity android:name=".swipecard.SwipeCardActivity"></activity>
+        <activity android:name=".swipecard.SwipeCardActivity" />
+        <activity android:name=".fragment.CustomFragmentActivity"></activity>
     </application>
 
 </manifest>

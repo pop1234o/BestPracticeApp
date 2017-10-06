@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.liyafeng.view.fragment.CustomFragmentActivity;
 import com.liyafeng.view.swipecard.SwipeCardActivity;
 import com.liyafeng.view.viewpager.CardPagerActivity;
 import com.liyafeng.view.viewpager.ViewPagerActivity;
@@ -26,7 +28,8 @@ public class MainActivity extends Activity {
             "redpoint",
             "viewpager",
             "cardpager",
-            "swipecardlayout"
+            "swipecardlayout",
+            "fragment"
 
     };
 
@@ -37,6 +40,7 @@ public class MainActivity extends Activity {
             ViewPagerActivity.class,
             CardPagerActivity.class,
             SwipeCardActivity.class,
+            CustomFragmentActivity.class
 
             };
 
@@ -87,4 +91,39 @@ public class MainActivity extends Activity {
     }
 
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
+    }
 }
