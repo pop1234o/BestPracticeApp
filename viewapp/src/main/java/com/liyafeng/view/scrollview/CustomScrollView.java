@@ -2,11 +2,15 @@ package com.liyafeng.view.scrollview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Scroller;
+
+import static com.liyafeng.view.MainActivity.TAG;
 
 /**
  * Created by liyafeng on 07/10/2017.
@@ -15,8 +19,8 @@ import android.widget.Scroller;
 public class CustomScrollView extends FrameLayout {
     private float rawX;
     private float rawY;
-    private int scrollY;
     private Scroller scroller;
+    private VelocityTracker tracker;
 
     public CustomScrollView(Context context) {
         super(context);
@@ -56,6 +60,11 @@ public class CustomScrollView extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (tracker == null) {
+
+        tracker = VelocityTracker.obtain();
+        }
+        tracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 rawX = event.getRawX();
@@ -74,6 +83,12 @@ public class CustomScrollView extends FrameLayout {
 
                 break;
             case MotionEvent.ACTION_UP:
+                tracker.computeCurrentVelocity(1000);
+                float yVelocity = tracker.getYVelocity();
+                Log.i(TAG, "onTouchEvent: "+getScrollY());
+                scroller.fling(0,getScrollY(),0, -(int) yVelocity,0,0,0,5000);
+                invalidate();
+                tracker.clear();
                 break;
         }
 
@@ -81,4 +96,10 @@ public class CustomScrollView extends FrameLayout {
     }
 
 
+    @Override
+    public void computeScroll() {
+        if(scroller.computeScrollOffset()){
+            scrollTo(0,scroller.getCurrY());
+        }
+    }
 }
