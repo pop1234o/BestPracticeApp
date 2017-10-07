@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Scroller;
 
 /**
  * Created by liyafeng on 07/10/2017.
@@ -15,23 +16,26 @@ public class CustomScrollView extends FrameLayout {
     private float rawX;
     private float rawY;
     private int scrollY;
+    private Scroller scroller;
 
     public CustomScrollView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public CustomScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public CustomScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
+
+        scroller = new Scroller(context);
 
     }
 
@@ -75,5 +79,6 @@ public class CustomScrollView extends FrameLayout {
 
         return true;
     }
+
 
 }

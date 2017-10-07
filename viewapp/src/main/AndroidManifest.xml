@@ -24,7 +24,8 @@
         <activity android:name=".swipecard.SwipeCardActivity" />
         <activity android:name=".fragment.CustomFragmentActivity" />
         <activity android:name=".listview.ListViewActivity" />
-        <activity android:name=".scrollview.ScrollActivity"></activity>
+        <activity android:name=".scrollview.ScrollActivity" />
+        <activity android:name=".scroller.ScrollerActivity"></activity>
     </application>
 
 </manifest>
