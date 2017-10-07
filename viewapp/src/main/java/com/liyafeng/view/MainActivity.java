@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.liyafeng.view.drag.DragActivity;
 import com.liyafeng.view.fragment.CustomFragmentActivity;
+import com.liyafeng.view.listview.ListViewActivity;
 import com.liyafeng.view.redpoint.RedPointActivity;
+import com.liyafeng.view.scrollview.ScrollActivity;
 import com.liyafeng.view.slidingmenu.SlidingMenuActivity;
 import com.liyafeng.view.swipecard.SwipeCardActivity;
 import com.liyafeng.view.viewpager.CardPagerActivity;
@@ -28,7 +30,9 @@ public class MainActivity extends Activity {
             "viewpager",
             "cardpager",
             "swipecardlayout",
-            "fragment"
+            "fragment",
+            "scrollview",
+            "listview",
 
     };
 
@@ -39,7 +43,9 @@ public class MainActivity extends Activity {
             ViewPagerActivity.class,
             CardPagerActivity.class,
             SwipeCardActivity.class,
-            CustomFragmentActivity.class
+            CustomFragmentActivity.class,
+            ScrollActivity.class,
+            ListViewActivity.class,
 
             };
 
