@@ -6,25 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.liyafeng.view.listview.ListViewActivity">
 
-    <!--<ListView-->
-    <!--android:id="@+id/listview"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"></ListView>-->
-
-    <!--<ScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-    <com.liyafeng.view.scrollview.CustomScrollView
+    <com.liyafeng.view.listview.CustomListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"></com.liyafeng.view.listview.CustomListView>
 
-        <com.liyafeng.view.listview.CustomListView
-            android:id="@+id/clistview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#aaa"
-            android:orientation="vertical"></com.liyafeng.view.listview.CustomListView>
+    <!--<com.liyafeng.view.listview.MyListView-->
+        <!--android:id="@+id/listview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"></com.liyafeng.view.listview.MyListView>-->
 
-    </com.liyafeng.view.scrollview.CustomScrollView>
-    <!--</ScrollView>-->
 </RelativeLayout>
