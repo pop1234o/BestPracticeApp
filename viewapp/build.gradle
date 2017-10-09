@@ -27,4 +27,5 @@ dependencies {
 
     compile 'com.google.android:support-v4:r7'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
 }

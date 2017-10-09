@@ -25,7 +25,8 @@
         <activity android:name=".fragment.CustomFragmentActivity" />
         <activity android:name=".listview.ListViewActivity" />
         <activity android:name=".scrollview.ScrollActivity" />
-        <activity android:name=".scroller.ScrollerActivity"></activity>
+        <activity android:name=".scroller.ScrollerActivity" />
+        <activity android:name=".recycleview.RecyclerViewActivity"></activity>
     </application>
 
 </manifest>
