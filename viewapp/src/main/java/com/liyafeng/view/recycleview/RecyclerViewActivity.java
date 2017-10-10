@@ -1,12 +1,12 @@
 package com.liyafeng.view.recycleview;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,15 +25,18 @@ public class RecyclerViewActivity extends Activity {
         setContentView(R.layout.activity_recycler_view);
 
         RecyclerView recycer = (RecyclerView) findViewById(R.id.recycer);
-        recycer.setLayoutManager(new LinearLayoutManager(this));
+//        recycer.setLayoutManager(new LinearLayoutManager(this));
+//        recycer.setLayoutManager(new GridLayoutManager(this,3));
+
+        recycer.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         adapter = new RecyclerView.Adapter<ListHolder>() {
             @Override
             public ListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                TextView textView = new TextView(RecyclerViewActivity.this);
-                textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                textView.setBackgroundColor(Color.RED);
-                textView.setTextColor(Color.BLACK);
-                ListHolder listHolder = new ListHolder(textView);
+                View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.list_recycle, null);
+
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                ListHolder listHolder = new ListHolder(view);
 
                 return listHolder;
             }
@@ -60,11 +63,12 @@ public class RecyclerViewActivity extends Activity {
 
         public ListHolder(View itemView) {
             super(itemView);
-            this.itemView = (TextView) itemView;
+            this.itemView = (TextView) itemView.findViewById(R.id.item);
         }
 
         public void setData(int position){
             itemView.setText(""+position);
+            itemView.setHeight(position*50);
         }
     }
 
@@ -73,7 +77,7 @@ public class RecyclerViewActivity extends Activity {
 
         @Override
         public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            int dragFlags = ItemTouchHelper.UP|ItemTouchHelper.DOWN;
+            int dragFlags = ItemTouchHelper.UP|ItemTouchHelper.DOWN|ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;
             int swipeFlags  =ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;
             int i = makeMovementFlags(dragFlags, swipeFlags);
             return i;
@@ -100,8 +104,22 @@ public class RecyclerViewActivity extends Activity {
 
         @Override
         public boolean isItemViewSwipeEnabled() {
-            return super.isItemViewSwipeEnabled();
+            return false;
         }
 
+
+
+//        @Override
+//        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+//            if (dX > -200) {
+//
+////                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+//                viewHolder.itemView.scrollTo((int) -dX,0);
+//            } else {
+//
+//            }
+//
+//
+//        }
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.liyafeng.view.drag.DragActivity;
 import com.liyafeng.view.fragment.CustomFragmentActivity;
 import com.liyafeng.view.listview.ListViewActivity;
+import com.liyafeng.view.pullrefresh.PullRefreshActivity;
 import com.liyafeng.view.recycleview.RecyclerViewActivity;
 import com.liyafeng.view.redpoint.RedPointActivity;
 import com.liyafeng.view.scroller.ScrollerActivity;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
             "scrollview",
             "listview",
             "recyclerview",
+            "pullrefresh",
 
     };
 
@@ -52,6 +54,7 @@ public class MainActivity extends Activity {
             ScrollActivity.class,
             ListViewActivity.class,
             RecyclerViewActivity.class,
+            PullRefreshActivity.class,
 
             };
 

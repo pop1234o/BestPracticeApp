@@ -26,7 +26,8 @@
         <activity android:name=".listview.ListViewActivity" />
         <activity android:name=".scrollview.ScrollActivity" />
         <activity android:name=".scroller.ScrollerActivity" />
-        <activity android:name=".recycleview.RecyclerViewActivity"></activity>
+        <activity android:name=".recycleview.RecyclerViewActivity" />
+        <activity android:name=".pullrefresh.PullRefreshActivity"></activity>
     </application>
 
 </manifest>
