@@ -27,7 +27,10 @@
         <activity android:name=".scrollview.ScrollActivity" />
         <activity android:name=".scroller.ScrollerActivity" />
         <activity android:name=".recycleview.RecyclerViewActivity" />
-        <activity android:name=".pullrefresh.PullRefreshActivity"></activity>
+        <activity android:name=".pullrefresh.PullRefreshActivity" />
+        <activity android:name=".match.MatchActivity" />
+        <activity android:name=".svg.SVGActivity" />
+        <activity android:name=".NewLayoutActivity"></activity>
     </application>
 
 </manifest>
