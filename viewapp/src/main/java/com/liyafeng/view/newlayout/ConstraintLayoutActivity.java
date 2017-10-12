@@ -1,9 +1,11 @@
-package com.liyafeng.view;
+package com.liyafeng.view.newlayout;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-public class NewLayoutActivity extends Activity {
+import com.liyafeng.view.R;
+
+public class ConstraintLayoutActivity extends Activity {
 
     /**
      * ConstraintLayout
