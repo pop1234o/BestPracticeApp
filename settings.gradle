@@ -1,1 +1,1 @@
-include ':viewapp'
+include ':viewapp', ':event'
