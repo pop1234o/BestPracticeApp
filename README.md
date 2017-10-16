@@ -1,5 +1,5 @@
-# CustomViewApp
-一个自定义View的集合，非常适合拿来学习，欢迎fork和star。
+# BestPracticeApp
+一个Android最佳实践的集合，非常适合拿来学习，欢迎fork和star。
 
 自定义View列表：
 * DragView(一个随手指滑动的View)
