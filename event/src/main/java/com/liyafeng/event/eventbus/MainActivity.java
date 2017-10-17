@@ -17,11 +17,19 @@ public class MainActivity extends Activity {
     public static final String TAG = "test";
 
     /**
-     * eventbus的线程模式
+     * eventbus的四种线程模式
      * <p>
      * sticky模式 注解要加上条件，这个是一直在内存中，除非remove
      *
      * 优先级和事件的取消
+     *
+     * 线程模式 BACKGROUND是如果post的是子线程，那么就在这个子线程执行，如果是主线程，那么开一个子线程
+     * ASYNC 这个总是独立于post的线程，总是在另一个子线程完成
+     *
+     * =======================
+     * 这里注册的时候遍历这个类的方法，查找有Subscribe注解的，形成一个Subscribion对象，
+     * 形成一个map：eventObj-List<Subscribion>
+     *
      *
      * @param savedInstanceState
      */
@@ -34,6 +42,7 @@ public class MainActivity extends Activity {
             int count= 0;
             @Override
             public void onClick(View v) {
+                EventBus.getDefault().post(new Event(""));
                 EventBus.getDefault().postSticky(new Event("hi"+count++));
                 Log.i(TAG, "onClick: " + Thread.currentThread().getName());
             }
