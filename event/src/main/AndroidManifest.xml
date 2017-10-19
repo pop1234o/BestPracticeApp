@@ -10,13 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".eventbus.MainActivity">
+        </activity>
+        <activity android:name=".eventbus.SecondActivity" />
+        <activity android:name=".eventbus.custom.CustomMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".eventbus.SecondActivity"></activity>
     </application>
 
 </manifest>

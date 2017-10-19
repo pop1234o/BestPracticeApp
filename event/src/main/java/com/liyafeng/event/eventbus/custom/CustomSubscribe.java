@@ -1,4 +1,4 @@
-package com.liyafeng.event.eventbus;
+package com.liyafeng.event.eventbus.custom;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -18,5 +18,10 @@ import java.lang.annotation.Target;
 @Inherited //是否继承
 public @interface CustomSubscribe {
 
+    CustomEventBus.ThreadMode threadMode() default CustomEventBus.ThreadMode.POSTING;
+
+    boolean sticky() default false;
+
+    int priority() default 0;
 
 }

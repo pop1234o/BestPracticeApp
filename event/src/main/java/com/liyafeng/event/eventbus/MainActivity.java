@@ -30,6 +30,9 @@ public class MainActivity extends Activity {
      * 这里注册的时候遍历这个类的方法，查找有Subscribe注解的，形成一个Subscribion对象，
      * 形成一个map：eventObj-List<Subscribion>
      *
+     * =======================
+     * 这里的pool 回收机制也很巧妙
+     *
      *
      * @param savedInstanceState
      */
