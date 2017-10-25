@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.liyafeng.video"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -26,5 +26,6 @@ dependencies {
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.android.exoplayer:exoplayer:r2.0.2'
+    compile 'com.googlecode.mp4parser:isoparser:1.1.21'
 
 }

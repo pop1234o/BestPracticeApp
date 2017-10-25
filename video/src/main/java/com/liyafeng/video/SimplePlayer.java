@@ -79,4 +79,10 @@ public class SimplePlayer {
             'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
             'u', 'v', 'w', 'x', 'y', 'z'
     };
+
+    public void deMux() throws IOException {
+//        MediaCodec byCodecName = MediaCodec.createByCodecName("");
+//        byCodecName.configure();
+
+    }
 }

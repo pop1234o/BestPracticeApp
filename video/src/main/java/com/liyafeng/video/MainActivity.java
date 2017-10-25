@@ -86,7 +86,7 @@ import android.os.Bundle;
  * PCM 是音频调制的规则
  *
  * H.26x/MPEG-4 part10 ----视频编码规则
- * ACC /MPEG-1 Layer 3 ----音频编码规则
+ * ACC /MPEG-1 Layer 3 /杜比数字（Dolby Digital），或称AC-3----音频编码规则
  *
  * 封装格式
  * .mp4 .rmvb .avi .mkv  .flv（flash video）--都是不同组织定义的封装视频的规则
@@ -133,12 +133,44 @@ import android.os.Bundle;
  * 采样率*每个样本的bit = 码率
  * 清晰度高，每个样本的bit就大（更清晰）， 或者采样率高（更流畅）  =  视频更接近真实
  *
+ * 一个MP4的比特率就是文件字节数*8bit/ 视频长度
  * ===============
  * ASCII 有128个字符，0-127  = 00-7F = 0000 0000 - 0111 1111
  * 8位带符号
  * 一个byte 8位 可以用-128-127 的整数来表示 ，可以用
  * 80 7f 7e
  *
+ * 所以一个字节可以用2个16进制数来表示，如果是ascii码，则可以转化为对应的字符
+ *
+ * ================
+ * 所以一个MP4 的开始4个字节（开始的32位 或者开始的2*4个16进制数）是表示大小，后面是ftyp 表示一个box
+ * 所以数据就是这样存储起来的
+ *
+ * ============
+ * 小端序-》反向；大端序-》正向排列 Endianness
+ *
+ * ===========
+ *  compile 'com.googlecode.mp4parser:isoparser:1.1.21'
+ *
+ * ============
+ * unicode 和 utf-8的区别
+ * https://www.zhihu.com/question/23374078
+ *
+ * unicode是字符集，utf-8是unicode的编码规则
+ * unicode是两个字节表示 0000 0000 0000 0000 65536种可能
+ * 后来加上Planes（平面）的概念，每个平面就0000-ffff  现在定义了17个平面
+ * U+0000 默认代表plane 0 ，U+2ffff 代表平面2， 一直到U+10ffff 代表平面16 ，所以又110w个code points(码点) 编码指向
+ *
+ * utf-8是一种编码规则 需要n个字节 开始的n个字节写1，后面跟0， 后面每个8位开头是10，这样剩下的位就写原来的 二进制
+ *
+ * ============
+ * 高级加密标准（英语：Advanced Encryption Standard，缩写：AES
+ *
+ * ===========
+ * exoplayer完全java书写，读取，和解复用都是 自己写的
+ * 解码使用MediaCodec，最终传递给系统的Surface渲染
+ *
+ * 使用数据队列的数据结构，一遍读，入队列，取数据，解码，交给surface渲染
  *
  *
  *
