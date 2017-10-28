@@ -18,6 +18,15 @@ allprojects {
     }
 }
 
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task hello {
+    doLast {
+        println 'Hello, World!'
+    }
+}
+description = 'liyafeng best practice'
+version = '1.0'

@@ -8,7 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildtool" />
             <option value="$PROJECT_DIR$/event" />
+            <option value="$PROJECT_DIR$/modularization" />
             <option value="$PROJECT_DIR$/video" />
             <option value="$PROJECT_DIR$/viewapp" />
           </set>
