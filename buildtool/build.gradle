@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion "25.0.2"
 
     defaultConfig {
@@ -19,11 +19,136 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+
+
+        }
     }
+
+
+
+
+
+    //指定风味的尺寸，这实际就好像薯片番茄味的可以有大包的，小包的，这实际上是二维的，优先级高的在前面
+    //也就是api的优先级高
+    flavorDimensions "api", "mode"
+
+    //产品偏好(风味/种类)  指的就是可以build成多个需求的apk 比如包名不一样，targersdk不一样 ，
+    // 就像乐事薯片，可以有不同风味的产品，但是他们也有相同的地方，所以这里就是配置他们不同的地方
+    //这个和defaultConfig中的配置内容相同,会覆盖defaultConfig中的配置内容
+
+    productFlavors {
+        myname1 {
+            applicationId 'com.example.myapp.free'
+            dimension "mode"
+        }
+
+        myname2 {
+            applicationId 'com.example.myapp.paid'
+            dimension "mode"
+        }
+
+        minApi24 {
+            dimension "api"
+            minSdkVersion 24
+            // To ensure the target device receives the version of the app with
+            // the highest compatible API level, assign version codes in increasing
+            // value with API level. To learn more about assigning version codes to
+            // support app updates and uploading to Google Play, read Multiple APK Support
+            versionCode 30000 + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi24"
+        }
+
+        minApi23 {
+            dimension "api"
+            minSdkVersion 23
+            versionCode 20000  + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi23"
+        }
+
+        minApi21 {
+            dimension "api"
+            minSdkVersion 21
+            versionCode 10000  + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi21"
+        }
+    }
+
+    /**
+     * The splits block is where you can configure different APK builds that
+     * each contain only code and resources for a supported screen density or
+     * ABI. You'll also need to configure your build so that each APK has a
+     * different versionCode.
+     */
+
+    splits {
+        // Settings to build multiple APKs based on screen density.
+        density {
+
+            // Enable or disable building multiple APKs.
+            enable false
+
+            // Exclude these densities when building multiple APKs.
+            exclude "ldpi", "tvdpi", "xxxhdpi", "400dpi", "560dpi"
+        }
+    }
+
+
+    sourceSets {
+        // Encapsulates configurations for the main source set.
+        main {
+            // Changes the directory for Java sources. The default directory is
+            // 'src/main/java'.
+//            java.srcDirs = ['other/java']
+
+            // If you list multiple directories, Gradle uses all of them to collect
+            // sources. Because Gradle gives these directories equal priority, if
+            // you define the same resource in more than one directory, you get an
+            // error when merging resources. The default directory is 'src/main/res'.
+//            res.srcDirs = ['other/res1', 'other/res2']
+
+            // Note: You should avoid specifying a directory which is a parent to one
+            // or more other directories you specify. For example, avoid the following:
+            // res.srcDirs = ['other/res1', 'other/res1/layouts', 'other/res1/strings']
+            // You should specify either only the root 'other/res1' directory, or only the
+            // nested 'other/res1/layouts' and 'other/res1/strings' directories.
+
+            // For each source set, you can specify only one Android manifest.
+            // By default, Android Studio creates a manifest for your main source
+            // set in the src/main/ directory.
+//            manifest.srcFile 'other/AndroidManifest.xml'
+        }
+
+        // Create additional blocks to configure other source sets.
+        androidTest {
+
+            // If all the files for a source set are located under a single root
+            // directory, you can specify that directory using the setRoot property.
+            // When gathering sources for the source set, Gradle looks only in locations
+            // relative to the root directory you specify. For example, after applying the
+            // configuration below for the androidTest source set, Gradle looks for Java
+            // sources only in the src/tests/java/ directory.
+//            setRoot 'src/tests'
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("myreleasekey.keystore")
+            storePassword "password"
+            keyAlias "MyReleaseKey"
+            keyPassword "password"
+        }
+    }
+
+
 }
 
 
 dependencies {
+
+    myname1Compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

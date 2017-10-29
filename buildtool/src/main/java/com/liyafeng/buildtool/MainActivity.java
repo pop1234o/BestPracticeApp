@@ -145,7 +145,8 @@ import android.os.Bundle;
  *
  *  禁用一些没必要task ，在debug的时候
  *
- *
+ * =========================
+ * 关于配置你的android project 见https://developer.android.com/studio/build/index.html#build-process
  *
  */
 public class MainActivity extends Activity {

@@ -18,7 +18,11 @@ allprojects {
     }
 }
 
+//定义变量
+ext{
+    compileSdkVersion = 25
 
+}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
