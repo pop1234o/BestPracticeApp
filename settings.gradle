@@ -1,1 +1,1 @@
-include ':viewapp', ':event', ':video', ':modularization', ':buildtool'
+include ':viewapp', ':event', ':video', ':buildtool', ':network'

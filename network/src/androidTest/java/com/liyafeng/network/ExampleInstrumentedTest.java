@@ -1,4 +1,4 @@
-package com.liyafeng.modularization;
+package com.liyafeng.network;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.liyafeng.modularization", appContext.getPackageName());
+        assertEquals("com.liyafeng.network", appContext.getPackageName());
     }
 }
