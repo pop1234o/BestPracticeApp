@@ -27,7 +27,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  *
  */
 
-public class Volley {
+public class SimpleVolley {
 
     public static RequestQueue newRequestQueue() {
         NetWork.UrlNetWork netWork = new NetWork.UrlNetWork();

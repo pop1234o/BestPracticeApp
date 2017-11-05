@@ -17,15 +17,23 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 /**
  * HttpURLConnection
  * httpclient
- * Volley
+ * SimpleVolley
  * Okhttp
  * Retrofit
  */
@@ -33,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "test";
     private RequestQueue requestQueue;
+    private OkHttpClient okHttpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,27 +51,56 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestVolley();
+                requestHttpUrlConnection();
             }
         });
-//        request();
+
 
     }
 
-    private void request() {
-        try {
-            URL url = new URL("");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+    private void requestHttpUrlConnection() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-            urlConnection.setConnectTimeout(10000);
-            int responseCode = urlConnection.getResponseCode();
-            if (responseCode == 200) {
-                InputStream inputStream = urlConnection.getInputStream();
-//                inputStream.read()
+                InputStream inputStream = null;
+                try {
+                    URL url = new URL("http://www.google.com");
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                    urlConnection.setConnectTimeout(1000);
+                    int responseCode = urlConnection.getResponseCode();
+                    if (responseCode == 200) {
+                        inputStream = urlConnection.getInputStream();
+
+                        ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+                        byte[] bytes = new byte[1024];
+
+                        int length;
+                        while ((length = inputStream.read(bytes)) != -1) {
+                            arrayOutputStream.write(bytes, 0, length);
+                        }
+
+                        String s = new String(arrayOutputStream.toByteArray());
+
+                        Log.i(TAG, "requestHttpUrlConnection: " + s);
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (inputStream != null) {
+
+                            inputStream.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
+
     }
 
     /**
@@ -141,9 +179,76 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void requestOkHttpGet() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (okHttpClient == null) {
+                    okHttpClient = new OkHttpClient();
+                }
+                okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
+                okhttp3.Request request = builder.url("http://www.google.com").build();
+                okhttp3.Response response = null;
+                try {
+                    response = okHttpClient.newCall(request).execute();
+                    String s = response.body().string();//注意这里是string()不是toString();
+                    Log.i(TAG, "requestOkHttpGet: " + s);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+
+    private void requestOkHttpPost() {
+        final MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (okHttpClient == null) {
+                    okHttpClient = new OkHttpClient();
+                }
+                okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
+                RequestBody requestBody = RequestBody.create(JSON, "{\"key\":\"value\"}");
+                okhttp3.Request request = builder.url("http://www.google.com").post(requestBody).build();
+                okhttp3.Response response = null;
+                try {
+                    response = okHttpClient.newCall(request).execute();
+                    String s = response.body().string();//注意这里是string()不是toString();
+                    Log.i(TAG, "requestOkHttpPost: " + s);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 缓存
+     */
+    private void requestOkHttp() {
+        new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                okhttp3.Request request = chain.request();
+                okhttp3.Response response = chain.proceed(request);
+                return response;
+            }
+        }).cache(new okhttp3.Cache(getCacheDir(), 5 * 1024 * 1024)).build();
+
+        okhttp3.Request request_forceNocache = new okhttp3.Request.Builder().cacheControl(new CacheControl.Builder().noCache().build()).url("").build();
+        okhttp3.Request request_forceCache = new okhttp3.Request.Builder().cacheControl(new CacheControl.Builder().maxAge(0, TimeUnit.SECONDS).build()).url("").build();
+
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
-        requestQueue.cancelAll("tag1");
+        if (requestQueue != null) {
+            requestQueue.cancelAll("tag1");
+        }
     }
 }
