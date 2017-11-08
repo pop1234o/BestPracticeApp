@@ -1,6 +1,8 @@
 package com.liyafeng.network;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +31,13 @@ import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * HttpURLConnection
@@ -51,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestHttpUrlConnection();
+                requestOkHttpGet();
             }
         });
 
@@ -182,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestOkHttpGet() {
         new Thread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 if (okHttpClient == null) {
@@ -189,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
                 okhttp3.Request request = builder.url("http://www.google.com").build();
-                okhttp3.Response response = null;
-                try {
-                    response = okHttpClient.newCall(request).execute();
+                //必须在这定义
+                try (okhttp3.Response response = okHttpClient.newCall(request).execute()) {
+
                     String s = response.body().string();//注意这里是string()不是toString();
                     Log.i(TAG, "requestOkHttpGet: " + s);
                 } catch (IOException e) {
@@ -199,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+
 
     }
 
@@ -234,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 okhttp3.Request request = chain.request();
+//                chain.request().newBuilder().addHeader().build()
                 okhttp3.Response response = chain.proceed(request);
                 return response;
             }
@@ -243,6 +255,40 @@ public class MainActivity extends AppCompatActivity {
         okhttp3.Request request_forceCache = new okhttp3.Request.Builder().cacheControl(new CacheControl.Builder().maxAge(0, TimeUnit.SECONDS).build()).url("").build();
 
     }
+
+
+    private void requestRetrofit() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com").addConverterFactory(GsonConverterFactory.create()).build();
+        RequestService requestService = retrofit.create(RequestService.class);
+        final Call<RequestService.User> call = requestService.getUser("myname", "mypassword");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    RequestService.User body = call.execute().body();
+                    Log.i(TAG, "requestRetrofit: " + body.toString());
+                } catch (IOException e) {
+                    Log.i(TAG, "requestRetrofit: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+    }
+
+    public interface RequestService {
+
+        @Headers({"Cache-Control:max-age=64000"})
+        @GET("user/{name}/repo?age=18")
+        Call<User> getUser(@Path("name") String username, @Query("password") String password);
+
+        class User {
+
+        }
+    }
+
 
     @Override
     protected void onStop() {
