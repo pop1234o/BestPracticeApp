@@ -1,1 +1,1 @@
-include ':viewapp', ':event', ':video', ':buildtool', ':network'
+include ':viewapp', ':event', ':video', ':buildtool', ':network', ':practicelib'
