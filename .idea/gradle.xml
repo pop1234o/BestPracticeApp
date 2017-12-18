@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/buildtool" />
             <option value="$PROJECT_DIR$/event" />
             <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/orm" />
             <option value="$PROJECT_DIR$/practicelib" />
             <option value="$PROJECT_DIR$/video" />
             <option value="$PROJECT_DIR$/viewapp" />
