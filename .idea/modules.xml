@@ -4,19 +4,13 @@
     <modules>
       <module fileurl="file://E:\mypro\MyApplication.iml" filepath="E:\mypro\MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/buildtool/buildtool.iml" filepath="$PROJECT_DIR$/buildtool/buildtool.iml" />
-      <module fileurl="file://E:\mypro\buildtool\buildtool.iml" filepath="E:\mypro\buildtool\buildtool.iml" />
       <module fileurl="file://$PROJECT_DIR$/event/event.iml" filepath="$PROJECT_DIR$/event/event.iml" />
-      <module fileurl="file://E:\mypro\event\event.iml" filepath="E:\mypro\event\event.iml" />
       <module fileurl="file://$PROJECT_DIR$/mypro.iml" filepath="$PROJECT_DIR$/mypro.iml" />
       <module fileurl="file://$PROJECT_DIR$/network/network.iml" filepath="$PROJECT_DIR$/network/network.iml" />
-      <module fileurl="file://E:\mypro\network\network.iml" filepath="E:\mypro\network\network.iml" />
       <module fileurl="file://$PROJECT_DIR$/orm/orm.iml" filepath="$PROJECT_DIR$/orm/orm.iml" />
       <module fileurl="file://$PROJECT_DIR$/practicelib/practicelib.iml" filepath="$PROJECT_DIR$/practicelib/practicelib.iml" />
-      <module fileurl="file://E:\mypro\practicelib\practicelib.iml" filepath="E:\mypro\practicelib\practicelib.iml" />
       <module fileurl="file://$PROJECT_DIR$/video/video.iml" filepath="$PROJECT_DIR$/video/video.iml" />
-      <module fileurl="file://E:\mypro\video\video.iml" filepath="E:\mypro\video\video.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewapp/viewapp.iml" filepath="$PROJECT_DIR$/viewapp/viewapp.iml" />
-      <module fileurl="file://E:\mypro\viewapp\viewapp.iml" filepath="E:\mypro\viewapp\viewapp.iml" />
     </modules>
   </component>
 </project>
