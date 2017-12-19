@@ -3,9 +3,10 @@ package com.liyafeng.practice;
 public class AndroidFramework {
 
     /**
-     * 1.简述事件分发流程
+     * 简述事件分发流程
+     * 事件分发机制
      */
-    public void a1(){
+    public void a1() {
         /*
         * 最一开始ViewRootImpl 接收到触摸事件，然后会传递给DecorView
         * 的dispatchTouchEvent()，然后Decorview会将事件分发给子控件
@@ -19,10 +20,11 @@ public class AndroidFramework {
         * */
 
     }
+
     /**
-     * 2.View的渲染机制
+     * View的渲染机制
      */
-    public void a2(){
+    public void a2() {
         /*
         *
         * Android的图形都是在canvas对象中绘制的，一个canvas持有一个bitmap对象
@@ -38,10 +40,25 @@ public class AndroidFramework {
         * */
     }
 
+
     /**
-     * 3.Android 动画原理 、底层如何给上层信号？
+     * View的绘制流程
+     * http://www.liyafeng.com/c/Android_APIsetContentView流程分析
      */
-    public void a3(){
+    public void a2_1() {
+        /*
+        * 首先会将xml解析成对象，addview添加到decorview中
+        * 然后执行requestLayout()，最终在ViewRootImpl中执行doTraversals
+        * 进行view树的遍历，最先执行performMeasure()初步确定view的宽高,
+        * 然后是performLayout，确定子view在父布局中的位置，left top right bottom 四个参数
+        * 最后执行performDraw ,将canvas对象传入，子view根据自己的ondraw方法进行绘制
+        */
+    }
+
+    /**
+     * Android 动画原理 、底层如何给上层信号？
+     */
+    public void a3() {
         /*
         * 分为 1.补间动画（tween 屯，两者之间）2.属性动画(attribute) 3.帧动画 frame
         *
@@ -58,7 +75,6 @@ public class AndroidFramework {
         * */
 
     }
-
 
 
 }

@@ -7,22 +7,27 @@ package com.liyafeng.practice;
 public class Java {
 
 
-    interface a{
-        public static int b=1;
+    interface a {
+        public static int b = 1;
+
         public abstract void aa();
     }
-    static abstract class b{
-        int a= 1;
-        public void a(){
+
+    static abstract class b {
+        int a = 1;
+
+        public void a() {
 
         }
+
         protected abstract void b();
     }
+
     /**
      * 1.接口和抽象类的区别
      * http://www.importnew.com/12399.html
      */
-    void a1(){
+    void a1() {
         /*
         * 从微观上说
         * 一个类能实现多个接口，但只能继承一个抽象类
@@ -38,5 +43,31 @@ public class Java {
         *
         *
         * */
+    }
+
+
+    /**
+     * =====================
+     * ### 线程
+     * 推荐阅读书籍《Java并发编程实战》
+     * =====================
+     * */
+
+    /**
+     * sleep和wait有什么区别
+     */
+    public void a2() {
+        /*
+        * 首先线程有6种状态，new waiting runnable blocked ,timed waiting ,terminated
+        * 见下图
+        *
+        *
+        */
+
+        int thread_status = R.drawable.thread_status;
+    }
+
+    public static void main(String[] args) {
+
     }
 }
