@@ -55,6 +55,18 @@ public class Java {
         *
         * */
     }
+
+    /**
+     * 说说String ，StringBuilder ,StringBuffer的区别
+     * */
+    public void a1_1(){
+        /*
+        * String 是一个不可变的字符序列
+        * StringBuilder是可变的字符序列，他在单线程中使用，比速度StringBuffer更快
+        * StringBuffer是线程安全的可变的字符序列
+        * 他们两个操作的是一个字符数组，而String操作的是常量池中的数据
+        */
+    }
     //endregion
 
     //region Java线程
