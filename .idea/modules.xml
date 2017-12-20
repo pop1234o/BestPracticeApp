@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Algorithm/Algorithm.iml" filepath="$PROJECT_DIR$/Algorithm/Algorithm.iml" />
       <module fileurl="file://E:\mypro\MyApplication.iml" filepath="E:\mypro\MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/buildtool/buildtool.iml" filepath="$PROJECT_DIR$/buildtool/buildtool.iml" />
       <module fileurl="file://$PROJECT_DIR$/event/event.iml" filepath="$PROJECT_DIR$/event/event.iml" />
