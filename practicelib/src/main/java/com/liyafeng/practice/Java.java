@@ -67,6 +67,22 @@ public class Java {
         * 他们两个操作的是一个字符数组，而String操作的是常量池中的数据
         */
     }
+
+    /**
+     * 说说Java的三大特性？如何理解多态？
+     * http://www.runoob.com/java/java-polymorphism.html
+     * */
+    public void a1_2(){
+        /*
+        * 多态，封装，继承
+        * 封装意思是隐藏类中的实现细节，只暴露它的方法
+        * 继承，子类继承父类中的特性，减少重复代码
+        * 多态，就是父类引用指向子类对象，当父类引用调用方法的时候，调用的是子类重写的方法
+        * 就是一个行为有多种实现方式
+        * 多态的三个必要条件，继承，重写，父类引用指向子类对象
+        * override
+        */
+    }
     //endregion
 
     //region Java线程
@@ -188,5 +204,44 @@ public class Java {
         * 数组加链表，拉链法实现的散列表
         */
     }
+    //endregion
+
+    //region Java网络
+
+    /**
+     * =====================
+     * ### 网络
+     * =====================
+     * */
+
+    /**
+     * 说说断点下载
+     * */
+    public void a6(){
+        /*
+        * 在http请求头中加入 range字段， range:bytes=0-
+        * 然后加入etag，If-Match:asdfasdfa
+        * 第一次请求的时候可以不用传etag，服务器相应200
+        * 返回数据和Etag,将Etag保存到本地
+        * 下次请求获取本地以下载文件的字节数，然后加上
+        * range:bytes=1024-
+        * If-Match:asdfasdfa
+        * 服务器会响应206，如果服务器返回206，就用RandomAccessFile .seekTo()
+        * 到最后一个字节，然后再继续写入
+        */
+    }
+
+    /**
+     * 说说多线程断点下载
+     * */
+    public void a7(){
+        /*
+        * 和断点下载一样，开启多个线程，每个线程请求指定范围的数据，
+        * 首先获取文件的总大小，用get方式请求文件，然后getContentLength获取文件长度
+        * 用RandomAccessFile写入文件
+        */
+    }
+
+
     //endregion
 }

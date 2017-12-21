@@ -37,4 +37,16 @@ public class MainActivity extends Activity {
         *
         */
     }
+
+    /**
+     * Android布局优化方案？
+     * */
+    public void a2(){
+        /*
+        * 少嵌套，
+        * 可以使用ConstraintLayout，来实现扁平布局
+        * 避免overdraw，就是说背景尽量少重叠
+        * 用Android 系统开发者选项中的检测布局边界，来确定布局是否重叠度过高
+        */
+    }
 }

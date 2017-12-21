@@ -2,6 +2,15 @@ package com.liyafeng.practice;
 
 public class AndroidFramework {
 
+
+    //region Android UI
+
+    /**
+    * =====================
+    * ### Android UI
+    * =====================
+    * */
+
     /**
      * 简述事件分发流程
      * 事件分发机制
@@ -77,6 +86,27 @@ public class AndroidFramework {
     }
 
     /**
+     * Activity的加载流程
+     * http://www.liyafeng.com/c/Android_APIstartActivity流程分析
+     * */
+    public void a3_1(){
+        /*
+        * 首先用binder请求到ActivityManagerService ，然后会回调到本进程的
+        * ActivityThread，在里面会通过反射方式new 出Activity的对象，然后会
+        * 回调Activity的生命周期
+        */
+    }
+    
+    //endregion
+
+    //region Android 内存/虚拟机
+
+    /**
+    * =====================
+    * ### Android 内存
+    * =====================
+    * */
+    /**
      * 说说Android的垃圾回收机制
      * */
     public void a4(){
@@ -111,5 +141,59 @@ public class AndroidFramework {
         *
         */
     }
+    
+    /**
+     * Android进程如何保活？系统杀掉后如何重启？为什么要保活？
+     * http://blog.csdn.net/andrexpert/article/details/75045678
+     * */
+    public void a6(){
+        /*
+        * 我们APP要及时接收到通知，那么就需要通知服务一直在后台运行
+        * Android的进程回收机制是用Low Memory Killer
+        *
+        * 1.监听系统广播唤醒app
+        * 2.启动前台service，在通知栏发个消息
+        * 3.减少内存消耗，防止被杀死
+        * 4.一像素保活（动态监听屏幕锁屏解锁广播，在锁屏时开启一个像素的Activity）
+        *   在黑屏状态下保活
+        * 5.循环播放一段无声的音频，用一键清理也保活
+        * 6.双进程相互唤起
+        *
+        * linux会为每个进程分配一个优先级，叫oom_adj，数值越低优先级越高，越不容易被杀死
+        * 普通app的值一般是大于0，系统进程一般是小于0
+        * 用adb shell进入手机命令行模式，然后用 ps|grep com.xxx 来查看包下的所有进程
+        * 然后用 cat /proc/进程id/oom_adj 来查看进程的优先级数值
+        *
+        *
+        */
+    }
+    
+    /**
+     * Android Dalvik虚拟机和JVM的区别？
+     * */
+    public void a6_1(){
+        /*
+        * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
+        * 他是.class文件的压缩，这样占用的内存更少
+        * 2.dvm是基于寄存器的，而jvm是基于栈的
+        * http://rednaxelafx.iteye.com/blog/492667
+        */
+    }
+    //endregion
 
+    //region Android四大组件基本知识
+    /**
+     * 广播有几种注册方式？各有什么优点？
+     * https://developer.android.google.cn/guide/components/broadcasts.html#receiving_broadcasts
+     * */
+    public void a7(){
+        /*
+        * AndroidManifest中静态注册，代码中动态注册
+        * 优点，代码注册的优先级比较高，而且有些隐式广播只能代码中注册
+        * 缺点，注册广播的Activity的页面关闭后，广播就失效了
+        * 静态的优点，是随时都能接收到广播
+        *
+        */
+    }
+    //endregion
 }
