@@ -193,6 +193,14 @@ public class Java {
 
 //    }
 
+    /**
+     * 线程池的原理？
+     * */
+    public void a2_3(){
+        /*
+        * 
+        */
+    }
     //endregion
 
     //region Java集合
