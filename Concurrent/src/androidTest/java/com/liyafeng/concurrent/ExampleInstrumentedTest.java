@@ -1,4 +1,4 @@
-package com.liyafeng.thread;
+package com.liyafeng.concurrent;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

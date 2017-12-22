@@ -1,7 +1,14 @@
-package com.liyafeng.thread;
+package com.liyafeng.concurrent;
 
 /**
  * Created by lenovo on 2017/12/21.
+ *
+ * 一个具体的RunnableFuture （可run,可get()结果）的对象
+ *
+ * 内部持有一个Callsble对象，使用阻塞，激活的方式来实现get()
+ * callable对象来返回任务运行的结果
+ *
+ * 可以说futuretask是集Runnable，Future，Callable三者的特性
  */
 
 public class FutureTask<V> implements RunnableFuture<V> {

@@ -1,4 +1,4 @@
-package com.liyafeng.thread;
+package com.liyafeng.concurrent;
 
 /**
  * Created by lenovo on 2017/12/21.

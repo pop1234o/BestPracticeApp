@@ -1,4 +1,4 @@
-package com.liyafeng.thread;
+package com.liyafeng.concurrent;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,8 +7,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class MainActivity extends Activity {
 
@@ -21,19 +19,20 @@ public class MainActivity extends Activity {
 
     public void thread(){
         ExecutorService executorService = Executors.newCachedThreadPool();
-        Future<?> submit = executorService.submit(new Runnable() {
-            @Override
-            public void run() {
+        executorService.execute();
+//        Future<?> submit = executorService.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
 
-            }
-        });
-
-        try {
-            Object o = submit.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Object o = submit.get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
     }
 }
