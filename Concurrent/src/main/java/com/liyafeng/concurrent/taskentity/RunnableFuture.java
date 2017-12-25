@@ -1,4 +1,4 @@
-package com.liyafeng.concurrent;
+package com.liyafeng.concurrent.taskentity;
 
 
 /**

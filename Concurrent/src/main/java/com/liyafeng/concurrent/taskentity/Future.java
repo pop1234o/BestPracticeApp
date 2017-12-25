@@ -1,4 +1,4 @@
-package com.liyafeng.concurrent;
+package com.liyafeng.concurrent.taskentity;
 
 /**
  * Created by lenovo on 2017/12/21.

@@ -1,4 +1,7 @@
-package com.liyafeng.concurrent;
+package com.liyafeng.concurrent.util;
+
+import com.liyafeng.concurrent.taskentity.Callable;
+import com.liyafeng.concurrent.taskentity.Runnable;
 
 /**
  * Created by lenovo on 2017/12/21.

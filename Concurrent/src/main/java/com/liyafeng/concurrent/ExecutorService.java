@@ -1,5 +1,8 @@
 package com.liyafeng.concurrent;
 
+import com.liyafeng.concurrent.taskentity.Future;
+import com.liyafeng.concurrent.taskentity.Runnable;
+
 /**
  * Created by lenovo on 2017/12/21.
  *
@@ -7,6 +10,7 @@ package com.liyafeng.concurrent;
  * 而且可以判断当前任务的状态
  * 而且任务可以有返回值
  *
+ * 这个类还是对“任务”进行处理
  */
 
 public interface ExecutorService extends Executor {

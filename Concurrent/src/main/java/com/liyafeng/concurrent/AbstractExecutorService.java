@@ -1,7 +1,14 @@
 package com.liyafeng.concurrent;
 
+import com.liyafeng.concurrent.taskentity.Future;
+import com.liyafeng.concurrent.taskentity.FutureTask;
+import com.liyafeng.concurrent.taskentity.Runnable;
+import com.liyafeng.concurrent.taskentity.RunnableFuture;
+
 /**
  * Created by lenovo on 2017/12/21.
+ *
+ * 这个类负责执行前对“任务”对象的一些处理
  */
 
 public abstract class AbstractExecutorService implements ExecutorService {

@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
 
     public void thread(){
         ExecutorService executorService = Executors.newCachedThreadPool();
-        executorService.execute();
+//        executorService.execute();
 //        Future<?> submit = executorService.submit(new Runnable() {
 //            @Override
 //            public void run() {
