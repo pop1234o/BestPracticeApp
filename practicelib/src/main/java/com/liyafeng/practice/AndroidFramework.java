@@ -6,10 +6,10 @@ public class AndroidFramework {
     //region Android UI
 
     /**
-    * =====================
-    * ### Android UI
-    * =====================
-    * */
+     * =====================
+     * ### Android UI
+     * =====================
+     * */
 
     /**
      * 简述事件分发流程
@@ -88,28 +88,28 @@ public class AndroidFramework {
     /**
      * Activity的加载流程
      * http://www.liyafeng.com/c/Android_APIstartActivity流程分析
-     * */
-    public void a3_1(){
+     */
+    public void a3_1() {
         /*
         * 首先用binder请求到ActivityManagerService ，然后会回调到本进程的
         * ActivityThread，在里面会通过反射方式new 出Activity的对象，然后会
         * 回调Activity的生命周期
         */
     }
-    
+
     //endregion
 
     //region Android 内存/虚拟机
 
     /**
-    * =====================
-    * ### Android 内存
-    * =====================
-    * */
+     * =====================
+     * ### Android 内存
+     * =====================
+     * */
     /**
      * 说说Android的垃圾回收机制
-     * */
-    public void a4(){
+     */
+    public void a4() {
         /*
         * 虚拟机中的内存区域分为新生代和老年代，新分配的对象被存储在新生代中
         * 当需要申请内存而内存空间不足时，就触发Minor GC来回收新生代的内存，
@@ -126,8 +126,8 @@ public class AndroidFramework {
 
     /**
      * 说说什么是内存泄漏，说一个典型的例子，怎么避免？
-     * */
-    public void a5(){
+     */
+    public void a5() {
         /*
         * 本该被回收的对象因为存在对他的强引用而没有被回收
         * Android中最典型的就是Activity对象的泄漏，比如用Handler发延时消息
@@ -141,12 +141,12 @@ public class AndroidFramework {
         *
         */
     }
-    
+
     /**
      * Android进程如何保活？系统杀掉后如何重启？为什么要保活？
      * http://blog.csdn.net/andrexpert/article/details/75045678
-     * */
-    public void a6(){
+     */
+    public void a6() {
         /*
         * 我们APP要及时接收到通知，那么就需要通知服务一直在后台运行
         * Android的进程回收机制是用Low Memory Killer
@@ -167,11 +167,11 @@ public class AndroidFramework {
         *
         */
     }
-    
+
     /**
      * Android Dalvik虚拟机和JVM的区别？
-     * */
-    public void a6_1(){
+     */
+    public void a6_1() {
         /*
         * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
         * 他是.class文件的压缩，这样占用的内存更少
@@ -182,11 +182,12 @@ public class AndroidFramework {
     //endregion
 
     //region Android四大组件基本知识
+
     /**
      * 广播有几种注册方式？各有什么优点？
      * https://developer.android.google.cn/guide/components/broadcasts.html#receiving_broadcasts
-     * */
-    public void a7(){
+     */
+    public void a7() {
         /*
         * AndroidManifest中静态注册，代码中动态注册
         * 优点，代码注册的优先级比较高，而且有些隐式广播只能代码中注册
@@ -195,5 +196,28 @@ public class AndroidFramework {
         *
         */
     }
+    //endregion
+
+    //region Android 操作系统
+    /**
+     * =====================
+     * ### Android 操作系统
+     * =====================
+     * */
+
+    /**
+     * Android  6.0的权限机制？6.0之前的权限机制？权限机制的原理是什么？
+     */
+    public void a8() {
+        /*
+         * 权限请求
+         * https://developer.android.google.cn/training/permissions/requesting.html?hl=zh-cn
+         * -----------------------
+         * 6.0后要动态申请权限，6.0之前可以在xml中申请权限，用户在安装的时候同意所有
+         * 原理是调用系统api的时候回去判断这个应用有没有被授权，如果有则执行，没有就
+         * 返回null或者异常。
+         */
+    }
+
     //endregion
 }

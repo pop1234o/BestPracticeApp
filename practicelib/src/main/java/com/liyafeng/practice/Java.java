@@ -161,44 +161,30 @@ public class Java {
         */
     }
 
-//    private static boolean flag = true;
-//    private static int number = 0;
 
-//    public static void main(String[] args) {
-//
-//        try {
-//            new Object().wait();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        for (int i = 0; i < 10; i++) {
-//            final int j = i;
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    while (flag){
-//                        System.out.println("循环"+j);
-//                    }
-//                    System.out.println(j+"数字"+number);
-//                }
-//            }).start();
-//        }
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                number = 42;
-//                System.out.println("执行=============="+(flag = false));
-//            }
-//        }).start();
 
-//    }
 
     /**
      * 线程池的原理？
      * */
     public void a2_3(){
         /*
-        * 
+        * 线程池会指定核心线程数，和最大线程数，根据这个来创建线程
+        * 里面会进行死循环，从任务队列中取任务，如果没有任务就阻塞
+        * 有任务就唤醒执行。除了核心线程其他线程有超时时间，超过超时时间
+        * 线程就会中断
+        * 线程池好处就是不用频繁创建线程了，最大可创建500w个线程，2^29-1;
+        * 剩下两位是状态；
+        */
+    }
+
+
+    /**
+     * 多线程中的安全队列通过什么实现？
+     * */
+    public void a2_4(){
+        /*
+        * 通过AbstractQueuedSynchronizer
         */
     }
     //endregion
