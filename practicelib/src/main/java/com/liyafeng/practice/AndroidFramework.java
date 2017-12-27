@@ -233,13 +233,22 @@ public class AndroidFramework {
      * 说说Android最新架构 Architecture Component
      *
      * https://developer.android.google.cn/topic/libraries/architecture/guide.html#recommended_app_architecture
+     * 源码地址
+     * https://github.com/googlesamples/android-architecture-components
      * */
     public void a9(){
         /*
         * 为了更好的管理生命周期，比如横竖屏切换，数据要重新加载的问题
         * 数据加载完成后 Activity 已经销毁导致内存泄漏的问题
-        *
-        * LifeRecycer Live Data ViewModel
+        * 可以不让UI Controller （Activity Fragment）不那么臃肿，这样代码可维护
+        * LifecycleOwner 持有Activity或者Fragment的生命周期
+        * LiveData 负责当ViewModel获取了数据后，通知UI
+        * ViewModel 为指定的UI提供数据
+        * Repository 真正获取数据的仓库，里面获取MutableLiveData;
+        * -------------
+        * 在LiveData，setValue的时候，就会通知Activity中的观察者，然后更新UI
+        * ---------
+        * 其实也是MVVM的一种实现，但是加入了生命周期的管理，基于观察者模式的mvvm
         *
         */
     }
