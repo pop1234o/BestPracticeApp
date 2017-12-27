@@ -181,7 +181,7 @@ public class AndroidFramework {
     }
     //endregion
 
-    //region Android四大组件基本知识
+    //region Android 四大组件基本知识
 
     /**
      * 广播有几种注册方式？各有什么优点？
@@ -220,4 +220,40 @@ public class AndroidFramework {
     }
 
     //endregion
+
+
+    //region Android 架构模式
+    /**
+     * =====================
+     * ### Android 架构模式
+     * =====================
+     * */
+
+    /**
+     * 说说Android最新架构 Architecture Component
+     *
+     * https://developer.android.google.cn/topic/libraries/architecture/guide.html#recommended_app_architecture
+     * */
+    public void a9(){
+        /*
+        * 为了更好的管理生命周期，比如横竖屏切换，数据要重新加载的问题
+        * 数据加载完成后 Activity 已经销毁导致内存泄漏的问题
+        *
+        * LifeRecycer Live Data ViewModel
+        *
+        */
+    }
+
+
+    /**
+     * 说说MVC MVP MVVM 和Clean架构各自优点和区别？
+     * */
+    public void a10(){
+        /*
+        *
+        */
+    }
+
+    //endregion
+
 }
