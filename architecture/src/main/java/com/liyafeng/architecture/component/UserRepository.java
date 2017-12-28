@@ -1,9 +1,7 @@
-package com.liyafeng.architecture;
+package com.liyafeng.architecture.component;
 
 import android.arch.lifecycle.*;
 import android.arch.lifecycle.MutableLiveData;
-
-import java.util.logging.Handler;
 
 /**
  * Created by liyafeng on 2017/12/27.

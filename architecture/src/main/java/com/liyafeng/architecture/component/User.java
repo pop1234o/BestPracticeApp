@@ -1,4 +1,4 @@
-package com.liyafeng.architecture;
+package com.liyafeng.architecture.component;
 
 /**
  * Created by liyafeng on 2017/12/27.

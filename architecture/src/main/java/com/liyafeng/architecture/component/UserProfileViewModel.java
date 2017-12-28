@@ -1,4 +1,4 @@
-package com.liyafeng.architecture;
+package com.liyafeng.architecture.component;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
