@@ -1,4 +1,4 @@
-package com.liyafeng.event.eventbus;
+package com.liyafeng.event;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.liyafeng.event.R;
+import com.liyafeng.event.rxjava.RxJavaSample;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,6 +56,8 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, SecondActivity.class));
             }
         });
+
+        new RxJavaSample();
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)

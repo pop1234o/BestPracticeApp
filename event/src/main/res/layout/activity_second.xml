@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.liyafeng.event.eventbus.SecondActivity">
+    tools:context="com.liyafeng.event.SecondActivity">
 
 </android.support.constraint.ConstraintLayout>

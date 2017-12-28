@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.liyafeng.event.R;
 
-import static com.liyafeng.event.eventbus.MainActivity.TAG;
+import static com.liyafeng.event.MainActivity.TAG;
 
 
 public class CustomMainActivity extends Activity {

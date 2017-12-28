@@ -1,15 +1,16 @@
-package com.liyafeng.event.eventbus;
+package com.liyafeng.event;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.liyafeng.event.MainActivity;
 import com.liyafeng.event.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import static com.liyafeng.event.eventbus.MainActivity.TAG;
+import static com.liyafeng.event.MainActivity.TAG;
 
 
 public class SecondActivity extends Activity {
