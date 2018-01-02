@@ -17,6 +17,8 @@ public class Main {
      * 然后我们在Application中新建 MyOpenHelper对象，getWritableDb()
      * new DaoMaster(db).newSession();然后我们将DaoSession写个getter
      * 接下来就可以使用了
+     * ----------------------
+     * greendao的原理还是用的原生的数据库框架，只不过为你自动生成了代码
      *
      */
     public static void main(String[] args) {
