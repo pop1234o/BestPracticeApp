@@ -26,6 +26,10 @@ public class Main {
      * detach相当于removeView，但是没有销毁，下次可以attach
      * replace方法相当于把现在container中的Fragment全都remove，然后将新的Fragment add进去
      *
+     * --------------------------
+     * 一个app主体可以用Fragment+viewpager+RadioButton，但是viewpager要加懒加载
+     * 也可以Fragment+radioButton，这样适合没有滑动效果的主页框架
+     *
      */
     public static void main(String[] args) {
     }
