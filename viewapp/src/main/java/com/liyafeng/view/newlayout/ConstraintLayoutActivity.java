@@ -13,7 +13,8 @@ public class ConstraintLayoutActivity extends Activity {
      * 相对约束
      *
      *
-     * 创造一个chain，就是相互toright toleft
+     * 创造一个chain，就是相互toright toleft ,而且要和parent进行约束
+     * 而且width要是0dp ,才能形成一个chain
      *
      * 我们之前用LinearLayout的权重，然后再用RelaiveLayout的相对约束
      *
