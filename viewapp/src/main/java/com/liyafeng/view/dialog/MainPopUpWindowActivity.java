@@ -61,8 +61,12 @@ public class MainPopUpWindowActivity extends AppCompatActivity implements View.O
 
 
                 //这种显示方式如果是和view无关，里面只是为了获得token
-                popupWindow.showAtLocation(mButton7,Gravity.CENTER,100,0);
+                popupWindow.showAtLocation(mButton7,Gravity.BOTTOM|Gravity.LEFT,100,200);
                 //这个x y的位置是先计算重力所在的位置，然后再以那个位置为左上角，x,y是相对位置
+
+                //如果是Gravity.BOTTOM   设置y值不能为负值
+                //设置了重力后坐标系的方向就变了，如果是Gravity.BOTTOM 那么y轴的方向就是向上
+
 
 
                 break;
