@@ -15,12 +15,16 @@ public class ConstraintLayoutActivity extends Activity {
      *
      * 创造一个chain，就是相互toright toleft ,而且要和parent进行约束
      * 而且width要是0dp ,才能形成一个chain
-     *
+     * ---------------------------------------------------------
      * 我们之前用LinearLayout的权重，然后再用RelaiveLayout的相对约束
      *
      * 但是这个布局就集合在一起了
      *
      * 还有GuideLine来引导
+     * =================================================
+     * 如果要填充在两个view之间，之前用linearLayout的weight=1  height=0dp
+     * 现在也是，约束控件的上下，然后height=0dp一定要设置，否则不起效果
+     *
      *
      *
      *
