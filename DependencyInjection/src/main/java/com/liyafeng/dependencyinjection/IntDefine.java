@@ -23,6 +23,10 @@ public class IntDefine {
 
     }
 
+    /**
+     *  compile 'com.android.support:support-annotations:23.4.0'
+     * @param args
+     */
     public static void main(String[] args) {
         //如果这样写编译会报错2
 //        new IntDefine().setType(1);
