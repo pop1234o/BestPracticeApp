@@ -16,6 +16,15 @@ public class Main {
      * https://developer.android.google.cn/reference/android/support/design/widget/TabLayout.html
      *  compile 'com.android.support:design:25.0.0'
      *
+     *  https://www.jianshu.com/p/2b2bb6be83a8
+     *
+     * 这个只要重写adapter。getPageTitle即可
+     * xmlns:app="http://schemas.android.com/apk/res-auto"
+     *  app:tabSelectedTextColor="@color/mobile_yellow"
+     *  app:tabTextColor="#fff"
+     *  app:tabIndicatorColor="@color/mobile_yellow"
+     *  app:tabIndicatorHeight="3dp"
+     * ---------------------------------------
      *
      * 或者MagicIndicator，这个效果比较全
      *

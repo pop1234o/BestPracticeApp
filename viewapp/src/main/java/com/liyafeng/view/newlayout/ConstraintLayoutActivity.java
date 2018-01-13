@@ -15,6 +15,12 @@ public class ConstraintLayoutActivity extends Activity {
      *
      * 创造一个chain，就是相互toright toleft ,而且要和parent进行约束
      * 而且width要是0dp ,才能形成一个chain
+     * 而且在第一个view可以指定chain的模式
+     * app:layout_constraintVertical_chainStyle="packed"
+     * packed是所有view都在chain的中间，
+     * spread是view平均分布
+     * spread_inside是内部空隙平均分布
+     *
      * ---------------------------------------------------------
      * 我们之前用LinearLayout的权重，然后再用RelaiveLayout的相对约束
      *
