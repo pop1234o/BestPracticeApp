@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.liyafeng.view.dialog.DialogActivity;
 import com.liyafeng.view.dialog.MainPopUpWindowActivity;
 import com.liyafeng.view.drag.DragActivity;
 import com.liyafeng.view.fragment.CustomFragmentActivity;
@@ -45,6 +46,7 @@ public class MainActivity extends Activity {
             "coordinatorlayout",
             "scrolling",
             "popup",
+            "dialog",
 
     };
 
@@ -64,6 +66,7 @@ public class MainActivity extends Activity {
             DesignLayoutActivity.class,
             ScrollingActivity.class,
             MainPopUpWindowActivity.class,
+            DialogActivity.class,
             };
 
     @Override

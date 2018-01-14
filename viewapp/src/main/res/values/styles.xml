@@ -2,4 +2,39 @@
 
     <!-- Base application theme. -->
 
+    <!--parent="android:Theme.Material.Dialog"-->
+    <style name="popupDialog" >
+        <!--背景色，必须要用@color或者@drawable这种，不能写#ff0000
+            设置透明背景色
+        -->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--<item name="android:windowBackground">@color/colorPrimary</item>-->
+
+
+        <!--这个如果选择true那么dialog上面会自动多加入一些空间-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+
+
+        <!--<item name="android:windowAnimationStyle">@style/dialog_animation</item>-->
+        <!--缓存背景色？-->
+        <!--<item name="android:colorBackgroundCacheHint">@null</item>-->
+
+        <!--&lt;!&ndash;背景的阴影灰度&ndash;&gt;-->
+        <!--<item name="android:backgroundDimEnabled">true</item>-->
+        <!--<item name="android:backgroundDimAmount">0.6</item>-->
+
+        <!--这两个必须一起用，才能有warp_content而且背景有阴影的效果，居中效果-->
+        <!--如果只有一个那么window是白色背景，而且是warp_content-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowIsFloating">true</item>-->
+
+        <!--全屏，其实默认的dialog的window就是全屏的-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--window上面的覆盖物？可以指定覆盖？-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+
+
+        <!-- 边框 -->
+        <!--<item name="android:windowFrame">@null</item>-->
+    </style>
 </resources>
