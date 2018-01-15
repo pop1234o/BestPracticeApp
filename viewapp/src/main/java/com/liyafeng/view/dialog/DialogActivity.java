@@ -1,11 +1,13 @@
 package com.liyafeng.view.dialog;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -76,7 +78,9 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             default:
                 break;
             case R.id.button9:
-                new BottomDialog(this).createDialog();
+//                new BottomDialog(this).createDialog();
+
+                new CenterDialog(this);
                 break;
         }
     }
@@ -99,6 +103,7 @@ class CustomDialog extends android.app.Dialog {
 //        window.getAttributes().width = ViewGroup.LayoutParams.MATCH_PARENT;
 //        window.setAttributes(window.getAttributes());
 
+        //这个设置的是内容布局根部局的大小
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
     }
 }
@@ -111,14 +116,24 @@ class BottomDialog extends android.app.Dialog {
 
     public void createDialog() {
         setContentView(R.layout.dialog_bottom);
+        show();
         Window window = getWindow();
         LinearLayout ll_content = (LinearLayout) window.findViewById(R.id.ll_content);
-        show();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) ll_content.getLayoutParams();
         layoutParams.gravity = Gravity.BOTTOM;
         ll_content.setLayoutParams(layoutParams);
 
 
+    }
+}
+
+class CenterDialog {
+    public CenterDialog(Context context) {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_center, null);
+        AlertDialog alertDialog = new AlertDialog.Builder(context).setView(view).create();
+        //这样是在中央显示，但是会变成warp_content，所以最好不要把宽高写在最外层
+        //让内部布局都有高度
+        alertDialog.show();
     }
 }
