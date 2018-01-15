@@ -26,6 +26,8 @@
         <!--这两个必须一起用，才能有warp_content而且背景有阴影的效果，居中效果-->
         <!--如果只有一个那么window是白色背景，而且是warp_content-->
         <!--<item name="android:windowIsTranslucent">true</item>-->
+
+        <!--如果指定了这个内容就自动居中，而且被挤压,但是背景自动是半透明阴影-->
         <!--<item name="android:windowIsFloating">true</item>-->
 
         <!--全屏，其实默认的dialog的window就是全屏的-->
@@ -37,4 +39,30 @@
         <!-- 边框 -->
         <!--<item name="android:windowFrame">@null</item>-->
     </style>
+
+
+    <style name="bottomDialog" >
+        <!--指定这两个，内容不会被挤压，而且背景色可以指定-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--如果在这设置window背景色，那么平移动画的时候背景色也会移动，而不是淡入淡出-->
+        <!--<item name="android:windowBackground">@color/colorAlphaBlack</item>-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--<item name="android:backgroundDimEnabled">true</item>-->
+        <!--<item name="android:backgroundDimAmount">0.6</item>-->
+
+        <!--如果不加这个，那么执行动画的时候会有状态栏，而且设置Fullscreen后面Activity的状态栏也会消失-->
+        <item name="android:windowIsFloating">true</item>
+        <!--window动画-->
+        <item name="android:windowAnimationStyle">@style/anim_bottomDialog</item>
+
+        <!--这个在代码中设置，否则状态栏会消失-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+    </style>
+
+    <style name="anim_bottomDialog" >
+        <item name="android:windowEnterAnimation">@anim/anim_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_bottom_out</item>
+    </style>
+
 </resources>
