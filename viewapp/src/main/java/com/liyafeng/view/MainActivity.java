@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.liyafeng.view.dialog.DialogActivity;
 import com.liyafeng.view.dialog.MainPopUpWindowActivity;
+import com.liyafeng.view.dialog.ToastActivity;
 import com.liyafeng.view.drag.DragActivity;
 import com.liyafeng.view.fragment.CustomFragmentActivity;
 import com.liyafeng.view.listview.ListViewActivity;
@@ -47,6 +48,7 @@ public class MainActivity extends Activity {
             "scrolling",
             "popup",
             "dialog",
+            "toast",
 
     };
 
@@ -67,6 +69,7 @@ public class MainActivity extends Activity {
             ScrollingActivity.class,
             MainPopUpWindowActivity.class,
             DialogActivity.class,
+            ToastActivity.class,
             };
 
     @Override

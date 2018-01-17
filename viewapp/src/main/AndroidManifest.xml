@@ -37,7 +37,8 @@
             android:name=".newlayout.ScrollingActivity"
             android:label="@string/title_activity_scrolling" />
         <activity android:name=".dialog.MainPopUpWindowActivity" />
-        <activity android:name=".dialog.DialogActivity"></activity>
+        <activity android:name=".dialog.DialogActivity" />
+        <activity android:name=".dialog.ToastActivity"></activity>
     </application>
 
 </manifest>

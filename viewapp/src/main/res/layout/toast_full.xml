@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#88000000">
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="显示toast"
+        android:textColor="#fff"
+        android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>
