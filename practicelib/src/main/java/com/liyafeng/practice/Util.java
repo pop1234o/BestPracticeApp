@@ -14,7 +14,7 @@ public class Util {
      * @param context
      * @return
      */
-    private int getStatusBarHeight(Context context) {
+    public static int getStatusBarHeight(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("status_bar_height", "dimen","android");
         int height = resources.getDimensionPixelSize(resourceId);
@@ -22,11 +22,21 @@ public class Util {
     }
 
 
-    private int getNavigationBarHeight(Context context) {
+    public static int getNavigationBarHeight(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height","dimen", "android");
         int height = resources.getDimensionPixelSize(resourceId);
         return height;
+    }
+
+    public static int px2dp(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    public static int dp2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
     }
 
 }
