@@ -68,6 +68,12 @@ public class ChartView extends RelativeLayout {
             paint.setTextSize(40);
         }
 
+        /**
+         * @param canvas
+         * 可以根据间距 算出 startIndex ,endIndex
+         * 然后只循环之个区间的数据
+         * 他们的坐标就是 index*durationX ,
+         */
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);

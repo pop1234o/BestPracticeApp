@@ -20,8 +20,15 @@ public class Main {
      * -------------
      * network cache database 原始数据的获取，存储
      *
+     *
      */
     public static void main(String[] args) {
 
     }
+    /**
+     * google  https://github.com/googlesamples/android-architecture
+     *
+     *
+    *
+    * */
 }

@@ -5,7 +5,7 @@
     <!--parent="android:Theme.Material.Dialog"-->
     <style name="popupDialog" >
         <!--背景色，必须要用@color或者@drawable这种，不能写#ff0000
-            设置透明背景色
+            设置透明背景色 ,只设置这一个即可变为透明
         -->
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <!--<item name="android:windowBackground">@color/colorPrimary</item>-->

@@ -20,6 +20,10 @@ public class Main {
      * ----------------------
      * greendao的原理还是用的原生的数据库框架，只不过为你自动生成了代码
      *
+     * -----------------------------
+     * 官方文档
+     * http://greenrobot.org/greendao/documentation/modelling-entities/
+     *
      */
     public static void main(String[] args) {
 

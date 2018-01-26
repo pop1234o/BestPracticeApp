@@ -24,6 +24,7 @@ import com.liyafeng.view.redpoint.RedPointActivity;
 import com.liyafeng.view.scroller.ScrollerActivity;
 import com.liyafeng.view.scrollview.ChartActivity;
 import com.liyafeng.view.scrollview.ScrollActivity;
+import com.liyafeng.view.slidingmenu.DrawerActivity;
 import com.liyafeng.view.slidingmenu.SlidingMenuActivity;
 import com.liyafeng.view.swipecard.SwipeCardActivity;
 import com.liyafeng.view.viewpager.CardPagerActivity;
@@ -51,6 +52,7 @@ public class MainActivity extends Activity {
             "dialog",
             "toast",
             "chartView",
+            "drawerActivity",
 
     };
 
@@ -73,6 +75,7 @@ public class MainActivity extends Activity {
             DialogActivity.class,
             ToastActivity.class,
             ChartActivity.class,
+            DrawerActivity.class,
             };
 
     @Override

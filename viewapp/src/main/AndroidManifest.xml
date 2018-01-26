@@ -39,7 +39,8 @@
         <activity android:name=".dialog.MainPopUpWindowActivity" />
         <activity android:name=".dialog.DialogActivity" />
         <activity android:name=".dialog.ToastActivity" />
-        <activity android:name=".scrollview.ChartActivity"></activity>
+        <activity android:name=".scrollview.ChartActivity" />
+        <activity android:name=".slidingmenu.DrawerActivity"></activity>
     </application>
 
 </manifest>
