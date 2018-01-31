@@ -3,10 +3,10 @@ package com.liyafeng.designpattern.singleton;
 public class Singleton {
 
     public static void main(String[] args) {
-        Singleton instance1 = Singleton.getInstance();
-        Singleton instance2 = Singleton.getInstance();
-
-        System.out.printf(instance1 + " " + instance2);
+//        Singleton instance1 = Singleton.getInstance();
+//        Singleton instance2 = Singleton.getInstance();
+//
+//        System.out.printf(instance1 + " " + instance2);
 
     }
 
@@ -50,17 +50,17 @@ public class Singleton {
 //        }
 //    }
 
-    /**
-     * 饿汉式
-     */
-    public static class Singleton {
-        private static Singleton singleton = new Singleton();
-
-        private Singleton() {
-        }
-
-        public static Singleton getInstance() {
-            return singleton;
-        }
-    }
+//    /**
+//     * 饿汉式
+//     */
+//    public static class Singleton {
+//        private static Singleton singleton = new Singleton();
+//
+//        private Singleton() {
+//        }
+//
+//        public static Singleton getInstance() {
+//            return singleton;
+//        }
+//    }
 }

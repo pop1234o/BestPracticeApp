@@ -1,6 +1,5 @@
 package com.liyafeng.algorithm;
 
-import com.sun.imageio.plugins.common.I18N;
 
 
 public class N11_Power {
