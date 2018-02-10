@@ -33,13 +33,14 @@ public class N34_UglyNumber {
         while (nextUgly < index) {
             int min = min(arrays[t_2_index]*2, arrays[t_3_index]*3, arrays[t_5_index]*5);
             arrays[nextUgly] = min;
-            while (arrays[t_2_index] < min) {
+            //找出乘以2后大于min 的一个数（注意，这里是<= ）
+            while (arrays[t_2_index]*2 <= min) {
                 t_2_index++;
             }
-            while (arrays[t_3_index] < min) {
+            while (arrays[t_3_index]*3 <= min) {
                 t_3_index++;
             }
-            while (arrays[t_5_index] < min) {
+            while (arrays[t_5_index] *5<= min) {
                 t_5_index++;
             }
             nextUgly++;
