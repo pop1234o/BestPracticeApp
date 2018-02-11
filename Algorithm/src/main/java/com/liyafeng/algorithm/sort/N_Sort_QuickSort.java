@@ -1,9 +1,9 @@
-package com.liyafeng.algorithm;
+package com.liyafeng.algorithm.sort;
 
 public class N_Sort_QuickSort {
 
     /**
-     * 快速排序
+     * 快速排序（时间复杂度 O(n log n)）
      *
      * 取第一位 low，
      * 定义start，end两个指针指向 low+1 和 high
