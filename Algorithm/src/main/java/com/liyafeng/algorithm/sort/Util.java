@@ -17,4 +17,10 @@ public class Util {
             System.out.print(array[i]+",");
         }
     }
+
+    public static <E> void exchange(E[] array, int i, int j) {
+        E t = array[i];
+        array[i] = array[j];
+        array[j] = t;
+    }
 }
