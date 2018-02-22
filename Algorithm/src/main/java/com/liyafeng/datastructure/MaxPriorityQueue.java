@@ -31,15 +31,37 @@ public class MaxPriorityQueue<E extends Comparable<E>> {
         keys[N + 1] = null;//删除那个元素
         sink(1);//此时第一个元素就是从末尾交换过来的，然后下沉，从新使堆有序
         return deleteKey;
-
-
     }
 
+    /**
+     * 索引为k的元素上浮
+     *
+     * @param k
+     */
     private void swim(int k) {
 
+        while (k > 1 && Util.less(keys, k / 2, k)) {//和父节点比较，如果大于父节点，就交换
+            Util.exchange(keys, k / 2, k);
+            k = k / 2;
+        }
     }
 
-    private void sink(int k) {
+    private void sink(int k) {//下沉，和较大的子节点比较，使较大的上浮
+        while (k * 2 <= N) {
+
+            int j = 2 * k;
+            //j<N是因为没有N+1这个节点，也就是说节点k只有一个子节点，只能和他比较
+            if (j < N && Util.less(keys, j, j + 1)) {
+                j++;
+            }
+            if (Util.less(keys, k, j)) {//k节点和较大的子节点比较
+                Util.exchange(keys, k, j);
+                k = j;//接续向下比较
+            } else {//已经下沉成功，k已经比子节点都大
+                break;
+            }
+
+        }
 
     }
 }

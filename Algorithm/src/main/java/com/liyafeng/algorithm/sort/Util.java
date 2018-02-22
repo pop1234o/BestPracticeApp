@@ -18,9 +18,28 @@ public class Util {
         }
     }
 
+    /**
+     * 交换
+     * @param array
+     * @param i
+     * @param j
+     * @param <E>
+     */
     public static <E> void exchange(E[] array, int i, int j) {
         E t = array[i];
         array[i] = array[j];
         array[j] = t;
+    }
+
+    /**
+     * 小于
+     * @param keys
+     * @param i
+     * @param j
+     * @param <E>
+     * @return
+     */
+    public static <E extends Comparable<E>> boolean less(E[] keys, int i, int j) {
+        return keys[i].compareTo(keys[j]) < 0;
     }
 }
