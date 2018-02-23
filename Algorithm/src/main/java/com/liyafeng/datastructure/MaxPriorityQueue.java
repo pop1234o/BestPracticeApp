@@ -1,6 +1,6 @@
 package com.liyafeng.datastructure;
 
-import com.liyafeng.algorithm.sort.Util;
+import com.liyafeng.algorithm.basic.sort.Util;
 
 /**
  * Created by liyafeng on 2018/2/22.

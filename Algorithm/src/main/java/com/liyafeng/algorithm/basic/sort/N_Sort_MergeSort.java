@@ -1,4 +1,4 @@
-package com.liyafeng.algorithm.sort;
+package com.liyafeng.algorithm.basic.sort;
 
 /**
  * Created by liyafeng on 2018/2/10.

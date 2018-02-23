@@ -1,4 +1,4 @@
-package com.liyafeng.algorithm.sort;
+package com.liyafeng.algorithm.basic.sort;
 
 public class N_Sort_QuickSort {
 
