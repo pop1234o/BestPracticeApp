@@ -5,8 +5,8 @@ package com.liyafeng.algorithm.sort;
  */
 
 public class Util {
-    
-    public static void exchange(int[] array,int i,int j){
+
+    public static void exchange(int[] array, int i, int j) {
         int t = array[i];
         array[i] = array[j];
         array[j] = t;
@@ -14,12 +14,13 @@ public class Util {
 
     public static void print(int[] array) {
         for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]+",");
+            System.out.print(array[i] + ",");
         }
     }
 
     /**
      * 交换
+     *
      * @param array
      * @param i
      * @param j
@@ -33,6 +34,7 @@ public class Util {
 
     /**
      * 小于
+     *
      * @param keys
      * @param i
      * @param j
@@ -41,5 +43,9 @@ public class Util {
      */
     public static <E extends Comparable<E>> boolean less(E[] keys, int i, int j) {
         return keys[i].compareTo(keys[j]) < 0;
+    }
+
+    public static boolean less(int[] keys, int i, int j) {
+        return keys[i] < keys[j];
     }
 }

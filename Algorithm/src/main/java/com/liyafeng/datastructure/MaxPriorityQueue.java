@@ -7,6 +7,8 @@ import com.liyafeng.algorithm.sort.Util;
  * <p>
  * 优先队列
  * 基于数组实现的
+ * 特点：每次都可以取出数组中的最大元素
+ * 插入和删除的时间复杂度O(lgN)
  */
 
 public class MaxPriorityQueue<E extends Comparable<E>> {
@@ -20,11 +22,19 @@ public class MaxPriorityQueue<E extends Comparable<E>> {
         keys = (E[]) new Comparable[maxN + 1];//要保留第0个位置
     }
 
+    /**
+     * 插入元素，插入到末尾，然后上浮
+     * @param key
+     */
     public void insert(E key) {
         keys[++N] = key;//加入到二叉树末尾
         swim(N);//然后上浮
     }
 
+    /**
+     * 删除一个元素，将第一个和最后一个交换，然后下沉
+     * @return
+     */
     public E deleteMax() {
         E deleteKey = keys[1];
         Util.exchange(keys, 1, N--);//把已经删除的元素放到最后，然后长度减一
