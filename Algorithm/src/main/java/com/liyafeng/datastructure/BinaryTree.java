@@ -2,6 +2,9 @@ package com.liyafeng.datastructure;
 
 /**
  * Created by liyafeng on 2018/2/24.
+ * 完全二叉树
+ * 满二叉树
+ * 平衡二叉树：左右子树的高度相差不大于1
  */
 
 public class BinaryTree {

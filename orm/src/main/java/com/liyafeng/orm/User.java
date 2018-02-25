@@ -19,12 +19,22 @@ public class User {
     @NotNull
     private String name;
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    private int number;
     private java.util.Date date;
 
-    @Generated(hash = 1208562441)
-    public User(Long id, @NotNull String name, java.util.Date date) {
+    @Generated(hash = 172853687)
+    public User(Long id, @NotNull String name, int number, java.util.Date date) {
         this.id = id;
         this.name = name;
+        this.number = number;
         this.date = date;
     }
 
@@ -54,5 +64,15 @@ public class User {
 
     public void setDate(java.util.Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", number=" + number +
+                ", date=" + date +
+                '}';
     }
 }
