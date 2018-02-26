@@ -12,6 +12,8 @@ public class N42_1_LeftRotateString {
      * Iamgood -> mgoodIa
      * ==============思路====================
      *
+     * ===========考点================
+     * 字符串的处理能力
      * @param args
      */
     public static void main(String[] args) {
