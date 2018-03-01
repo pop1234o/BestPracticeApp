@@ -15,7 +15,14 @@ public class LeetCode_1_TwoSum {
      * <p>
      * Because nums[0] + nums[1] = 2 + 7 = 9,
      * return [0, 1].
-     *
+     * ==============思路=================
+     * 两个循环，第一个是sum减去元素，然后再之后的元素中找到和他们差相等的元素
+     * 时间复杂度是O(n^2)
+     * 也可以先排序，然后两个指针分别指向头尾，如果start+end>sum，则end--
+     * 小于sum，则start++
+     * 时间复杂度n+nlogn
+     * =================考点=================
+     * 找规律，如果两个元素和大于sum，那么肯定要减小某个元素，那肯定只能减小end
      * @param args
      */
     public static void main(String[] args) {
