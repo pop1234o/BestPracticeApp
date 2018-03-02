@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Created by liyafeng on 2018/3/1.
  */
 
-public class LeetCode_3_LongestSubstringWithoutRepeatingCharacters {
+public class LeetCode_3_LongestSubstringWithoutRepeatingCharacters_Medium {
 
     /**
      * Given a string, find the length of the longest substring without repeating characters.

@@ -4,7 +4,7 @@ package com.liyafeng.algorithm.leetcode;
  * Created by liyafeng on 2018/3/1.
  */
 
-public class LeetCode_2_AddTwoNumbers {
+public class LeetCode_2_AddTwoNumbers_Medium {
 
     /**
      * You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.

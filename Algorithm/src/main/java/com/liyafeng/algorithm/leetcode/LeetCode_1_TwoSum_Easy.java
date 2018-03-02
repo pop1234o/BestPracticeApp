@@ -1,6 +1,6 @@
 package com.liyafeng.algorithm.leetcode;
 
-public class LeetCode_1_TwoSum {
+public class LeetCode_1_TwoSum_Easy {
 
     /**
      * 给定一个数组，和一个目标值，找出数组中和是目标值的两个元素
