@@ -17,7 +17,9 @@ public class LeetCode_2_AddTwoNumbers {
      * Output: 7 -> 0 -> 8
      * Explanation: 342 + 465 = 807.
      * ==============思路===========================
-     *
+     * 逐位相加，进位
+     * ===============考点==============
+     * 找规律，发现加法进位规律
      * @param args
      */
     public static void main(String[] args) {
