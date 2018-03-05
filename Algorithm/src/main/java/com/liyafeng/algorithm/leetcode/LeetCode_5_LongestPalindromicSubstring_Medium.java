@@ -4,7 +4,7 @@ package com.liyafeng.algorithm.leetcode;
  * Created by liyafeng on 2018/3/5.
  */
 
-public class LeetCode_5_LongestPalindromicSubstring {
+public class LeetCode_5_LongestPalindromicSubstring_Medium {
 
     /**
      * 最长回文子串
