@@ -9,6 +9,7 @@ import java.util.Arrays;
 public class LeetCode_3_LongestSubstringWithoutRepeatingCharacters_Medium {
 
     /**
+     * 字符串中最长不重复的子串
      * Given a string, find the length of the longest substring without repeating characters.
      * <p>
      * Examples:
