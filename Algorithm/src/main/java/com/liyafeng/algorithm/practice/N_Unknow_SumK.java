@@ -74,4 +74,29 @@ public class N_Unknow_SumK {
         } // for i
         return f[n][k][target];
     }
+
+
+    public class Solution {
+        /**
+         * 利用二维数组，像纸币面额问题一样，递归关系：dp[ y ][ z ] += dp[ y-1 ][ z-A[x] ] ，dp[ y ][ z ]代表 y 个数之和为 z 的方案个数。
+         * <p>
+         * ***  时间复杂度  O（n*k*target）， 空间复杂度 O（k*target）****
+         *
+         * @param A:      an integer array.
+         * @param k:      a positive integer (k <= length(A))
+         * @param target: a integer
+         * @return an integer
+         */
+        public int kSum(int A[], int k, int target) {
+            //   T(n, k, target) = O(n*k*target). area(n, k, target) = O(k*target)
+            int n = A.length;
+            int[][] dp = new int[k + 1][target + 1];
+            dp[0][0] = 1;
+            for (int x = 0; x < n; x++)
+                for (int y = k; y >= 1; y--)
+                    for (int z = target; z >= A[x]; z--)
+                        dp[y][z] += dp[y - 1][z - A[x]];
+            return dp[k][target];
+        }
+    }
 }
