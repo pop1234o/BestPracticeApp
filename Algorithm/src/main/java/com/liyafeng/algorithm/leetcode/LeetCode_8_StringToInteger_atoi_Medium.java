@@ -104,4 +104,44 @@ public class LeetCode_8_StringToInteger_atoi_Medium {
 
         return i;
     }
+
+
+
+    class Solution {
+        public int myAtoi(String str) {
+            if(str.length()==0) return 0;
+            int index=0;
+            int result=0;
+            while(str.charAt(index)==' ')
+            {
+                index++;
+            }
+            int isNegative=1;
+            if(str.charAt(index)=='-' || str.charAt(index)=='+')
+            {
+                isNegative=str.charAt(index)=='+'?1:-1;
+                index++;
+            }
+            while(index<str.length()&&str.charAt(index)=='0')
+            {
+                index++;
+            }
+            while(index<str.length())
+            {
+                int digit=str.charAt(index)-'0';
+                if(digit<0||digit>9)
+                {
+                    break;
+                }
+                if(Integer.MAX_VALUE/10<result || (Integer.MAX_VALUE/10==result && Integer.MAX_VALUE%10<digit))
+                {
+                    return isNegative==1?Integer.MAX_VALUE:Integer.MIN_VALUE;
+                }
+                result=result*10+digit;
+                index++;
+            }
+
+            return result*isNegative;
+        }
+    }
 }
