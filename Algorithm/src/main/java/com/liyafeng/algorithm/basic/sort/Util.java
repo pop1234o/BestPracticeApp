@@ -1,5 +1,7 @@
 package com.liyafeng.algorithm.basic.sort;
 
+import java.util.ArrayList;
+
 /**
  * Created by liyafeng on 2018/2/12.
  */
@@ -47,5 +49,23 @@ public class Util {
 
     public static boolean less(int[] keys, int i, int j) {
         return keys[i] < keys[j];
+    }
+
+    public static void print(ArrayList<Integer> list) {
+        for (Integer integer : list) {
+            System.out.print(integer.intValue() + ",");
+        }
+    }
+
+    public static void print(Integer[] a) {
+        for (Integer integer : a) {
+            System.out.print(integer.intValue() + ",");
+        }
+    }
+
+    public static void print(Object[] a) {
+        for (Object integer : a) {
+            System.out.print(integer.toString() + ",");
+        }
     }
 }

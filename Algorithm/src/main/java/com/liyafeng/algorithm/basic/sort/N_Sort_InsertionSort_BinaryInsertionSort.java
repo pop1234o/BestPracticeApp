@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class N_Sort_InsertionSort_BinaryInsertionSort {
 
     /**
-     * 二分插入排序
+     * 二分插入排序   {@link java.util.TimSort}
      * 时间复杂度，最坏是O(n^2)，最好是O(nlogn)每次插入用logn次比较，有n-1次插入
      * 移动元素还是需要O(n^2)次
      * ======================================

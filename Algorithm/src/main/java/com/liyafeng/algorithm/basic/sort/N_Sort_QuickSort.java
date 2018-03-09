@@ -76,7 +76,8 @@ public class N_Sort_QuickSort {
     }
 
     /**
-     * 切分！！
+     * 切分！！选中的那个元素叫做pivot（轴）
+     * 经典的快速排序是单个pivot
      * @param ints
      * @param lo
      * @param hi
