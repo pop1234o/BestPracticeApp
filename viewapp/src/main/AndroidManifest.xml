@@ -40,7 +40,8 @@
         <activity android:name=".dialog.DialogActivity" />
         <activity android:name=".dialog.ToastActivity" />
         <activity android:name=".scrollview.ChartActivity" />
-        <activity android:name=".slidingmenu.DrawerActivity"></activity>
+        <activity android:name=".slidingmenu.DrawerActivity" />
+        <activity android:name=".drawable.DrawableActivity"></activity>
     </application>
 
 </manifest>
