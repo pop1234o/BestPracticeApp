@@ -106,23 +106,6 @@ public class AndroidFramework {
      * ### Android 内存
      * =====================
      * */
-    /**
-     * 说说Android的垃圾回收机制
-     */
-    public void a4() {
-        /*
-        * 虚拟机中的内存区域分为新生代和老年代，新分配的对象被存储在新生代中
-        * 当需要申请内存而内存空间不足时，就触发Minor GC来回收新生代的内存，
-        * 如果没被回收的对象就讲它年龄+1，一般到15的时候对象会被转移到老年代
-        * 老年代占满，会触发Major GC，回收老年代的垃圾对象
-        * 直到所有内存都占满，就触发Full GC，回收所有内存空间中的垃圾对象
-        * Android使用的是标记-清除算法来回收垃圾对象
-        *
-        * 另外的GC算法还有复制算法（就是定义两个大小相等的区域，一次GC把非垃圾对象
-        * 复制到另一块内存中，这样减少了内存碎片）
-        * 标记-整理算法，标记非垃圾对象，并且整理到连续的内存中
-        */
-    }
 
     /**
      * 说说什么是内存泄漏，说一个典型的例子，怎么避免？
@@ -179,6 +162,7 @@ public class AndroidFramework {
         * http://rednaxelafx.iteye.com/blog/492667
         */
     }
+
     //endregion
 
     //region Android 四大组件基本知识
@@ -220,7 +204,6 @@ public class AndroidFramework {
     }
 
     //endregion
-
 
     //region Android 架构模式
     /**
