@@ -135,5 +135,7 @@ class CenterDialog {
         //这样是在中央显示，但是会变成warp_content，所以最好不要把宽高写在最外层
         //让内部布局都有高度
         alertDialog.show();
+
+        //加入到window中最外层布局，参数变成warp_content
     }
 }
