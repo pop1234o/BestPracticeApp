@@ -9,7 +9,12 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * Created by liyafeng on 16/11/2017.
@@ -454,6 +459,40 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         /*
         * 数组加链表，拉链法实现的散列表
         */
+    }
+    
+    /**
+     * 常用java集合框架简介
+     * {@link java.util.Collection}
+     * {@link java.util.Map}
+     * ----------------------
+     * */
+    public void a3_2(){
+        /*
+         * 总体有两种接口，Collection 和 Map
+         *
+         * Collection=>{List ，Set，Queue }
+         * Collection是“集合”的抽象 ，
+         * -----------------------------
+         * List 是代表有序的集合 An ordered collection (also known as a <i>sequence</i>)
+         * Queue  元素优先处理的集合 A collection designed for holding elements prior to processing.
+         * Set 一个没有重复元素的集合 A collection that contains no duplicate elements
+         * -------------------------
+         *
+         *
+        */
+    }
+    /**
+     * 并发集合了解哪些？
+     * */
+    public void a3_3(){
+        /*
+        * ConcurrentHashMap 和 CopyOnWriteArrayList
+        */
+        Collection<Object> collection = Collections.synchronizedCollection(new ArrayList<Object>());
+        new Hashtable<>();
+        new Vector<>();
+
     }
     //endregion
 
