@@ -33,7 +33,7 @@ public class CustomMainActivity extends Activity {
         });
     }
 
-    @CustomSubscribe(threadMode = CustomEventBus.ThreadMode.BACKGROUND)
+    @CustomSubscribe(threadMode = CustomEventBus.ThreadMode.BACKGROUND, sticky = true,priority = 0)
     public void doSomething(Event event) {
 
         Log.i(TAG, "doSomething: " + Thread.currentThread().getName());

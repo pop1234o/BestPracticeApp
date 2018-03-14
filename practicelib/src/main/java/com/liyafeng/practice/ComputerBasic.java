@@ -40,7 +40,8 @@ public class ComputerBasic {
          * 为什么要有编码规则？是因为你不知道 32位是表示一个字符，还是四个字符，
          * 因为32位都表示一个字符，那么英文的存储就很浪费空间（因为他的高位都是0）
          *
-         * 比如“知”这个汉字，在unicode中16进制表示是：77E5  10进制表示：30693
+         * 比如“知”这个汉字，
+         * 在unicode中16进制表示是：77E5(\u77e5)  10进制表示：30693
          * 对应 utf-8的编码（转化）规则就是，
          * 1110XXXX 10XXXXXX 10XXXXXX
          * 77E5=> 0111 0111 1110 0101
@@ -72,6 +73,16 @@ public class ComputerBasic {
          */
         context.getResources().getDrawable(R.drawable.unicode);
         context.getResources().getDrawable(R.drawable.unicode_chinese_range);
+    }
+    
+    /**
+     * utf-8编码中的中文占几个字节 ? 
+     * */
+    public void a1_1(){
+        /*
+        * 三个字节，因为unicode中2w多个汉字的编码范围在4e00-95a5之间
+        * 所以根据utf-8的编码规则，这个是要转化为三个字节的（24位）
+        */
     }
     //endregion
 

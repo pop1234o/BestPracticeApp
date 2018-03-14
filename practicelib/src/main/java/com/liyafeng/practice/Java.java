@@ -1,10 +1,14 @@
 package com.liyafeng.practice;
 
+import android.content.Context;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 
 /**
@@ -62,6 +66,8 @@ public class Java {
 
     /**
      * 说说String ，StringBuilder ,StringBuffer的区别
+     * -------------------------
+     * String如何保证不可变？为什么设计成不可变的？
      */
     public void a1_1() {
         /*
@@ -69,6 +75,14 @@ public class Java {
         * StringBuilder是可变的字符序列，他在单线程中使用，比速度StringBuffer更快
         * StringBuffer是线程安全的可变的字符序列，原理就是在每个方法中加上synchronized
         * 他们两个操作的是一个字符数组，而String操作的是常量池中的数据
+        * ==================
+        * String 是final类，里面是final 的char[]数组，而且是private的，
+        * 也没有提供修改char[]内容的方法，所以String是不可变的
+        * ------------------------
+        * 主要是为了安全，比如放入hashmap中，本来是相等的，后来就变成其他字符串
+        * 那么会引起数据混乱
+        * 线程安全，每个线程取出的字符串是相等的
+        * 减少空间占用，相同的字符串可以指向内存中的同一空间。
         */
         new StringBuffer().append(1);
     }
@@ -204,6 +218,115 @@ public class Java {
        * 然后根据java规范判断解析的类是不是objectref的一个实例，最后在栈顶写入结果。
        */
     }
+
+    /**
+     * 静态代理和动态代理的区别，什么场景使用？
+     */
+    public void a1_9() {
+        /*
+        * 静态代理，实际上就是指的设计模式中的代理模式，代理类在运行之前就已经
+        * 产生了class文件。（代理模式，代理类和委托类都实现同一接口，然后我们执行代理类
+        * 中的方法）
+        * 动态代理，使用java reflect包中，Proxy类，将委托类的类加载器，和接口传入
+        * 里面用native方法动态创建代理类，然后通过反射来创建代理类的对象，我们
+        * 调用代理类的方法，就会执行InvocationHandler中的invoke方法，
+        * 在这个方法中我们可以加入附加逻辑
+        * =======================场景===============
+        * 静态代理一般是我们对于项目中的业务逻辑进行代理
+        * 而静态代理适合aop，面向切面编程，比如加统计日志
+        */
+
+        //会创建一个代理类的对象，实现了委托类的所有接口中的方法
+        Object o = Proxy.newProxyInstance(Java.class.getClassLoader(), Java.class.getInterfaces(), new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                System.out.println("执行前处理");
+                Object invoke = method.invoke(proxy, args);//proxy是真正的执行者，就是委托类
+                System.out.println("执行后处理");
+                return invoke;
+            }
+        });
+        o.toString();//这个是代理对象
+    }
+
+
+    /**
+     * 说说Java的异常体系
+     */
+    public void a1_10(Context context) {
+        /*
+        * 结构见下图
+        * Throwable是异常的顶级类，子类有Error和Exception类
+        * Error是程序无法处理的错误，比如OutOfMemoryError，这时Jvm会强制
+        * 终止进程。
+        * Exception是程序能处理的异常，它又分运行时异常和非运行时异常
+        * RuntimeException 是运行时异常，他是由我们的业务逻辑出错而导致的
+        * 我们可以选择捕获或者捕获，编译时不强制要求，比如NullPointException
+        * OutOfIndexException 。
+        * 非运行时异常一般可能由外界环境引起的异常，比如IOException,SQLException
+        * 这些要求我们在编译的时候就要捕获。否则编译不通过
+        */
+        context.getResources().getDrawable(R.drawable.throwable);
+        //Throwable
+        //Error
+        //Exception
+
+    }
+
+
+    /**
+     * 说说你对Java注解的理解（Annotation）
+     * http://gityuan.com/2016/01/23/java-annotation/
+     */
+    public void a1_11() {
+        /*
+        * @Documented //生成文档
+        * @Retention(RetentionPolicy.RUNTIME) //表示保留此注解到什么时候
+        * @Target(ElementType.METHOD) //注解在哪里使用
+        * @Inherited //是否继承
+        * public @interface CustomSubscribe {
+        *     boolean sticky() default false;
+        *     int priority() default 0;
+        * }
+        * //使用方法
+        * @CustomSubscribe(sticky = true,priority = 1)
+        * public void fun(){}
+        * ===============系统注解==============
+        * @Target(ElementType.METHOD)
+        * @Retention(RetentionPolicy.SOURCE)
+        * public @interface Override {
+        * }
+        * ==================注解的意义========================
+        * 注解也叫元数据
+        * 注解是JDK1.5版本开始引入的一个特性，用于对代码进行说明，可以对包、类、接口、字段、方法参数、局部变量等进行注解。它主要的作用有以下四方面：
+        * 生成文档，通过代码里标识的注解生成javadoc文档。 @Documented
+        * 编译检查，通过代码里标识的注解让编译器在编译期间进行检查验证。 @Override
+        * 编译时动态处理，编译时通过代码里标识的注解动态处理，例如动态生成代码。//比如GreenDao的注解
+        * 运行时动态处理，运行时通过代码里标识的注解动态处理，
+        *     例如使用反射注入实例。//比如EventBus，可以动态的取出注解，判断是主线程执行还是子线程
+        *     //比图Dragger2的依赖注入，就是运行时进行引用和实例的关联
+        * ===============注解的原理===================
+        * 定义完注解，编译后其实是一个普通接口继承Annotation接口，然后我们通过动态代理
+        * 为这个接口产生对应的实例类，然后我们就可以取得里面的值
+        * java注解是怎么实现的？ - 曹旭东的回答 - 知乎
+ht      * https://www.zhihu.com/question/24401191/answer/37601385
+        */
+    }
+
+
+    /**
+     * 说一下泛型原理，并举例说明
+     * */
+    public void a1_12(){
+        /*
+        * 类型擦除
+        * ----------
+        * 最好能说出不同jdk之间的区别，说出编译后的class是什么样的。
+        */
+    }
+
+
+
     //endregion
 
     //region Java线程
