@@ -26,30 +26,37 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
     private Button mButton9;
 
     /**
-     * @param args 一个全屏的dialog，想让dialog像Activity一样
-     *             如果你设置dialog最外层布局为match_parent，那么他实际是没有效果的
-     *             会自动变为warp_content
-     *             -----------------------------------
-     *             dialog本质上是一个新的PhoneWindow，只不过没有Activity那样的生命周期
-     *             ---------------------------------------------
-     *             <item name="android:windowFullscreen">true</item>
-     *             <item name="android:windowContentOverlay">@null</item>
-     *             在style设置了全屏后，那么代码中就不用设置全屏，window背景默认白色
-     *             <p>
-     *             ----------------------------------------
-     *             注意，你要的是window的大小还是，window内容的大小
-     *             <p>
-     *             -----------------------------------------
-     *             设置一个空的style，然后将内容布局设置为match_parent，直接就是全屏
-     *             <p>
-     *             -----------------------------------------
-     *             AlertDialog是默认有几个按钮，也可以设置文案，也可以自定义布局
-     *             guide/topics/ui/dialogs.html
-     *             但是注意，alertDialog只能用系统的几个主题，你用自己的主题不管用，里面有判断
-     *             resolveDialogTheme
-     *             -------------------------------------
-     *             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-     *             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+     * 一个全屏的dialog，想让dialog像Activity一样
+     * 如果你设置dialog最外层布局为match_parent，那么他实际是没有效果的
+     * 会自动变为warp_content
+     * -----------------------------------
+     * dialog本质上是一个新的PhoneWindow，只不过没有Activity那样的生命周期
+     * ---------------------------------------------
+     * <item name="android:windowFullscreen">true</item>
+     * <item name="android:windowContentOverlay">@null</item>
+     * 在style设置了全屏后，那么代码中就不用设置全屏，window背景默认白色
+     * <p>
+     * ----------------------------------------
+     * 注意，你要的是window的大小还是，window内容的大小
+     * <p>
+     * -----------------------------------------
+     * 设置一个空的style，然后将内容布局设置为match_parent，直接就是全屏
+     * <p>
+     * -----------------------------------------
+     * AlertDialog是默认有几个按钮，也可以设置文案，也可以自定义布局
+     * guide/topics/ui/dialogs.html
+     * 但是注意，alertDialog只能用系统的几个主题，你用自己的主题不管用，里面有判断
+     * resolveDialogTheme
+     * -------------------------------------
+     * overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+     * overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+     * <p>
+     * ----------------显示原理---------------
+     * 其实就是将你自定义的布局加入了DecorView，你自己布局最外层参数会变成最简单的warp_content
+     * 外面的蒙版，边距，都是DecorView控制的，这个window指的是PhoneWindow.class，里面有DecorView
+     * 最终是DecorView加入到WindowManager.addView中，这个DecorView实际上就是LinearLayout(title+FrameLayout)
+     * 我们的自定义布局就是在FrameLayout中 id是content;
+     * @param args
      */
     public static void main(String[] args) {
 
@@ -104,7 +111,7 @@ class CustomDialog extends android.app.Dialog {
 //        window.setAttributes(window.getAttributes());
 
         //这个设置的是内容布局根部局的大小
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 }
 
@@ -119,7 +126,7 @@ class BottomDialog extends android.app.Dialog {
         show();
         Window window = getWindow();
         LinearLayout ll_content = (LinearLayout) window.findViewById(R.id.ll_content);
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) ll_content.getLayoutParams();
         layoutParams.gravity = Gravity.BOTTOM;
         ll_content.setLayoutParams(layoutParams);

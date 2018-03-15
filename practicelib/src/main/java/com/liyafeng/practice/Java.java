@@ -321,15 +321,14 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 说一下泛型原理，并举例说明
-     * */
-    public void a1_12(){
+     */
+    public void a1_12() {
         /*
         * 类型擦除
         * ----------
         * 最好能说出不同jdk之间的区别，说出编译后的class是什么样的。
         */
     }
-
 
 
     //endregion
@@ -460,14 +459,15 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 数组加链表，拉链法实现的散列表
         */
     }
-    
+
     /**
      * 常用java集合框架简介
      * {@link java.util.Collection}
      * {@link java.util.Map}
      * ----------------------
-     * */
-    public void a3_2(){
+     * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
+     */
+    public void a3_2() {
         /*
          * 总体有两种接口，Collection 和 Map
          *
@@ -478,21 +478,146 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * Queue  元素优先处理的集合 A collection designed for holding elements prior to processing.
          * Set 一个没有重复元素的集合 A collection that contains no duplicate elements
          * -------------------------
+         * List下有{
+         *  Vector ，可增长和收缩的对象数组，线程安全，方法上加入synchronized
+         *  ArrayList 可调整大小的对象数组，和Vector类似，只不过他没有同步锁
+         *  LinkedList 双向链表，实现了List和Deque接口，
+         *  CopyOnWriteArrayList （java.util.concurrent.）线程安全的随机访问列表 A thread-safe random-access list
+         *  写入的时候是将数组复制到一个新的数组，然后再新的数组中写入，然后，引用指向
+         *  新的数组（在写入时拷贝）
+         * }
+         * -----------------------------------
+         * Set下有
+         * {
+         * =》SortedSet
+         * =》NavigableSet
+         *   TreeSet(内部是TreeMap实现)
+         * ****************************
+         * HashSet (内部是HashMap实现 )
+         * **********************************
+         * android.support.v4.util.ArraySet
+         * 数组实现，二分法查找
+         *
+         * }
+         *
+         * =======================================
+         * Queue下
+         * {
+         * =>AbstractQueue
+         * PriorityQueue 一个基于最大/小堆的优先队列
+         * *******************************
+         * BlockingQueue(支持读取等待，和存储等待的队列)
+         * 比如现在队列是空，我们调用读取，会等待队列中有数据再读取
+         * =》ArrayBlockingQueue
+         * =>LinkedBlockingQueue
+         * =>PriorityBlockingQueue
+         *
+         * *****************************************
+         * Deque(双向队列)
+         *  =》LinkedList
+         *  +>ArrayDeque
+         *  ->BlockingDeque-> LinkedBlockingDeque
+         *
+         * }
+         *
+         * =====================================
+         * Map(一个键值对映射的对象，key只有唯一值)
+         * An object that maps keys to values.  A map cannot contain duplicate keys;
+         * each key can map to at most one value.
+         *
+         * ------------------------------
+         * Map
+         * {
+         * *****************************
+         * HashMap 一个基于散列表的Map实现 ，键值可以为null
+         * （拉链法的散列表）
+         * *******************************
+         * =>SortedMap(key排序的map，按Comparator升序排序 )
+         * => NavigableMap(导航的Map,比如小于某个数字的最大key)
+         * TreeMap 是他们的子类，都实现了他们的特性
+         * *******************************
+         * HashTable 散列表实现的Map，键值非null，和HashMap差不多，只不过他的方法都加入了同步锁
+         * *******************************
+         * ConcurrentMap=>
+         * ConcurrentHashMap(线程安全的HashMap，里面使用了分段锁)
+         * *******************************
+         * LinkedHashMap 是HashMap的子类，提供有序的访问HashMap
+         * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
+         * accessOrder =true //代表按访问顺序排序（访问一个元素，插入到顺序结尾），
+         * false，我们遍历的时候就是按插入时的顺序遍历
+         * **************************************
+         * android.support.v4.util.ArrayMap
+         * 里面是数组加二分法查找hash实现
+         * 他更节省内存，因为只用数组存储，但是它只适合小数据量，几百个数据下
+         * 和HashMap的性能不相差50%。
+         * }
          *
          *
         */
     }
+
     /**
      * 并发集合了解哪些？
-     * */
-    public void a3_3(){
+     * （线程安全的集合）
+     */
+    public void a3_3() {
         /*
-        * ConcurrentHashMap 和 CopyOnWriteArrayList
+        * java.util.concurrent 包下的
+        * ConcurrentHashMap(分段锁)
+        * CopyOnWriteArrayList（方法锁，加写时复制）（这个在遍历的时候线程安全，但是遍历的可能不是最新数组）
+        * ConcurrentLinkedQueue（sun.misc.Unsafe 用这个类保持线程安全）
         */
         Collection<Object> collection = Collections.synchronizedCollection(new ArrayList<Object>());
         new Hashtable<>();
-        new Vector<>();
+        new Vector<>();//这个在遍历的时候还是线程不安全
 
+    }
+
+    /**
+     * RandomAccess接口有什么用？
+     */
+    public void a3_4() {
+        /*
+        * 这是一个标记接口
+        * 实现这个接口的List，表明它有能力提供 快速的随机访问数组的能力，
+        * 比如ArrayList, 因为它可以通过索引在常数时间内访问任一元素
+        *
+        * 这个接口的作用是我们可以判断一个List是否实现了RandomAccess
+        * 当实现的时候，我们可以用for循环来遍历数组
+        * 如果没有实现（比如LinkedList），我们推荐用Iterator的方式遍历，
+        * 如果用For循环会慢很多。
+        */
+    }
+
+
+    /**
+     * Iterator 和 Enumeration区别?
+     *
+     * */
+    public void a3_5(){
+        /*
+        * 他们都是用来遍历集合的
+        * Enumeration jdk1出的，Iterator是jdk2出的，是前者的升级
+        * 主要两点不同
+        * <li> Iterators allow the caller to remove elements from the
+        *      underlying collection during the iteration with well-defined
+        *      semantics.
+        * <li> Method names have been improved.
+        *
+        */
+    }
+
+
+    /**
+     * 说说Arrays和Collections 类的作用？
+     * */
+    public void a3_6(){
+        /*
+        * 都是工具类
+        * Arrays主要对数据进行操作，主要是查找，复制，排序
+        * Collections对Collection对象操作，复制，查找，变成同步的集合
+        *
+        */
     }
     //endregion
 
