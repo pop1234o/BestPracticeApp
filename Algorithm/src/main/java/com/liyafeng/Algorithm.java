@@ -2,6 +2,9 @@ package com.liyafeng;
 
 /**
  * Created by liyafeng on 16/11/2017.
+ * 这里主要是问答形式的算法题，
+ * 如果是写代码形式的算法题，见com.liyafeng.algorithm
+ *
  */
 
 public class Algorithm {
@@ -126,11 +129,19 @@ public class Algorithm {
 
 
     /**
+     * 什么是图？
+     * */
+    public void a4(){
+        /*
+        * 定义：由一组定点和一组能够将两个顶点相连的边组成
+        */
+    }
+    /**
      * 图的算法？
      * ===========
      * 最短路径，最小生成树，拓扑排序
      */
-    void a4() {
+    public void a4_1() {
 
     }
 

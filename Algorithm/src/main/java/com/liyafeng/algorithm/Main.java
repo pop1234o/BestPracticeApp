@@ -34,4 +34,12 @@ public class Main {
         System.out.printf("hello");
 
     }
+
+    /**
+     * 解法索引：
+     * 链表中是否有环？{@link com.liyafeng.algorithm.practice.N_Unknow_HasCircleInLinkList}
+     * 反转链表 {@link com.liyafeng.algorithm.sword2offer.N16_ReverseList}
+     * 合并多个有序链表 {@link com.liyafeng.algorithm.sword2offer.N17_MergeSortedLists}
+     *
+     */
 }
