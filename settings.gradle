@@ -1,1 +1,1 @@
-include ':viewapp', ':event', ':video', ':buildtool', ':network', ':practicelib', ':orm', ':Algorithm', ':Performance', ':Concurrent', ':architecture', ':DependencyInjection'
+include ':ViewApp', ':Event', ':Video', ':BuildTool', ':Network', ':Practicelib', ':Orm', ':Algorithm', ':Performance', ':Concurrent', ':Architecture', ':DependencyInjection'

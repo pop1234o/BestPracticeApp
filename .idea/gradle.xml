@@ -9,17 +9,17 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Algorithm" />
+            <option value="$PROJECT_DIR$/Architecture" />
+            <option value="$PROJECT_DIR$/BuildTool" />
             <option value="$PROJECT_DIR$/Concurrent" />
             <option value="$PROJECT_DIR$/DependencyInjection" />
+            <option value="$PROJECT_DIR$/Event" />
+            <option value="$PROJECT_DIR$/Network" />
+            <option value="$PROJECT_DIR$/Orm" />
             <option value="$PROJECT_DIR$/Performance" />
-            <option value="$PROJECT_DIR$/architecture" />
-            <option value="$PROJECT_DIR$/buildtool" />
-            <option value="$PROJECT_DIR$/event" />
-            <option value="$PROJECT_DIR$/network" />
-            <option value="$PROJECT_DIR$/orm" />
-            <option value="$PROJECT_DIR$/practicelib" />
-            <option value="$PROJECT_DIR$/video" />
-            <option value="$PROJECT_DIR$/viewapp" />
+            <option value="$PROJECT_DIR$/Practicelib" />
+            <option value="$PROJECT_DIR$/Video" />
+            <option value="$PROJECT_DIR$/ViewApp" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
