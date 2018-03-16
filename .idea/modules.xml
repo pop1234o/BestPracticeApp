@@ -12,11 +12,11 @@
       <module fileurl="file://$PROJECT_DIR$/Network/network.iml" filepath="$PROJECT_DIR$/Network/network.iml" />
       <module fileurl="file://$PROJECT_DIR$/Orm/orm.iml" filepath="$PROJECT_DIR$/Orm/orm.iml" />
       <module fileurl="file://$PROJECT_DIR$/Performance/Performance.iml" filepath="$PROJECT_DIR$/Performance/Performance.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Practicelib/practicelib.iml" filepath="$PROJECT_DIR$/Practicelib/practicelib.iml" />
       <module fileurl="file://E:\mypro\Concurrent\Thread.iml" filepath="E:\mypro\Concurrent\Thread.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Video/video.iml" filepath="$PROJECT_DIR$/Video/video.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewApp/viewapp.iml" filepath="$PROJECT_DIR$/ViewApp/viewapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mypro.iml" filepath="$PROJECT_DIR$/mypro.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Video/video.iml" filepath="$PROJECT_DIR$/Video/video.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Practicelib/practicelib.iml" filepath="$PROJECT_DIR$/Practicelib/practicelib.iml" />
     </modules>
   </component>
 </project>
