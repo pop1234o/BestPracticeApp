@@ -487,6 +487,34 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         */
     }
 
+    /**
+     * 开启线程的三种方式？各自优缺点？
+     *
+     * */
+    public void a2_6(){
+        /*
+        * 1.继承Thread
+        * 2.实现Runnable接口
+        * 3.实现Callable，用FutureTask来实现线程（这个类其实也实现了Runnable）
+        *
+        * 实现接口的方式优点就是还能够继承其他类，而且可以访问同一个Runnable中的对象
+        * 缺点就是如果引用当前线程必须用Thread.currentThread()
+        *
+        * 继承的优点是用this可以访问线程中的一些变量
+        * 缺点就是不能继承其他类了
+        */
+
+
+    }
+    
+    /**
+     * 如何控制某个方法允许并发访问线程的个数？他的原理是什么？
+     * */
+    public void a2_7(){
+        /*
+        * 用Semaphore类，执行到一个方法时申请信号量加1，超过时等待
+        */
+    }
     //endregion
 
     //region Java集合
