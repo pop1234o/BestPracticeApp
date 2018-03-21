@@ -371,6 +371,33 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         */
     }
     
+    
+    /**
+     * 说说Unsafe类，里面有哪些操作？
+     * https://www.jianshu.com/p/09477cec1478
+     * http://blog.csdn.net/aesop_wubo/article/details/7537278
+     * http://mishadoff.com/blog/java-magic-part-4-sun-dot-misc-dot-unsafe/
+     * */
+    public void a1_15(){
+        /*
+        *  他可以直接操作jvm的内存，只用类加载器是系统的主加载器才能使用
+        *  ===========用反射的方式获取======================
+        *   Field f = Unsafe.class.getDeclaredField("theUnsafe");
+        *    f.setAccessible(true);
+        *    Unsafe unsafe = (Unsafe) f.get(null);
+        *  =============================
+        * 1.可以分配内存，扩充内存，释放内存
+        * 2.修改对象的字段值，即使他是私有的
+        * 3.线程的挂起和恢复
+        * 4.CAS操作(compare and swap) 这是一种乐观操作\ 原子操作
+        *  compareAndSwapInt(Object obj, long offset, int expect, int update);
+        *                    操作对象，    偏移量        期望值      更新值
+        *  当我们偏移量的变量的当前值和期望值一样的时候，我们将这个变量改为更新值
+        *  获取head字段的偏移量（这个是相对对象内存地址偏移多少）
+        *  long HEAD = U.objectFieldOffset(AbstractQueuedSynchronizer.class.getDeclaredField("head"))
+        *
+        */
+    }
     //endregion
 
     //region Java线程
@@ -513,6 +540,25 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     public void a2_7(){
         /*
         * 用Semaphore类，执行到一个方法时申请信号量加1，超过时等待
+        * 它的原理是内部使用了AbstractQueuedSynchronizer
+        *
+        */
+    }
+
+
+    /**
+     * 说说Thread中的interrupt?interrupted 和isInterrupted区别？
+     * http://www.cnblogs.com/skywang12345/p/3479949.html
+     * */
+    public void a2_8(){
+        /*
+        * interrupt 中断阻塞线程（wait sleep join），阻塞位置抛出
+        * InterruptedException
+        * 如果线程不是阻塞，那么就只是将标记设置为true
+        *
+        * ================================
+        * interrupted是检测标记并将标记设置为false
+        * isInterrupted仅返回检测的标记
         */
     }
     //endregion
