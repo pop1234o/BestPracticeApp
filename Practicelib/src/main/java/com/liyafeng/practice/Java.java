@@ -555,10 +555,42 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * interrupt 中断阻塞线程（wait sleep join），阻塞位置抛出
         * InterruptedException
         * 如果线程不是阻塞，那么就只是将标记设置为true
-        *
+        * 这个方法的作用就是将线程阻塞的状态打破，然后线程的阻塞方法比如wait等
+        * 会抛出个异常
+        * 如果线程不是阻塞的，那么调用这个方法只是标记为阻塞，线程仍然正常
+        * 执行
         * ================================
         * interrupted是检测标记并将标记设置为false
         * isInterrupted仅返回检测的标记
+        */
+    }
+
+    /**
+     * 谈谈wait/notify关键字的理解?为什么他们都要在同步代码块中？
+     * */
+    public void a2_9(){
+        /*
+        * 他们必须在同步代码块中是为了防止竞态条件。
+        * 比如有很多消费者线程等待资源，这时一个生产者生产了一个资源，
+        * 然后notifyAll了，如果没有锁，那么所有的消费者线程都会抢占这一个
+        * 资源，会造成不可预知的结果，这是不能接受的
+        * 而且生产者加锁也是为了安全，只有生产者准备就绪，释放锁的时候
+        * 消费者线程才能获取到锁。
+        */
+        try {
+            wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        notify();
+    }
+    
+    /**
+     * 什么导致线程阻塞？
+     * */
+    public void a2_10(){
+        /*
+        * 
         */
     }
     //endregion

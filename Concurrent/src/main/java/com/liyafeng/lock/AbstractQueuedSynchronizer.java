@@ -4,6 +4,12 @@ import java.util.concurrent.locks.LockSupport;
 
 /**
  * Created by liyafeng on 2018/3/19.
+ * 其实这个类提供了一个抽象的持有锁和等待模型
+ * tryAcquire tryRelease 都是子类要实现的方法
+ * 他们确定是否线程能获取到锁
+ * 如果获取不到就加入等待队列，然后释放锁后这个类会自动从
+ * 等待队列取出符合条件的等待线程，然后唤醒他
+ *
  */
 
 public abstract class AbstractQueuedSynchronizer extends AbstractOwnableSynchronizer {
