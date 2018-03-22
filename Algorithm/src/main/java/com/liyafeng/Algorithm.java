@@ -4,12 +4,37 @@ package com.liyafeng;
  * Created by liyafeng on 16/11/2017.
  * 这里主要是问答形式的算法题，
  * 如果是写代码形式的算法题，见com.liyafeng.algorithm
- *
  */
 
 public class Algorithm {
 
 
+    public static void main(String[] args) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int i=0;
+                    while (i++<5) {
+                        System.out.println("进入了1");
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        });
+        thread.start();
+
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("执行结束了");
+    }
     //region 排序
 
     /**
@@ -130,12 +155,13 @@ public class Algorithm {
 
     /**
      * 什么是图？
-     * */
-    public void a4(){
+     */
+    public void a4() {
         /*
         * 定义：由一组定点和一组能够将两个顶点相连的边组成
         */
     }
+
     /**
      * 图的算法？
      * ===========
@@ -151,8 +177,8 @@ public class Algorithm {
 
     /**
      * 什么是树？
-     * */
-    public void a5_1(){
+     */
+    public void a5_1() {
         /*
         *  树(Tree)是n(n≥0)个结点的有限集T，T为空时称为空树，否则它满足如下两个条件：
         *   有且仅有一个特定的称为根(Root)的结点；
@@ -164,19 +190,20 @@ public class Algorithm {
 
     /**
      * 说说几种常用的树
-     * */
-    public void a5_2(){
+     */
+    public void a5_2() {
         /*
         * 见res/drawable/tree.png
         */
     }
+
     /**
      * 什么是B树？什么是B+树？有什么区别？
      * ----------------------
      * （B树等于 B-树） B-Tree
      * http://blog.csdn.net/v_JULY_v/article/details/6530142
-     * */
-    public void a5_3(){
+     */
+    public void a5_3() {
         /*
         * B树，是Balance树的简称，意为多路平衡查找树，我们知道红黑树也是一种平衡树，
         * 但是他的每个节点只能有2-3个子节点。而一个m阶的B树最多有m个子节点。

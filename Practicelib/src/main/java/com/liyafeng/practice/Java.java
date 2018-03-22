@@ -590,9 +590,59 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * */
     public void a2_10(){
         /*
-        * 
+        * Thread.sleep 这个不会放弃锁
+        * wait方法 这个阻塞后会放弃锁
+        * Thread.yield() 有可能导致阻塞
+        * thread.join方法，会阻塞等待thread线程执行完
+        * IO操作和Socket操作都是阻塞式操作
+        */
+
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        notify();
+
+        Thread.yield();
+    }
+    
+    /**
+     * Thread.yield()有什么作用？什么场景使用？
+     * */
+    public void a2_11(){
+        /*
+        * 使线程放弃cpu使用权限，一般可以用来复现bug，或者设计并发线程结构
+        * 注意，这个放弃cpu使用权限，但是不放弃锁
         */
     }
+
+    /**
+     * thread join 是什么作用？
+     * */
+    public void a2_12(){
+        /*
+        * 首先这个线程对象中的方法，thread.join();
+        * 是调用线程，等待thread线程执行完后再继续执行
+        *
+        * 调用线程等待对象线程死亡，这个时候调用线程阻塞。
+        * 里面原理就是 用 isAlive判断线程是否存活，如果存活，就wait（）
+        * 如果不存活了，就跳出循环继续执行
+        */
+        try {
+            Thread thread = new Thread();
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     //endregion
 
     //region Java集合

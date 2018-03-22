@@ -3,19 +3,19 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Algorithm/Algorithm.iml" filepath="$PROJECT_DIR$/Algorithm/Algorithm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Architecture/architecture.iml" filepath="$PROJECT_DIR$/Architecture/architecture.iml" />
-      <module fileurl="file://$PROJECT_DIR$/BuildTool/buildtool.iml" filepath="$PROJECT_DIR$/BuildTool/buildtool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Architecture/Architecture.iml" filepath="$PROJECT_DIR$/Architecture/Architecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BuildTool/BuildTool.iml" filepath="$PROJECT_DIR$/BuildTool/BuildTool.iml" />
       <module fileurl="file://$PROJECT_DIR$/Concurrent/Concurrent.iml" filepath="$PROJECT_DIR$/Concurrent/Concurrent.iml" />
       <module fileurl="file://$PROJECT_DIR$/DependencyInjection/DependencyInjection.iml" filepath="$PROJECT_DIR$/DependencyInjection/DependencyInjection.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Event/event.iml" filepath="$PROJECT_DIR$/Event/event.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Event/Event.iml" filepath="$PROJECT_DIR$/Event/Event.iml" />
       <module fileurl="file://E:\mypro\MyApplication.iml" filepath="E:\mypro\MyApplication.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Network/network.iml" filepath="$PROJECT_DIR$/Network/network.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Orm/orm.iml" filepath="$PROJECT_DIR$/Orm/orm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Network/Network.iml" filepath="$PROJECT_DIR$/Network/Network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Orm/Orm.iml" filepath="$PROJECT_DIR$/Orm/Orm.iml" />
       <module fileurl="file://$PROJECT_DIR$/Performance/Performance.iml" filepath="$PROJECT_DIR$/Performance/Performance.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Practicelib/practicelib.iml" filepath="$PROJECT_DIR$/Practicelib/practicelib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Practicelib/Practicelib.iml" filepath="$PROJECT_DIR$/Practicelib/Practicelib.iml" />
       <module fileurl="file://E:\mypro\Concurrent\Thread.iml" filepath="E:\mypro\Concurrent\Thread.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Video/video.iml" filepath="$PROJECT_DIR$/Video/video.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ViewApp/viewapp.iml" filepath="$PROJECT_DIR$/ViewApp/viewapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Video/Video.iml" filepath="$PROJECT_DIR$/Video/Video.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ViewApp/ViewApp.iml" filepath="$PROJECT_DIR$/ViewApp/ViewApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mypro.iml" filepath="$PROJECT_DIR$/mypro.iml" />
     </modules>
   </component>
