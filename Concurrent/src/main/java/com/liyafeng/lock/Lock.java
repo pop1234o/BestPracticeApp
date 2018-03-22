@@ -8,7 +8,7 @@ package com.liyafeng.lock;
  * （提供比synchronized更广泛的锁操作）
  *
  * 用来代替，synchronized关键字，比它更灵活
- * 这个也是为线程分配一个锁，
+ * 这个也是为线程分配一个锁，内部用的是AQS
  */
 
 public class Lock {
