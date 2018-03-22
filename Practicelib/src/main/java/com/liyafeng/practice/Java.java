@@ -431,7 +431,10 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         *
         * sleep 和 wait都是让线程进入阻塞状态，但是sleep是指定时间后恢复运行状态
         * 而wait需要notify，而且操作和锁有关
-        *
+        *=================总结==========================
+        * sleep 后不会释放锁， wait后会释放锁
+        * sleep必须指定阻塞时间，而wait可以不指定
+        * wait后能被notify和interrupt打断，而sleep只能被interrupt打断
         *
         */
 
@@ -642,7 +645,95 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         }
     }
 
+    /**
+     * 线程如何关闭？
+     * */
+    public void a2_13(){
+        /*
+        * 1.thread.stop() 这个已经废弃了,因为他不安全的,因为他会在任意逻辑处终止执行
+        * 因为stop后线程中持有的锁会立刻释放掉，就导致并发的逻辑不可控制
+        * 2.推荐使用变量标记的方式来终止线程，while(flag>0)  volatile flag
+        *
+        */
+        Thread.currentThread().isInterrupted();
+        Thread.currentThread().stop();
+    }
 
+
+    /**
+     * 讲一下java中同步的方法?
+     * http://www.cnblogs.com/paddix/p/5405678.html
+     * */
+    public void a2_14(){
+        /*
+        * 同步是为了防止多个线程访问同一资源，所以要排队访问线程
+        * 1.可以用 关键字synchronized，优点就是使用方便，缺点是他是互斥锁，不能是共享锁，不够灵活，
+        * synchronized 配合wait notify 来实现阻塞和唤醒
+        * 2.可以用AbstractQueuedSynchronizer 的子类来实现同步
+        * 其实Lock子类是用来代替synchronized的，内部的实现原理还是AQS的内部类
+        * 配合 Condition await signal 来实现阻塞和唤醒
+        * 用到AQS的类，比如Semaphore,ReentrantLock,CountDownLatch
+        * ==============原理======================
+        * 1.synchronized原理是对象锁，存储对象的内存中有一个标记
+        * 当线程进入锁，标记加1，退出锁标记减1，来实现同步，这个操作也是CAS
+        * 底层也有一个等待队列，
+        * 2.AQS的原理是使用UnSafe类中的CAS（Compare and swap）操作来标记
+        * 线程进入退出，使用park 和unpark来实现线程阻塞等待，然后当有线程释放锁的时候
+        * 会从等待队列中取线程来唤醒，让他继续持有锁。
+        */
+    }
+
+    /**
+     * java中如何保证数据的一致性？
+     */
+    public void a2_15() {
+        /*
+        * 1.使用同步锁
+        * 2.使用volatile关键字
+        */
+    }
+    
+    /**
+     * 什么是互斥锁、共享锁？
+     * 什么是乐观锁？什么是自旋？
+     * 什么是CAS操作？什么是ABA问题？
+     * 什么是公平锁？什么是非公平锁？
+     * 什么是轻量级锁？什么是偏量锁？
+     * http://www.cnblogs.com/paddix/p/5405678.html
+     * http://www.cnblogs.com/javaminer/p/3892288.html
+     * https://www.zhihu.com/question/55075763
+     * */
+    public void a2_16(){
+        /*
+        *
+        */
+    }
+    
+    /**
+     * synchronized 关键字的原理？
+     * http://www.cnblogs.com/paddix/p/5367116.html
+     * */
+    public void a2_17(){
+        /*
+        *
+        */
+    }
+    
+    /**
+     * volatile关键字作用和原理?
+     * http://www.cnblogs.com/paddix/p/5428507.html
+     * */
+    public void a2_18(){
+        /*
+        * 1.可以防止重排序
+        * 2.可见性，一个线程修改了这个变量，另一个线程取到的是最新值，
+        * 3.原子性，long double分为高32位和低32位，我们写入的时候有可能只写了
+        *  低32位，然后这个时候读取出的数值就是错的。
+        *
+        */
+    }
+    
+    
     //endregion
 
     //region Java集合
