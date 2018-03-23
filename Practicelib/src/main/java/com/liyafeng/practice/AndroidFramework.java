@@ -173,9 +173,10 @@ public class AndroidFramework {
      * 1.Activity 生命周期的理解？
      * 2.横竖屏切换时的生命周期？如何配置?
      * 3.显示dialog时 Activity的生命周期?
-     * 4.Activity上有Dialog的时候按Home键时的生命周期？
+     * 4.Activity上有Dialog的时候按Home键（前后台切换）时的生命周期？
      * 5.跳转时的生命周期
-     * 6.前后台切换时的生命周期?
+     * 6.锁屏和解锁后生命周期
+     * 7.永久性质的数据，应该在哪个生命周期方法中保存?
      * https://developer.android.google.cn/guide/components/activities.html
      * https://developer.android.google.cn/guide/components/activities/activity-lifecycle.html#java
      * */
@@ -188,15 +189,16 @@ public class AndroidFramework {
         *
         * onRestoreInstanceState 在onStart后调用， 在onPostCreate前调用
         * 一般我们在onCreate中就恢复了原有状态，但是在这调用时为了有些时候
-        * 我们需要等所有资源初始化完毕后再调用。
+        * 我们需要等所有资源初始化完毕后再调用。（这个只有在系统回收后，我们
+        * 再次启动的时候调用）所以这里的Bundle一定不为null
         *
         *
         * onResume()后，Activity变得可见，一般在这个方法中恢复在onPause
         * 中释放的资源，或者初始化动画？这个时候Activity获取到焦点
         *
         * onPause()当Activity被遮罩的时候，失去焦点，用户不能再与之交互
-        * 比如半透明的activity或者dialog打开，这个Activity部分可见，就会
-        * 失去焦点，调用onPause();
+        * 比如半透明的activity（作为dialog的Activity），这个Activity部分可见，就会
+        * 失去焦点，调用onPause();注意Dialog出现不会调用任何方法
         *
         * onSaveInstanceState 永远在onPause后和onStop前调用，为什么这么设计？
         * 是因为我们如果onStop后调用，那么有可能被系统回收而得不到回调。
@@ -222,14 +224,32 @@ public class AndroidFramework {
         * 我们在清单文件中配置不销毁
         * android:configChanges="orientation|keyboardHidden|screenSize"
         * （这个和操作系统(4.0)和targetApi(12)有关，但是最新的一般都是这样配置）
-        *
+        * ================3========================
+        * Dialog的出现不会调用Activity的任何生命周期，
+        * 调用生命周期是ActivityManager，而dialog是通过WindowManager来管理的
+        * （但是好像系统的Dialog会造成onPause???）
+        *====================4=======================
+        * 有无dialog，Activity的进入后台，切回前台生命周期都是这样的
+        *   onPause:
+        *   onSaveInstanceState:
+        *   onStop:
+        *   onRestart:
+        *   onStart:
+        *   onResume:
         *
         * ==================5=========================
         * A开启B, A-onPause B-onCreate\onStart\onResume A-onStop
-        *
+        * B关闭，B-onPause A-onRestart\onStart\onResume  B-onStop\onDestroy
+        * ================6================
+        * 锁屏和前后台切换的生命周期相同
+        * ===============7================
+        * 永久性数据应该在onStop中存储，因为在后台有可能被系统kill掉不调用onDestroy
+        * onPause中太频繁
         *
         */
     }
+
+
     /**
      * Activity与Fragment之间生命周期比较
      * */

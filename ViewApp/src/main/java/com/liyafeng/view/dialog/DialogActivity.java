@@ -201,7 +201,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    class FullDiolog extends Dialog{
+    public static class FullDiolog extends Dialog{
 
         public FullDiolog(@NonNull Context context) {
             super(context,R.style.style_full);//这里不指定主题，就用默认的主题
