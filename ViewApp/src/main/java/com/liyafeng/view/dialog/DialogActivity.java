@@ -1,6 +1,7 @@
 package com.liyafeng.view.dialog;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,8 @@ import com.liyafeng.view.R;
 
 public class DialogActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private  final String TAG = getClass().getSimpleName()
+            ;
     /**
      * Button
      */
@@ -72,6 +75,56 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
 
 //        new CustomDialog(this).createDialog();
 
+        Log.i(TAG, "onCreate: ");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.i(TAG, "onRestoreInstanceState: ");
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause: ");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
     }
 
     private void initView() {
@@ -87,62 +140,81 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.button9:
 //                new BottomDialog(this).createDialog();
 
-                new CenterDialog(this);
+                new FullDiolog(this).createDialog();
                 break;
         }
     }
-}
 
-class CustomDialog extends android.app.Dialog {
 
-    public CustomDialog(@NonNull Context context) {
-        super(context, R.style.popupDialog);
-    }
 
-    public void createDialog() {
-        setContentView(R.layout.dialog_custom);
-        Window window = getWindow();
-        show();
+    class CustomDialog extends android.app.Dialog {
 
-        //这2种方式都可以改变宽高，但是周围会有留白，留白是因为使用了系统的theme，换成一个空theme即可
+        public CustomDialog(@NonNull Context context) {
+            super(context, R.style.popupDialog);
+        }
+
+        public void createDialog() {
+            setContentView(R.layout.dialog_custom);
+            Window window = getWindow();
+            show();
+
+            //这2种方式都可以改变宽高，但是周围会有留白，留白是因为使用了系统的theme，换成一个空theme即可
 //       WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
 //        window.getAttributes().height = ViewGroup.LayoutParams.MATCH_PARENT;
 //        window.getAttributes().width = ViewGroup.LayoutParams.MATCH_PARENT;
 //        window.setAttributes(window.getAttributes());
 
-        //这个设置的是内容布局根部局的大小
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-    }
-}
-
-class BottomDialog extends android.app.Dialog {
-
-    public BottomDialog(@NonNull Context context) {
-        super(context, R.style.bottomDialog);
+            //这个设置的是内容布局根部局的大小
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        }
     }
 
-    public void createDialog() {
-        setContentView(R.layout.dialog_bottom);
-        show();
-        Window window = getWindow();
-        LinearLayout ll_content = (LinearLayout) window.findViewById(R.id.ll_content);
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) ll_content.getLayoutParams();
-        layoutParams.gravity = Gravity.BOTTOM;
-        ll_content.setLayoutParams(layoutParams);
+    class BottomDialog extends android.app.Dialog {
+
+        public BottomDialog(@NonNull Context context) {
+            super(context, R.style.bottomDialog);
+        }
+
+        public void createDialog() {
+            setContentView(R.layout.dialog_bottom);
+            show();
+            Window window = getWindow();
+            LinearLayout ll_content = (LinearLayout) window.findViewById(R.id.ll_content);
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) ll_content.getLayoutParams();
+            layoutParams.gravity = Gravity.BOTTOM;
+            ll_content.setLayoutParams(layoutParams);
 
 
+        }
     }
-}
 
-class CenterDialog {
-    public CenterDialog(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_center, null);
-        AlertDialog alertDialog = new AlertDialog.Builder(context).setView(view).create();
-        //这样是在中央显示，但是会变成warp_content，所以最好不要把宽高写在最外层
-        //让内部布局都有高度
-        alertDialog.show();
+    class CenterDialog {
+        public CenterDialog(Context context) {
+            View view = LayoutInflater.from(context).inflate(R.layout.dialog_center, null);
+            AlertDialog alertDialog = new AlertDialog.Builder(context).setView(view).create();
+            //这样是在中央显示，但是会变成warp_content，所以最好不要把宽高写在最外层
+            //让内部布局都有高度
+            alertDialog.show();
 
-        //加入到window中最外层布局，参数变成warp_content
+            //加入到window中最外层布局，参数变成warp_content
+        }
+    }
+
+    class FullDiolog extends Dialog{
+
+        public FullDiolog(@NonNull Context context) {
+            super(context,R.style.style_full);//这里不指定主题，就用默认的主题
+        }
+
+        public void createDialog(){
+            //这个最外层布局不会变成warp_content,还是原来的布局（如果没有设置windowIsFloating）
+            setContentView(R.layout.dialog_full);
+
+
+            //这个居然变成match_content了
+//            setContentView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_full,null));
+            show();
+        }
     }
 }

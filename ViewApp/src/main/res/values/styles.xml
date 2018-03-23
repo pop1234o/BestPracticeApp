@@ -78,4 +78,9 @@
     </style>
 
 
+    <style name="style_full">
+        <!--设置了这个窗口就包裹内容了，而且有背景是阴影，否则是白色（而且有那种淡入淡出的动画了）-->
+        <item name="android:windowIsFloating">true</item>
+
+    </style>
 </resources>

@@ -33,7 +33,7 @@ public class AndroidFramework {
     /**
      * View的渲染机制
      */
-    public void a2() {
+    public void a1_1() {
         /*
         *
         * Android的图形都是在canvas对象中绘制的，一个canvas持有一个bitmap对象
@@ -54,7 +54,7 @@ public class AndroidFramework {
      * View的绘制流程
      * http://www.liyafeng.com/c/Android_APIsetContentView流程分析
      */
-    public void a2_1() {
+    public void a1_2() {
         /*
         * 首先会将xml解析成对象，addview添加到decorview中
         * 然后执行requestLayout()，最终在ViewRootImpl中执行doTraversals
@@ -67,7 +67,7 @@ public class AndroidFramework {
     /**
      * Android 动画原理 、底层如何给上层信号？
      */
-    public void a3() {
+    public void a1_3() {
         /*
         * 分为 1.补间动画（tween 屯，两者之间）2.属性动画(attribute) 3.帧动画 frame
         *
@@ -89,7 +89,7 @@ public class AndroidFramework {
      * Activity的加载流程
      * http://www.liyafeng.com/c/Android_APIstartActivity流程分析
      */
-    public void a3_1() {
+    public void a1_4() {
         /*
         * 首先用binder请求到ActivityManagerService ，然后会回调到本进程的
         * ActivityThread，在里面会通过反射方式new 出Activity的对象，然后会
@@ -110,7 +110,7 @@ public class AndroidFramework {
     /**
      * 说说什么是内存泄漏，说一个典型的例子，怎么避免？
      */
-    public void a5() {
+    public void a2_1() {
         /*
         * 本该被回收的对象因为存在对他的强引用而没有被回收
         * Android中最典型的就是Activity对象的泄漏，比如用Handler发延时消息
@@ -129,7 +129,7 @@ public class AndroidFramework {
      * Android进程如何保活？系统杀掉后如何重启？为什么要保活？
      * http://blog.csdn.net/andrexpert/article/details/75045678
      */
-    public void a6() {
+    public void a2_2() {
         /*
         * 我们APP要及时接收到通知，那么就需要通知服务一直在后台运行
         * Android的进程回收机制是用Low Memory Killer
@@ -154,7 +154,7 @@ public class AndroidFramework {
     /**
      * Android Dalvik虚拟机和JVM的区别？
      */
-    public void a6_1() {
+    public void a2_3() {
         /*
         * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
         * 他是.class文件的压缩，这样占用的内存更少
@@ -166,6 +166,128 @@ public class AndroidFramework {
     //endregion
 
     //region Android 四大组件基本知识
+
+
+    //region Activity/Fragment
+    /**
+     * 1.Activity 生命周期的理解？
+     * 2.横竖屏切换时的生命周期？如何配置?
+     * 3.显示dialog时 Activity的生命周期?
+     * 4.Activity上有Dialog的时候按Home键时的生命周期？
+     * 5.跳转时的生命周期
+     * 6.前后台切换时的生命周期?
+     * https://developer.android.google.cn/guide/components/activities.html
+     * https://developer.android.google.cn/guide/components/activities/activity-lifecycle.html#java
+     * */
+    public void a3_1(){
+        /*
+        * =============1==========================
+        * onCreate() 设置布局，初始化变量，接收Bundle来恢复Activity
+        * onStart() 这个方法不建议做耗时操作，可以进行注册广播接受者的操作
+        * 这个时候Activity还不可见，
+        *
+        * onRestoreInstanceState 在onStart后调用， 在onPostCreate前调用
+        * 一般我们在onCreate中就恢复了原有状态，但是在这调用时为了有些时候
+        * 我们需要等所有资源初始化完毕后再调用。
+        *
+        *
+        * onResume()后，Activity变得可见，一般在这个方法中恢复在onPause
+        * 中释放的资源，或者初始化动画？这个时候Activity获取到焦点
+        *
+        * onPause()当Activity被遮罩的时候，失去焦点，用户不能再与之交互
+        * 比如半透明的activity或者dialog打开，这个Activity部分可见，就会
+        * 失去焦点，调用onPause();
+        *
+        * onSaveInstanceState 永远在onPause后和onStop前调用，为什么这么设计？
+        * 是因为我们如果onStop后调用，那么有可能被系统回收而得不到回调。
+        * onPause之前调用又会效率太低。
+        *
+        *
+        * onStop当Activity完全不可见的时候进入这个方法。这个方法中我们释放
+        * 一些用户不用的资源，比如我们在onStart中注册的广播，可以在
+        * onStop中取消注册。还可以释放一些资源以免内存泄漏，因为这个Activity
+        * 有可能被系统终止而不调用onDestroy ,如果Activity重新回到前台，
+        * 会调用onReStart()-OnStart
+        *
+        * onDestroy 释放所有资源
+        *
+        *
+        *
+        *
+        * =====================2==================
+        * https://blog.csdn.net/xiaoli100861/article/details/50855152
+        *  方向切换的时候我们会销毁后重建，当然onSaveInstanceState
+        *  onRestoreInstanceState 可以用来恢复数据
+        *  onPause ,onStop onDestroy onCreate onStart onResume
+        * 我们在清单文件中配置不销毁
+        * android:configChanges="orientation|keyboardHidden|screenSize"
+        * （这个和操作系统(4.0)和targetApi(12)有关，但是最新的一般都是这样配置）
+        *
+        *
+        * ==================5=========================
+        * A开启B, A-onPause B-onCreate\onStart\onResume A-onStop
+        *
+        *
+        */
+    }
+    /**
+     * Activity与Fragment之间生命周期比较
+     * */
+    public void a3_2(){
+        /*
+        *
+        */
+    }
+
+    /**
+     * Activity的四种启动模式对比?
+     * */
+    public void a3_6(){
+        /*
+        *
+        */
+    }
+
+    /**
+     * Activity状态保存与恢复?什么情况下发生？
+     * */
+    public void a3_7(){
+        /*
+        *
+        */
+    }
+    
+    /**
+     * Fragment状态保存startActivityForResult是哪个类的方法，在什么情况下使用？
+     * */
+    public void a3_8(){
+        /*
+        * 
+        */
+    }
+    
+    /**
+     * 如何实现Fragment的滑动？
+     * */
+    public void a3_9(){
+        /*
+        *
+        */
+    }
+    
+    /**
+     * fragment之间传递数据的方式？
+     * */
+    public void a3_10(){
+        /*
+        *
+        */
+    }
+
+
+    //endregion
+
+    //region BroadCastReceiver
 
     /**
      * 广播有几种注册方式？各有什么优点？
@@ -180,6 +302,17 @@ public class AndroidFramework {
         *
         */
     }
+
+    //endregion
+
+    //region Service
+
+    //endregion
+
+    //region ContentProvider
+    //endregion
+
+
     //endregion
 
     //region Android 操作系统
@@ -214,12 +347,12 @@ public class AndroidFramework {
 
     /**
      * 说说Android最新架构 Architecture Component
-     *
+     * <p>
      * https://developer.android.google.cn/topic/libraries/architecture/guide.html#recommended_app_architecture
      * 源码地址
      * https://github.com/googlesamples/android-architecture-components
-     * */
-    public void a9(){
+     */
+    public void a9() {
         /*
         * 为了更好的管理生命周期，比如横竖屏切换，数据要重新加载的问题
         * 数据加载完成后 Activity 已经销毁导致内存泄漏的问题
@@ -239,8 +372,8 @@ public class AndroidFramework {
 
     /**
      * 说说MVC MVP MVVM 和Clean架构各自优点和区别？
-     * */
-    public void a10(){
+     */
+    public void a10() {
         /*
         *
         */
