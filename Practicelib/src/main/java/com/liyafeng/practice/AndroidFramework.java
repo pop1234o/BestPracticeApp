@@ -1,5 +1,8 @@
 package com.liyafeng.practice;
 
+import android.app.FragmentManager;
+import android.content.Context;
+
 public class AndroidFramework {
 
 
@@ -190,7 +193,7 @@ public class AndroidFramework {
         * onRestoreInstanceState 在onStart后调用， 在onPostCreate前调用
         * 一般我们在onCreate中就恢复了原有状态，但是在这调用时为了有些时候
         * 我们需要等所有资源初始化完毕后再调用。（这个只有在系统回收后，我们
-        * 再次启动的时候调用）所以这里的Bundle一定不为null
+        * 再次启动的时候调用,还有在屏蔽旋转销毁后）所以这里的Bundle一定不为null
         *
         *
         * onResume()后，Activity变得可见，一般在这个方法中恢复在onPause
@@ -202,7 +205,9 @@ public class AndroidFramework {
         *
         * onSaveInstanceState 永远在onPause后和onStop前调用，为什么这么设计？
         * 是因为我们如果onStop后调用，那么有可能被系统回收而得不到回调。
-        * onPause之前调用又会效率太低。
+        * onPause之前调用又会效率太低。（用户按back键或者finish时这个方法不被调用
+        * ，因为用户已经明确不需要这个Activity了，只有在Activity进入后台，有可能被
+        * 回收的时候，才会调用（比如home键，锁屏，打开新的Activity））
         *
         *
         * onStop当Activity完全不可见的时候进入这个方法。这个方法中我们释放
@@ -252,28 +257,55 @@ public class AndroidFramework {
 
     /**
      * Activity与Fragment之间生命周期比较
+     * https://developer.android.google.cn/guide/components/fragments.html
+     * {@link com.liyafeng.view.fragment.Main}
      * */
-    public void a3_2(){
+    public void a3_2(Context context){
         /*
+        * Fragment生命周期是FragmentManager来控制的
+        * 他本质上还是inflate了布局，然后addView的方式加入到Activity的布局中
+        * 他也有回退栈管理，按返回键和Activity效果一样
         *
         */
+        context.getResources().getDrawable(R.drawable.fragment_lifecycle);
+        context.getResources().getDrawable(R.drawable.activity_fragment_lifecycle);
+
     }
 
     /**
-     * Activity的四种启动模式对比?
+     * Activity的四种启动模式对比? 回退栈有什么用？
+     * https://developer.android.google.cn/guide/components/activities/tasks-and-back-stack.html
+     * https://blog.csdn.net/u012203641/article/details/77408342
      * */
     public void a3_6(){
         /*
-        *
+        * https://blog.csdn.net/u012203641/article/details/77408342
         */
     }
 
     /**
-     * Activity状态保存与恢复?什么情况下发生？
+     * 进程的四种状态？内存低的时候Android系统是如何管理进程的？
+     * https://developer.android.google.cn/guide/components/activities/process-lifecycle.html
      * */
     public void a3_7(){
         /*
+        * 1.前台进程，
+        * 这个进程中有一个resume的Activity，
+        * 或者一个在执行onReceive()的BroadCastReceiver ,
+        * 或者有一个在执行onCreate onStart onDestroy 的Service
         *
+        * 2. 可见进程，
+        * 进程中有一个没有焦点的Activity，但是它可见，比如一个半透明的Activity 盖住了他
+        * 有个前台的Service，通过Service.startForeground方法来显示一个Notification
+        * 有系统用的独特服务，比如动态壁纸，输入法服务
+        *
+        * 3.服务进程
+        * 进程中有startService 方式打开的Service，当前两种进程内存不够用时，将回收这个进程
+        * 连续运行30分钟以上有可能会被降级，因为这有可能发生了内存泄漏而占用太多内存
+        *
+        * 4.缓存进程
+        * 一般这种进程中有1个或者多个onStop的Activity，这个时候当内存不足时会优先回收
+        * 一般优先回收的是最久没有用过的进程。
         */
     }
     
@@ -282,7 +314,7 @@ public class AndroidFramework {
      * */
     public void a3_8(){
         /*
-        * 
+        * 有个回调是在FragmentActivity中调用的，
         */
     }
     
@@ -291,7 +323,7 @@ public class AndroidFramework {
      * */
     public void a3_9(){
         /*
-        *
+        * 用ViewPager
         */
     }
     
@@ -300,7 +332,7 @@ public class AndroidFramework {
      * */
     public void a3_10(){
         /*
-        *
+        * 可以通过Activity来传递，也可以用EventBus的实现方式
         */
     }
 
