@@ -45,6 +45,11 @@ public class ListViewActivity extends Activity {
      * View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
      * totalHeight += listItem.getMeasuredHeight();
      * }
+     * 注意，用这种方法需要我们的listItem的高度要在最外层布局的内部布局指定，
+     * 因为istItem.measure，传入的参数的父布局指定的宽高，就是listitem最外层布局
+     * 的宽高，那么这是传0肯定是错的。
+     * FrameLayout->LinearLayout 我们要在LinearLayout中指定高度
+     *
      *
      * @param savedInstanceState
      */
