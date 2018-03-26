@@ -31,10 +31,21 @@ public class ListViewActivity extends Activity {
         }
         return totalHeight;
     }
+
     /**
      * 如果ScrollView包裹了listview，那么listview的高度就变为一个item的高度
      * 这个时候就必须手动测量出item的高度和，然后给listview设置高度
      * mGv.setLayoutParams(new LinearLayout.LayoutParams(mGv.getLayoutParams().width, totalHeight));
+     * <p>
+     * int totalHeight = 0;
+     * for (int i = 0; i < adapter.getCount(); i += add) {
+     * View listItem = adapter.getView(i, null, gv_rule);
+     * listItem.measure(
+     * View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+     * View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+     * totalHeight += listItem.getMeasuredHeight();
+     * }
+     *
      * @param savedInstanceState
      */
     @Override
@@ -42,7 +53,7 @@ public class ListViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
         CustomListView listview = (CustomListView) findViewById(R.id.listview);
-        if(listview==null){
+        if (listview == null) {
             return;
         }
 
@@ -54,12 +65,12 @@ public class ListViewActivity extends Activity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                if(convertView==null){
-                    convertView =new TextView(ListViewActivity.this);
+                if (convertView == null) {
+                    convertView = new TextView(ListViewActivity.this);
 //                    Log.i(TAG, "getView: 创建"+ ++count);
                 }
-                TextView tv= (TextView)convertView;
-                tv.setText(position+"");
+                TextView tv = (TextView) convertView;
+                tv.setText(position + "");
                 return tv;
             }
         });

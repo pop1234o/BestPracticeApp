@@ -1,12 +1,13 @@
 package com.liyafeng.practice;
 
+import android.animation.ObjectAnimator;
 import android.app.FragmentManager;
 import android.content.Context;
 
 public class AndroidFramework {
 
 
-    //region Android UI
+    //region Android UI绘制
 
     /**
      * =====================
@@ -97,6 +98,28 @@ public class AndroidFramework {
         * 首先用binder请求到ActivityManagerService ，然后会回调到本进程的
         * ActivityThread，在里面会通过反射方式new 出Activity的对象，然后会
         * 回调Activity的生命周期
+        */
+    }
+
+    /**
+     * invalidate和postInvalidate的区别及使用?
+     * */
+    public void a1_5(){
+        /*
+        * 他们都是用来发出信号来刷新UI的
+        * 区别是后者可以在字线程中调用
+        * 原理是调用了ViewRootImpl中的ViewRootHandler.post方法
+        */
+    }
+
+    /**
+     * Activity-Window-View三者的差别?
+     * */
+    public void a1_6(){
+        /*
+        * Activity中持有Window对象，他的实现类是PhoneWindow
+        * PhoneWindow中持有DecorView,DecorView是FrameLayout的子类
+        * 是真正显示视图的
         */
     }
 
@@ -258,7 +281,7 @@ public class AndroidFramework {
     /**
      * Activity与Fragment之间生命周期比较
      * https://developer.android.google.cn/guide/components/fragments.html
-     * {@link com.liyafeng.view.fragment.Main}
+     * @link com.liyafeng.view.fragment.Main}
      * */
     public void a3_2(Context context){
         /*
@@ -345,7 +368,7 @@ public class AndroidFramework {
      * 广播有几种注册方式？各有什么优点？
      * https://developer.android.google.cn/guide/components/broadcasts.html#receiving_broadcasts
      */
-    public void a7() {
+    public void a4() {
         /*
         * AndroidManifest中静态注册，代码中动态注册
         * 优点，代码注册的优先级比较高，而且有些隐式广播只能代码中注册
@@ -355,17 +378,72 @@ public class AndroidFramework {
         */
     }
 
+    /**
+     * 有哪些常见的系统广播
+     * */
+    public void a4_1(){
+        /*
+        * 系统开机
+        * 飞行模式
+        * 网络状态改变
+        *
+        */
+    }
+    
+    /**
+     * 本地广播和全局广播的差别?
+     * */
+    public void a4_2(){
+        /*
+        * 本地广播只能在本应用内传播，使用LocalBroadcastManager来注册和发送
+        */
+    }
     //endregion
 
     //region Service
 
+    /**
+     * 请描述一下Service 的生命周期?
+     * */
+    public void a5_1(){
+        /*
+        * start方式，onCreate ,onStartCommand ,onDestroy
+        * bind方式，onCreate,onBind  onUnBind ,
+        * 多次start 会调用多次startCommand()
+        * bind只能调用一次，否则抛异常
+        * bind后调用stop无效果
+        * start和bind可以不分顺序的调用
+        */
+    }
     //endregion
 
     //region ContentProvider
+
+    /**
+     * 谈谈你对ContentProvider的理解?
+     * https://developer.android.google.cn/guide/topics/providers/content-providers.html
+     * */
+    public void a6_1(){
+        /*
+        * 我们可以用这个组件来提供自己app的数据（CRUD操作），比如系统提供的音频，视频
+        * 相片，联系人，日历
+        *
+        */
+
+        // Queries the user dictionary and returns results
+//        mCursor = getContentResolver().query(
+//                UserDictionary.Words.CONTENT_URI,   // The content URI of the words table
+//                mProjection,                        // The columns to return for each row
+//                mSelectionClause                    // Selection criteria
+//                mSelectionArgs,                     // Selection criteria
+//                mSortOrder);                        // The sort order for the returned rows
+    }
     //endregion
 
 
     //endregion
+    
+
 
     //region Android 操作系统
     /**
@@ -431,6 +509,48 @@ public class AndroidFramework {
         */
     }
 
+    //endregion
+
+    //region Android动画
+    /**
+     * 估值器和差值器的区别
+     * https://blog.csdn.net/u012203641/article/details/77823949
+     * */
+    public void a11(){
+        /*
+        * 一个动画 过程是从0-1（100%） 匀速完成的，这个进度定义为 fraction（百分比）
+        * 差值器是重新计算这个fraction，
+        * 而估值器是计算当前百分比时，动画的属性值是多少
+        *
+        */
+    }
+    /**
+     * Android动画框架实现原理?
+     * https://blog.csdn.net/u012203641/article/details/77823949
+     * */
+    public void a11_1(){
+        /*
+        *
+        * 视图动画
+        * 原理就是调用invalidate（）方法，然后在View.draw的时候getAnimation
+        * 判断是否为null，如果不为null，则获取View的Transformation对象(转化对象)，
+        * 这个对象持有View画布的Matrix对象，最终在Animation中的applyTransformation()
+        * 方法中完成矩阵的转化，不同子类调用不同的Matrix方法。比如Rotate调用的是
+        * Matrix的旋转方法，这个方法是native的。然后如果动画没完成，会接着触发invalidate
+        * 就在draw中，有个more标记，如果为true，那么继续调用invalidate
+        *
+        * 属性动画，
+        * 从start()后，里面 Choreographer.getInstance();
+        * Choreographer = Coordinates the timing of animations, input and drawing.
+        * 我们将属性动画的回调加入到Choreographer中，然后post一个消息，
+        * 然后先调用我们属性动画的回调，调用View的setXXX来设置View的属性
+        * 然后Choreographer中还添加了draw的回调，所以就会刷新UI。
+        * 依然是判断时间有没有执行完，没有执行完就循环调用
+        *
+        */
+
+//        ObjectAnimator.ofFloat().start();
+    }
     //endregion
 
 }

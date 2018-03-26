@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.EditText;
+import android.widget.GridView;
 
 import java.lang.reflect.Method;
 
@@ -109,6 +111,25 @@ public class Util {
      */
     public static int getScreenHeight(Context context) {
         return context.getResources().getDisplayMetrics().heightPixels;
+    }
+
+
+    /**
+     * 获取高度
+     *
+     * @param adapter
+     * @return
+     */
+    public static int getListViewHeight(Adapter adapter, int add, GridView gv_rule) {
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i += add) {
+            View listItem = adapter.getView(i, null, gv_rule);
+            listItem.measure(
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        return totalHeight;
     }
 
 }

@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
      * 配置httpclient对象
      */
     private void requestVolley() {
+        //一般只创建一个RequestQueue，里面对应了一个缓存线程和多个网络请求线程
         requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest("http://www.liyafeng.com", new Response.Listener<String>() {
