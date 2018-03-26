@@ -1028,6 +1028,54 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
 
+    /**
+     * 描述一次网络请求的流程?
+     * */
+    public void a7_1(Context context){
+        /*
+        * 1, 请求dns
+        * 封装好http请求，用网络框架请求，比如Android原生的HttpUrlConnection
+        * 或者OkHttp（这些底层都是用的Socket来请求）
+        * 网络框架请求dns服务器，然后返回域名的ip地址
+        * 2,建立Tcp\ip连接
+        * 通过三次握手来确认双方都准备好接收和发送请求了。
+        * 3.发起请求
+        * 然后用Tcp/ip协议（Socket实现）请求对方ip，
+        * 经过Socket封包，根据TCP协议封包，根据Ip协议封包，传入数据链路层
+        * 我们的网卡会将请求，通过网线或者WiFi发到路由，然后路由通过转发
+        * 达到指定ip的主机，主机通过拆包，发给指定 进程（比如tomcat）（它监听了端口号）
+        * 4.接收到请求和返回响应
+        * 这个进程接收到数据后进行拆包，最终返回http请求交给上层应用处理
+        * 处理完后将结果写入响应流，客户端接收到响应流
+        * 5.结束Tcp\ip连接
+        *  用四次挥手，服务端释放连接资源（节省内存）
+        *
+        */
+        context.getResources().getDrawable(R.drawable.http);
+    }
+
+    /**
+     * 说说三次握手和四次挥手？为什么要这样做？
+     * https://github.com/jawil/blog/issues/14
+     * */
+    public void a7_2(){
+        /*
+        *
+        */
+    }
+    
+    /**
+     * HttpUrlConnection 和 okhttp关系?
+     *
+     * http://www.maplejaw.com/2016/07/22/HttpURLConnection-%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/
+     * */
+    public void a7_3(){
+        /*
+        * 都是实现Http协议的网络请求框架，
+        * HttpURLConnection是个抽象类，android4.4后
+        * HttpURLConnection使用OkHttp来实现的。
+        */
+    }
     //endregion
 
     //region JVM知识

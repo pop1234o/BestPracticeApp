@@ -29,6 +29,9 @@ public class AndroidFrame {
         *  mCacheQueue, mNetworkQueue,这两个都是存放请求对象的对方，是 PriorityBlockingQueue
         *
         * }
+        *
+        * Request=>RetryPolicy 这个是重试策略，一般设置超时时间
+        *    当请求超时的时候，我们会调用这个方法
         * RequestQueue中、会判断这个请求（的响应）是否可以用缓存
         *      如果不可以，直接加入网络请求队列（这是个优先队列），然后
         *   直接从网络获取响应

@@ -89,18 +89,7 @@ public class AndroidFramework {
 
     }
 
-    /**
-     * Activity的加载流程
-     * http://www.liyafeng.com/c/Android_APIstartActivity流程分析
-     */
-    public void a1_4() {
-        /*
-        * 首先用binder请求到ActivityManagerService ，然后会回调到本进程的
-        * ActivityThread，在里面会通过反射方式new 出Activity的对象，然后会
-        * 回调Activity的生命周期
-        */
-    }
-
+  
     /**
      * invalidate和postInvalidate的区别及使用?
      * */
@@ -123,6 +112,17 @@ public class AndroidFramework {
         */
     }
 
+    /**
+     * Bitmap对象的理解?
+     * 如何计算一张图片的大小？
+     * 如何高效加载一张大图？
+     * https://developer.android.google.cn/topic/performance/graphics/index.html
+     * */
+    public void a1_7(){
+        /*
+        *
+        */
+    }
     //endregion
 
     //region Android 内存/虚拟机
@@ -359,6 +359,17 @@ public class AndroidFramework {
         */
     }
 
+    /**
+     * Activity的加载流程
+     * http://www.liyafeng.com/c/Android_APIstartActivity流程分析
+     */
+    public void a3_11() {
+        /*
+        * 首先用binder请求到ActivityManagerService ，然后会回调到本进程的
+        * ActivityThread，在里面会通过反射方式new 出Activity的对象，然后会
+        * 回调Activity的生命周期
+        */
+    }
 
     //endregion
 

@@ -8,11 +8,11 @@ package com.liyafeng.network;
  *
  * Tcp/ip五层网络模型/架构
  *
- * (application layer)  http   请求头、响应头  https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview
- * (network layer)      tcp / udp   3次握手/4次挥手  syn攻击       https://hit-alibaba.github.io/interview/basic/network/TCP.html
- * (transport layer)    ip
- * (data link layer)    wifi/网卡
- * (phycial layer)      网线
+ * 应用层(application layer)  http   请求头、响应头  https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview
+ * 网络层(network layer)      tcp / udp   3次握手/4次挥手  syn攻击       https://hit-alibaba.github.io/interview/basic/network/TCP.html
+ * 传输层(transport layer)    ip
+ * 数据链路层(data link layer)    wifi/网卡
+ * 物理层(phycial layer)      网线
  *
  * tcp/ip下面就是网卡，上面就是http (application layer)
  *
