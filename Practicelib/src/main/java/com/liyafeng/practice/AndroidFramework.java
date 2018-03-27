@@ -89,11 +89,11 @@ public class AndroidFramework {
 
     }
 
-  
+
     /**
      * invalidate和postInvalidate的区别及使用?
-     * */
-    public void a1_5(){
+     */
+    public void a1_5() {
         /*
         * 他们都是用来发出信号来刷新UI的
         * 区别是后者可以在字线程中调用
@@ -103,8 +103,8 @@ public class AndroidFramework {
 
     /**
      * Activity-Window-View三者的差别?
-     * */
-    public void a1_6(){
+     */
+    public void a1_6() {
         /*
         * Activity中持有Window对象，他的实现类是PhoneWindow
         * PhoneWindow中持有DecorView,DecorView是FrameLayout的子类
@@ -116,12 +116,131 @@ public class AndroidFramework {
      * Bitmap对象的理解?
      * 如何计算一张图片的大小？
      * 如何高效加载一张大图？
+     * 如何高效加载多张张图片，比如在ListView或ViewPager中？
+     * 图片放在不同dpi路径下的区别？
      * https://developer.android.google.cn/topic/performance/graphics/index.html
-     * */
-    public void a1_7(){
+     */
+    public void a1_7() {
         /*
+        * =========Bitmap对象的理解?==============================
+        * https://developer.android.google.cn/topic/performance/graphics/manage-memory.html
+        * 每个api版本不同，bitmap存放的位置也不同
+        * 在3.0以前，bitmap的像素信息存储在native memory中，而bitmap对象存储在 Dalvik heap中
+        * 所以我们必须要调用recycle（）方法来释放bitmap的像素数据（因为GC只会回收Heap）
+        *
+        * 3.0以后，pixel data 和 bitmap对象都存储在Dalvik heap中，这个时候我们就不必调用recycle
+        * Gc会自动回收了。
+        *
+        * 8.0开始，pixel data存到了 native heap中
+        * ------------重用bitmap-----------------
+        * https://developer.android.google.cn/reference/android/graphics/BitmapFactory.Options.html#inBitmap
+        * 每次都要为像素数据 申请内存空间，而被回收的bitmap的内存空间又要被回收，
+        * 那么我们可以通过 BitmapFactory.Options.inBitmap 属性来设置重用的bitmap
+        * 1.我们将LruCache中废弃的Bitamp对象存入一个Set<SoftReference<Bitmap>>，而且要是
+        * 软引用的（以便于系统回收），然后我们下次加载图片的时候（用decodeXX方法），
+        * 我们将要加载图片的大小获取到，然后从Set中找到合适的Bitmap
+        * （在4.4以下，他们的宽高必须相同，4.4以上，要加载图片的bitmap大小要小于缓存的Bitmap的）
+        *   options.inMutable = true;
+        *   if (cache != null) {
+        *     Bitmap inBitmap = cache.getBitmapFromReusableSet(options);
+        *     if (inBitmap != null) {
+        *         options.inBitmap = inBitmap;
+        *     }
+        *    }
+        * 我们用这个options去decode Bitmap，那么系统就不会新申请内存了，就用以前的了。
+        *
+        * =============如何计算一张图片的大小？==================
+        * 512x384分辨率的图片，如果按ARGB_8888 来加载，那么每个像素需要4个字节，
+        * 因为每8位表示透明、red green blue ，所以一个像素需要32位表示，就是4个字节
+        * 那么图片加入到内存总大小就是，512x384*4 byte = 0.75Mb
+        *
+        * ===========如何高效加载一张大图？=======================
+        * https://developer.android.google.cn/topic/performance/graphics/load-bitmap.html
+        * 做法就是设置只加载图片的大小
+        * BitmapFactory.Options options = new BitmapFactory.Options();
+        *   options.inJustDecodeBounds = true;
+        *   BitmapFactory.decodeResource(getResources(), R.id.myimage, options);
+        *   int imageHeight = options.outHeight;
+        *   int imageWidth = options.outWidth;
+        *   String imageType = options.outMimeType;
+        *
+        * 比如我们要加载到200*200像素的imageview中，那么图片像素是200*200就正好
+        * 获取到原始宽高后，我们需要根据显示的分辨率来设置图片的加载大小
+        * 设置正确的inSampleSize，就会加载指定大小的图片
+        * 这样我们就能控制一张图片加载到内存中的大小了，就避免了OOM
+        *
+        * ==========================如何高效加载多张张图片，比如在ListView或ViewPager中？=====================================
+        * 在listview中使用LruCache（内存缓存），我们设置lruCache的大小原则，一般
+        * 是jvm为我们可分配最大内存的1/8
+        *
+        *   final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        *   final int cacheSize = maxMemory / 8;
+        *   mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+        *       @Override
+        *       protected int sizeOf(String key, Bitmap bitmap) {
+        *           return bitmap.getByteCount() / 1024;//这里要返回kb
+        *       }
+        *   };
+        * 使用LruCache可以使得ListView滑动加载图片更流畅
+        * 但是只有内存缓存是不建议的，一个是如果我们又很多图片要缓存，那么可能会引起OOM
+        * 而且此时来了一个电话，然后此时我们的app被kill掉了，那么内存缓存就没有了，
+        * 我们又要从新decode图片了，所以，这个时候我们应该用DiskLruCache
+        * 他比正常加载更快（但是比内存加载慢），
+        *
+        * 所以，多图加载的优化，对于大小我们还是用上面的inSampleSize来解决，
+        * 加载完毕后，我们分别加入LruCache和DiskLruCache，然后取得时候我们
+        * 依次从里面取，这种比从新将图片转化为bitmap要快。（这种算是显示速度
+        * 的优化）
+        *
+        *
+        * =======================图片放在不同dpi路径下的区别？=====================
+        * 系统会比较 设备屏幕的dpi ，和图片所在的dpi，将图片进行缩放（加载到内存的
+        * 大小会不同），尽量放在高dpi下，如果放在低dpi下，那么在高dpi屏幕下就会
+        * 放大，导致内存占用增加
+        *
         *
         */
+
+        //获取采样率(缩放比例)
+      /*  public static int calculateInSampleSize(
+                BitmapFactory.Options options, int reqWidth, int reqHeight) {
+            // Raw height and width of image
+            final int height = options.outHeight;
+            final int width = options.outWidth;
+            int inSampleSize = 1;
+
+            if (height > reqHeight || width > reqWidth) {
+
+                final int halfHeight = height / 2;
+                final int halfWidth = width / 2;
+
+                // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+                // height and width larger than the requested height and width.
+                while ((halfHeight / inSampleSize) >= reqHeight
+                        && (halfWidth / inSampleSize) >= reqWidth) {
+                    inSampleSize *= 2;
+                }
+            }
+
+            return inSampleSize;
+        }*/
+
+        //加载指定宽高的图片
+        /*public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+        int reqWidth, int reqHeight) {
+
+            // First decode with inJustDecodeBounds=true to check dimensions
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeResource(res, resId, options);
+
+            // Calculate inSampleSize
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+            return BitmapFactory.decodeResource(res, resId, options);
+        }*/
     }
     //endregion
 
@@ -195,6 +314,7 @@ public class AndroidFramework {
 
 
     //region Activity/Fragment
+
     /**
      * 1.Activity 生命周期的理解？
      * 2.横竖屏切换时的生命周期？如何配置?
@@ -205,8 +325,8 @@ public class AndroidFramework {
      * 7.永久性质的数据，应该在哪个生命周期方法中保存?
      * https://developer.android.google.cn/guide/components/activities.html
      * https://developer.android.google.cn/guide/components/activities/activity-lifecycle.html#java
-     * */
-    public void a3_1(){
+     */
+    public void a3_1() {
         /*
         * =============1==========================
         * onCreate() 设置布局，初始化变量，接收Bundle来恢复Activity
@@ -281,9 +401,10 @@ public class AndroidFramework {
     /**
      * Activity与Fragment之间生命周期比较
      * https://developer.android.google.cn/guide/components/fragments.html
+     *
      * @link com.liyafeng.view.fragment.Main}
-     * */
-    public void a3_2(Context context){
+     */
+    public void a3_2(Context context) {
         /*
         * Fragment生命周期是FragmentManager来控制的
         * 他本质上还是inflate了布局，然后addView的方式加入到Activity的布局中
@@ -299,8 +420,8 @@ public class AndroidFramework {
      * Activity的四种启动模式对比? 回退栈有什么用？
      * https://developer.android.google.cn/guide/components/activities/tasks-and-back-stack.html
      * https://blog.csdn.net/u012203641/article/details/77408342
-     * */
-    public void a3_6(){
+     */
+    public void a3_6() {
         /*
         * https://blog.csdn.net/u012203641/article/details/77408342
         */
@@ -309,8 +430,8 @@ public class AndroidFramework {
     /**
      * 进程的四种状态？内存低的时候Android系统是如何管理进程的？
      * https://developer.android.google.cn/guide/components/activities/process-lifecycle.html
-     * */
-    public void a3_7(){
+     */
+    public void a3_7() {
         /*
         * 1.前台进程，
         * 这个进程中有一个resume的Activity，
@@ -331,29 +452,29 @@ public class AndroidFramework {
         * 一般优先回收的是最久没有用过的进程。
         */
     }
-    
+
     /**
      * Fragment状态保存startActivityForResult是哪个类的方法，在什么情况下使用？
-     * */
-    public void a3_8(){
+     */
+    public void a3_8() {
         /*
         * 有个回调是在FragmentActivity中调用的，
         */
     }
-    
+
     /**
      * 如何实现Fragment的滑动？
-     * */
-    public void a3_9(){
+     */
+    public void a3_9() {
         /*
         * 用ViewPager
         */
     }
-    
+
     /**
      * fragment之间传递数据的方式？
-     * */
-    public void a3_10(){
+     */
+    public void a3_10() {
         /*
         * 可以通过Activity来传递，也可以用EventBus的实现方式
         */
@@ -391,8 +512,8 @@ public class AndroidFramework {
 
     /**
      * 有哪些常见的系统广播
-     * */
-    public void a4_1(){
+     */
+    public void a4_1() {
         /*
         * 系统开机
         * 飞行模式
@@ -400,11 +521,11 @@ public class AndroidFramework {
         *
         */
     }
-    
+
     /**
      * 本地广播和全局广播的差别?
-     * */
-    public void a4_2(){
+     */
+    public void a4_2() {
         /*
         * 本地广播只能在本应用内传播，使用LocalBroadcastManager来注册和发送
         */
@@ -415,8 +536,8 @@ public class AndroidFramework {
 
     /**
      * 请描述一下Service 的生命周期?
-     * */
-    public void a5_1(){
+     */
+    public void a5_1() {
         /*
         * start方式，onCreate ,onStartCommand ,onDestroy
         * bind方式，onCreate,onBind  onUnBind ,
@@ -433,8 +554,8 @@ public class AndroidFramework {
     /**
      * 谈谈你对ContentProvider的理解?
      * https://developer.android.google.cn/guide/topics/providers/content-providers.html
-     * */
-    public void a6_1(){
+     */
+    public void a6_1() {
         /*
         * 我们可以用这个组件来提供自己app的数据（CRUD操作），比如系统提供的音频，视频
         * 相片，联系人，日历
@@ -453,7 +574,6 @@ public class AndroidFramework {
 
 
     //endregion
-    
 
 
     //region Android 操作系统
@@ -523,11 +643,12 @@ public class AndroidFramework {
     //endregion
 
     //region Android动画
+
     /**
      * 估值器和差值器的区别
      * https://blog.csdn.net/u012203641/article/details/77823949
-     * */
-    public void a11(){
+     */
+    public void a11() {
         /*
         * 一个动画 过程是从0-1（100%） 匀速完成的，这个进度定义为 fraction（百分比）
         * 差值器是重新计算这个fraction，
@@ -535,11 +656,12 @@ public class AndroidFramework {
         *
         */
     }
+
     /**
      * Android动画框架实现原理?
      * https://blog.csdn.net/u012203641/article/details/77823949
-     * */
-    public void a11_1(){
+     */
+    public void a11_1() {
         /*
         *
         * 视图动画
