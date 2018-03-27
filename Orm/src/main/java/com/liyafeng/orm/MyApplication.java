@@ -1,6 +1,7 @@
 package com.liyafeng.orm;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
 
 /**
@@ -14,5 +15,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
     }
 }

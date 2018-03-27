@@ -2,6 +2,8 @@ package com.liyafeng.practice;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Adapter;
@@ -130,6 +132,25 @@ public class Util {
             totalHeight += listItem.getMeasuredHeight();
         }
         return totalHeight;
+    }
+
+
+    /**
+     * 获取一个像素多少字节
+     * @param config
+     * @return
+     */
+    static int getBytesPerPixel(Config config) {
+        if (config == Config.ARGB_8888) {
+            return 4;
+        } else if (config == Config.RGB_565) {
+            return 2;
+        } else if (config == Config.ARGB_4444) {
+            return 2;
+        } else if (config == Config.ALPHA_8) {
+            return 1;
+        }
+        return 1;
     }
 
 }

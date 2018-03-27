@@ -1,7 +1,5 @@
 package com.liyafeng.practice;
 
-import android.animation.ObjectAnimator;
-import android.app.FragmentManager;
 import android.content.Context;
 
 public class AndroidFramework {
@@ -597,6 +595,88 @@ public class AndroidFramework {
          */
     }
 
+    /**
+     * looper架构?
+     * */
+    public void a8_1(){
+        /*
+        * Handler=》{Looper } Handler只能在有Looper的线程创建（主线程已经在初始化的时候就已经创建Looper了）
+        * Looper=>{MessageQueue}
+        * 在创建Handler是，获取 Looper.myLooper();里面用的ThreadLocal来保证每个线程取出各自的Looper
+        *
+        * Looper.prepare();//给这个线程创建一个Looper，然后放到ThreadLocal中
+        * Looper.loop();//从MessageQueue中取Message，如果没有，就阻塞（用的native方法）
+        * //取出来后调用 msg.target.dispatchMessage(msg);target就是Handler
+        * dispatchMessage 内部调用handleMessage方法
+        *
+        * sendMessage();将msg加入到MessageQueue中（这是一个链表的形式存储）
+        * ----------------------------------------
+        * 这个Handler思想还是一个线程中的轮训器去取 消息队列中的Message
+        * 没有就阻塞。Handler绑定这个Looper，然后向他的MessageQueue中插入消息
+        *
+        * 一个线程只能有一个Looper,否则抛出异常
+        *
+        */
+    }
+    
+    
+    /**
+     * 说说App启动流程？
+     * (点下App图标后到界面显示都发生了什么？)
+     * 为什么点击home app退到后台，再次点击图标，不会再次启动app？
+     * https://www.jianshu.com/p/a5532ecc8377
+     * https://blog.csdn.net/luoshengyang/article/details/6689748
+     * */
+    public void a8_2(Context context){
+        /*
+        * 桌面也是一个应用，里面收集了所有应用的信息（可以用
+        * PackageManager.qureyActivities 来搜索所有 launch页面）
+        * 然后获取到包名,当我们点击的时候 桌面应用启动指定包名的启动页（指定intent的action和category）
+        * 到此，后面就是我们开启一个Activity（startActivity方法）所发生的事情了
+        * ----------------------
+        * http://www.liyafeng.com/c/Android_APIstartActivity%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90
+        * 这个时候交给ActivityManagerService，然后判断这个进程是否存在，如果不存在
+        * 则用ZygoteProcess,来start一个进程。 里面用的fork命令来 开启一个新的进程
+        * 然后新进程的入口就是，com.android.server.SystemServer中的main()方法，
+        * 里面调用了createSystemContext();方法中调用了ActivityThread.systemMain()
+        * 这个方法中new ActivityThread(),这时被创建了，ApplicationThread是在ActivityThread创建的时候就被创建了（成员变量直接new的）
+        * 紧接着调用attach方法，里面通过反射创建了Application对象，
+        *
+        * 总结一下
+        * 1,launcher调用startActivity
+        * 2,ActivityMangerService将launcher进入pause状态
+        * 3.ActivityMangerService判断进程是否启动，没有启动则调用Process.start()来开启一个进程
+        * 4.启动进程后dalvik会调用SystemServer.main()方法，这个方法中创建ActivityThread，继而创建ApplicationThread
+        * 5,ApplicationThread绑定到ActivityManagerService中？？？
+        * 6.ActivityManagerService执行创建Application对象,调用onCreate()，启动Activity，调用他的onCreate()
+        */
+        context.getResources().getDrawable(R.drawable.app_launch);
+        context.getResources().getDrawable(R.drawable.app_launch_flow);
+        context.getResources().getDrawable(R.drawable.app_launch_flow_2);
+        context.getResources().getDrawable(R.drawable.app_launch_flow_3);
+        context.getResources().getDrawable(R.drawable.app_launch_start_activity);
+    }
+    
+    /**
+     * 说说Android系统开机流程
+     * */
+    public void a8_3(){
+        /*
+        *
+        */
+    }
+
+    /**
+     * Android源码下载，编译，导入Studio预览？
+     * http://wl9739.github.io/2016/05/09/Android%E6%BA%90%E7%A0%81%E7%9A%84%E4%B8%8B%E8%BD%BD%E3%80%81%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AF%BC%E5%85%A5%E5%88%B0Android-Studio/
+     *
+     * http://kaedea.com/2016/02/09/android-about-source-code-how-to-read/
+     * */
+    public void a8_4(){
+        /*
+        *
+        */
+    }
     //endregion
 
     //region Android 架构模式
