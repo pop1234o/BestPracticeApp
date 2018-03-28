@@ -87,8 +87,8 @@ public class AndroidFramework {
         * ===========================================
         * layout的目的就是计算出view相对于父布局左上角的left top right bottom
         *
-        *====================================================
-        *
+        * ====================================================
+        * 父布局根据子View的 位置，将画布剪裁，调用child.draw方法
         */
     }
 
@@ -917,13 +917,30 @@ public class AndroidFramework {
     }
 
     /**
-     * RecycleView原理?
+     * ListView原理？RecycleView原理?
      * */
     public void a1_13(){
         /*
-        * 
+        * 本质上就是在layout的时候，遍历子view，然后子view.measure,layout,
+        * 第一个view从顶部开始，第二个就是第一个的height开始layout，
+        * 然后滑动的时候判断当前滑动的距离，判断出第一个view是否滚出屏幕
+        * 如果滚出屏幕，那么根据类型回收到对应的列表中，下面判断是否有gap(空隙)
+        * 如果有空隙，那么obtainView，先从缓存中取，如果没有就新创建一个
+        *========================================
+        * RecyclerView自动实现了使用缓存，他是如果存在缓存，就调用onBindViewHolder(Holder holder, int position)
+        * 如果不存在就调用 Holder onCreateViewHolder(ViewGroup parent, int viewType)
+        * ==========================
+        * 他们都使用了适配器模式，数据转换为View返回
+        * 和观察者模式 BaseAdapter中持有被观察者，当数据发生改变，调用notify的时候，
+        * 通知观察者，这个观察者就是AdapterView中持有的 AdapterDataSetObserver对象(在ListView中初始化的)
+        * AdapterDataSetObserver这个类是AdapterView的内部类。
+        * 然后里面调用了requestLayout()
+        *
+        *
         */
     }
+
+
     //endregion
 
     //region Android 架构模式
