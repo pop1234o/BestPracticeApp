@@ -3,6 +3,7 @@ package com.liyafeng.practice;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.Handler;
 
 public class AndroidFramework {
@@ -69,6 +70,27 @@ public class AndroidFramework {
         */
     }
 
+    /**
+     * 说说onMeasure,onLayout，onDraw都发生了什么？
+     * MeasureSpec三种模式的理解？UNSPECIFIED、EXACTLY、AT_MOST
+     * */
+    public void a1_3(){
+        /*
+        * 最外层ViewRoot调用根布局的，measureChildren方法（ViewGroup的），
+        * 然后遍历子View，调用他们的measure()方法，这个方法中调用onMeasure方法
+        * 如果子View是ViewGroup的话，那么所有的ViewGroup都重写了onMeasure方法来定义自己如何测量自己的
+        * 子View。。如果是View，那么直接调用指定View的onMeasure.一般是父布局，减去自己的padding，然后
+        * 获取子View的layoutParam，然后计算出View应该有的大小，传到measure中，然后再调用onMeasure（如此循环）
+        * ----------------------
+        * onMeasure的目的就是计算出measureHeight和measureWidth
+        *
+        * ===========================================
+        * layout的目的就是计算出view相对于父布局左上角的left top right bottom
+        *
+        *====================================================
+        *
+        */
+    }
 
 
 
@@ -805,7 +827,103 @@ public class AndroidFramework {
         */
 
     }
+
+    /**
+     * SpareArray作用？原理?
+     * */
+    public void a8_8(){
+        /*
+        ===============作用=================
+        * 他是用来代替HashMap的，他的Key是int ,value是T类型
+        * 因为我们用HashMap.put(1,object),那么这个1就要转化为Integer对象
+        * 如果频繁调用就会产生大量的 Integer对象，会造成频繁的gc，降低效率
+        *
+        * ==============原理==============
+        * 他有两个数组，key[] value[] ,我们用二分法查找key，
+        * put的时候，查找key存不存在，如果存在index>=0  ,
+        * 那么就替换value[index] = newObject;
+        * 如果不存在就插入到 ~index处。
+        *
+        * 当然空间不足的时候，会分配一个当前size 2倍的int[]空间，然后将原来的数据copy过去
+        *
+        */
+    }
+
+    /**
+     * IntentService作用？原理？
+     * */
+    public void a8_9(){
+        /*
+        * ===============作用====================
+        * 作用是开启一个带子线程的Service，我们重写onHandleIntent方法在子线程中执行我们的任务
+        * ==================原理===============
+        * 里面使用的HandlerThread，然后new 了一个Handler 使用了HandlerThread的Looper
+        */
+    }
+
+
+    /**
+     * Application的Context 和 Activity的Context 的区别?
+     * */
+    public void a8_10(){
+        /*
+        * Application的的生命周期和应用相同，Activity的生命周期和Activity相同
+        * ==============
+        * Activity的Context是在Activity开启的时候创建的。是在ActivityThread
+        * 的handleLaunchActivity()中，context = new ContextImpl()，然后创建Activity
+        * activity.attach(context ...) 然后这个是ContextWrapper中的真正的Context
+        * ==================
+        * Application的创建是在ActivityThread的handleLaunchActivity中，里面有获取
+        * application，如果为null,先new ContextImpl()，然后获取 Application的的类名
+        * 默认是“android.app,Application”，通过反射创建实例，然后app.attach(context)
+        * =================
+        * 所以我们看出，这个Context是随着Activity对象，或者Application对象有着同样的生命周期
+        *
+        */
+    }
+
     
+    /**
+     * Android中存储数据的几种方式？
+     * SP是进程同步的吗?有什么方法做到同步？
+     * https://developer.android.google.cn/guide/topics/data/data-storage.html
+     * */
+    public void a8_11(){
+        /*
+        * SharedPreferences
+        * 使用file，（我们可以获取到getCacheDir内部的目录） Environment.getDataDirectory()（外部目录）
+        *                   getExternalFilesDir()
+        *                   区别 https://developer.android.google.cn/training/data-storage/files.html
+        * 数据库
+        * 网络
+        * ContentProvider
+        *
+        * FileProvider共享文件 https://developer.android.google.cn/training/secure-file-sharing/index.html
+        *
+        * =================SP是进程同步的吗?有什么方法做到同步？============================
+        * https://www.jianshu.com/p/875d13458538 使用ContentProvider代替
+        *
+        */
+
+    }
+    /**
+     * 说说WindowManager?PackManager?LayoutInflater?
+     * */
+    public void a8_12(){
+        /*
+        * 很多服务都是在PolicyManager中的静态方法块，中初始化的，是直接new出来
+        * 存入到hashMap中????
+        */
+    }
+
+    /**
+     * RecycleView原理?
+     * */
+    public void a1_13(){
+        /*
+        * 
+        */
+    }
     //endregion
 
     //region Android 架构模式

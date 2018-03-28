@@ -82,6 +82,11 @@ public class CustomListView extends ViewGroup {
         }
     }
 
+    /**
+     * @param firstpos 第一个item的位置
+     * @param nextTop  下一个item的顶部位置
+     * @return
+     */
     private View makeAndAddView(int firstpos, int nextTop) {
         View scrapView = recycleBin.getScrapView();
         View view = adapter.getView(firstpos, scrapView, this);
@@ -117,7 +122,7 @@ public class CustomListView extends ViewGroup {
 
     public class RecycleBin {
         //        public ArrayList<View> activeView;
-        public ArrayList<View> scrapView;
+        public ArrayList<View> scrapView; //废弃的View的集合
 
         public RecycleBin() {
 //            activeView=  new ArrayList<>();
