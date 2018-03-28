@@ -7,8 +7,11 @@ import com.liyafeng.concurrent.util.Executors;
  *
  * 一个具体的RunnableFuture （可run,可get()结果）的对象
  *
- * 内部持有一个Callsble对象，使用阻塞，激活的方式来实现get()
+ * 内部持有一个Callable对象，使用阻塞，激活的方式来实现get()
  * callable对象来返回任务运行的结果
+ *
+ *  这样就实现了Feature的get()阻塞获取结果的特性
+ *  也实现了Runnable 可以在子线程run的特性
  *
  * 可以说futuretask是集Runnable，Future，Callable三者的特性
  */

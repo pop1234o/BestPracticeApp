@@ -1,6 +1,9 @@
 package com.liyafeng.practice;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Handler;
 
 public class AndroidFramework {
 
@@ -66,36 +69,22 @@ public class AndroidFramework {
         */
     }
 
-    /**
-     * Android 动画原理 、底层如何给上层信号？
-     */
-    public void a1_3() {
-        /*
-        * 分为 1.补间动画（tween 屯，两者之间）2.属性动画(attribute) 3.帧动画 frame
-        *
-        * 补间动画实际上操作的是canvas的matrix ，属性动画操作view的属性，有get set方法的属性
-        * 帧动画就是一帧帧图片播放
-        *
-        * 他们都原理都是记录动画的执行时间，判断当前时间动画有没有结束，如果没有结束
-        * 就调用invalidate方法进行重绘，一次次的重绘，改变位置，就会形成动画效果
-        *
-        * 给上层信号调用自身的的invalidate方法，里面调用父布局的invalidateChildInParent
-        * 这里有一个while循环，会一直取父布局（的引用），直到调用viewrootimpl的invalidateChildInParent
-        * 里面会调用scheduleTraversals()执行遍历，遍历调用view树的ondraw，这样就会刷新view的视图
-        *
-        * */
 
-    }
 
 
     /**
      * invalidate和postInvalidate的区别及使用?
+     * 如何刷新layout?
      */
     public void a1_5() {
         /*
-        * 他们都是用来发出信号来刷新UI的
+        * 他们都是用来发出信号来刷新UI的,只重写调用onDraw方法
         * 区别是后者可以在字线程中调用
         * 原理是调用了ViewRootImpl中的ViewRootHandler.post方法
+        * =================如何刷新layout?========================
+        * requestLayout()
+        *
+        *
         */
     }
 
@@ -240,6 +229,27 @@ public class AndroidFramework {
             return BitmapFactory.decodeResource(res, resId, options);
         }*/
     }
+
+
+    /**
+     * 1 如何自定义View?
+     * 2 自定义View如何考虑机型适配?
+     * 3 自定义View的事件如何处理？
+      * */
+    public void a1_8(){
+        /*
+        * =================如何自定义View===================
+        *
+        * =====================自定义View如何考虑机型适配?======================
+        * 获取屏幕分辨率，从新进行onLayout，
+        * ===========自定义View的事件如何处理？=========================
+        * 重写onTouchEvent(),根据业务需求返回true，进行事件消费
+        *
+        */
+    }
+
+
+
     //endregion
 
     //region Android 内存/虚拟机
@@ -677,6 +687,125 @@ public class AndroidFramework {
         *
         */
     }
+
+    /**
+     * AsyncTask 如何使用?原理？
+     * */
+    @SuppressLint("StaticFieldLeak")
+    public void a8_5(){
+        /*
+        * AsyncTask 持有 static的 线程池，和 static的 Handler(Looper是主线程的)
+        *  还有非静态的 WorkerRunnable（是个Callable），一个FutureTask（持有WorkerRunnable）
+        * WorkerRunnable中的call()是真正执行doBackground的地方，随后将结果用Handler
+        * 发到主线程，执行onPostExecute(Result s);
+        *
+        * 执行了execute后，将我们传入的参数 赋给 WorkerRunnable中的Param[] ,然后
+        * WorkerRunnable中调用doBackground(params) ，
+        * --------------------
+        * 我们需要在doBackground中调用publishProgress(Progress... p)方法，来回调onProgressUpdate
+        * 这个也是通过Handler发送到主线程的
+        *
+        * ======================================
+        * 总结，一个AsyncTask对应一个FutureTask+Callable， 执行，传入参数
+        * 用静态的线程池执行FutureTask，调用Callable中的call，调用doBackground
+        * 返回结果后，用静态的Handler发送结果到主线程，执行onPostExecute
+        *
+        *
+        *
+        */
+        new AsyncTask<Integer,Double,String>(){
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected void onProgressUpdate(Double... values) {
+                super.onProgressUpdate(values);
+            }
+
+            @Override
+            protected String doInBackground(Integer... integers) {
+                //后台处理
+                String s= "";
+                for (Integer integer : integers) {
+                    s+=integer;
+                }
+                return s;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                System.out.println(s);
+            }
+        }.execute(1,2,3);//传入元素数据
+
+         AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+    }
+    
+    
+    /**
+     * ThreadLocal作用？原理？
+     * */
+    public void a8_6(){
+        /*
+        * ThreadLocal中有静态内部类，ThreadLocalMap
+        * 不同ThreadLocal实例 对应不同的值。
+        * ============作用===========
+        * 创建 线程唯一 的变量，就是一个线程对应一个变量，相互不冲突
+        * ============原理============
+        * 我们调用set方法为线程设置 变量值，
+        * Thread中有成员变量，ThreadLocalMap，ThreadLocalMap里面有个一个Entry[]
+        * 里面存放着每个ThreadLocal实例对应的Entry，Entry中有value值。
+        * ------
+        * 我们set(value)的时候，判断当前线程有没有ThreadLocalMap，如果没有，那么new一个
+        * ，将value和ThreadLocal实例放入构造方法
+        * 如果Thread中存在ThreadLocalMap对象，那么直接调用ThreadLocalMap对象的set(ThreadLocal,value)
+        * 方法。
+        *
+        * get()方法，获取当前Thread的ThreadLocalMap对象，如果存在，调用map.getEntry(TheadLocal this)
+        * 方法，那么entry.value就是要取出的值了
+        *    如果不存在，那么调用setInitialValue()，里面调用initialValue()来获取默认值（我们可以重写这个方法）
+        *    这个方法默认返回null。然后同上面一样，new 一个ThreadLocalMap（ThreadLocal,value），
+        *    然后赋值给Thread的变量。
+        * ================通过ThreadLocal这个key用的什么算法找到对应的Entry？===============================
+        * 用的是线性探测法的散列表形式来找到对应的Entry.
+        * 计算hash值得方法就是 threadLocal.threadLocalHashCode & (len-1)
+        * threadLocalHashCode是用ThreadLocal中的一个静态的AtomicInteger.getAndAdd(HASH_INCREMENT)
+        * 每次创建都赋给TheadLoacl对象不同的 hashcode
+        *
+        */
+    }
+    
+    /**
+     * HandlerThread 作用？原理？
+     * */
+    public void a8_7(){
+        /*
+        * HandlerThread是Thread的一个子类，也是一个线程，
+        * 我们开启这个线程，调用getThreadHandler(),用这个Handler发送的消息
+        *  getThreadHandler().post(new Runnable() {
+        *   @Override
+        *   public void run() {
+        *       //在子线程中执行
+        *   }
+        * })
+        *
+        * 或者
+        * new Handler(handlerThread.getLooper())这个handler发送的消息就是子线程中执行的
+        * handleMessage()
+        * =====================原理===================
+        * 就是在子线程中Looper.prepare(), Looper.loop(),这样从
+        * MessageQueue中取出的消息就在当前线程中执行了
+        */
+
+    }
+    
     //endregion
 
     //region Android 架构模式
@@ -763,6 +892,27 @@ public class AndroidFramework {
         */
 
 //        ObjectAnimator.ofFloat().start();
+    }
+
+    /**
+     * Android 动画原理 、底层如何给上层信号？
+     */
+    public void a11_2() {
+        /*
+        * 分为 1.补间动画（tween 屯，两者之间）2.属性动画(attribute) 3.帧动画 frame
+        *
+        * 补间动画实际上操作的是canvas的matrix ，属性动画操作view的属性，有get set方法的属性
+        * 帧动画就是一帧帧图片播放
+        *
+        * 他们都原理都是记录动画的执行时间，判断当前时间动画有没有结束，如果没有结束
+        * 就调用invalidate方法进行重绘，一次次的重绘，改变位置，就会形成动画效果
+        *
+        * 给上层信号调用自身的的invalidate方法，里面调用父布局的invalidateChildInParent
+        * 这里有一个while循环，会一直取父布局（的引用），直到调用viewrootimpl的invalidateChildInParent
+        * 里面会调用scheduleTraversals()执行遍历，遍历调用view树的ondraw，这样就会刷新view的视图
+        *
+        * */
+
     }
     //endregion
 
