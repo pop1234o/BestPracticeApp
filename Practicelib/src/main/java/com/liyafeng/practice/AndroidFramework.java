@@ -18,8 +18,13 @@ public class AndroidFramework {
      * */
 
     /**
-     * 简述事件分发流程
-     * 事件分发机制
+     * 简述事件分发流程\事件分发机制？
+     * ----------------------------------
+     * 说说onTouch和onTouchEvent的区别？
+     * ----------------------------------
+     * View和ViewGroup分别有哪些事件分发相关的回调方法?
+     * <p>
+     * https://blog.csdn.net/u012203641/article/details/77624017
      */
     public void a1() {
         /*
@@ -31,6 +36,27 @@ public class AndroidFramework {
         * 调用父控件的ontouchevent,直到事件被消费。
         *
         * 整个过程是一个递归调用，是类似于是反向的树的前序遍历
+        * ----------------------------------
+        * 关键点在于，ViewGroup中的dispatchTouchEvent()，最开始肯定是Down事件传递进去
+        * 然后执行拦截，调用onInterceptTouchEvent ,判断是否拦截，如果拦截，那么直接调用dispatchTransformedTouchEvent方法
+        * 然后调用super.dispatchTouchEvent(),就是View中的方法，这个方法中调用了onTouchEvent
+        * 如果没有拦截，那么会逆序遍历子View，调用他们的dispatchTouchEvent()（遇到子控件是View就是调用onTouchEvent，遇到
+        * ViewGroup就会遍历他的子View,直到视图树的子节点为止），如果遇到一个View消费了时间的，那么循环直接break，停止遍历
+        * 然后标记已经遍历了alreadyDispatchedToNewTouchTarget = true，
+        *
+        * 接下来模块判断 mFirstTouchTarget 是否为null，如果为null，那么说明子视图没有消费事件，交给自己的onTouchEvent处理
+        * 如果有消费，那么判断是否已经Dispatched过了，如果已经循环过了，那么直接标记handle为true，如果没有（则遍历调用
+        * dispatchTransformedTouchEvent 调用他们的dispatch方法）
+        *
+        * ------------------------
+        * 第二次，直接判断有没有target，如果没有，直接拦截事件（说明它肯定在down传入的时候消费了事件，否则第二次肯定不会调用了）
+        *
+        * ===========================说说onTouch和onTouchEvent的区别？=======================================
+        * onTouch是OnTouchListener调用的，是先于onTouchEvent,只有onTouch没有消费事件，才会传入到onTouchEvent
+        *
+        *============================View和ViewGroup分别有哪些事件分发相关的回调方法?===========================
+        * onTouch ,onClick onLongClick
+        *
         *
         * */
 
@@ -73,8 +99,8 @@ public class AndroidFramework {
     /**
      * 说说onMeasure,onLayout，onDraw都发生了什么？
      * MeasureSpec三种模式的理解？UNSPECIFIED、EXACTLY、AT_MOST
-     * */
-    public void a1_3(){
+     */
+    public void a1_3() {
         /*
         * 最外层ViewRoot调用根布局的，measureChildren方法（ViewGroup的），
         * 然后遍历子View，调用他们的measure()方法，这个方法中调用onMeasure方法
@@ -93,10 +119,16 @@ public class AndroidFramework {
     }
 
 
-
     /**
      * invalidate和postInvalidate的区别及使用?
+     * -------------------------
      * 如何刷新layout?
+     * ------------------------
+     * View刷新机制?
+     * -------------------------
+     * 一个Activity的ViewRootImpl是何时创建的？
+     * ---------------------------
+     * ViewRootImpl有什么作用？
      */
     public void a1_5() {
         /*
@@ -105,8 +137,16 @@ public class AndroidFramework {
         * 原理是调用了ViewRootImpl中的ViewRootHandler.post方法
         * =================如何刷新layout?========================
         * requestLayout()
+        *====================View刷新机制================
+        * 调用invalidate，最终调用ViewParent的invalidateChild方法，这是个接口，实现类是ViewRootImpl
+        * 里面调用scheduleTraversals()-》performTraversals  来发送遍历视图树，从新调用他们的onDraw方法重新绘制
         *
+        *=======================一个Activity的ViewRootImpl是何时创建的？=================================
+        *  是调用了 onResume后，WindowManager.addView，将视图加入到界面上的时候，在WindowManagerGloble
         *
+        *===========================ViewRootImpl有什么作用？==========================================
+        *  ViewRootImpl实现了ViewParent接口，他是DecorView和WindowManager之间的桥梁，比如我们有触摸事件
+        *  ViewRootImpl是接收触摸事件，然后分发给真正的视图树。
         */
     }
 
@@ -257,8 +297,8 @@ public class AndroidFramework {
      * 1 如何自定义View?
      * 2 自定义View如何考虑机型适配?
      * 3 自定义View的事件如何处理？
-      * */
-    public void a1_8(){
+     */
+    public void a1_8() {
         /*
         * =================如何自定义View===================
         *
@@ -269,7 +309,6 @@ public class AndroidFramework {
         *
         */
     }
-
 
 
     //endregion
@@ -629,8 +668,8 @@ public class AndroidFramework {
 
     /**
      * looper架构?
-     * */
-    public void a8_1(){
+     */
+    public void a8_1() {
         /*
         * Handler=》{Looper } Handler只能在有Looper的线程创建（主线程已经在初始化的时候就已经创建Looper了）
         * Looper=>{MessageQueue}
@@ -650,16 +689,16 @@ public class AndroidFramework {
         *
         */
     }
-    
-    
+
+
     /**
      * 说说App启动流程？
      * (点下App图标后到界面显示都发生了什么？)
      * 为什么点击home app退到后台，再次点击图标，不会再次启动app？
      * https://www.jianshu.com/p/a5532ecc8377
      * https://blog.csdn.net/luoshengyang/article/details/6689748
-     * */
-    public void a8_2(Context context){
+     */
+    public void a8_2(Context context) {
         /*
         * 桌面也是一个应用，里面收集了所有应用的信息（可以用
         * PackageManager.qureyActivities 来搜索所有 launch页面）
@@ -688,11 +727,11 @@ public class AndroidFramework {
         context.getResources().getDrawable(R.drawable.app_launch_flow_3);
         context.getResources().getDrawable(R.drawable.app_launch_start_activity);
     }
-    
+
     /**
      * 说说Android系统开机流程
-     * */
-    public void a8_3(){
+     */
+    public void a8_3() {
         /*
         *
         */
@@ -701,10 +740,10 @@ public class AndroidFramework {
     /**
      * Android源码下载，编译，导入Studio预览？
      * http://wl9739.github.io/2016/05/09/Android%E6%BA%90%E7%A0%81%E7%9A%84%E4%B8%8B%E8%BD%BD%E3%80%81%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AF%BC%E5%85%A5%E5%88%B0Android-Studio/
-     *
+     * <p>
      * http://kaedea.com/2016/02/09/android-about-source-code-how-to-read/
-     * */
-    public void a8_4(){
+     */
+    public void a8_4() {
         /*
         *
         */
@@ -712,9 +751,11 @@ public class AndroidFramework {
 
     /**
      * AsyncTask 如何使用?原理？
-     * */
+     * -------------------
+     * 如何取消AsyncTask？
+     */
     @SuppressLint("StaticFieldLeak")
-    public void a8_5(){
+    public void a8_5() {
         /*
         * AsyncTask 持有 static的 线程池，和 static的 Handler(Looper是主线程的)
         *  还有非静态的 WorkerRunnable（是个Callable），一个FutureTask（持有WorkerRunnable）
@@ -732,10 +773,12 @@ public class AndroidFramework {
         * 用静态的线程池执行FutureTask，调用Callable中的call，调用doBackground
         * 返回结果后，用静态的Handler发送结果到主线程，执行onPostExecute
         *
-        *
+        * ======================如何取消AsyncTask？==============
+        * 调用他的cancel方法，里面调用的futureTask，的cancel方法，因为futureTask.get()方法阻塞，
+        * 等待call执行完会将他唤醒，那么现在直接调用interrupt方法将线程中断阻塞。
         *
         */
-        new AsyncTask<Integer,Double,String>(){
+        new AsyncTask<Integer, Double, String>() {
 
             @Override
             protected void onPreExecute() {
@@ -749,9 +792,9 @@ public class AndroidFramework {
             @Override
             protected String doInBackground(Integer... integers) {
                 //后台处理
-                String s= "";
+                String s = "";
                 for (Integer integer : integers) {
-                    s+=integer;
+                    s += integer;
                 }
                 return s;
             }
@@ -760,21 +803,21 @@ public class AndroidFramework {
             protected void onPostExecute(String s) {
                 System.out.println(s);
             }
-        }.execute(1,2,3);//传入元素数据
+        }.execute(1, 2, 3).cancel(true);//传入元素数据
 
-         AsyncTask.execute(new Runnable() {
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
 
             }
         });
     }
-    
-    
+
+
     /**
      * ThreadLocal作用？原理？
-     * */
-    public void a8_6(){
+     */
+    public void a8_6() {
         /*
         * ThreadLocal中有静态内部类，ThreadLocalMap
         * 不同ThreadLocal实例 对应不同的值。
@@ -803,11 +846,11 @@ public class AndroidFramework {
         *
         */
     }
-    
+
     /**
      * HandlerThread 作用？原理？
-     * */
-    public void a8_7(){
+     */
+    public void a8_7() {
         /*
         * HandlerThread是Thread的一个子类，也是一个线程，
         * 我们开启这个线程，调用getThreadHandler(),用这个Handler发送的消息
@@ -830,8 +873,8 @@ public class AndroidFramework {
 
     /**
      * SpareArray作用？原理?
-     * */
-    public void a8_8(){
+     */
+    public void a8_8() {
         /*
         ===============作用=================
         * 他是用来代替HashMap的，他的Key是int ,value是T类型
@@ -851,8 +894,8 @@ public class AndroidFramework {
 
     /**
      * IntentService作用？原理？
-     * */
-    public void a8_9(){
+     */
+    public void a8_9() {
         /*
         * ===============作用====================
         * 作用是开启一个带子线程的Service，我们重写onHandleIntent方法在子线程中执行我们的任务
@@ -864,8 +907,8 @@ public class AndroidFramework {
 
     /**
      * Application的Context 和 Activity的Context 的区别?
-     * */
-    public void a8_10(){
+     */
+    public void a8_10() {
         /*
         * Application的的生命周期和应用相同，Activity的生命周期和Activity相同
         * ==============
@@ -882,13 +925,13 @@ public class AndroidFramework {
         */
     }
 
-    
+
     /**
      * Android中存储数据的几种方式？
      * SP是进程同步的吗?有什么方法做到同步？
      * https://developer.android.google.cn/guide/topics/data/data-storage.html
-     * */
-    public void a8_11(){
+     */
+    public void a8_11() {
         /*
         * SharedPreferences
         * 使用file，（我们可以获取到getCacheDir内部的目录） Environment.getDataDirectory()（外部目录）
@@ -906,20 +949,31 @@ public class AndroidFramework {
         */
 
     }
+
     /**
      * 说说WindowManager?PackManager?LayoutInflater?
-     * */
-    public void a8_12(){
+     * --------------------------------
+     * 说说WMS AMS?
+     */
+    public void a8_12() {
         /*
-        * 很多服务都是在PolicyManager中的静态方法块，中初始化的，是直接new出来
-        * 存入到hashMap中????
+        * =================说说WindowManager?PackManager?LayoutInflater?============================
+        * 很多服务都是在ContextImpl中的静态方法块，中初始化的，是直接new出来的服务
+        * 存入到静态的hashMap中，所以我们context.getSystemService(key)就是取出服务实例
+        * 这些服务都是每个app都有一个的，然后所有app的服务都是与系统中WMS AMS建立联系
+        * =============================
+        * 最新的sdk已经放到了android/app/SystemServiceRegistry.java中,但是代码都是一样
+        * 在静态代码块中注册（向hashmap加入）各个服务（基本都是new出来的，然后内部用binder
+        * 和系统的服务建立联系）
+        *
+        *
         */
     }
 
     /**
      * ListView原理？RecycleView原理?
-     * */
-    public void a1_13(){
+     */
+    public void a1_13() {
         /*
         * 本质上就是在layout的时候，遍历子view，然后子view.measure,layout,
         * 第一个view从顶部开始，第二个就是第一个的height开始layout，
@@ -935,7 +989,79 @@ public class AndroidFramework {
         * 通知观察者，这个观察者就是AdapterView中持有的 AdapterDataSetObserver对象(在ListView中初始化的)
         * AdapterDataSetObserver这个类是AdapterView的内部类。
         * 然后里面调用了requestLayout()
+        * ===============================
+        * 其实listview主要的作用就是在 layoutChildren中，里面调用fillUp fillDown
+        * 然后开始layout 一个个item，其实原理有点像LinearLayout，确定了layout后left top...等
+        * 我们ListView的画布就会剪裁那段画布给他
         *
+        */
+    }
+
+
+    /**
+     * AndroidManifest的作用与理解?
+     */
+    public void a1_14() {
+        /*
+        * 1.主要是在app启动的时候，PMS会遍历解析这个文件，然后将组件注册到PMS中，当我们开启Activity或者发送广播
+        * 都会去这里面查找符合Intent规则的组件并启动
+        * 2.安装app声明所需要的权限
+        * 3.定义应用名称，图标
+        */
+    }
+
+    /**
+     * 为什么子线程不能更新UI？在什么地方子线程能更新UI?
+     * https://blog.csdn.net/xyh269/article/details/52728861
+     */
+    public void a1_15() {
+        /*
+        * 因为更新UI后再刷新的时候(调用view.requestLayout=>viewRoot.requestLayout->checkThread())，
+        * 会判断这个方法是不是和ViewRootImpl中的thread一样，这个thread是
+        * 在ViewRootImpl的构造方法被赋值的thread= Thread.currentThread() 所以更新UI的线程要和
+        * 创建ViewRootImpl的线程一致，否则抛出异常。
+        * 而我们知道ViewRootImpl,是在onResume之后再WindowManager将视图添加到WMS中的时候创建的。
+        * 所以在onResume之前我们getViewRoot()的时候为null,所以不会执行viewRoot.requestLayout
+        * 所以就不会抛出异常
+        *
+        */
+    }
+
+    /**
+     * ANR产生的原因是什么？
+     * ------------------------
+     * ANR定位和修正
+     * <p>
+     * 基础：https://developer.android.google.cn/topic/performance/vitals/anr.html#detect_and_diagnose_problems
+     * 深入源码：http://www.bijishequ.com/detail/569457?p=
+     */
+    public void a1_16() {
+        /*
+        ** Activity在生命周期中阻塞超过5秒就会提示anr，broadcastReceiver 是10秒，service是20秒
+        * ActivityManagerService中定义了 Activity和broadcastReceiver的超时时间
+        * ActiveServices中定义了服务的超时时间
+        *
+        * 触发anr的原理就是在执行Activity的生命周期之前，AMS会发送一个Handler,延时5秒
+        * 然后执行Activity的生命周期的方法，执行完成后，取消Handler中的超时消息
+        * 如果超过5秒，回执行相应的超时处理方法，比如Activity超时会弹出弹窗
+        * ==================ANR定位和修正------------------------------
+        * 然后将堆栈信息记录在data/anr/trace.txt中
+        */
+    }
+
+
+    /**
+     * oom是什么？
+     * 什么情况导致oom？
+     * android 每个应用能申请多少内存？ https://zhuanlan.zhihu.com/p/27269803
+     * 有什么解决方法可以避免OOM？
+     * Oom 是否可以try catch？为什么？
+     */
+    public void a1_17() {
+        /*
+        * 内存溢出，是因为我们申请的内存超过jvm可分配内存的最大值，
+        * 我们申请内存前会判断当前内存够不够，如果不够，那么触发gc，
+        * gc后依然不够，那么抛出oom
         *
         */
     }

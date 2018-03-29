@@ -86,4 +86,22 @@ public class ComputerBasic {
     }
     //endregion
 
+    //region 计算机网络
+    /**
+     * 什么是APN?
+     * -----------------------
+     * 通用的APN有哪些？有什么区别
+     * -----------------------
+     * 什么是WAP?
+     * */
+    public void a2_1(){
+        /*
+        * Access Point Name
+        * https://baike.baidu.com/item/APN
+        * 可以访问的外部网络有很多种，比如Internet，WAP网站，企业内部网络
+        * 所以我们可以设置接入点的配置，（就是路由ip不一样？）
+        *
+        */
+    }
+    //endregion
 }
