@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 
+import java.util.concurrent.Executors;
+
 public class AndroidFramework {
 
 
@@ -311,6 +313,14 @@ public class AndroidFramework {
     }
 
 
+    /**
+     * 计算一个view的嵌套层级?
+     * */
+    public void a1_9(){
+        /*
+        * 循环调用view.getParent
+        */
+    }
     //endregion
 
     //region Android 内存/虚拟机
@@ -638,6 +648,18 @@ public class AndroidFramework {
 //                mSelectionClause                    // Selection criteria
 //                mSelectionArgs,                     // Selection criteria
 //                mSortOrder);                        // The sort order for the returned rows
+    }
+
+    /**
+     * ContentProvider的权限管理(解答：读写分离，权限控制-精确到表级，URL控制)
+     * 如何通过广播拦截和abort一条短信？
+     * 广播是否可以请求网络？
+     * 广播引起anr的时间限制是多少？
+     */
+    public void a6_2() {
+        /*
+        *
+        */
     }
     //endregion
 
@@ -973,7 +995,7 @@ public class AndroidFramework {
     /**
      * ListView原理？RecycleView原理?
      */
-    public void a1_13() {
+    public void a8_13() {
         /*
         * 本质上就是在layout的时候，遍历子view，然后子view.measure,layout,
         * 第一个view从顶部开始，第二个就是第一个的height开始layout，
@@ -1001,7 +1023,7 @@ public class AndroidFramework {
     /**
      * AndroidManifest的作用与理解?
      */
-    public void a1_14() {
+    public void a8_14() {
         /*
         * 1.主要是在app启动的时候，PMS会遍历解析这个文件，然后将组件注册到PMS中，当我们开启Activity或者发送广播
         * 都会去这里面查找符合Intent规则的组件并启动
@@ -1014,7 +1036,7 @@ public class AndroidFramework {
      * 为什么子线程不能更新UI？在什么地方子线程能更新UI?
      * https://blog.csdn.net/xyh269/article/details/52728861
      */
-    public void a1_15() {
+    public void a8_15() {
         /*
         * 因为更新UI后再刷新的时候(调用view.requestLayout=>viewRoot.requestLayout->checkThread())，
         * 会判断这个方法是不是和ViewRootImpl中的thread一样，这个thread是
@@ -1035,7 +1057,7 @@ public class AndroidFramework {
      * 基础：https://developer.android.google.cn/topic/performance/vitals/anr.html#detect_and_diagnose_problems
      * 深入源码：http://www.bijishequ.com/detail/569457?p=
      */
-    public void a1_16() {
+    public void a8_16() {
         /*
         ** Activity在生命周期中阻塞超过5秒就会提示anr，broadcastReceiver 是10秒，service是20秒
         * ActivityManagerService中定义了 Activity和broadcastReceiver的超时时间
@@ -1057,14 +1079,94 @@ public class AndroidFramework {
      * 有什么解决方法可以避免OOM？
      * Oom 是否可以try catch？为什么？
      */
-    public void a1_17() {
-        /*
+    public void a8_17() {
+        /*===============oom是什么？什么情况导致oom？==============
         * 内存溢出，是因为我们申请的内存超过jvm可分配内存的最大值，
         * 我们申请内存前会判断当前内存够不够，如果不够，那么触发gc，
         * gc后依然不够，那么抛出oom
+        * =====================android 每个应用能申请多少内存？=======
+        * Runtime.getRuntime().maxMemory() 获取app能申请的最大内存
+        * 一般初始化的时候分配16m内存，一般最多是100m+ ，如果在AndroidManifest.xml
+        * 配置android:largeHeap="true" 可能能分配到512m内存
+        * 每个手机的这个配置在/system/build.prop 文件中
+        * dalvik.vm.heapsize=36m
+        *   dalvik.vm.heapstartsize=8m    ----起始分配内存
+        *   dalvik.vm.heapgrowthlimit=192m ---- 一般情况app申请的最大内存 dalvik.vm.heapsize=512m   ---- 设置largeheap时，App可用的最大内存dalvik.vm.heaptargetutilization=0.75  ---- GC相关
+        *   dalvik.vm.heapminfree=512k
+        *   dalvik.vm.heapmaxfree=8m     ----- GC机制相关
+        * ======================有什么解决方法可以避免OOM？=============
+        * 预防，我们提前对app做性能测试，观察app内存变化情况，做出优化
+        * 加载大图可能导致oom，所以要缩放
+        * ==================Oom 是否可以try catch？为什么？===========
+        * 不可以，因为这是jvm终止进程，他是一个Error类型的错误，是不可修复的
+        */
+    }
+
+
+    /**
+     * 内存泄漏是什么？
+     * 什么情况导致内存泄漏？
+     * 内存泄露的解决方法?
+     * 如何防止线程的内存泄漏？
+     */
+    public void a8_18() {
+        /*
+        =============内存泄漏是什么？===============
+        * 当我们要回收的对象无法进行回收的时候，这种叫内存泄漏
+        * ================什么情况导致内存泄漏？======================
+        * 静态变量持有要回收对象的引用
+        * 内部类持有要回收对象的引用（因为内部类默认持有外部类的引用）
+        * 非静态Handler发送延时消息，因为非静态Handler持有外部类（Activity）引用，而msg持有handler，MessageQueue持有msg
+        * ==============内存泄露的解决方法?=========================
+        * 编码：养成良好的编码习惯，我们编码可以用静态的Handler来发送消息，发送的msg要在页面退出时清空
+        * 检测，我们可以用Android自带的内存检测，开启多个页面然后关闭，点击强制GC，然后看哪个页面还存留（1个或者多个）
+        *       那么这个时候发生了内存泄漏
+        * 定位：我们可以用观察代码的形式来判断，比如退出页面，线程没有关闭，msg没有清空，或者有静态变量引用Activity
+        *       还可以用mat，dump heap，然后转化一下文件，然后mat打开，找到对应的类，然后找到最短gc路径，看哪个变量持有Activity，
+        *       这里就是泄漏的地方了
+        *
+        * ==============================如何防止线程的内存泄漏？=============================
+        * 1.及时关闭线程
+        * 2.使得线程持有Activity的弱引用
         *
         */
     }
+
+    /**
+     * LruCache作用，原理？
+     * DiskLruCache作用，原理？
+     */
+    public void a8_19() {
+        /*
+        * ===========LruCache作用，原理？=========================
+        * Least Recent Used 最近最少使用，意思就是将最近使用的缓存起来（加入头部）
+        * 最少使用的淘汰出去（从尾部去除）
+        * 原理就是里面使用了LinkedHashMap，他里面有一个maxSize的设置，如果超过
+        * 那么从队列尾出队列。
+        *
+        * =================DiskLruCache=====================
+        * 他的原理和LruCache差不多，只是写入读取的时候是从磁盘中读取的
+        * 他里面也用LinkedHashMap来保存缓存文件列表（里面持有文件的大小信息）
+        * https://github.com/JakeWharton/DiskLruCache/blob/master/src/main/java/com/jakewharton/disklrucache/DiskLruCache.java
+        */
+    }
+
+    
+    /**
+     * Android线程有没有上限？
+     * 线程池有没有上限？
+     * */
+    public void a8_20(){
+        /*
+        * 有上限，如果过多会导致 StackOverflowError（这个是C层创建线程的时候会有判断？？）
+        * 最多好像是1024个？？？
+        * ====================线程池有没有上限？====================
+        * 应该是和线程的数量一致？
+        *
+        */
+//        Executors.newFixedThreadPool()
+    }
+
 
 
     //endregion

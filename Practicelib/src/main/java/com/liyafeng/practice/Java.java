@@ -989,6 +989,23 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         */
         context.getResources().getDrawable(R.drawable.tree);
     }
+
+    /**
+     * LinkedHashMap作用？原理？
+     * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
+     * */
+    public void a3_9(){
+        /*
+        * 有序的HashMap(按插入顺序，或者访问顺序)
+        * =================原理==============
+        * 原理就是重写了 addEntry方法 也从写了createEntry 如果是新加入的，那么加入Entry链表的头结点
+        * LinkedHashMapEntry<K,V> extends HashMapEntry<K,V>  里面重写了recordAccess方法，
+        * 每次访问，如果accessOrder=true(按访问顺序)，然后就把这个Entry加入头部
+        * LinkedHashMapEntry 是一个双向列表的格式
+        *
+        *
+        */
+    }
     //endregion
 
     //region Java网络
