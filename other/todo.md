@@ -18,3 +18,5 @@
 ### 博客
 * http://blog.csdn.net/v_july_v 
   专门讲解算法、大数据处理、机器学习的博客，csdn博客专家
+* https://joyrun.github.io/ 
+  悦跑圈技术博客

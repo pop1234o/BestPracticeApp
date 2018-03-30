@@ -282,6 +282,8 @@ public class Java {
     /**
      * 说说你对Java注解的理解（Annotation）
      * http://gityuan.com/2016/01/23/java-annotation/
+     * 说说注解处理器
+     * https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Processor.html
      */
     public void a1_11() {
         /*

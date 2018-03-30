@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -21,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
      * Picasso Square公司创造 A powerful image downloading and caching library for Android
      * http://square.github.io/picasso/
      *
+     * ======================================
+     * Glide google员工写的 一个快速高效的Android图片加载库，注重于平滑的滚动。
+     * https://muyangmin.github.io/glide-docs-cn/
+     *
      *
      * @param savedInstanceState
      */
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                String url = "http://i.imgur.com/DvpvklR.png";
-               loadImageByPicasso(url,imageView);
+               loadImageByGlide(url,imageView);
            }
        });
     }
@@ -83,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
      * List<BitmapHunter> batch，然后复制一份，用Picasso中的MainHandler发送到Picasso中
      * 最终在主线程中调用了Action.complete(),
      * 这里是ImageViewAction ,最终将imageview，设置了bitmap
+     * ========================总结=================================
+     * Request封装成ImageViewAction，封装成BitmapHunter （Runnable）
+     * 然后线程池执行，返回结果，handler发送到主线程，然后Action中负责如何显示
      *
      * @param url
      * @param imageView
@@ -120,6 +128,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override public String key() { return "square()"; }
+    }
+
+
+
+    private void loadImageByGlide(String url, ImageView imageView){
+        Glide.with(this).load(url).into(imageView);
+//        Glide.with(this).clear(imageView);//取消加载
+
+        //调用这个需要在Application添加注解，而且要依赖额外的注解处理的库
+//        GlideApp.with(this).load(url).placeholder(R.mipmap.ic_launcher).into(imageView);
     }
 
 }
