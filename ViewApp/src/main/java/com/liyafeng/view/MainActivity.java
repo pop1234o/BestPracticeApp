@@ -131,6 +131,20 @@ public class MainActivity extends Activity {
 //                new DialogActivity.FullDiolog(MainActivity.this).createDialog();
 //            }
 //        },5000);
+
+        for (int i = 0; i < 100000; i++) {
+            Log.i(TAG, "onCreate: "+i);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
 
 

@@ -10,53 +10,19 @@ public class Algorithm {
 
 
     public static void main(String[] args) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("等待锁1");
-                synchronized (Algorithm.class) {
-
-                    while (true) {
-                        System.out.println("进入了1");
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+        for (int i = 0; i < 100000; i++) {
+            System.out.println("创建"+i);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-            }
-
-        });
-        thread.start();
-        Thread thread1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("等待锁2");
-                synchronized (Algorithm.class) {
-                    while (true) {
-                        System.out.println("进入了2");
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-
-        });
-        thread1.start();
-
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            }).start();
         }
-        thread.stop();
-
-        System.out.println("执行结束了");
     }
     //region 排序
 

@@ -19,7 +19,7 @@ public class FrameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView textView = new TextView(getActivity());
         textView.setText("this is  frame fragment"+n++);
-        startActivityForResult();
+//        startActivityForResult();
         return textView;
     }
 }
