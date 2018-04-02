@@ -24,4 +24,10 @@ public class MainActivity extends Activity {
 
     }
 
+    /**
+     * 使用Android Profiler 进行内存占用分析，cpu耗时分析，网络流量分析
+     * 使用MAT查看内存泄漏，还可以查看内存中大对象
+     *
+     *
+    * */
 }

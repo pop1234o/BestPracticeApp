@@ -1,11 +1,24 @@
 package com.liyafeng.imageloader;
 
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
+import android.app.Application;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 
 /**
- * Created by liyafeng on 2018/3/30.
+ * Created by liyafeng on 2018/4/2.
  */
-@GlideModule
-public class MyApplication extends AppGlideModule {
+
+public class MyApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Fresco.initialize(this);
+
+//        https://www.fresco-cn.org/docs/using-other-network-layers.html#_
+        //配置使用OkHttp
+        com.facebook.drawee.backends.pipeline.Fresco.initialize(this, OkHttpImagePipelineConfigFactory.newBuilder(this, new okhttp3.OkHttpClient()).build());
+
+    }
 }
