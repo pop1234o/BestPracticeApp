@@ -3,10 +3,6 @@ package com.liyafeng.practice;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.os.Handler;
-
-import java.util.concurrent.Executors;
 
 public class AndroidFramework {
 
@@ -315,8 +311,8 @@ public class AndroidFramework {
 
     /**
      * 计算一个view的嵌套层级?
-     * */
-    public void a1_9(){
+     */
+    public void a1_9() {
         /*
         * 循环调用view.getParent
         */
@@ -1151,12 +1147,12 @@ public class AndroidFramework {
         */
     }
 
-    
+
     /**
      * Android线程有没有上限？
      * 线程池有没有上限？
-     * */
-    public void a8_20(){
+     */
+    public void a8_20() {
         /*
         * 有上限，如果过多会导致 StackOverflowError（这个是C层创建线程的时候会有判断？？）
         * 最多好像是1024个？？？实践的到1976
@@ -1166,7 +1162,6 @@ public class AndroidFramework {
         */
 //        Executors.newFixedThreadPool()
     }
-
 
 
     //endregion
@@ -1279,4 +1274,57 @@ public class AndroidFramework {
     }
     //endregion
 
+    //region Android优化
+
+
+    /**
+     * 深入说说ANR
+     * <p>
+     * 基础：https://developer.android.google.cn/topic/performance/vitals/anr.html#detect_and_diagnose_problems
+     * <p>
+     * 深入源码：http://www.bijishequ.com/detail/569457?p=
+     */
+    public void a12() {
+        /*
+        * Activity在生命周期中阻塞超过5秒就会提示anr，broadcastReceiver 是10秒，service是20秒
+        * ActivityManagerService中定义了 Activity和broadcastReceiver的超时时间
+        * ActiveServices中定义了服务的超时时间
+        *
+        * 触发anr的原理就是在执行Activity的生命周期之前，AMS会发送一个Handler,延时5秒
+        * 然后执行Activity的生命周期的方法，执行完成后，取消Handler中的超时消息
+        * 如果超过5秒，回执行相应的超时处理方法，比如Activity超时会弹出弹窗
+        * 然后将堆栈信息记录在data/anr/trace.txt中
+        *
+        */
+    }
+
+    /**
+     * Android布局优化方案？
+     */
+    public void a12_1() {
+        /*
+        * 少嵌套，
+        * 可以使用ConstraintLayout，来实现扁平布局
+        * 避免overdraw，就是说背景尽量少重叠
+        * 用Android 系统开发者选项中的检测布局边界，来确定布局是否重叠度过高
+        */
+    }
+
+    /**
+     * 说说Android内存优化？
+     * */
+    public void a12_2(){
+        /*
+        * 目的就是降低内存占用率，三个方向，一个是降低正常内存使用，二是防止内存泄漏，三是使用多进程
+        * ------------------降低内存使用---------------------
+        * 1.问题定位，找出哪些地方申请内存过多，我们用AS自带的Android Profiler(分析器)
+        * 我们先强制GC一下，然后操作app，在内存占用突然过高或者持续增长的地方，record
+        * 然后生成分析报告，会显示出哪个方法中申请内存的数量，我们找到过高的地方，进行优化
+        * 2.问题解决，优化的手段有：改变数据结构，使用缓存池，改变业务逻辑（比如使用观察者代替轮询）
+        *
+        * ------------------降低内存使用---------------------
+        */
+    }
+
+    //endregion
 }
