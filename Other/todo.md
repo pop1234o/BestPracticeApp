@@ -19,4 +19,6 @@
 * http://blog.csdn.net/v_july_v 
   专门讲解算法、大数据处理、机器学习的博客，csdn博客专家
 * https://joyrun.github.io/ 
-  悦跑圈技术博客
+  悦跑圈技术博客，讲解的自定义注解处理器很不错
+* https://hit-alibaba.github.io/interview
+  很全面的网络、数据结构、操作系统知识

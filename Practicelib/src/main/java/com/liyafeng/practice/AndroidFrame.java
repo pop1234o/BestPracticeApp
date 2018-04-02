@@ -1,16 +1,18 @@
 package com.liyafeng.practice;
 
+import android.content.Context;
+
 /**
  * Created by liyafeng on 16/11/2017.
  */
 
 public class AndroidFrame {
-    
-    
+
+
     /**
      * 谈谈对Volley的理解?
-     * */
-    public void a1(){
+     */
+    public void a1() {
         /*
         * Volley=>{RequestQueue类,}
         * RequestQueue=》{
@@ -48,5 +50,61 @@ public class AndroidFrame {
         *
         *
         */
+    }
+
+    /**
+     * 图片库对比?
+     * 图片库的源码分析?
+     * 图片框架缓存实现？
+     */
+    public void a2() {
+        /*
+        * ===========图片库对比?===============
+        * Picasso  square开发，使用双缓存，体积小，使用简单，但是不能加载gif
+        * Glide  谷歌员工根据Picasso改进，功能强大，能加载gif，根据imageview大小进行缓存图片,
+        *        但是需要注解处理器，自动生成代码GlideApp才能简洁配置占位图，错误图
+        * Fresco Facebook开发，功能最强大，加载gif ,webp，将图片存在native堆中，减少OOM
+        *       体积最大（2M），要使用DraweeView，原生不支持ImageView
+        * ===============图片库的源码分析?======================
+        * 都是使用双缓存，先读缓存，没有从网络加载（或者本地），然后写缓存
+        *  分发主线程，渲染到ImageView上
+        * =============图片框架缓存实现？========================
+        * 都是用LruCache，DiskLruCache
+        * Picasso用的http的缓存机制（OKHttp默认实现），不是自己做缓存？？？
+        */
+    }
+
+
+    /**
+     * 网络框架对比?
+     * OkHttp和HttpUrlConnection区别？
+     * 网络框架源码分析?
+     */
+    public void a3(Context context) {
+        /*
+        * xUtil 里的HttpUtil
+        * Async-HttpClient 不维护了，基于HttpClient
+        * Volley，Google出品，轻量级，适合数据量小、频繁的网络请求,基于HttpUrlConnection
+        *       缺点是不支持同步，因为默认在内存中缓存，所以不适合请求数据量大的，或者请求量
+        *       大的，容易OOM
+        * Retrofit Square出品，内部使用OkHttp，支持RESTful API,(POST，GET,PUT，DELETE)
+        *       使用注解定义请求，代码清晰
+        * ， 提供了自定义Converter（序列化，反序列化）
+        *       支持同步和异步的请求
+        *       来解析自己定义的数据结构，默认可以用Json形式
+        * ==============================OkHttp和HttpUrlConnection区别？=====================
+        * 相同点：OkHttp和HttpUrlConnection 是相同职责，是Http协议的实现，内部都用的Socket
+        *          从Android4.4开始HttpURLConnection的底层实现采用的是okHttp
+        * 不同点：OkHttp使用拦截器的结构来对请求添加配置，我们可以自定义拦截器，使用更方便更灵活
+        *       OkHttp内部使用http协议的请求头字段进行缓存，内部使用DiskLruCache
+        *       而HttpUrlConnection默认没有实现缓存，需要我们自己写逻辑
+        *
+        * =======================网络框架源码分析?=======================
+        * 见Network模块中的介绍
+        */
+
+        context.getResources().getDrawable(R.drawable.volley_construction);
+        context.getResources().getDrawable(R.drawable.okhttp_construct);
+        context.getResources().getDrawable(R.drawable.okhttp_cache);
     }
 }

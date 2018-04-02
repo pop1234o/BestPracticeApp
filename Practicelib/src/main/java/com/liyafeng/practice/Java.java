@@ -337,8 +337,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * 堆和栈在内存中的区别是什么
      * (解答提示：可以从数据结构方面以及实际实现方面两个方面去回答)？
      * jvm
-     * */
-    public void a1_13(){
+     */
+    public void a1_13() {
         /*
         * 数据结构上，堆是一种特殊的二叉树，栈是一种先进后出的数据结构
         * jvm中，我们执行一个方法，方法中的参数，局部变量，都压入栈中，
@@ -347,13 +347,13 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 而对象都存储在堆中，由垃圾回收算法回收内存
         */
     }
-    
-    
+
+
     /**
      * 什么是深拷贝和浅拷贝、延时拷贝
      * https://segmentfault.com/a/1190000010648514
-     * */
-    public void a1_14(){
+     */
+    public void a1_14() {
         /*
         * 浅拷贝就是新创建一个对象，将原对象的基本数据类型值拷贝过去
         * 将引用类型的变量的引用值复制过去。
@@ -372,15 +372,15 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 当引用类型的值发生改变的时候，我们就创建计数个对象。
         */
     }
-    
-    
+
+
     /**
      * 说说Unsafe类，里面有哪些操作？
      * https://www.jianshu.com/p/09477cec1478
      * http://blog.csdn.net/aesop_wubo/article/details/7537278
      * http://mishadoff.com/blog/java-magic-part-4-sun-dot-misc-dot-unsafe/
-     * */
-    public void a1_15(){
+     */
+    public void a1_15() {
         /*
         *  他可以直接操作jvm的内存，只用类加载器是系统的主加载器才能使用
         *  ===========用反射的方式获取======================
@@ -521,9 +521,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 开启线程的三种方式？各自优缺点？
-     *
-     * */
-    public void a2_6(){
+     */
+    public void a2_6() {
         /*
         * 1.继承Thread
         * 2.实现Runnable接口
@@ -538,11 +537,11 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
 
     }
-    
+
     /**
      * 如何控制某个方法允许并发访问线程的个数？他的原理是什么？
-     * */
-    public void a2_7(){
+     */
+    public void a2_7() {
         /*
         * 用Semaphore类，执行到一个方法时申请信号量加1，超过时等待
         * 它的原理是内部使用了AbstractQueuedSynchronizer
@@ -554,8 +553,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * 说说Thread中的interrupt?interrupted 和isInterrupted区别？
      * http://www.cnblogs.com/skywang12345/p/3479949.html
-     * */
-    public void a2_8(){
+     */
+    public void a2_8() {
         /*
         * interrupt 中断阻塞线程（wait sleep join），阻塞位置抛出
         * InterruptedException
@@ -572,8 +571,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 谈谈wait/notify关键字的理解?为什么他们都要在同步代码块中？
-     * */
-    public void a2_9(){
+     */
+    public void a2_9() {
         /*
         * 他们必须在同步代码块中是为了防止竞态条件。
         * 比如有很多消费者线程等待资源，这时一个生产者生产了一个资源，
@@ -589,11 +588,11 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         }
         notify();
     }
-    
+
     /**
      * 什么导致线程阻塞？
-     * */
-    public void a2_10(){
+     */
+    public void a2_10() {
         /*
         * Thread.sleep 这个不会放弃锁
         * wait方法 这个阻塞后会放弃锁
@@ -616,11 +615,11 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
         Thread.yield();
     }
-    
+
     /**
      * Thread.yield()有什么作用？什么场景使用？
-     * */
-    public void a2_11(){
+     */
+    public void a2_11() {
         /*
         * 使线程放弃cpu使用权限，一般可以用来复现bug，或者设计并发线程结构
         * 注意，这个放弃cpu使用权限，但是不放弃锁
@@ -629,8 +628,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * thread join 是什么作用？
-     * */
-    public void a2_12(){
+     */
+    public void a2_12() {
         /*
         * 首先这个线程对象中的方法，thread.join();
         * 是调用线程，等待thread线程执行完后再继续执行
@@ -649,8 +648,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 线程如何关闭？
-     * */
-    public void a2_13(){
+     */
+    public void a2_13() {
         /*
         * 1.thread.stop() 这个已经废弃了,因为他不安全的,因为他会在任意逻辑处终止执行
         * 因为stop后线程中持有的锁会立刻释放掉，就导致并发的逻辑不可控制
@@ -665,8 +664,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * 讲一下java中同步的方法?
      * http://www.cnblogs.com/paddix/p/5405678.html
-     * */
-    public void a2_14(){
+     */
+    public void a2_14() {
         /*
         * 同步是为了防止多个线程访问同一资源，所以要排队访问线程
         * 1.可以用 关键字synchronized，优点就是使用方便，缺点是他是互斥锁，不能是共享锁，不够灵活，
@@ -694,7 +693,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 2.使用volatile关键字
         */
     }
-    
+
     /**
      * 什么是互斥锁、共享锁？
      * 什么是乐观锁？什么是自旋？
@@ -704,28 +703,28 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * http://www.cnblogs.com/paddix/p/5405678.html
      * http://www.cnblogs.com/javaminer/p/3892288.html
      * https://www.zhihu.com/question/55075763
-     * */
-    public void a2_16(){
+     */
+    public void a2_16() {
         /*
         *
         */
     }
-    
+
     /**
      * synchronized 关键字的原理？
      * http://www.cnblogs.com/paddix/p/5367116.html
-     * */
-    public void a2_17(){
+     */
+    public void a2_17() {
         /*
         *
         */
     }
-    
+
     /**
      * volatile关键字作用和原理?
      * http://www.cnblogs.com/paddix/p/5428507.html
-     * */
-    public void a2_18(){
+     */
+    public void a2_18() {
         /*
         * 1.可以防止重排序
         * 2.可见性，一个线程修改了这个变量，另一个线程取到的是最新值，
@@ -734,23 +733,24 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         *
         */
     }
-    
+
 
     /**
      * AbstractQueuedSynchronizer原理？
-     * */
-    public void a2_19(){
+     */
+    public void a2_19() {
         /*
         * 里面用status 标记线程状态
         * 用CAS操作和UnSafe类的park和unpark来实现线程阻塞和唤醒
         * 用双向列表来存储没有获取到锁的线程
         */
     }
+
     /**
      * ReentrantLock 原理？
      * https://www.jianshu.com/p/fe027772e156
-     * */
-    public void a2_20(){
+     */
+    public void a2_20() {
         /*
         * 内部用AQS实现了公平锁和非公平锁，重写的tryAcquire 和tryRelease
         * 来实现公平和非公平
@@ -759,8 +759,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 死锁的四个必要条件？如何防止死锁？
-     * */
-    public void a2_21(){
+     */
+    public void a2_21() {
         /*
         * 1.互斥条件：一个资源在同一时间只能被一个线程占有
         * 2.不可剥夺(抢占)条件:在一个线程未使用完这个资源时，其他线程不可抢占
@@ -779,8 +779,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 多线程断点上传原理?多线程断点下载（续传）原理？
-     * */
-    public void a2_22(){
+     */
+    public void a2_22() {
         /*
         * 多线程的原理就是每个线程负责文件 指定字节范围的下载、上传
         * =============下载=================
@@ -939,9 +939,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * Iterator 和 Enumeration区别?
-     *
-     * */
-    public void a3_5(){
+     */
+    public void a3_5() {
         /*
         * 他们都是用来遍历集合的
         * Enumeration jdk1出的，Iterator是jdk2出的，是前者的升级
@@ -957,8 +956,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 说说Arrays和Collections 类的作用？
-     * */
-    public void a3_6(){
+     */
+    public void a3_6() {
         /*
         * 都是工具类
         * Arrays主要对数据进行操作，主要是查找，复制，排序
@@ -970,8 +969,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 如何实现二叉树深度优先和广度优先的遍历？
-     * */
-    public void a3_7(){
+     */
+    public void a3_7() {
         /*
         * 深度优先遍历可以用递归方法来遍历
         * 广度优先遍历可以用一个栈来存储上一层已经遍历的节点
@@ -981,8 +980,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 堆和树的区别?
-     * */
-    public void a3_8(Context context){
+     */
+    public void a3_8(Context context) {
         /*
         * 堆是一种特殊的树（我们通常讲的堆就是二叉堆）
         * 当一颗二叉树中的节点都大于等于他们的子节点的时候，这个二叉树是“堆有序”的
@@ -995,8 +994,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * LinkedHashMap作用？原理？
      * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
-     * */
-    public void a3_9(){
+     */
+    public void a3_9() {
         /*
         * 有序的HashMap(按插入顺序，或者访问顺序)
         * =================原理==============
@@ -1049,8 +1048,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 描述一次网络请求的流程?
-     * */
-    public void a7_1(Context context){
+     */
+    public void a7_1(Context context) {
         /*
         * 1, 请求dns
         * 封装好http请求，用网络框架请求，比如Android原生的HttpUrlConnection
@@ -1076,23 +1075,59 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * 说说三次握手和四次挥手？为什么要这样做？
      * https://github.com/jawil/blog/issues/14
-     * */
-    public void a7_2(){
+     */
+    public void a7_2() {
         /*
         *
         */
     }
-    
+
     /**
      * HttpUrlConnection 和 okhttp关系?
-     *
+     * <p>
      * http://www.maplejaw.com/2016/07/22/HttpURLConnection-%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/
-     * */
-    public void a7_3(){
+     */
+    public void a7_3() {
         /*
         * 都是实现Http协议的网络请求框架，
         * HttpURLConnection是个抽象类，android4.4后
         * HttpURLConnection使用OkHttp来实现的。
+        */
+    }
+
+    /**
+     * 什么是WebSocket?
+     * https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001472780997905c8f293615c5a42eab058b6dc29936a5c000
+     */
+    public void a7_4() {
+        /*
+        * webSocket也是一种协议，基于http的，使用这种协议必须要服务端和客户端都实现相应的逻辑
+        * http协议是一次请求和响应后就断开连接了，webSocket是可以保持长连接的
+        * 首先客户端用socket发送请求
+        * GET ws://localhost:3000/ws/chat HTTP/1.1
+        * Host: localhost
+        * Upgrade: websocket
+        * Connection: Upgrade
+        * Origin: http://localhost:3000
+        * Sec-WebSocket-Key: client-random-string
+        * Sec-WebSocket-Version: 13
+        * ----------------------
+        * 该请求和普通的HTTP请求有几点不同：
+        *   GET请求的地址不是类似/path/，而是以ws://开头的地址；
+        *   请求头Upgrade: websocket和Connection: Upgrade表示这个连接将要被转换为WebSocket连接；
+        *   Sec-WebSocket-Key是用于标识这个连接，并非用于加密数据；
+        *   Sec-WebSocket-Version指定了WebSocket的协议版本。
+        * -------------------
+        * 然后服务器响应
+        * HTTP/1.1 101 Switching Protocols
+        * Upgrade: websocket
+        * Connection: Upgrade
+        * Sec-WebSocket-Accept: server-random-string
+        *
+        * 浏览器和服务器就可以随时主动发送消息给对方。
+        * 消息有两种，一种是文本，一种是二进制数据。通常，我们可以发送JSON格式的文本
+        *
+        * Android4.4以上支持
         */
     }
     //endregion

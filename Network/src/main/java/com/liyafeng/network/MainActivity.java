@@ -190,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 先用Builder模式来构建Request对象
+     *
+     */
     private void requestOkHttpGet() {
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
