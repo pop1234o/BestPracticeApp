@@ -257,6 +257,8 @@ public class Java {
 
     /**
      * 说说Java的异常体系
+     * ==================
+     * 说说try-with-resources
      */
     public void a1_10(Context context) {
         /*
@@ -270,6 +272,13 @@ public class Java {
         * OutOfIndexException 。
         * 非运行时异常一般可能由外界环境引起的异常，比如IOException,SQLException
         * 这些要求我们在编译的时候就要捕获。否则编译不通过
+        * =======================try-with-resources ======================
+        * try( Closeable c =init()){
+        * }catch(Exception e){
+        * }
+        * jdk7 加入
+        * 就是在括号内创建的对象，会在最后调用他的close()方法
+        * 就省去我们写finally了，比如IO流，锁
         */
         context.getResources().getDrawable(R.drawable.throwable);
         //Throwable
@@ -862,7 +871,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * *****************************************
          * Deque(双向队列)
          *  =》LinkedList
-         *  +>ArrayDeque
+         *  +>ArrayDeque （里面用数组实现，可变大小）
          *  ->BlockingDeque-> LinkedBlockingDeque
          *
          * }

@@ -27,6 +27,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CacheControl;
+import okhttp3.Callback;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -191,8 +192,46 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * 先用Builder模式来构建Request对象
      *
+     * ==============================
+     * 先用Builder模式来构建Request对象，然后将Request封装成一个Call（RealCall）对象
+     *  调用RealCall.execute。里面使用OkHttpClient.Dispatcher.execute(call)
+     *  里面将call加入Dispatcher中ArrayDeque中，然后再 RealCall.getResponseWithInterceptorChain()
+     *  中创建各种拦截器，（
+     *  BridgeInterceptor 添加请求头，比如User-Agent，Connection，Host
+     *  CacheInterceptor请求头缓存设置，
+     *  ConnectInterceptor获取http连接，判断是1.0还是1.1，
+     *              获取到HttpCodec对象，真正建立起了Socket连接
+     *  CallServerInterceptor 将请求行，请求头写入Socket,然后发送到服务端，接收Socket响应
+     *  这里用的是BufferedSource 是okio，NIO，然后获取到http响应，解析响应行，响应头，响应体
+     *  用ResponseBuilder来创建一个Response，然后返回
+     *  ）
+     *  以上是一个同步的过程，异步的过程类似，就是创建一个AsyncCall然后用线程池执行
+     *  返回Response后调用回调方法回调都是在子线程。
+     *  =================================
+     *  他的巧妙的结构在于 ,链式的调用结构
+     *  Response r = chain.proceed(request)；
+     *
+     *  Interceptor=>
+     *  Response intercept(Chain chain){
+     *      //处理Request
+     *     Response r = chain.proceed(chain.request());
+     *     //处理Response
+     *     return r;
+     *  }
+     *
+     *  Chain=>中方法
+     *  Response proceed(Request request){
+     *      //这里主要遍历取出拦截器
+     *     Response r = interceptors.get(index++).intercept(new Chain());
+     *     return r;
+     *  }
+     *
+     *
+     * ==============================
+     * 使用builder模式创建Request,OkHttpClient
+     * 使用工厂模式创建 EventListener
+     * 策略模式，设置拦截器
      */
     private void requestOkHttpGet() {
         new Thread(new Runnable() {
@@ -204,9 +243,20 @@ public class MainActivity extends AppCompatActivity {
                 }
                 okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
                 okhttp3.Request request = builder.url("http://www.google.com").build();
-                //必须在这定义
-                try (okhttp3.Response response = okHttpClient.newCall(request).execute()) {
-
+                //必须在这定义 //  try-with-resources
+                try (okhttp3.Response response = okHttpClient.newCall(request).execute()) {//  try-with-resources
+                    //回调形式
+//                    okHttpClient.newCall(request).enqueue(new Callback() {
+//                        @Override
+//                        public void onFailure(okhttp3.Call call, IOException e) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+//
+//                        }
+//                    });
                     String s = response.body().string();//注意这里是string()不是toString();
                     Log.i(TAG, "requestOkHttpGet: " + s);
                 } catch (IOException e) {

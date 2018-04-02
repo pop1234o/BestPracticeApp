@@ -107,4 +107,22 @@ public class AndroidFrame {
         context.getResources().getDrawable(R.drawable.okhttp_construct);
         context.getResources().getDrawable(R.drawable.okhttp_cache);
     }
+
+    /**
+     * ===============OkHttp专题================
+     * 说说OkHttp源码？
+     * okhttp如何处理网络缓存的？
+     * */
+    public void a4(){
+        /*
+        * 主要是使用链式的拦截器，处理请求和响应，然后用Socket来处理请求
+        * ================okhttp如何处理网络缓存的？=============
+        * 里面用的Cache=>DiskLruCache，用url作为key，将整个Response保存
+        * 他有个CacheInterceptor ，先从磁盘读取相应的Response对象
+        * 读取响应的last-modify expire ,cache-control，etag响应头，判断是否过期
+        * 没过期直接返回，如果过期
+        * 然后请求的时候会加上 if-modify-since ，if-none-match 请求头（如果有）
+        * 然后请求，如果没有修改，那么服务器直接返回304
+        */
+    }
 }

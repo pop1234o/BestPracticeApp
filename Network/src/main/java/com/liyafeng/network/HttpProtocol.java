@@ -2,6 +2,7 @@ package com.liyafeng.network;
 
 /**
  * Created by liyafeng on 05/11/2017.
+ * 实际上都是文本，只不过是按规定写的文本，美名其曰协议。
  * <p>
  * <p>
  * OSI 七层网络模型
