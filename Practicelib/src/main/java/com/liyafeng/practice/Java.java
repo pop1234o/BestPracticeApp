@@ -1084,12 +1084,22 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * 说说三次握手和四次挥手？为什么要这样做？
      * https://github.com/jawil/blog/issues/14
+     * https://hit-alibaba.github.io/interview/basic/network/TCP.html
      */
-    public void a7_2() {
+    public void a7_2(Context context) {
         /*
+        * 三次握手和四次挥手是Tcp协议中定义，所以他们是建立Tcp连接和断开的基石
+        * 利用TCP头部的SYN ACK标记来进行三次握手、
+        *
+        * ================为什么要这样做？=======================
+        * 为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误，浪费服务端资源
         *
         */
+        context.getResources().getDrawable(R.drawable.tcp_shake_hand);
+        context.getResources().getDrawable(R.drawable.tcp_connection_made_three_way_handshake);
+        context.getResources().getDrawable(R.drawable.tcp_connection_closed_four_way_handshake);
     }
+
 
     /**
      * HttpUrlConnection 和 okhttp关系?
@@ -1139,6 +1149,38 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * Android4.4以上支持
         */
     }
+    
+    /**
+     * 从网络加载一个10M的图片，说下注意事项?
+     * */
+    public void a7_5(){
+        /*
+        * 使用断点下载，先存储到磁盘中，然后通过inSampleSize来进行合理的缩放
+        * 再加载到内存中
+        */
+    }
+
+    /**
+     * TCP与UDP的区别?
+     * */
+    public void a7_6(){
+        /*
+        * TCP：
+        * 1面向连接 ，建立连接需要开销较多(时间，系统资源)
+        * 2传输可靠(保证数据正确性,保证数据顺序)、
+        * 3传输是面向字节流，用于传输大量数据(流模式)
+        * 4，tcp报文首部需要20字节
+        * 5。一对一，端口对端口的
+        * UDP：
+        * 1面向非连接，速度快，没有拥塞机制
+        * 2传输不可靠、
+        * 3传输面向数据报，用于传输少量数据(数据包模式)
+        * 4 首部需要8个字节
+        * 5可以广播一对多
+        */
+    }
+
+
     //endregion
 
     //region JVM知识

@@ -1,5 +1,9 @@
 package com.liyafeng;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+
 /**
  * Created by liyafeng on 16/11/2017.
  * 这里主要是问答形式的算法题，
@@ -10,18 +14,14 @@ public class Algorithm {
 
 
     public static void main(String[] args) {
-        for (int i = 0; i < 100000; i++) {
-            System.out.println("创建"+i);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+        try {
+            Socket client = new Socket("127.0.0.1", 8899);
+            client.setSoTimeout(10000);
+            OutputStream outputStream = client.getOutputStream();
+            outputStream.write(123);
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     //region 排序
