@@ -97,15 +97,54 @@ package com.liyafeng.network;
  * 4xx：客户端错误--请求有语法错误或请求无法实现
  * 5xx：服务器端错误--服务器未能实现合法的请求
  * 常见状态代码、状态描述、说明：
- * 200 OK      //客户端请求成功
- * 206 继续接受响应
- * 304 (Not Modified)
- * 400 Bad Request  //客户端请求有语法错误，不能被服务器所理解
- * 401 Unauthorized //请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用
- * 403 Forbidden  //服务器收到请求，但是拒绝提供服务
- * 404 Not Found  //请求资源不存在，eg：输入了错误的URL
- * 500 Internal Server Error //服务器发生不可预期的错误
- * 503 Server Unavailable  //服务器当前不能处理客户端的请求，一段时间后可能恢复正常
+
+ * <p>
+ * 100 Continue 初始的请求已经接受，客户应当继续发送请求的其余部分。（HTTP 1.1新）
+ * 101 Switching Protocols 服务器将遵从客户的请求转换到另外一种协议（HTTP 1.1新）
+ * 200 OK 一切正常，对GET和POST请求的应答文档跟在后面。
+ * 201 Created 服务器已经创建了文档，Location头给出了它的URL。
+ * 202 Accepted 已经接受请求，但处理尚未完成。
+ * 203 Non-Authoritative Information 文档已经正常地返回，但一些应答头可能不正确，因为使用的是文档的拷贝（HTTP 1.1新）。
+ * 204 No Content 没有新文档，浏览器应该继续显示原来的文档。如果用户定期地刷新页面，而Servlet可以确定用户文档足够新，这个状态代码是很有用的。
+ * 205 Reset Content 没有新的内容，但浏览器应该重置它所显示的内容。用来强制浏览器清除表单输入内容（HTTP 1.1新）。
+ * 206 Partial Content 客户发送了一个带有Range头的GET请求，服务器完成了它（HTTP 1.1新）。
+ * 300 Multiple Choices 客户请求的文档可以在多个位置找到，这些位置已经在返回的文档内列出。如果服务器要提出优先选择，则应该在Location应答头指明。
+ * 301 Moved Permanently 客户请求的文档在其他地方，新的URL在Location头中给出，浏览器应该自动地访问新的URL。
+ * 302 Found 类似于301，但新的URL应该被视为临时性的替代，而不是永久性的。注意，在HTTP1.0中对应的状态信息是“Moved Temporatily”。
+ * 出现该状态代码时，浏览器能够自动访问新的URL，因此它是一个很有用的状态代码。
+ * 注意这个状态代码有时候可以和301替换使用。例如，如果浏览器错误地请求http://host/~user（缺少了后面的斜杠），有的服务器返回301，有的则返回302。
+ * 严格地说，我们只能假定只有当原来的请求是GET时浏览器才会自动重定向。请参见307。
+ * <p>
+ * 303 See Other 类似于301/302，不同之处在于，如果原来的请求是POST，Location头指定的重定向目标文档应该通过GET提取（HTTP 1.1新）。
+ * 304 Not Modified 客户端有缓冲的文档并发出了一个条件性的请求（一般是提供If-Modified-Since头表示客户只想比指定日期更新的文档）。服务器告诉客户，原来缓冲的文档还可以继续使用。
+ * 305 Use Proxy 客户请求的文档应该通过Location头所指明的代理服务器提取（HTTP 1.1新）。
+ * 307 Temporary Redirect 和302（Found）相同。许多浏览器会错误地响应302应答进行重定向，即使原来的请求是POST，即使它实际上只能在POST请求的应答是303时 才能重定向。由于这个原因，HTTP 1.1新增了307，以便更加清除地区分几个状态代码：当出现303应答时，浏览器可以跟随重定向的GET和POST请求；如果是307应答，则浏览器只能跟随对GET请求的重定向。（HTTP 1.1新）
+ * 400 Bad Request 请求出现语法错误。
+ * 401 Unauthorized 客户试图未经授权访问受密码保护的页面。应答中会包含一个WWW-Authenticate头，浏览器据此显示用户名字/密码对话框，然后在填写合适的Authorization头后再次发出请求。
+ * 403 Forbidden 资源不可用。服务器理解客户的请求，但拒绝处理它。通常由于服务器上文件或目录的权限设置导致。
+ * 404 Not Found 无法找到指定位置的资源。这也是一个常用的应答。
+ * 405 Method Not Allowed 请求方法（GET、POST、HEAD、DELETE、PUT、TRACE等）对指定的资源不适用。（HTTP 1.1新）
+ * 406 Not Acceptable 指定的资源已经找到，但它的MIME类型和客户在Accpet头中所指定的不兼容（HTTP 1.1新）。
+ * 407 Proxy Authentication Required 类似于401，表示客户必须先经过代理服务器的授权。（HTTP 1.1新）
+ * 408 Request Timeout 在服务器许可的等待时间内，客户一直没有发出任何请求。客户可以在以后重复同一请求。（HTTP 1.1新）
+ * 409 Conflict 通常和PUT请求有关。由于请求和资源的当前状态相冲突，因此请求不能成功。（HTTP 1.1新）
+ * 410 Gone 所请求的文档已经不再可用，而且服务器不知道应该重定向到哪一个地址。它和404的不同在于，返回407表示文档永久地离开了指定的位置，而404表示由于未知的原因文档不可用。（HTTP 1.1新）
+ * 411 Length Required 服务器不能处理请求，除非客户发送一个Content-Length头。（HTTP 1.1新）
+ * 412 Precondition Failed 请求头中指定的一些前提条件失败（HTTP 1.1新）。
+ * 413 Request Entity Too Large 目标文档的大小超过服务器当前愿意处理的大小。如果服务器认为自己能够稍后再处理该请求，则应该提供一个Retry-After头（HTTP 1.1新）。
+ * 414 Request URI Too Long URI太长（HTTP 1.1新）。
+ * 416 Requested Range Not Satisfiable 服务器不能满足客户在请求中指定的Range头。（HTTP 1.1新）
+ * 500 Internal Server Error 服务器遇到了意料不到的情况，不能完成客户的请求。
+ * 501 Not Implemented 服务器不支持实现请求所需要的功能。例如，客户发出了一个服务器不支持的PUT请求。
+ * 502 Bad Gateway 服务器作为网关或者代理时，为了完成请求访问下一个服务器，但该服务器返回了非法的应答。
+ * 503 Service Unavailable 服务器由于维护或者负载过重未能应答。例如，Servlet可能在数据库连接池已满的情况下返回503。服务器返回503时可以提供一个Retry-After头。
+ * 504 Gateway Timeout 由作为代理或网关的服务器使用，表示不能及时地从远程服务器获得应答。（HTTP 1.1新）
+ * 505 HTTP Version Not Supported 服务器不支持请求中所指明的HTTP版本。（HTTP 1.1新）
+ * <p>
+ * 作者：吴白
+ * 链接：https://www.jianshu.com/p/52d86558ca57
+ * 來源：简书
+ * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
  * <p>
  * -------------响应头-------------------------
  * Server: Microsoft-IIS/5.0    //web服务器
@@ -115,12 +154,12 @@ package com.liyafeng.network;
  * Content-Type: text/html
  * Set-Cookie: ASPSESSIONIDQAQBQQQB=BEJCDGKADEDJKLKKAJEOIMMH; path=/
  * Expires: Thu,08 Mar 2007 07:16:51 GMT
- *      （在此日期之前，响应都是有效的,这种有个缺点，是服务端时间和客户端时间不匹配）
- *
+ * （在此日期之前，响应都是有效的,这种有个缺点，是服务端时间和客户端时间不匹配）
+ * <p>
  * Cache-control: public、private、no-cache、no-store、no-transform、must-revalidate、proxy-revalidate、max-age、s-maxage.
- *          (Cache-Control: max-age=3600代表响应的有效期，单位是秒，这就解决了C/S时间不匹配问题
- *             缺点是HTTP1.1才有的，所以一般是两者都返回，优先使用Cache-control）
- *
+ * (Cache-Control: max-age=3600代表响应的有效期，单位是秒，这就解决了C/S时间不匹配问题
+ * 缺点是HTTP1.1才有的，所以一般是两者都返回，优先使用Cache-control）
+ * <p>
  * Last-Modified: Thu, 30 Nov 2006 11:35:41 GMT  (服务端最后修改（响应的）时间)
  * ETag: "6277a-415-e7c76980"     （响应的唯一标识）
  * Accept-Ranges: bytes
@@ -128,7 +167,7 @@ package com.liyafeng.network;
  * <p>
  * <p>
  * ==========断点下载================
- *
+ * <p>
  * <p>
  * <p>
  * etag_/if-match 一般配合range使用，来实现断点下载
@@ -145,7 +184,7 @@ package com.liyafeng.network;
  * 否则返回412 (Precondition Failed，先决条件失败)
  * <p>
  * =========== 缓存  ==============
- *             https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn
+ * https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn
  * <p>
  * last-modified/if-modified-since:<day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
  * Wed, 21 Oct 2015 07:28:00 GMT
@@ -305,6 +344,32 @@ public class HttpProtocol {
  * 那么一个注册的app给他分配一个私钥，服务端会认证这个私钥。
  * <p>
  * <p>
+ * <p>
+ * <p>
+ * RFC
+ * 征求意见稿（英语：Request For Comments，缩写为RFC），是由互联网工程任务组（IETF）发布的一系列备忘录。
+ * 文件收集了有关互联网相关信息，以及UNIX和互联网社区的软件文件，以编号排定。目前RFC文件是由互联网协会（ISOC）赞助发行。
+ * RFC始于1969年，由斯蒂芬·克罗克用来记录有关ARPANET开发的非正式文档，最终演变为用来记录互联网规范、协议、过程等的标准文件。
+ * <p>
+ * <p>
+ * <p>
+ * <p>
+ * ============================
+ * <p>
+ * tcp udp
+ * <p>
+ * 正如上一小节所指出的，当您编写 socket 应用程序的时候，您可以在使用 TCP 还是使用 UDP 之间做出选择。它们都有各自的优点和缺点。
+ * TCP 是流协议，而UDP是数据报协议。换句话说，TCP 在客户机和服务器之间建立持续的开放连接，在该连接的生命期内，
+ * 字节可以通过该连接写出（并且保证顺序正确）。然而，通过 TCP 写出的字节没有内置的结构，所以需要高层协议在被传输的字节流内部分隔数据记录和字段。
+ * 另一方面，UDP 不需要在客户机和服务器之间建立连接，它只是在地址之间传输报文。UDP 的一个很好特性在于它的包是自分隔的（self-delimiting），
+ * 也就是一个数据报都准确地指出它的开始和结束位置。然而，UDP 的一个可能的缺点在于，它不保证包将会按顺序到达，甚至根本就不保证。
+ * 当然，建立在 UDP 之上的高层协议可能会提供握手和确认功能。
+ * <p>
+ * 对于理解 TCP 和 UDP 之间的区别来说，一个有用的类比就是电话呼叫和邮寄信件之间的区别。
+ * 在呼叫者用铃声通知接收者，并且接收者拿起听筒之前，电话呼叫不是活动的。只要没有一方挂断，该电话信道就保持活动，
+ * 但是在通话期间，他们可以自由地想说多少就说多少。来自任何一方的谈话都按临时的顺序发生。另一方面，当你发一封信的时候，
+ * 邮局在投递时既不对接收方是否存在作任何保证，也不对信件投递将花多长时间做出有力保证。接收方可能按与信件的发送顺序不同的顺序接收不同的信件，
+ * 并且发送方也可能在他们发送信件是交替地接收邮件。与（理想的）邮政服务不同，无法送达的信件总是被送到死信办公室处理，而不再返回给发送者。
  * <p>
  * <p>
  * RFC

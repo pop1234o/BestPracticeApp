@@ -1121,6 +1121,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     public void a7_4() {
         /*
         * webSocket也是一种协议，基于http的，使用这种协议必须要服务端和客户端都实现相应的逻辑
+        * 也是基于tcp协议，提供双向的数据通道
         * http协议是一次请求和响应后就断开连接了，webSocket是可以保持长连接的
         * 首先客户端用socket发送请求
         * GET ws://localhost:3000/ws/chat HTTP/1.1
@@ -1181,6 +1182,26 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
 
+    /**
+     * HTTP1.0与1.1与2.0的区别?
+     * https://www.jianshu.com/p/52d86558ca57
+     * https://www.zhihu.com/question/34074946
+     * */
+    public void a7_7(){
+        /*
+        * ===================1.1 和1.0的区别===========================
+        * 1：添加了请求头
+        * Http1.1新增了Host请求头，这就使得我们可以在同一IP的同一端口来指定不同的服务主机
+        * 新增了Connection请求头，keep-alive表示不关闭tcp连接，这就使得一次tcp连接能发送多个http请求
+        *       close表示关闭
+        * 添加了range请求头，支持了断点下载
+        * 添加了cache-control请求头，优化了服务器时间和客户端时间不一致导致缓存过期或者不过期的问题
+        * 2.添加了响应码
+        * 101 表示切换了协议，支持了WebSocket
+        * 412 比如断点下载的ETag不匹配，返回错误
+        *
+        */
+    }
     //endregion
 
     //region JVM知识
