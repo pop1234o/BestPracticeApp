@@ -1052,6 +1052,7 @@ public class AndroidFramework {
      * <p>
      * 基础：https://developer.android.google.cn/topic/performance/vitals/anr.html#detect_and_diagnose_problems
      * 深入源码：http://www.bijishequ.com/detail/569457?p=
+     * 深入源码 http://maoao530.github.io/2017/02/21/anr-analyse/
      */
     public void a8_16() {
         /*

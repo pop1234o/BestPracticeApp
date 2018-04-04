@@ -71,4 +71,28 @@ public class Tools {
 //            annotationProcessor  'org.greenrobot:eventbus-annotation-processor:3.0.1'
 //        }
     }
+
+
+    /**
+     * 谈谈你对安卓签名的理解?
+     * https://blog.csdn.net/jiangwei0910410003/article/details/50402000（signapk.jar源码分析）
+     * https://juejin.im/entry/575ed0bb1532bc00609c3aa9
+     * https://maoao530.github.io/2017/01/31/apk-sign/
+     * */
+    public void a2(){
+        /*
+        * 整个过程用到了SHA-1 的hash算法，和RSA非对称加密
+        * 首先签名过程就是在apk(压缩包)中生成一个META-INF文件夹，里面有三个文件
+        * MANIFEST.MF  CERT.SF  CERT.RSA 文件，我们就是靠这三个文件来验证apk是没有
+        * 被修改过的。
+        *   而产生这三个文件的程序就是用 apksigner.jar用xxx.keystore来生成的，
+        * xxx.keystore中存储了公钥和私钥 ，而生成xxx.keystore 需要用keytool.jar这个工具
+        * keytool -genkeypair -v -keyalg DSA -keysize 1024 -sigalg SHA1withDSA -validity 20000 -keystore D:\xxx.keystore -alias 别名 -keypass 使用密码 -storepass 打包密码？
+        * apksigner 签名时用的是pk8和x509.pem文件，xxx.keystore文件可以转化为他们
+        * apksigner.jar 源码分析 源码位置：com/android/signapk/sign.java
+        * 1，
+        * 2
+        * 3
+        */
+    }
 }
