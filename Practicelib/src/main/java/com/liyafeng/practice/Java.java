@@ -1184,6 +1184,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * HTTP1.0与1.1与2.0的区别?
+     * SPDY 是什么？
      * https://www.jianshu.com/p/52d86558ca57
      * https://www.zhihu.com/question/34074946
      * */
@@ -1199,7 +1200,38 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 2.添加了响应码
         * 101 表示切换了协议，支持了WebSocket
         * 412 比如断点下载的ETag不匹配，返回错误
+        * ==========================2.0和1.x的区别=======================
+        * 互联网工程任务组（IETF）2015年5推出
+        * 1.单一长连接，向单个域名的请求，会用一个tcp连接，这样就减少三次握手带来的开销
+        *   而且克服了tcp慢启动（一开始会会限制最大传输速度，如果响应成功，会提高传输速度）
+        * 2.（多路复用）head of line blocking 是http1.x的特性，一个请求没有响应之前，后面的请求将会阻塞
+        *       所以我们用二进制分帧的形式将多个请求合并为一个，每个请求编号
+        * 3.二进制分帧（Frame），在Http协议和Tcp协议之间加入 二进制分帧层（Binary Framing）
+        *   将 http请求头加入到HEADER frame 中，将请求体加入  DATA frame 中
+        * 4.首部压缩 ，SPDY 使用的是通用的DEFLATE 算法，而 HTTP/2 则使用了专门为首部压缩而设计的 HPACK 算法
+        * 5.服务端推送（Server Push、Cache Push），一个请求可以有多个响应，比如我们请求A，那么服务端可以
+        *   响应A后，再返回响应B,这样就相当于主动推送了（这在首页初次请求很多资源时很有用）
         *
+        * ===================SPDY 是什么？===================
+        * （SPeeDY）快速的，是Google用来加快网络速度，降低延迟。
+        * 是google为了改进Http1.x的缺陷来制定的协议，后来Http2.0出来，Google就不维护这个协议了
+        * 全力支持Http2.0，Http2.0也是根据这个协议改进而来
+        *
+        */
+    }
+    
+    /**
+     * HTTP与HTTPS的区别以及如何实现安全性?
+     * 如何验证证书的合法性?
+     * https中哪里用了对称加密，哪里用了非对称加密，对加密算法（如RSA）等是否有了解?
+     * http://www.techug.com/post/https-ssl-tls.html
+     * https://www.barretlee.com/blog/2015/10/05/how-to-build-a-https-server/
+     *
+     * */
+    public void a7_8(){
+        /*
+        * https是在http下层加入了tls层（传输层安全协议）
+        * 区别是url头部不同，端口不同，
         */
     }
     //endregion
