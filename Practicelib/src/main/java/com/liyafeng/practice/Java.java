@@ -1116,11 +1116,13 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 什么是WebSocket?
+     * 如何在Android中使用WebSocket?
+     *
      * https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001472780997905c8f293615c5a42eab058b6dc29936a5c000
      */
     public void a7_4() {
         /*
-        * webSocket也是一种协议，基于http的，使用这种协议必须要服务端和客户端都实现相应的逻辑
+        * webSocket也是一种协议，基于tcp的，使用这种协议必须要服务端和客户端都实现相应的逻辑
         * 也是基于tcp协议，提供双向的数据通道
         * http协议是一次请求和响应后就断开连接了，webSocket是可以保持长连接的
         * 首先客户端用socket发送请求
@@ -1148,6 +1150,12 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 消息有两种，一种是文本，一种是二进制数据。通常，我们可以发送JSON格式的文本
         *
         * Android4.4以上支持
+        *
+        * =====================如何在Android中使用WebSocket?======================
+        * https://blog.csdn.net/moxiouhao/article/details/77840168
+        *
+        *
+        *
         */
     }
     

@@ -1165,6 +1165,15 @@ public class AndroidFramework {
     }
 
 
+    /**
+     * App 是如何沙箱化，为什么要这么做?
+     */
+    public void a8_21{
+        /*
+        *
+        *
+        * */
+    }
     //endregion
 
     //region Android 架构模式
