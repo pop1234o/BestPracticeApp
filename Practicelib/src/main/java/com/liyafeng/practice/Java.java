@@ -1291,5 +1291,66 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         */
     }
 
+    /**
+     * java的安全性如果保证？/说说java安全模型
+     * 说说java沙箱机制？
+     * 说说类加载器的双亲委托模型？
+     * jvm内存模型？
+     * ---------------------------------------
+     * 《深入理解java虚拟机》
+     * */
+    public void a8_2(){
+        /*
+        * ==============java的安全性如果保证？/说说java安全模型=================
+        * 为了保证任何不可靠来源（比如网络）的代码对java原有逻辑进行破坏
+        * 所以java建立了沙箱安全模型
+        * ==============说说java沙箱机制？========================
+        * 由四个部分组成
+        * 1.类加载器结构（双亲委托模型）
+        * 2.class文件检查器
+        * 3 。
+        *
+        * ===========说说类加载器的双亲委托模型？====================
+        * https://blog.csdn.net/javazejian/article/details/73413292
+        * https://www.ibm.com/developerworks/cn/java/j-lo-classloader/
+        *
+        * 我们有一个启动类加载器/引导类加载器（BootStrap ClassLoader），它是一个独立的类加载器，由C++实现
+        * 还有拓展类加载器，系统类加载器
+        * BootStrap ：由c++实现，负责将 <JAVA_HOME>/lib路径下的核心类库或
+        *   -Xbootclasspath参数指定的路径下的jar包加载到内存中，注意必由于虚拟机是按照文件名识别加载jar包的，
+        *   如rt.jar，如果文件名不被虚拟机识别，即使把jar包丢到lib目录下也是没有作用的
+        *   (出于安全考虑，Bootstrap启动类加载器只加载包名为java、javax、sun等开头的类)。
+        *
+        *  Extension（ExtClassLoader.java）： 扩展类加载器是指Sun公司(已被Oracle收购)实现的sun.misc.Launcher$ExtClassLoader类，
+        *   由Java语言实现的，是Launcher的静态内部类，它负责加载<JAVA_HOME>/lib/ext目录下
+        *   或者由系统变量-Djava.ext.dir指定位路径中的类库，开发者可以直接使用标准扩展类加载器
+        *
+        * System(AppClassLoader.java) 应用程序加载器是指 Sun公司实现的sun.misc.Launcher$AppClassLoader。它负责加载系统类路径java -classpath
+        * 或-D java.class.path 指定路径下的类库，也就是我们经常用到的classpath路径，
+        * 开发者可以直接使用系统类加载器，一般情况下该类加载是程序中默认的类加载器，
+        * 通过ClassLoader#getSystemClassLoader()方法可以获取到该类加载器
+        *
+        * BootStrap 《- ExtClassLoader《- AppClassLoader
+        * 他们虽然不是继承关系 ，但是通过getParent（）方法获取到的就是这个关系
+        * 这个parent是在构造方法中传入的
+        * --------------加载原理-------------------
+        * 从磁盘中读取相应的class文件，然后获取输入流，然后用native方法
+        * 来生成Class对象，从而完成Class文件加载（到jvm的内存中）
+        * 优点：
+        * 1，可以防止类重复加载
+        * 2，保证安全性，比如我们自己定义了一个java.lang.String，那么
+        *   没有这个机制就会加载我们的类，导致我们的String类能访问java.lang
+        *   中可以包内访问的成员变量
+        *
+        * ==============jvm内存模型======================
+        * http://liuwangshu.cn/java/jvm/1-runtime-data-area.html
+        *
+        */
+        //系统类加载器
+        ClassLoader.getSystemClassLoader().getParent();
+        //线程上下文类加载器，这个获取到与当前程序相同的类加载器
+        // 一般是AppClassLoader ,但是在java web环境中可能不是
+        Thread.currentThread().getContextClassLoader();
+    }
     //endregion
 }

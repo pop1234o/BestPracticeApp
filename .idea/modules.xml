@@ -7,19 +7,18 @@
       <module fileurl="file://$PROJECT_DIR$/BuildTool/BuildTool.iml" filepath="$PROJECT_DIR$/BuildTool/BuildTool.iml" />
       <module fileurl="file://$PROJECT_DIR$/Concurrent/Concurrent.iml" filepath="$PROJECT_DIR$/Concurrent/Concurrent.iml" />
       <module fileurl="file://$PROJECT_DIR$/DependencyInjection/DependencyInjection.iml" filepath="$PROJECT_DIR$/DependencyInjection/DependencyInjection.iml" />
-      <module fileurl="file://E:\mynewpro\mypro.iml" filepath="E:\mynewpro\mypro.iml" />
-      <module fileurl="file://E:\mypro\Concurrent\Thread.iml" filepath="E:\mypro\Concurrent\Thread.iml" />
-      <module fileurl="file://E:\mypro\MyApplication.iml" filepath="E:\mypro\MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/Event/Event.iml" filepath="$PROJECT_DIR$/Event/Event.iml" />
       <module fileurl="file://$PROJECT_DIR$/ImageLoader/ImageLoader.iml" filepath="$PROJECT_DIR$/ImageLoader/ImageLoader.iml" />
+      <module fileurl="file://E:\mypro\MyApplication.iml" filepath="E:\mypro\MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/Network/Network.iml" filepath="$PROJECT_DIR$/Network/Network.iml" />
       <module fileurl="file://$PROJECT_DIR$/Orm/Orm.iml" filepath="$PROJECT_DIR$/Orm/Orm.iml" />
       <module fileurl="file://$PROJECT_DIR$/Performance/Performance.iml" filepath="$PROJECT_DIR$/Performance/Performance.iml" />
       <module fileurl="file://$PROJECT_DIR$/Practicelib/Practicelib.iml" filepath="$PROJECT_DIR$/Practicelib/Practicelib.iml" />
+      <module fileurl="file://E:\mypro\Concurrent\Thread.iml" filepath="E:\mypro\Concurrent\Thread.iml" />
       <module fileurl="file://$PROJECT_DIR$/Video/Video.iml" filepath="$PROJECT_DIR$/Video/Video.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewApp/ViewApp.iml" filepath="$PROJECT_DIR$/ViewApp/ViewApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mynewpro.iml" filepath="$PROJECT_DIR$/mynewpro.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mynewpro.iml" filepath="$PROJECT_DIR$/mynewpro.iml" />
+      <module fileurl="file://E:\mynewpro\mypro.iml" filepath="E:\mynewpro\mypro.iml" />
     </modules>
   </component>
 </project>

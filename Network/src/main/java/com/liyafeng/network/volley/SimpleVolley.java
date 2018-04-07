@@ -3,6 +3,8 @@ package com.liyafeng.network.volley;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.liyafeng.network.socket.SocketClient;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +35,6 @@ public class SimpleVolley {
         NetWork.UrlNetWork netWork = new NetWork.UrlNetWork();
         Cache.DiskBasedCache cache = new Cache.DiskBasedCache();
         RequestQueue requestQueue = new RequestQueue(netWork, cache);
-
         return requestQueue;
     }
 

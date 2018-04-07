@@ -3,6 +3,7 @@ package com.liyafeng.practice;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 
 public class AndroidFramework {
 
@@ -380,6 +381,23 @@ public class AndroidFramework {
         * 他是.class文件的压缩，这样占用的内存更少
         * 2.dvm是基于寄存器的，而jvm是基于栈的
         * http://rednaxelafx.iteye.com/blog/492667
+        */
+    }
+
+    /**
+     * Android的类加载器？
+     * 加载流程是什么？/加载dex源码分析？
+     */
+    public void a2_4() {
+        /*
+        * PathClassLoader：只能加载已经安装到Android系统中的apk文件（/data/app目录），
+        * 是Android默认使用的类加载器。
+        * DexClassLoader：可以加载任意目录下的dex/jar/apk/zip文件，也就是我们一开始提到的补丁。
+        *
+        * ====================加载流程是什么？/加载dex源码分析？===============
+        * https://juejin.im/post/5a0ad2b551882531ba1077a2
+        * 实际上就是将dex文件转换为Element对象，然后这个对象中findClass，
+        *
         */
     }
 
@@ -796,39 +814,45 @@ public class AndroidFramework {
         * 等待call执行完会将他唤醒，那么现在直接调用interrupt方法将线程中断阻塞。
         *
         */
-        new AsyncTask<Integer, Double, String>() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            new AsyncTask<Integer, Double, String>() {
 
-            @Override
-            protected void onPreExecute() {
-            }
-
-            @Override
-            protected void onProgressUpdate(Double... values) {
-                super.onProgressUpdate(values);
-            }
-
-            @Override
-            protected String doInBackground(Integer... integers) {
-                //后台处理
-                String s = "";
-                for (Integer integer : integers) {
-                    s += integer;
+                @Override
+                protected void onPreExecute() {
                 }
-                return s;
-            }
 
-            @Override
-            protected void onPostExecute(String s) {
-                System.out.println(s);
-            }
-        }.execute(1, 2, 3).cancel(true);//传入元素数据
+                @Override
+                protected void onProgressUpdate(Double... values) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+                        super.onProgressUpdate(values);
+                    }
+                }
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
+                @Override
+                protected String doInBackground(Integer... integers) {
+                    //后台处理
+                    String s = "";
+                    for (Integer integer : integers) {
+                        s += integer;
+                    }
+                    return s;
+                }
 
-            }
-        });
+                @Override
+                protected void onPostExecute(String s) {
+                    System.out.println(s);
+                }
+            }.execute(1, 2, 3).cancel(true);//传入元素数据
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
+        }
     }
 
 
@@ -1168,7 +1192,7 @@ public class AndroidFramework {
     /**
      * App 是如何沙箱化，为什么要这么做?
      */
-    public void a8_21{
+    public void a8_21() {
         /*
         *
         *
@@ -1322,8 +1346,8 @@ public class AndroidFramework {
 
     /**
      * 说说Android内存优化？
-     * */
-    public void a12_2(){
+     */
+    public void a12_2() {
         /*
         * 目的就是降低内存占用率，三个方向，一个是降低正常内存使用，二是防止内存泄漏，三是使用多进程
         * ------------------降低内存使用---------------------
@@ -1337,4 +1361,24 @@ public class AndroidFramework {
     }
 
     //endregion
+    
+    //region Android 热修复/插件化
+    
+    /**
+     * 说说Android 热修复
+     * https://juejin.im/post/5a0ad2b551882531ba1077a2
+     * （热修复、插件化）https://www.jianshu.com/p/704cac3eb13d
+     *
+     * DexPathList.java
+     * http://androidxref.com/8.0.0_r4/xref/libcore/dalvik/src/main/java/dalvik/system/DexPathList.java
+     * */
+    public void a13(){
+        /*
+        *
+        */
+    }
+
+
+    //endregion
+    
 }

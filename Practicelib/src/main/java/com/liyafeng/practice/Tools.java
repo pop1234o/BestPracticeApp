@@ -102,7 +102,7 @@ public class Tools {
         *   的结果要和之前的信息一致）
         */
 
-        context.getResources().getDrawable(R.drawable.CERT_RSA);
+        context.getResources().getDrawable(R.drawable.cert_rsa);
     }
 
     /**
@@ -135,6 +135,6 @@ public class Tools {
         * ====================x.509是什么？======================
         * 是一种证书的格式，规定了公钥name:value的一些格式
         */
-        context.getResources().getDrawable(R.drawable.CERT_RSA);
+        context.getResources().getDrawable(R.drawable.cert_rsa);
     }
 }
