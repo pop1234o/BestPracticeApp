@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/Concurrent" />
             <option value="$PROJECT_DIR$/DependencyInjection" />
             <option value="$PROJECT_DIR$/Event" />
+            <option value="$PROJECT_DIR$/HotFix" />
             <option value="$PROJECT_DIR$/ImageLoader" />
             <option value="$PROJECT_DIR$/Network" />
             <option value="$PROJECT_DIR$/Orm" />

@@ -392,11 +392,16 @@ public class AndroidFramework {
         /*
         * PathClassLoader：只能加载已经安装到Android系统中的apk文件（/data/app目录），
         * 是Android默认使用的类加载器。
+        *  PathClassLoader加载系统的类，是在ClassLoader中创建的，因为jvm,dvm不一样，所以
+        *  google修改了ClassLoader的代码
+        *
         * DexClassLoader：可以加载任意目录下的dex/jar/apk/zip文件，也就是我们一开始提到的补丁。
         *
         * ====================加载流程是什么？/加载dex源码分析？===============
         * https://juejin.im/post/5a0ad2b551882531ba1077a2
-        * 实际上就是将dex文件转换为Element对象，然后这个对象中findClass，
+        * 实际上就是将dex文件转换为Element对象，一个dex文件对应一个Element
+        * 首先遍历Element[]，依次调用element.findClass(name)
+        * 里面调用了DexFile.loadClassBinaryName(),里面最终还是调用native方法
         *
         */
     }
@@ -1198,6 +1203,26 @@ public class AndroidFramework {
         *
         * */
     }
+
+    /**
+     * 说说Android能获取到那些存储目录？
+     */
+    public void a8_22() {
+        /*
+        * Context的方法
+        * getExternalCacheDir    /storage/emulated/0/Android/data/com.liyafeng.hotfix/cache
+        * getExternalFilesDir    /storage/emulated/0/Android/data/com.liyafeng.hotfix/files
+        * getFilesDir           /data/data/com.liyafeng.hotfix/files
+        * getCacheDir           /data/data/com.liyafeng.hotfix/cache
+        *
+        * Environment的方法
+        * getDataDirectory                      /data
+        * getDownloadCacheDirectory             /cache
+        * getExternalStorageDirectory           /storage/emulated/0  （sd卡的根目录）
+        * getRootDirectory                      /system
+        */
+    }
+
     //endregion
 
     //region Android 架构模式
@@ -1361,24 +1386,25 @@ public class AndroidFramework {
     }
 
     //endregion
-    
+
     //region Android 热修复/插件化
-    
+
     /**
      * 说说Android 热修复
      * https://juejin.im/post/5a0ad2b551882531ba1077a2
-     * （热修复、插件化）https://www.jianshu.com/p/704cac3eb13d
-     *
+     * https://www.jianshu.com/p/704cac3eb13d（热修复、插件化）
+     * https://yq.aliyun.com/articles/231111?utm_content=m_34179 (阿里的文章，各种热修复原理介绍)
      * DexPathList.java
      * http://androidxref.com/8.0.0_r4/xref/libcore/dalvik/src/main/java/dalvik/system/DexPathList.java
-     * */
-    public void a13(){
+     */
+    public void a13() {
         /*
         *
         */
+
     }
 
 
     //endregion
-    
+
 }

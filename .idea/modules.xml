@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/Concurrent/Concurrent.iml" filepath="$PROJECT_DIR$/Concurrent/Concurrent.iml" />
       <module fileurl="file://$PROJECT_DIR$/DependencyInjection/DependencyInjection.iml" filepath="$PROJECT_DIR$/DependencyInjection/DependencyInjection.iml" />
       <module fileurl="file://$PROJECT_DIR$/Event/Event.iml" filepath="$PROJECT_DIR$/Event/Event.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HotFix/HotFix.iml" filepath="$PROJECT_DIR$/HotFix/HotFix.iml" />
       <module fileurl="file://$PROJECT_DIR$/ImageLoader/ImageLoader.iml" filepath="$PROJECT_DIR$/ImageLoader/ImageLoader.iml" />
       <module fileurl="file://E:\mypro\MyApplication.iml" filepath="E:\mypro\MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/Network/Network.iml" filepath="$PROJECT_DIR$/Network/Network.iml" />

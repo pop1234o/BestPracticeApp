@@ -15,6 +15,8 @@
 * https://www.coursera.org/ 一个大学课程学习网站
 * androidxref.com 在线查看Android源码的网站，我们要查看某个系统源码
     而又不想下载整个Android源码，可以用这个网站，它有强大的搜索功能
+* https://github.com/aosp-mirror/platform_frameworks_base 
+    Android源码在github上的镜像
 
 ### 博客
 * http://blog.csdn.net/v_july_v 
