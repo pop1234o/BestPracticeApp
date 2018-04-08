@@ -4,6 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.File;
 
 public class AndroidFramework {
 
@@ -1207,7 +1211,7 @@ public class AndroidFramework {
     /**
      * 说说Android能获取到那些存储目录？
      */
-    public void a8_22() {
+    public void a8_22(Context context) {
         /*
         * Context的方法
         * getExternalCacheDir    /storage/emulated/0/Android/data/com.liyafeng.hotfix/cache
@@ -1221,6 +1225,26 @@ public class AndroidFramework {
         * getExternalStorageDirectory           /storage/emulated/0  （sd卡的根目录）
         * getRootDirectory                      /system
         */
+
+        File externalCacheDir = context.getExternalCacheDir();
+        Log.i("test", "getExternalCacheDir"+externalCacheDir.getAbsolutePath());
+        File externalFilesDir = context.getExternalFilesDir(null);
+        Log.i("test", "getExternalFilesDir"+externalFilesDir.getAbsolutePath());
+        File filesDir = context.getFilesDir();
+        Log.i("test", "getFilesDir"+filesDir.getAbsolutePath());
+        File cacheDir = context.getCacheDir();
+        Log.i("test", "getCacheDir"+cacheDir.getAbsolutePath());
+
+        File dataDirectory = Environment.getDataDirectory();
+        Log.i("test", "getDataDirectory"+dataDirectory.getAbsolutePath());
+        File downloadCacheDirectory = Environment.getDownloadCacheDirectory();
+        Log.i("test", "getDownloadCacheDirectory"+downloadCacheDirectory.getAbsolutePath());
+        File externalStorageDirectory = Environment.getExternalStorageDirectory();
+        Log.i("test", "getExternalStorageDirectory"+externalStorageDirectory.getAbsolutePath());
+        File rootDirectory = Environment.getRootDirectory();
+        Log.i("test", "getRootDirectory"+rootDirectory.getAbsolutePath());
+
+
     }
 
     //endregion

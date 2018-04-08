@@ -34,25 +34,15 @@ public class MainActivity extends Activity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File externalCacheDir = getExternalCacheDir();
-                Log.i("test", "getExternalCacheDir"+externalCacheDir.getAbsolutePath());
-                File externalFilesDir = getExternalFilesDir(null);
-                Log.i("test", "getExternalFilesDir"+externalFilesDir.getAbsolutePath());
-                File filesDir = getFilesDir();
-                Log.i("test", "getFilesDir"+filesDir.getAbsolutePath());
-                File cacheDir = getCacheDir();
-                Log.i("test", "getCacheDir"+cacheDir.getAbsolutePath());
-
-                File dataDirectory = Environment.getDataDirectory();
-                Log.i("test", "getDataDirectory"+dataDirectory.getAbsolutePath());
-                File downloadCacheDirectory = Environment.getDownloadCacheDirectory();
-                Log.i("test", "getDownloadCacheDirectory"+downloadCacheDirectory.getAbsolutePath());
-                File externalStorageDirectory = Environment.getExternalStorageDirectory();
-                Log.i("test", "getExternalStorageDirectory"+externalStorageDirectory.getAbsolutePath());
-                File rootDirectory = Environment.getRootDirectory();
-                Log.i("test", "getRootDirectory"+rootDirectory.getAbsolutePath());
-
-
+                try {
+                    DexInsertHotFix.loadFix(MainActivity.this);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
