@@ -9,13 +9,13 @@ import android.util.Log;
 public class BugClass {
 
     static int i  ;
+
     static {
         i=1;
-        Log.i("test", "加载了"+i);
+        Log.i("test", "load "+i);
     }
 
-    public static void doSomething(){
-        i++;
-        Log.i("test", "结果"+i);
+    public  void doSomething(){
+        Log.i("test", "result");
     }
 }

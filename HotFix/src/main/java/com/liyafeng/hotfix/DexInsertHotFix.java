@@ -23,6 +23,7 @@ public class DexInsertHotFix {
      *  编译完成后
      *  我们可以查看class文件，用javap -c <xxx.class目录> 里面是反汇编的字节码
      *
+     * 然后将xx.class文件转换为classes.dex文件。
      *
      * @param args
      */

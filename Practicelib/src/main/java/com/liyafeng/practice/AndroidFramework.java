@@ -1415,7 +1415,7 @@ public class AndroidFramework {
 
     /**
      * 说说Android 热修复
-     * https://juejin.im/post/5a0ad2b551882531ba1077a2
+     * https://juejin.im/post/5a0ad2b551882531ba1077a2 (Dex插庄源码实现原理)
      * https://www.jianshu.com/p/704cac3eb13d（热修复、插件化）
      * https://yq.aliyun.com/articles/231111?utm_content=m_34179 (阿里的文章，各种热修复原理介绍)
      * DexPathList.java
@@ -1429,6 +1429,14 @@ public class AndroidFramework {
     }
 
 
+    /**
+     * http://www.infoq.com/cn/articles/android-plug-ins-from-entry-to-give-up( infoq的文章，插件化历史介绍)
+     * */
+    public void a13_1(){
+        /*
+        *
+        */
+    }
     //endregion
 
 }

@@ -15,8 +15,7 @@ public class BugClass {
         Log.i("test", "after fix init" + i);
     }
 
-    public static void doSomething() {
-        i++;
-        Log.i("test", "after fix result" + i);
+    public void doSomething() {
+        Log.i("test", "after fix result");
     }
 }
