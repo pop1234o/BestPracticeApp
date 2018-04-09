@@ -1430,12 +1430,16 @@ public class AndroidFramework {
 
 
     /**
+     * 说说插件化
      * http://www.infoq.com/cn/articles/android-plug-ins-from-entry-to-give-up( infoq的文章，插件化历史介绍)
+     * https://zhuanlan.zhihu.com/p/33017826（插件化原理介绍）
      * */
-    public void a13_1(){
+    public void a13_1(Context context){
         /*
         *
         */
+
+        context.getResources().getDrawable(R.drawable.plugin);
     }
     //endregion
 
