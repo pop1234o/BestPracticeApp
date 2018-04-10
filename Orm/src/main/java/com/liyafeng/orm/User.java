@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 public class User {
 
-    @Id
+    @Id(autoincrement = true) //这里的自增主键 必须是Long类型
     private Long id;
 
     @NotNull
