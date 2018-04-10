@@ -4,7 +4,7 @@ package com.liyafeng.orm;
  * Created by liyafeng on 2018/1/2.
  */
 
-public class Main {
+public class Main_GreenDao {
 
     /**
      * @param args

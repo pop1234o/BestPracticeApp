@@ -41,6 +41,14 @@
 ### 视频音频 (Module: Video)
 * 对于视频编解码的一些理解
 
+### 插件化/热修复
+* 插庄、Hook原理的一些介绍
+
+### Android应用架构/组件化
+* MVC、MVP、MVVM
+* 最新官方的 Android-Architecture-Component 架构
+* 阿里组件化框架Arouter的介绍（TODO）
+
 ### 自动化构建工具 (Module: BuildTool)
 * Gradle的理解
 
@@ -53,9 +61,6 @@
 * MAT分析内存泄漏
 * 性能优化的一些建议
 
-### Android应用架构
-* MVC、MVP、MVVM
-* 最新官方的 Android-Architecture-Component 架构
 
 ### 算法和数据结构 (Module: Algorithm)
 * 各种排序、查找算法
