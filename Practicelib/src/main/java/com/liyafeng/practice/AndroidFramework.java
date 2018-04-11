@@ -1227,22 +1227,22 @@ public class AndroidFramework {
         */
 
         File externalCacheDir = context.getExternalCacheDir();
-        Log.i("test", "getExternalCacheDir"+externalCacheDir.getAbsolutePath());
+        Log.i("test", "getExternalCacheDir" + externalCacheDir.getAbsolutePath());
         File externalFilesDir = context.getExternalFilesDir(null);
-        Log.i("test", "getExternalFilesDir"+externalFilesDir.getAbsolutePath());
+        Log.i("test", "getExternalFilesDir" + externalFilesDir.getAbsolutePath());
         File filesDir = context.getFilesDir();
-        Log.i("test", "getFilesDir"+filesDir.getAbsolutePath());
+        Log.i("test", "getFilesDir" + filesDir.getAbsolutePath());
         File cacheDir = context.getCacheDir();
-        Log.i("test", "getCacheDir"+cacheDir.getAbsolutePath());
+        Log.i("test", "getCacheDir" + cacheDir.getAbsolutePath());
 
         File dataDirectory = Environment.getDataDirectory();
-        Log.i("test", "getDataDirectory"+dataDirectory.getAbsolutePath());
+        Log.i("test", "getDataDirectory" + dataDirectory.getAbsolutePath());
         File downloadCacheDirectory = Environment.getDownloadCacheDirectory();
-        Log.i("test", "getDownloadCacheDirectory"+downloadCacheDirectory.getAbsolutePath());
+        Log.i("test", "getDownloadCacheDirectory" + downloadCacheDirectory.getAbsolutePath());
         File externalStorageDirectory = Environment.getExternalStorageDirectory();
-        Log.i("test", "getExternalStorageDirectory"+externalStorageDirectory.getAbsolutePath());
+        Log.i("test", "getExternalStorageDirectory" + externalStorageDirectory.getAbsolutePath());
         File rootDirectory = Environment.getRootDirectory();
-        Log.i("test", "getRootDirectory"+rootDirectory.getAbsolutePath());
+        Log.i("test", "getRootDirectory" + rootDirectory.getAbsolutePath());
 
 
     }
@@ -1420,11 +1420,22 @@ public class AndroidFramework {
      * https://yq.aliyun.com/articles/231111?utm_content=m_34179 (阿里的文章，各种热修复原理介绍)
      * DexPathList.java
      * http://androidxref.com/8.0.0_r4/xref/libcore/dalvik/src/main/java/dalvik/system/DexPathList.java
+     * <p>
+     * QQ空间15年写的热修复原理文章
+     * https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=400118620&idx=1&sn=b4fdd5055731290eef12ad0d17f39d4a&scene=1&srcid=1106Imu9ZgwybID13e7y2nEi#wechat_redirect%20%20%20da
+     * <p>
+     * 各个热修复方案比较
+     * https://www.jianshu.com/p/eec0ab6800a4
      */
     public void a13() {
-        /*
-        *
-        */
+        /**
+         *=====================美团 robust====================
+         * https://tech.meituan.com/android_robust.html
+         * 方案就是在每个方法前插入代码，判断是否修复，如果修复就执行最新的代码
+         *
+         *
+         *
+         */
 
     }
 
@@ -1433,8 +1444,8 @@ public class AndroidFramework {
      * 说说插件化
      * http://www.infoq.com/cn/articles/android-plug-ins-from-entry-to-give-up( infoq的文章，插件化历史介绍)
      * https://zhuanlan.zhihu.com/p/33017826（插件化原理介绍）
-     * */
-    public void a13_1(Context context){
+     */
+    public void a13_1(Context context) {
         /*
         *
         */
