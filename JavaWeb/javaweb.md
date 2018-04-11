@@ -43,10 +43,30 @@ default-storage-engine=INNODB
 `use [dbname]`进入[dbname]数据库
 `show tables` 显示出数据库中的所有表
 
+创建表，并插入数据
+```
+#创建
+create table member(
+id int PRIMARY KEY AUTO_INCREMENT,
+name varchar(255),
+phone varchar(50),
+sex tinyint(4),
+birthday varchar(100),
+money float );
+#插入数据
+insert into member(name,phone,sex,birthday,money)values('李丽','18518552972',0,'20180909',55.5);
+#查询
+select *from member;
+```
+
+
+
+
 
 然后还要下载连接器的jar包 https://dev.mysql.com/downloads/connector/
 放入工程的library中，
-
+（记住，在eclipse中要在build path设置中将这个包 在order and export 中选择
+这个jar包，否则会报找不到 com.mysql.jdbc.Driver）
 
 
 ### jsp
