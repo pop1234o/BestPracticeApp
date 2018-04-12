@@ -172,6 +172,13 @@ public class Tools {
      */
     public void a5() {
         /*
+        * 其实这就是自定义一个Gradle插件（需要新建一个工程并且发布到仓库）
+        * 在这个插件中我们自定义Transform类，来对class文件进行处理
+        * 然后我们在要处理字节码的工程中引用这个插件。
+        * 然后make module ，我们的插件就能执行了。
+        *
+        * 所以说要使用这个类（api），就得先学会如何自定义gradle插件并使用
+        * 然后我们再在插件中加入自定义的Transform
         *
         */
     }

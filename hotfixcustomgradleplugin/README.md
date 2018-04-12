@@ -66,3 +66,6 @@ apply plugin: 'com.liyafeng.customplugin'
 接下来我clean project，然后make module，
 在Android Studio最下面的Gradle Console框中就能看到执行了我们的MyPlugin中的代码了
    
+   
+[参考资料]https://blog.csdn.net/yulong0809/article/details/77752098
+很详细讲解了自定义Gradle插件，然后再自定义插件中使用Transform的方法
