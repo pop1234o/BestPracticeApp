@@ -9,13 +9,27 @@ import android.content.Context;
 public class Tools {
 
     /**
-     * 编译打包的过程
+     * 说说Android 编译打包的过程
+     *
      * http://blog.csdn.net/luoshengyang/article/details/8744683
      * http://mouxuejie.com/blog/2016-08-04/build-and-package-flow-introduction/
+     *
+     * 说说zipalign?
+     * https://www.jianshu.com/p/10bc0c632eda
      */
     void a1(Context context) {
         context.getResources().getDrawable(R.drawable.build_simplified);
+        context.getResources().getDrawable(R.drawable.build_apk);
         /*
+        * 首先将java文件，R.java，编译成class（字节码）文件
+        * 将工程的字节码文件，和library（依赖库）中的字节码文件合并成dex文件
+        * 将values中的文件（strings.xml color.xml styles.xml）用aapt 打包到resources.arsc中
+        * 将dex文件、resources.arsc、layout和drawable中的xml和png文件、lib中的so
+        * assets中的js或者html，一起用apkbuilder，压缩到apk文件中
+        * 然后后用jarsigner 对apk进行签名，防止apk被修改
+        * 最后用zipalign ，将apk包中的内容对齐，这有利于资源的查找速度
+        * 比如我们apk安装时home应用会读取其中的app名称和图标，读取应用的
+        * 权限等，如果对齐有利于查找（就像代码格式化后有利于阅读一样）
         *
         * */
     }
@@ -45,7 +59,7 @@ public class Tools {
      */
     public void a1_2() {
         /*
-        * 最早我们用android-apt 这个工具，但是现在已经维护了
+        * 最早我们用android-apt 这个工具，但是现在已经不维护了
         * 因为Gradle推出了官方的处理工具 annotationProcessor
         *
         * Annotation Processing Tool 注解处理工具，用注解来生成代码
@@ -137,4 +151,40 @@ public class Tools {
         */
         context.getResources().getDrawable(R.drawable.cert_rsa);
     }
+
+    /**
+     * 如何自定义Gradle插件?
+     * https://kotlintc.com/articles/3075
+     * */
+    public void a4(){
+        /*
+        *
+        */
+    }
+
+    /**
+     * 如何使用Gradle的transform处理字节码？
+     *
+     * https://bintray.com/android/android-tools/com.android.tools.build.transform-api(官方库)
+     *
+     * javassist 官方库
+     * https://mvnrepository.com/artifact/org.javassist/javassist
+     * */
+    public void a5(){
+        /*
+        *
+        */
+    }
+
+    /**
+     * 对Gradle的理解？
+     *
+     * https://segmentfault.com/a/1190000004229002 (专门讲gradle的一个系列)
+     * */
+    public void a6(){
+        /*
+        *
+        */
+    }
+
 }

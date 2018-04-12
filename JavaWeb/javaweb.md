@@ -66,7 +66,8 @@ select *from member;
 然后还要下载连接器的jar包 https://dev.mysql.com/downloads/connector/
 放入工程的library中，
 （记住，在eclipse中要在build path设置中将这个包 在order and export 中选择
-这个jar包，否则会报找不到 com.mysql.jdbc.Driver）
+这个jar包，否则会报找不到 com.mysql.jdbc.Driver）(还是不行就得在tomcat目录下
+的lib中加入jar包，这样根据类加载机制就会优先使用lib中的mysql jar包)
 
 
 ### jsp

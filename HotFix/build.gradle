@@ -24,7 +24,6 @@ android {
     }
 
 }
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -33,4 +32,19 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    //用来转化class文件的处理jar包
+    compile 'com.android.tools.build:transform-api:1.5.0'
+    //操作class文件
+    compile 'org.javassist:javassist:3.20.0-GA'
+
+    compile 'com.android.tools.build:gradle:2.2.0'
+
+    //依赖当前版本的gradle
+    compile gradleApi()
+
+    compile localGroovy()
+
+    compile 'commons-io:commons-io:2.5'
+
 }
