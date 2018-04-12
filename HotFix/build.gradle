@@ -1,5 +1,19 @@
 apply plugin: 'com.android.application'
 
+buildscript {
+    repositories {
+        maven {//本地Maven仓库地址
+            url uri('D:/repos')
+        }
+    }
+    dependencies {
+        //格式为-->group:module:version
+        classpath 'com.liyafeng.plugin:hotfixcustomgradleplugin:1.0.0'
+    }
+}
+//com.liyafeng.gradle为resources/META-INF/gradle-plugins下的properties文件名称
+apply plugin: 'com.liyafeng.customplugin'
+
 android {
     compileSdkVersion 26
 
@@ -33,18 +47,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    //用来转化class文件的处理jar包
-    compile 'com.android.tools.build:transform-api:1.5.0'
-    //操作class文件
-    compile 'org.javassist:javassist:3.20.0-GA'
 
-    compile 'com.android.tools.build:gradle:2.2.0'
-
-    //依赖当前版本的gradle
-    compile gradleApi()
-
-    compile localGroovy()
-
-    compile 'commons-io:commons-io:2.5'
 
 }
+
+

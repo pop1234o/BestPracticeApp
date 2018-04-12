@@ -10,10 +10,10 @@ public class Tools {
 
     /**
      * 说说Android 编译打包的过程
-     *
+     * <p>
      * http://blog.csdn.net/luoshengyang/article/details/8744683
      * http://mouxuejie.com/blog/2016-08-04/build-and-package-flow-introduction/
-     *
+     * <p>
      * 说说zipalign?
      * https://www.jianshu.com/p/10bc0c632eda
      */
@@ -155,8 +155,8 @@ public class Tools {
     /**
      * 如何自定义Gradle插件?
      * https://kotlintc.com/articles/3075
-     * */
-    public void a4(){
+     */
+    public void a4() {
         /*
         *
         */
@@ -164,13 +164,13 @@ public class Tools {
 
     /**
      * 如何使用Gradle的transform处理字节码？
-     *
+     * <p>
      * https://bintray.com/android/android-tools/com.android.tools.build.transform-api(官方库)
-     *
+     * <p>
      * javassist 官方库
      * https://mvnrepository.com/artifact/org.javassist/javassist
-     * */
-    public void a5(){
+     */
+    public void a5() {
         /*
         *
         */
@@ -178,11 +178,36 @@ public class Tools {
 
     /**
      * 对Gradle的理解？
-     *
+     * <p>
      * https://segmentfault.com/a/1190000004229002 (专门讲gradle的一个系列)
-     * */
-    public void a6(){
+     */
+    public void a6() {
         /*
+        * Gradle是一个软件，他帮我们构建一个Module，打包成apk
+        * 但是真正打包的执行者是我们在 build.gradle中设置的插件
+        * apply plugin: 'com.android.application'
+        * 而这个插件是在Project的build.gradle中配置的
+        * buildscript { //这里要指定我们具体的构建脚本
+        *    repositories {
+        *      //指定构建插件所在的库的地址
+        *      //（jcenter就代表会去https://bintray.com/bintray/jcenter 这个网站上下载对应的jar包）
+        *        jcenter()
+        *    }
+        *    dependencies {
+        *          //指定插件 组名，项目名，版本号，然后下载里面的jar包
+        *        classpath 'com.android.tools.build:gradle:3.0.1'
+        *        //下载的位置就是 Android Studio安装目录下
+        *        //xxx\Android Studio\gradle\m2repository\com\android\tools\build\gradle\[版本号]\gradle-[版本号].jar
+        *
+        *    }
+        * }
+        *
+        * 在apply plugin: 'com.android.application' 应用了这个插件后
+        * 我们就能调用里面的方法，去做一些编译时的配置
+        * 我们看到google为android打包写的gradle插件 gradle-3.0.1.jar中
+        * 也有很多自定义的Plugin，这些都是编译的时候进行一些处理
+        *
+        *
         *
         */
     }

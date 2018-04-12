@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/Practicelib" />
             <option value="$PROJECT_DIR$/Video" />
             <option value="$PROJECT_DIR$/ViewApp" />
+            <option value="$PROJECT_DIR$/hotfixcustomgradleplugin" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
