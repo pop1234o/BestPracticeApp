@@ -20,35 +20,51 @@ import io.reactivex.schedulers.Schedulers;
  * <p>
  * 我们可以手写 Thread然后使用Handler来实现相同的逻辑，但是rxjava它简洁，链式调用，
  * 可维护性高
- *
+ * <p>
  * 订阅者-发布者
  * 观察者-被观察者
- *
+ * <p>
  * 订阅者 订阅 发布者发布的消息
+ * Publisher<T>-发布者
+ * Subscriber<T> -订阅者
+ * T代表发布的消息类型
+ * <p>
+ * =============================
+ * 可以消除回调地狱，我们之前在model层请求网络或者io操作，
+ * 可能还有localmodel和remotelocal ，还要加回调到model
+ * 然后要回调到presenter，这就要很多回调
+ * 但是用Rxjava就可以消除这种，将线程操作或者网络请求放到rxjava中的子线程
+ * 然后返回直接return，不用回调，然后我们切换到主线程做更新UI的操作
+ * 这样就省去了回调，和handler切换线程。代码就会清晰很多。
+ *
+ *
+ * ==============================================
+ * 扔物线 朱凯写的rxjava详解
+ * http://gank.io/post/560e15be2dca930e00da1083#toc_8
  */
 
 public class RxJavaSample {
 
     public RxJavaSample() {
 
-        //创造事件队列,然后加入
-        Flowable<String> just = Flowable.just("123");//这个是被观察的事件队列，123是内容
-        just.subscribe(new Consumer<String>() {//这个是观察者
+        do1();
+        do2();
+        do3();
+
+
+    }
+
+    private void do3() {
+        Flowable<Long> timer = Flowable.timer(3000, TimeUnit.MILLISECONDS);
+        timer.subscribe(new Consumer<Long>() {
             @Override
-            public void accept(String s) throws Exception {
-                Log.i("test", "打印" + s);
+            public void accept(Long aLong) throws Exception {
+                Log.i("test", "打印" + aLong);
             }
         });
+    }
 
-//        int[] ints = new int[3];
-//        Flowable<Long> timer = Flowable.timer(3000, TimeUnit.MILLISECONDS);
-//        timer.subscribe(new Consumer<Long>() {
-//            @Override
-//            public void accept(Long aLong) throws Exception {
-//                Log.i("test", "打印" + aLong);
-//            }
-//        });
-//
+    private void do2() {
         Flowable.fromCallable(new Callable<String>() {//发布者
             @Override
             public String call() throws Exception {
@@ -61,8 +77,20 @@ public class RxJavaSample {
             @Override
             public void accept(String s) throws Exception {
 
-                Log.i("test", "执行："+s);
+                Log.i("test", "执行：" + s);
             }
         });
+    }
+
+    private void do1() {
+        //创造事件队列,然后加入
+        Flowable<String> just = Flowable.just("123");//这个是被观察的事件队列，123是内容
+        just.subscribe(new Consumer<String>() {//这个是观察者
+            @Override
+            public void accept(String s) throws Exception {
+                Log.i("test", "打印" + s);
+            }
+        });
+
     }
 }
