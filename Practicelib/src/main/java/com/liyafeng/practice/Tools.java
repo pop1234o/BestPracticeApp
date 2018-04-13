@@ -20,6 +20,7 @@ public class Tools {
     void a1(Context context) {
         context.getResources().getDrawable(R.drawable.build_simplified);
         context.getResources().getDrawable(R.drawable.build_apk);
+        context.getResources().getDrawable(R.drawable.build_all);
         /*
         * 首先将java文件，R.java，编译成class（字节码）文件
         * 将工程的字节码文件，和library（依赖库）中的字节码文件合并成dex文件
@@ -242,4 +243,25 @@ public class Tools {
         */
     }
 
+    /**
+     * 描述清点击 Android Studio 的 build 按钮后发生了什么?
+     * */
+    public void a7(){
+        /*
+        * 点击build，gradle会执行 google为android写的插件
+        * com.android.application
+        *
+        * 这个插件的下载位置在Android Studio目录下
+        * \gradle\m2repository\com\android\tools\build\gradle\3.0.1\gradle-3.0.1.jar
+        * 里面的META-INF\gradle-plugin\com.android.application.properties
+        * 中指定了要执行插件的类
+        * implementation-class=com.android.build.gradle.AppPlugin
+        *
+        * 然后会执行AppPlugin类中的apply(Project p)方法
+        * 然后所有的调用都在这里执行各种task
+        *
+        * 具体的task我们可以在Android Studio 右侧的Gradle栏看到
+        * 接下来这些task做的就是编译打包的流程
+        */
+    }
 }

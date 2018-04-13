@@ -39,21 +39,21 @@ dependencies {
 }
 
 
-//使用我们自定义插件
-buildscript {
-    repositories {
-        maven {//本地Maven仓库地址
-            url uri('D:/repos')
-        }
-    }
-    dependencies {
-        //格式为-->group:module:version
-        classpath 'com.liyafeng.plugin:hotfixcustomgradleplugin:1.0.0'
-    }
-}
-//com.liyafeng.gradle为resources/META-INF/gradle-plugins下的properties文件名称
-apply plugin: 'com.liyafeng.customplugin'
-
-custom_extension{
-    name ='new name'
-}
+////使用我们自定义插件
+//buildscript {
+//    repositories {
+//        maven {//本地Maven仓库地址
+//            url uri('D:/repos')
+//        }
+//    }
+//    dependencies {
+//        //格式为-->group:module:version
+//        classpath 'com.liyafeng.plugin:hotfixcustomgradleplugin:1.0.0'
+//    }
+//}
+////com.liyafeng.gradle为resources/META-INF/gradle-plugins下的properties文件名称
+//apply plugin: 'com.liyafeng.customplugin'
+//
+//custom_extension{
+//    name ='new name'
+//}

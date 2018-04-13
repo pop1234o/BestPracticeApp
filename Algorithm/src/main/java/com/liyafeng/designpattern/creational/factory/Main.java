@@ -1,4 +1,4 @@
-package com.liyafeng.designpattern.factory;
+package com.liyafeng.designpattern.creational.factory;
 
 /**
  * Created by lenovo on 2017/12/20.
