@@ -36,6 +36,6 @@ public class SocketServer {
             e.printStackTrace();
         }
 
-        SocketClient.code =1;
+//        SocketClient.code =1;
     }
 }

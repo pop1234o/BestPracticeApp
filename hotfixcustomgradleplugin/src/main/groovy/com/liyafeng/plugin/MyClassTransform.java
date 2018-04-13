@@ -82,5 +82,7 @@ public class MyClassTransform extends Transform {
     @Override
     public void transform(Context context, Collection<TransformInput> inputs, Collection<TransformInput> referencedInputs, TransformOutputProvider outputProvider, boolean isIncremental) throws IOException, TransformException, InterruptedException {
         super.transform(context, inputs, referencedInputs, outputProvider, isIncremental);
+
+
     }
 }

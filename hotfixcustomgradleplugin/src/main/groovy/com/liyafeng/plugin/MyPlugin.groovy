@@ -2,9 +2,11 @@ package com.liyafeng.plugin
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
-import com.android.build.gradle.api.ApplicationVariant;
+import com.android.build.gradle.api.ApplicationVariant
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
-import org.gradle.api.Project;
+import org.gradle.api.Project
+import org.gradle.api.Task;
 
 public class MyPlugin implements Plugin<Project> {
 
@@ -22,9 +24,24 @@ public class MyPlugin implements Plugin<Project> {
         def classTransform = new MyClassTransform(project);
         android.registerTransform(classTransform);
 
-        //我们可以用自定义插件生成代码.java文件
 
-        createJava(project);
+
+        System.out.println("=====*=======开始执行==============");
+        //注册自定义的Extension
+        //Extension with name 'custom_extension' does not exist. Currently registered extension names: [ext, defaultArtifacts, reporting, buildOutputs, android]
+        //这个必须写在这里，要不build.gradle中不能使用custom_extension{}
+        project.extensions.create("custom_extension", CustomExtension);
+
+        project.getTasks().create("myTask", {
+            System.out.println("======*======执行==============");
+            def name = project.extensions.getByName("custom_extension").name;
+            System.out.println("执行的" + name);
+        }).doLast {
+            println "执行完毕";
+        };
+
+        //我们可以用自定义插件生成代码.java文件
+//        createJava(project);
 
 
     }
@@ -47,7 +64,9 @@ public class MyPlugin implements Plugin<Project> {
                     String str ="这个是生成的类";
                }
             """;
-        def file = project.getBuildFile();
+        def file = project.getBuildDir();
+        System.out.println("生成java文件" + file.getAbsolutePath());
+
         def out = new File(file, "CustomClass.java");
         if (!out.exists()) {
             out.createNewFile();
@@ -57,7 +76,11 @@ public class MyPlugin implements Plugin<Project> {
 
 
     public static class MyPlguinTestClass {
-        def str = "默认值";
+        def str = "default";
     }
 
+
+    public static class CustomExtension {
+        def name = "default name";
+    }
 }

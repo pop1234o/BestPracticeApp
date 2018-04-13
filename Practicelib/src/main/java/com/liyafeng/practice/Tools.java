@@ -158,7 +158,30 @@ public class Tools {
      */
     public void a4() {
         /*
+        * 具体可以看项目中的Module：hotfixcustomgradplugin
+        * 一个gradle插件就是一个groovy项目
+        * 具体就是mian/groovy/包名/MyPlugin.groovy
+        * 和resources/META-INF/gradle-plugins/插件名称.properties
+        * 里面指定插件实现的类，implementation-class=com.liyafeng.plugin.MyPlugin
+        * 这两个文件有了后就可以生成插件了
+        * 当然我们要使用groovy的插件 apply plugin: 'groovy'
+        * 依赖产生插件的包
+        *    compile gradleApi()
+        *   compile localGroovy()
         *
+        * 然后我们要用maven的插件来将jar包（插件）来发布到maven仓库
+        *
+        * 在另一个项目中添加meven库的路径，用classpath指定使用哪个库
+        * 然后apply plugin '插件名'来使用插件
+        *
+        * 这样我们点击run的时候就会执行我们的插件代码，我们能获取到Project对象
+        * 就能做一些操作，比如动态生成代码
+        *====================================================
+        * 在build.gradle 中apply plugin'插件名' 会执行插件中的apply(Project p)方法
+        * Project代表整个工程的信息。在里面我们可以做自己的自定义操作
+        * 我们可以自定义 自己的 Extension ,(一个Extension代表一个 花括号name{})
+        *
+        * 这样我们就可以读取用户在build.gradle中的name{ }中用户设置的值
         */
     }
 
