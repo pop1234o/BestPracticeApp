@@ -73,3 +73,14 @@ select *from member;
 ### jsp
 http://www.runoob.com/jsp/jsp-tutorial.html 
 菜鸟教程的jsp教程，简单易懂
+
+#### 项目结构
+在项目的根目录下，有src 和 WebContent目录
+src下是包名，然后是servlet类
+WebContent下是一些非java文件，比如jsp，html ,img，css，js
+WebContent/WEB-INF/下有web.xml和lib，web.xml中是项目配置信息，
+lib中存储要用到的jar包，比如，mysql的jdbc.jar
+而在index.html中引用css或者js可以用相对目录，/js/xx.js  ,/css/xx.css
+
+
+
