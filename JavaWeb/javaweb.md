@@ -1,5 +1,5 @@
 
-###eclipse
+### eclipse
  去官网下载eclipse，https://www.eclipse.org/downloads/
  下载后点击安装，然后选择javaee安装。安装完成后创建一个 dynamic web project
  
@@ -82,5 +82,56 @@ WebContent/WEB-INF/下有web.xml和lib，web.xml中是项目配置信息，
 lib中存储要用到的jar包，比如，mysql的jdbc.jar
 而在index.html中引用css或者js可以用相对目录，/js/xx.js  ,/css/xx.css
 
+### sql语句
 
+```sql
+create table member(
+id int PRIMARY KEY AUTOINCREMENT,
+name varchar(255),
+phone varchar(50),
+sex tinyint(4),
+birthday varchar(100),
+money float ,
+card varchar(255)
+);
 
+insert into member(name,phone,sex,birthday,money,card)values('李丽','18518552972',0,'20180909',55.5,'123123');
+
+select *from member;
+
+ALTER TABLE member ADD card varchar(255);
+
+ALTER TABLE tableName ALTER column columnName varchar(4000)  ;
+
+alter table tableName drop column columnName   ;
+```
+
+### AJAX
+
+```
+        var request = new XMLHttpRequest();
+		request.onreadystatechange = function() { // 状态发生变化时，函数被回调
+			if (request.readyState === 4) { // 成功完成
+				// 判断响应结果:
+				if (request.status === 200) {
+					// 成功，通过responseText拿到响应的文本:
+					return success(request.responseText);
+				} else {
+					// 失败，根据响应码判断失败原因:
+					alert("error:" + request.status);
+
+				}
+			} else {
+				// HTTP请求还在继续...
+			}
+		}
+
+        //获取值
+		var a = document.getElementById("memberNum");
+		//a.value =123;
+		// 发送请求:
+		request.open('GET',
+				'http://localhost:8080/member/MemberQueryServlet?memberNum='
+						+ a.value);
+		request.send();
+```
