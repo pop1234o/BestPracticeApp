@@ -74,6 +74,11 @@ select *from member;
 http://www.runoob.com/jsp/jsp-tutorial.html 
 菜鸟教程的jsp教程，简单易懂
 
+设置响应编码
+```
+response.setCharacterEncoding("UTF-8");
+response.setHeader("content-type","text/html;charset=UTF-8");
+```
 #### 项目结构
 在项目的根目录下，有src 和 WebContent目录
 src下是包名，然后是servlet类
@@ -98,6 +103,8 @@ card varchar(255)
 insert into member(name,phone,sex,birthday,money,card)values('李丽','18518552972',0,'20180909',55.5,'123123');
 
 select *from member;
+
+UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
 
 ALTER TABLE member ADD card varchar(255);
 
@@ -135,3 +142,8 @@ alter table tableName drop column columnName   ;
 						+ a.value);
 		request.send();
 ```
+
+
+### js
+关于<select>标签获取和设置内容的一些用法
+https://blog.csdn.net/whynottrythis/article/details/44460659
