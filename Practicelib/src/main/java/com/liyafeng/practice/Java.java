@@ -6,6 +6,11 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.lang.ref.PhantomReference;
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -408,6 +413,25 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         *  long HEAD = U.objectFieldOffset(AbstractQueuedSynchronizer.class.getDeclaredField("head"))
         *
         */
+    }
+
+
+    /**
+     * java中的四种引用的区别以及使用场景?
+     * https://blog.csdn.net/u011936381/article/details/11709245
+     * */
+    public void a1_16(){
+        /*
+        *
+        *  SoftReference 在请求更多的内存空间时清除，保证在OOM之前清除，
+        *  不建议用SoftReference缓存数据，因为它有可能过早的清除，建议使用android.Util.LruCache
+        *
+        *
+        *
+        */
+        new WeakReference<Integer>(1);
+        new SoftReference<Integer>(1);
+        new PhantomReference<Integer>(1,new ReferenceQueue<Integer>());
     }
     //endregion
 
