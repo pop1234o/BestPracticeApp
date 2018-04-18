@@ -419,19 +419,76 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * java中的四种引用的区别以及使用场景?
      * https://blog.csdn.net/u011936381/article/details/11709245
+     * http://www.infoq.com/cn/articles/cf-java-garbage-references
+     *
      * */
     public void a1_16(){
         /*
+        * 我们垃圾回收算法，就是当我们申请内存但是不足时，扫描一遍，回收内存
+        * 然后判断回收后内存够不够，如果不够，就会申请更多内存，如果达到上限就OOM
         *
         *  SoftReference 在请求更多的内存空间时清除，保证在OOM之前清除，
+        *  也就是说在内存不足的时候，软引用才会被回收，而内存充足而触发gc的时候软引用不会被回收
+        *  使用场景：SoftReference用于内存敏感的缓存，就是说内存一旦不足我们就要将他回收
         *  不建议用SoftReference缓存数据，因为它有可能过早的清除，建议使用android.Util.LruCache
         *
+        * WeakReference是只要触发gc，不管内存空间还够不够，都会被回收
+        * 使用场景，用于hash表 WeakHashMap （存的Entry本身是一个WeakReference）
+        * 判断ReferenceQueue是否为null，如果不为空取出来从map中移除
         *
+        *
+        * PhantomReference
+        * 基本没有引用，刚赋值直接返回null
+        *
+        * ReferenceQueue
+        * 当引用被回收的时候，这个XXXReference就会被加入到这个队列
         *
         */
         new WeakReference<Integer>(1);
         new SoftReference<Integer>(1);
-        new PhantomReference<Integer>(1,new ReferenceQueue<Integer>());
+        ReferenceQueue<Integer> queue = new ReferenceQueue<>();
+        new PhantomReference<Integer>(1, queue);
+        if( queue.poll()!=null){
+
+        }
+
+//        ReferenceQueue<Integer> queue = new ReferenceQueue<>();
+//        SoftReference<Integer> softReference = new SoftReference<>(1);
+//        WeakReference<Integer> weakReference = new WeakReference<>(2);
+//        PhantomReference<Integer> phantomReference = new PhantomReference<>(3, queue);
+//
+//        int i=0;
+//        while (true){
+//            Integer integer = softReference.get();
+//            if (integer != null) {
+//                System.out.println("soft:"+integer);
+//            } else {
+//                System.out.println("soft gc");
+//            }
+//            Integer integer1 = weakReference.get();
+//            if (integer1 != null) {
+//                System.out.println("weak:"+integer1);
+//            } else {
+//                System.out.println("weak gc");
+//            }
+//
+//            Integer integer2 = phantomReference.get();
+//            if (integer2 != null) {
+//                System.out.println("phantom:"+integer2);
+//            } else {
+//                System.out.println("phantom gc"+queue.poll());
+//            }
+//            System.out.println("==================");
+////            i++;
+//            new java.lang.String("123"+"123"+"123");
+//            Runtime.getRuntime().gc();
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
     }
     //endregion
 

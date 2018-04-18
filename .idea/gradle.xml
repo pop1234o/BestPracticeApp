@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/Event" />
             <option value="$PROJECT_DIR$/HotFix" />
             <option value="$PROJECT_DIR$/ImageLoader" />
+            <option value="$PROJECT_DIR$/JNI" />
             <option value="$PROJECT_DIR$/Network" />
             <option value="$PROJECT_DIR$/Orm" />
             <option value="$PROJECT_DIR$/Performance" />

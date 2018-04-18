@@ -1,7 +1,12 @@
 package com.liyafeng;
 
+
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.net.Socket;
 
 /**
@@ -14,15 +19,46 @@ public class Algorithm {
 
 
     public static void main(String[] args) {
-        try {
-            Socket client = new Socket("127.0.0.1", 8899);
-            client.setSoTimeout(10000);
-            OutputStream outputStream = client.getOutputStream();
-            outputStream.write(123);
-            client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        ReferenceQueue<Integer> queue = new ReferenceQueue<>();
+        SoftReference<Integer> softReference = new SoftReference<>(1);
+        WeakReference<Integer> weakReference = new WeakReference<>(2);
+        PhantomReference<Integer> phantomReference = new PhantomReference<>(3, queue);
+
+        int i=0;
+        while (true){
+            Integer integer = softReference.get();
+            if (integer != null) {
+                System.out.println("soft:"+integer);
+            } else {
+                System.out.println("soft gc");
+            }
+            Integer integer1 = weakReference.get();
+            if (integer1 != null) {
+                System.out.println("weak:"+integer1);
+            } else {
+                System.out.println("weak gc");
+            }
+
+            Integer integer2 = phantomReference.get();
+            if (integer2 != null) {
+                System.out.println("phantom:"+integer2);
+            } else {
+                System.out.println("phantom gc"+queue.poll());
+            }
+            System.out.println("==================");
+//            i++;
+            new java.lang.String("123"+"123"+"123");
+                Runtime.getRuntime().gc();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+
+
     }
     //region 排序
 
