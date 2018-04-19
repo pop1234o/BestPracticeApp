@@ -9,5 +9,5 @@ public class Hello {
         System.loadLibrary("custom_jni");
     }
 
-    public static native String doSomething(String s);
+    public static native int doSomething(String s);
 }
