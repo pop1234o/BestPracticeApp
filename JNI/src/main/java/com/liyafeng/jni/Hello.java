@@ -5,6 +5,9 @@ package com.liyafeng.jni;
  */
 
 public class Hello {
+    static {
+        System.loadLibrary("custom_jni");
+    }
 
     public static native String doSomething(String s);
 }
