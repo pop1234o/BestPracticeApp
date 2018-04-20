@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="com.liyafeng.aidl.LocalService"
+            />
+        <service android:name="com.liyafeng.aidl.RemoteService"
+            android:process=":remote"
+            />
     </application>
 
 </manifest>

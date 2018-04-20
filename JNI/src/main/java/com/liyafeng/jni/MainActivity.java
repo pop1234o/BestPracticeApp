@@ -1,10 +1,27 @@
 package com.liyafeng.jni;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+import com.liyafeng.aidl.LocalService;
+import com.liyafeng.aidl.RemoteService;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private ServiceConnection conn;
+    private Messenger messenger;
+    private Messenger messenger_remote;
 
     /**
      * ndk入门指南
@@ -34,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
      * <p>
      * ====================jni使用步骤===========================
      * 首先我们要下载ndk，我们生成so文件就是靠里面的 ndk-build.cmd
+     * 在Tools=>Android=>SDK Manager中安装Cmake，和NDK
      * 1，我们要在java文件中生命native方法
      * 2.使用javac 编译java文件为class文件（或者点AS的 Build->Make Module "xxx",
      * 在Module的build/intermediates/classes/包名/ 下有自动编译的class文件）
@@ -54,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
      * ====================================================
      * 需要将jni.h（该文件可以在%JAVA_HOME%/include文件夹下面找到）文件引入，
      * 因为在程序中的JNIEnv、 jobject等类型都是在该头文件中定义的
-     *
+     * <p>
      * =================================================
      * 1写java native方法
      * 2.生成class，生成.h
@@ -68,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int s = Hello.doSomething("1");
-        Log.i("test", "==========" + s);
+//        int s = Hello.doSomething("1");
+//        Log.i("test", "==========" + s);
 
         //==========Android.mk文件格式
         /*
@@ -88,5 +106,104 @@ public class MainActivity extends AppCompatActivity {
         *    include $(BUILD_SHARED_LIBRARY)
 
         * */
+
+
+        conn = new ServiceConnection() {
+
+
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                binder = (LocalService.MyBinder) service;
+                Log.i("test", "绑定成功");
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        };
+
+        findViewById(R.id.button).setOnClickListener(this);
+        findViewById(R.id.button2).setOnClickListener(this);
+        findViewById(R.id.button3).setOnClickListener(this);
+        findViewById(R.id.button4).setOnClickListener(this);
+
+        initRemote();
     }
+
+
+    private LocalService.MyBinder binder;
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (binder != null) {
+            unbindService(conn);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button:
+                String s = binder.doSomething(1);
+                Log.i("test", "======" + s);
+                break;
+            case R.id.button2: {
+                final Intent intent = new Intent(this, LocalService.class);
+                bindService(intent, conn, Context.BIND_AUTO_CREATE);
+
+            }
+
+            break;
+            case R.id.button3: {
+                final Intent intent = new Intent(this, RemoteService.class);
+                bindService(intent, new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        Log.i("test", "绑定成功" + name.getPackageName());
+                        messenger_remote = new Messenger(service);
+
+                    }
+
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+
+                    }
+                }, Context.BIND_AUTO_CREATE);
+            }
+
+            break;
+            case R.id.button4:
+
+                Message obtain = Message.obtain();
+                Bundle bundle = new Bundle();
+                bundle.putString("key","来自客户端的消息");
+                obtain.obj = bundle;
+                obtain.replyTo = messenger;
+                try {
+                    messenger_remote.send(obtain);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+
+    private void initRemote() {
+        messenger = new Messenger(handler);
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            Log.i("test", "来自服务端的消息:" + msg.obj.toString());
+
+
+        }
+    };
+
 }
