@@ -1,4 +1,4 @@
-package com.liyafeng.jni;
+package com.liyafeng;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -17,6 +17,8 @@ import android.view.View;
 import com.liyafeng.aidl.AIDLService;
 import com.liyafeng.aidl.LocalService;
 import com.liyafeng.aidl.RemoteService;
+import com.liyafeng.jni.IMyAidlInterface;
+import com.liyafeng.jni.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

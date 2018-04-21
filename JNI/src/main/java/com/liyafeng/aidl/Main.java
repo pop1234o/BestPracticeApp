@@ -13,7 +13,7 @@ public class Main {
      *
      * 在不同进程中会报错
      * java.lang.ClassCastException: android.os.BinderProxy cannot be cast to com.liyafeng.aidl.LocalService$MyBinder
-     * at com.liyafeng.jni.MainActivity$1.onServiceConnected(MainActivity.java:109)
+     * at com.liyafeng.MainActivity$1.onServiceConnected(MainActivity.java:109)
      * at android.app.LoadedApk$ServiceDispatcher.doConnected(LoadedApk.java:1208)
      * at android.app.LoadedApk$ServiceDispatcher$RunConnection.run(LoadedApk.java:1225)
      * at android.os.Handler.handleCallback(Handler.java:739)

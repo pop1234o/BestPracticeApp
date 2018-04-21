@@ -4,6 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.liyafeng.jni.IMyAidlInterface;
 
@@ -17,6 +19,12 @@ public class AIDLService extends Service {
         return stub;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i("test", "当前线程"+Thread.currentThread());
+    }
+
     IMyAidlInterface.Stub stub = new IMyAidlInterface.Stub() {
 
         @Override
@@ -26,6 +34,7 @@ public class AIDLService extends Service {
 
         @Override
         public String doSome(int i) throws RemoteException {
+            Log.i("test", "执行了doSome"+Thread.currentThread().toString());
             return "result:"+i;
         }
     };

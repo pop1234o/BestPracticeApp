@@ -430,6 +430,33 @@ public class AndroidFramework {
         *
         */
     }
+
+
+    /**
+     * 进程的四种状态？内存低的时候Android系统是如何管理进程的？
+     * https://developer.android.google.cn/guide/components/activities/process-lifecycle.html
+     */
+    public void a2_6() {
+        /*
+        * 1.前台进程，
+        * 这个进程中有一个resume的Activity，
+        * 或者一个在执行onReceive()的BroadCastReceiver ,
+        * 或者有一个在执行onCreate onStart onDestroy 的Service
+        *
+        * 2. 可见进程，
+        * 进程中有一个没有焦点的Activity，但是它可见，比如一个半透明的Activity 盖住了他
+        * 有个前台的Service，通过Service.startForeground方法来显示一个Notification
+        * 有系统用的独特服务，比如动态壁纸，输入法服务
+        *
+        * 3.服务进程
+        * 进程中有startService 方式打开的Service，当前两种进程内存不够用时，将回收这个进程
+        * 连续运行30分钟以上有可能会被降级，因为这有可能发生了内存泄漏而占用太多内存
+        *
+        * 4.缓存进程
+        * 一般这种进程中有1个或者多个onStop的Activity，这个时候当内存不足时会优先回收
+        * 一般优先回收的是最久没有用过的进程。
+        */
+    }
     //endregion
 
     //region Android 四大组件基本知识
@@ -549,31 +576,6 @@ public class AndroidFramework {
         */
     }
 
-    /**
-     * 进程的四种状态？内存低的时候Android系统是如何管理进程的？
-     * https://developer.android.google.cn/guide/components/activities/process-lifecycle.html
-     */
-    public void a3_7() {
-        /*
-        * 1.前台进程，
-        * 这个进程中有一个resume的Activity，
-        * 或者一个在执行onReceive()的BroadCastReceiver ,
-        * 或者有一个在执行onCreate onStart onDestroy 的Service
-        *
-        * 2. 可见进程，
-        * 进程中有一个没有焦点的Activity，但是它可见，比如一个半透明的Activity 盖住了他
-        * 有个前台的Service，通过Service.startForeground方法来显示一个Notification
-        * 有系统用的独特服务，比如动态壁纸，输入法服务
-        *
-        * 3.服务进程
-        * 进程中有startService 方式打开的Service，当前两种进程内存不够用时，将回收这个进程
-        * 连续运行30分钟以上有可能会被降级，因为这有可能发生了内存泄漏而占用太多内存
-        *
-        * 4.缓存进程
-        * 一般这种进程中有1个或者多个onStop的Activity，这个时候当内存不足时会优先回收
-        * 一般优先回收的是最久没有用过的进程。
-        */
-    }
 
     /**
      * Fragment状态保存startActivityForResult是哪个类的方法，在什么情况下使用？
@@ -824,10 +826,32 @@ public class AndroidFramework {
      * <p>
      * http://kaedea.com/2016/02/09/android-about-source-code-how-to-read/
      */
-    public void a8_4() {
+    public void a8_4(Context context) {
         /*
+        * https://github.com/aosp-mirror
+        * 这个是android open system project 在github上的镜像，但是代码不全，
+        * =========================
+        * https://source.android.com/setup/downloading
+        * 这个是官方的源码下载教程
+        * ===============================
+        * http://androidxref.com/
+        * 这个网站不用翻墙也能看，能看platform下的代码，但也不是全部的
+        * https://android.googlesource.com/?format=HTML
+        * 这个是全部的代码了，包括一些虚拟机和一些工具比如ndk的源代码
+        * 但是关于android整个四层架构的代码都在platform/下了，所以我们只看
+        * 这个目录下的代码就足够了。
+        * ===================================================
+        * 如果我们要下载aosp,但是不想翻墙，那么可以使用清华的镜像网站
+        * https://mirror.tuna.tsinghua.edu.cn/help/AOSP/
+        * ================android的platform下目录结构=================
+        * 里面有
+        * /frameworks 是framework层的代码，
+        * /dalvik 虚拟机代码
+        * /frameworks/native 里面有Binder的native代码
+        *
         *
         */
+        context.getResources().getDrawable(R.drawable.android_architecture);
     }
 
     /**
@@ -1541,4 +1565,26 @@ public class AndroidFramework {
 
     //endregion
 
+
+    //region jni/ndk/Binder机制
+
+
+    /**
+     * binder是什么？
+     * Linux进程间通讯机制有哪些？Android为什么用binder?
+     *aidl是是什么？原理是什么？
+     * */
+    public void a14(){
+        /*
+        * ==================binder是什么？===============
+        * https://github.com/xdtianyu/SourceAnalysis/blob/master/Binder源码分析.md
+        * Binder机制是Android系统进程间通讯的基础
+        * 他采用C、S架构，客户端bindService，获取到远程服务的代理类
+        * 然后
+        *
+        *
+        */
+    }
+
+    //endregion
 }
