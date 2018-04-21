@@ -410,6 +410,26 @@ public class AndroidFramework {
         */
     }
 
+    /**
+     * ART 和 Dalvik的区别？
+     * https://www.zhihu.com/question/29406156
+     * */
+    public void a2_5(){
+        /*
+        * 1.使用了AOT(Ahead-of-time)代替了JIT(Just-in-time)
+        * 2.提高了gc的效率,改成并行执行gc，以前gc的时候程序都要中断
+        * 3.提高了内存使用效率和减少了碎片化。
+        *
+        * 1   jit 是dex要在程序运行的时候才转化为可执行的机器代码，
+        * 转化后的dex是oat文件，而AOT是在安装的时候就讲dex转化为oat文件
+        * AOT优点是执行快，不用转化了。缺点是安装时间变长，oat占用多余的内存空间
+        *
+        * 2.使用了并发的gc
+        *
+        * 3.专门分配了large-object-space，用来存放大内存，这样就不用每次都回收碎片内存了
+        *
+        */
+    }
     //endregion
 
     //region Android 四大组件基本知识
@@ -764,8 +784,24 @@ public class AndroidFramework {
         * 3.ActivityMangerService判断进程是否启动，没有启动则调用Process.start()来开启一个进程
         * 4.启动进程后dalvik会调用SystemServer.main()方法，这个方法中创建ActivityThread，继而创建ApplicationThread
         * 5,ApplicationThread绑定到ActivityManagerService中？？？
-        * 6.ActivityManagerService执行创建Application对象,调用onCreate()，启动Activity，调用他的onCreate()
+        * 6.ActivityManagerService发送通知让Activity执行创建Application对象,调用onCreate()，
+        *  启动Activity，调用他的onCreate()
         */
+
+        /*
+        *    at com.android.nfc.NfcApplication.onCreate(NfcApplication.java:61)
+       *   at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1014)
+       *   at android.app.ActivityThread.handleBindApplication(ActivityThread.java:4707)
+       *   at android.app.ActivityThread.access$1600(ActivityThread.java:150)
+       *   at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1405)
+       *   at android.os.Handler.dispatchMessage(Handler.java:102)
+       *   at android.os.Looper.loop(Looper.java:148)
+       *   at android.app.ActivityThread.main(ActivityThread.java:5417)
+       *   at java.lang.reflect.Method.invoke(Native Method)
+       *   at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:726)
+       *   at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:616)
+       *
+        * */
         context.getResources().getDrawable(R.drawable.app_launch);
         context.getResources().getDrawable(R.drawable.app_launch_flow);
         context.getResources().getDrawable(R.drawable.app_launch_flow_2);

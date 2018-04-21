@@ -32,6 +32,11 @@ public class Main {
      * 通过Messenger传递的obj要实现Parcelable
      *
      *
+     * =================aidl=======================
+     * https://blog.csdn.net/u012203641/article/details/74474664
+     * IBinder接口代表一个可以远程传输的对象
+     * Binder则实现了RPC(远程进程通信)的一个协议，定义了如何传输和接收对象
+     *
      *
      * @param args
      */

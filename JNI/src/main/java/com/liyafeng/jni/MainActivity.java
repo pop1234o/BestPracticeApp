@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.liyafeng.aidl.AIDLService;
 import com.liyafeng.aidl.LocalService;
 import com.liyafeng.aidl.RemoteService;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ServiceConnection conn;
     private Messenger messenger;
     private Messenger messenger_remote;
+    private IMyAidlInterface anInterface;
 
     /**
      * ndk入门指南
@@ -127,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button2).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);
         findViewById(R.id.button4).setOnClickListener(this);
+        findViewById(R.id.button5).setOnClickListener(this);
+        findViewById(R.id.button6).setOnClickListener(this);
 
         initRemote();
     }
@@ -179,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Message obtain = Message.obtain();
                 Bundle bundle = new Bundle();
-                bundle.putString("key","来自客户端的消息");
+                bundle.putString("key", "来自客户端的消息");
                 obtain.obj = bundle;
                 obtain.replyTo = messenger;
                 try {
@@ -188,6 +192,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
                 break;
+
+            case R.id.button5: {
+                final Intent intent = new Intent(this, AIDLService.class);
+                bindService(intent, new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        Log.i("test", "绑定成功" + name.getPackageName());
+                        anInterface = IMyAidlInterface.Stub.asInterface(service);
+
+                    }
+
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+
+                    }
+                }, Context.BIND_AUTO_CREATE);
+            }
+
+            break;
+            case R.id.button6:
+                String s1 = null;
+                try {
+                    s1 = anInterface.doSome(2);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                Log.i("test", "执行：" + s1);
+                break;
+
         }
     }
 
