@@ -457,6 +457,25 @@ public class AndroidFramework {
         * 一般优先回收的是最久没有用过的进程。
         */
     }
+    
+    /**
+     * Android为每个应用程序分配的内存大小是多少？
+     * */
+    public void a2_7(){
+        /*
+        * 初始内存分配的大小配置在 /system/build.prop
+        * dalvik.vm.heapstartsize=8m   初始分配
+        *   dalvik.vm.heapgrowthlimit=96m   增长的限制
+        *   dalvik.vm.heapsize=384m 设置largeheap时的大小
+        *
+        */
+        Runtime runtime = Runtime.getRuntime();
+        long l = runtime.maxMemory();//bytes vm最大能申请的内存
+        long l1 = runtime.totalMemory();// 当前分配的内存大小
+
+        //mix2 的结果
+        //268435456 256m  18250546  17.4m
+    }
     //endregion
 
     //region Android 四大组件基本知识
@@ -1307,6 +1326,24 @@ public class AndroidFramework {
 
     }
 
+    
+    /**
+     * 系统启动流程是什么？（提示：Zygote进程 –> SystemServer进程 –> 各种系统服务 –> 应用进程）
+     * */
+    public void a8_23(){
+        /*
+        * 
+        */
+    }
+    
+    /**
+     * 大体说清一个应用程序安装到手机上时发生了什么?/apk安装流程
+     * */
+    public void a8_24(){
+        /*
+        *
+        */
+    }
     //endregion
 
     //region Android 架构模式
@@ -1574,16 +1611,44 @@ public class AndroidFramework {
      * Linux进程间通讯机制有哪些？Android为什么用binder?
      *aidl是是什么？原理是什么？
      * */
-    public void a14(){
+    public void a14(Context context){
         /*
         * ==================binder是什么？===============
         * https://github.com/xdtianyu/SourceAnalysis/blob/master/Binder源码分析.md
         * Binder机制是Android系统进程间通讯的基础
         * 他采用C、S架构，客户端bindService，获取到远程服务的代理类
-        * 然后
+        * 然后客户端调用binder的一个代理类，里面封装好数据，调用native
+        * android_util_Binder.cpp的transact()来处理数据，调用BpBinder,cpp的transact()
+        * 数据通过kernel层/dev/binder来通知服务端的BBinder，然后调用onTransact()
+        * 来通知java层的服务，根据封装的数据来调用服务端响应的方法。这样就完成的进程间的
+        * 一次通信
+        *   那么我们如何识别要调用那个服务，就是通过ServiceManager来进行判断，
+        * 它相当于一个路由，当有一个远程服务启动的时候，服务会在SystemServer中进行注册
+        * 然后我们通过intent中的标识，在ServiceManager中来查找注册的服务，找到相应的服务
+        * 通过BBinder来调用他的方法。
+        *
+        * 我们和AMS通信 也是通过 ServiceManager 中注册的AMS来进行跨进程通信
+        *
+        * AMS等一些其他系统服务都在Zygote进程中运行
+        * 在我们系统启动的时候 创建，然后在ServiceManager中注册
+        * =====================？？？==============
+        * SystemService是每个进程都有的吗？
+        * ServiceManager和 SystemService有什么关系？
+        *
+        * =====================Linux进程间通讯机制有哪些？Android为什么用binder?======================
+        * https://www.ibm.com/developerworks/cn/linux/l-ipc/index.html（linux进程通信介绍）
+        * https://www.zhihu.com/question/39440766?sort=created（Android为什么使用binder）
+        *
+        * socket通信，管道，共享内存
+        * 但是 socket通信，管道 要将数据拷贝2次，共享内存不安全
+        *
+        * 而binder是安全（他使用Uid来标识进程，这个uid是android在，使得服务端可以判断请求是否安全），
+        * 高效的（只拷贝数据一次）
         *
         *
         */
+
+        context.getResources().getDrawable(R.drawable.binder_native_stack);
     }
 
     //endregion

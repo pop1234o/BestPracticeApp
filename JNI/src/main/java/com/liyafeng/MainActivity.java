@@ -135,6 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button6).setOnClickListener(this);
 
         initRemote();
+
+        Runtime runtime = Runtime.getRuntime();
+        long l = runtime.maxMemory();
+        long l1 = runtime.totalMemory();
+        
+        Log.i("test", "max"+l+ "   "+l1);
+        //268435456 256m  18250546  17.4m
     }
 
 
