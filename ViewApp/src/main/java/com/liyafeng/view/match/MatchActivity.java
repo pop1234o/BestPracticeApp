@@ -9,8 +9,9 @@ public class MatchActivity extends Activity {
 
     /**
      * 屏幕适配
+     * https://developer.android.google.cn/training/multiscreen/screendensities.html
      *
-     * dpi dots per inch 每英寸的像素点个数 ，一定程度上代表屏幕的大小
+     * dpi dots per inch 每英寸的像素点个数 ，一定程度上代表屏幕的大小（屏幕密度）
      *
      * dip 独立像素密度  pixel
      *
@@ -40,6 +41,18 @@ public class MatchActivity extends Activity {
      * 针对特殊value-xx重写布局
      *
      * 对照生成指定的像素转换文件（鸿翔）
+     *
+     * ==========================mipmap===================
+     * https://developer.android.google.cn/guide/topics/resources/providing-resources.html（官方的目录介绍）
+     * mipmap在图片缩放上会有优化，但是在同等dpi的设备上，图片不缩放，那么和drawable是一样的效果
+     * 所以mipmap用来存放app的启动图片。原来的图片还是放在drawable下
+     *
+     *
+     * ===================res文件下资源文件夹的命名规则======================
+     * https://developer.android.google.cn/guide/topics/resources/providing-resources.html
+     *
+     *
+     *
      *
      * @param savedInstanceState
      */
