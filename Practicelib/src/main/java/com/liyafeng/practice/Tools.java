@@ -264,4 +264,18 @@ public class Tools {
         * 接下来这些task做的就是编译打包的流程
         */
     }
+
+
+    //region git
+
+    /**
+     * git 流是怎样的
+     * */
+    public void a8(Context context){
+        /*
+        *
+        */
+        context.getResources().getDrawable(R.drawable.git);
+    }
+    //endregion
 }
