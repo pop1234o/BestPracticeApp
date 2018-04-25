@@ -75,6 +75,12 @@ public class Main {
      * java中类型在不同平台中所占用的位数是相同的
      * 而c在不同平台中类型的位数不同。所以我们要将java中类型映射为c中的类型
      * jint jfloat jstring jdouble等
+     * ======================jni运行java程序================
+     * 我们知道java调用c的时候，jvm已经启动了，那么能不能再c中启动jvm呢？
+     * 比如我们写好了c，编译成exe文件，在windows中执行，他要调用java的class文件
+     * 那么就先要启动java虚拟机，这时候就要用到jni中的invokcation API，
+     * 这个api可以让我们启动jvm，然后findclass函数来找到对应的类，（根据classpath来查找）
+     * 然后会加载class到jvm中执行，最后提供了销毁jvm的方法
      *
      * @param args
      */

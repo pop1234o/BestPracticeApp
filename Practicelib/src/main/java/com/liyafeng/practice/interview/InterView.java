@@ -207,7 +207,7 @@ public class InterView {
         *
         * ==================如何学习新知识的？=====================
         * 通过书籍，比如《Android开发艺术探索》《Android设计模式源码分析》
-        * 通过阅读优秀开源框架
+        * 通过阅读优秀开源框架,github上的trending
         * 通过技术网站，csdn 掘金，Android开发技术周报https://www.androidweekly.cn/
         * 通过公众号的文章，比如阿里技术（ali_tect）qq音乐技术团队，鸿翔，郭霖
         *  importNew,玉刚说，谷歌开发者
