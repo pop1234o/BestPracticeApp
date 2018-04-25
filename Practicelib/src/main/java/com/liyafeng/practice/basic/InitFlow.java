@@ -43,6 +43,28 @@ public class InitFlow {
      * at java.lang.reflect.Method.invoke(Native Method)
      * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:726)
      * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:616)
+     * <p>
+     * =======================================================
+     * android.os.DeadObjectException
+     * at android.os.BinderProxy.transactNative(Native Method)
+     * at android.os.BinderProxy.transact(Binder.java:503)
+     * at android.nfc.INfcAdapter$Stub$Proxy.setForegroundDispatch(INfcAdapter.java:525)
+     * at android.nfc.NfcAdapter.disableForegroundDispatchInternal(NfcAdapter.java:1245)
+     * at android.nfc.NfcAdapter.disableForegroundDispatch(NfcAdapter.java:1233)
+     * at com.pinzhikeji.snack.MainActivity.onPause(MainActivity.java:1934)
+     * at android.app.Activity.performPause(Activity.java:6397)
+     * at android.app.Instrumentation.callActivityOnPause(Instrumentation.java:1312)
+     * at android.app.ActivityThread.performPauseActivity(ActivityThread.java:3367)
+     * at android.app.ActivityThread.performPauseActivity(ActivityThread.java:3340)
+     * at android.app.ActivityThread.handlePauseActivity(ActivityThread.java:3315)
+     * at android.app.ActivityThread.access$1100(ActivityThread.java:150)
+     * at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1355)
+     * at android.os.Handler.dispatchMessage(Handler.java:102)
+     * at android.os.Looper.loop(Looper.java:148)
+     * at android.app.ActivityThread.main(ActivityThread.java:5417)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:726)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:616)
      *
      * @param args
      */

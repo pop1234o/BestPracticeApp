@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+import android.util.LruCache;
 
 import java.io.File;
 
@@ -946,11 +947,14 @@ public class AndroidFramework {
 
     /**
      * ThreadLocal作用？原理？
+     * {@link java.lang.ThreadLocal}
      */
     public void a8_6() {
         /*
         * ThreadLocal中有静态内部类，ThreadLocalMap
-        * 不同ThreadLocal实例 对应不同的值。
+        * 不同ThreadLocal实例 对应不同的值。(一个Thread中可以有多个ThreadLocal变量)
+        * 所以在Thread中用一个ThreadLocalMap对象来存储，这个ThreadLocalMap自己实现了散列表
+        * ThreadLocalMap key是ThreadLocal对象，value就是泛型的值
         * ============作用===========
         * 创建 线程唯一 的变量，就是一个线程对应一个变量，相互不冲突
         * ============原理============
@@ -1242,7 +1246,7 @@ public class AndroidFramework {
     }
 
     /**
-     * LruCache作用，原理？
+     * LruCache作用，原理？{@link android.util.LruCache}
      * DiskLruCache作用，原理？
      */
     public void a8_19() {
@@ -1250,14 +1254,42 @@ public class AndroidFramework {
         * ===========LruCache作用，原理？=========================
         * Least Recent Used 最近最少使用，意思就是将最近使用的缓存起来（加入头部）
         * 最少使用的淘汰出去（从尾部去除）
-        * 原理就是里面使用了LinkedHashMap，他里面有一个maxSize的设置，如果超过
-        * 那么从队列尾出队列。
+        * 原理就是里面使用了LinkedHashMap，且设置为accessOrder=true,表示按访问顺序访问
+        * 他里面有一个maxSize的设置，如果put时超过那么从队列尾出队列。
         *
+        * 每新加入一个元素，会获取他的大小，和之前的大小相加，
+        * 判断是否超过最大值，如果超过，那么从header移出LinkedHashMap
+        *
+        * 获取一个元素，从map中获取，如果没有命中，那么调用create方法来创建
+        * 默认实现是返回null;
         * =================DiskLruCache=====================
         * 他的原理和LruCache差不多，只是写入读取的时候是从磁盘中读取的
         * 他里面也用LinkedHashMap来保存缓存文件列表（里面持有文件的大小信息）
         * https://github.com/JakeWharton/DiskLruCache/blob/master/src/main/java/com/jakewharton/disklrucache/DiskLruCache.java
         */
+
+        //缓存总长度最大为30的字符串
+        LruCache<Long, String> lruCache = new LruCache<Long, String>(30){
+            @Override
+            protected int sizeOf(Long key, String value) {
+                return value.length();
+//                return super.sizeOf(key, value);
+            }
+
+            @Override
+            protected void entryRemoved(boolean evicted, Long key, String oldValue, String newValue) {
+                super.entryRemoved(evicted, key, oldValue, newValue);
+                //这个是cache满了（或者key替换了新的entry） 移除的回调
+            }
+
+            @Override
+            protected String create(Long key) {
+                //当从缓存中没有获取到，则调用这个方法创建Entry，默认返回null
+                return super.create(key);
+            }
+        };
+        String aa = lruCache.put(1L, "aa");//返回被替换的entry
+        String s = lruCache.get(1L);
     }
 
 
@@ -1651,5 +1683,19 @@ public class AndroidFramework {
         context.getResources().getDrawable(R.drawable.binder_native_stack);
     }
 
+    //endregion
+    
+    //region Android 音视频
+    /**
+     * 说说SurfaceView
+     * {@link android.view.SurfaceView}
+     * */
+    public void a15(){
+        /*
+        * 他继承自View,有自己专有的Surface对象，在子线程中渲染，可以执行
+        * 频繁的绘制操作
+        *
+        */
+    }
     //endregion
 }

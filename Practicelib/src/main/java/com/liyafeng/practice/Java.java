@@ -19,6 +19,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -753,6 +756,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 讲一下java中同步的方法?
+     * synchronized和Lock有什么区别？
      * http://www.cnblogs.com/paddix/p/5405678.html
      */
     public void a2_14() {
@@ -771,6 +775,13 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 2.AQS的原理是使用UnSafe类中的CAS（Compare and swap）操作来标记
         * 线程进入退出，使用park 和unpark来实现线程阻塞等待，然后当有线程释放锁的时候
         * 会从等待队列中取线程来唤醒，让他继续持有锁。
+        *
+        * ==============synchronized和Lock有什么区别？==========
+        * synchronized是jvm来控制的，而Lock是java代码控制的
+        * 他们在1.6后性能都差不多，因为1.5之前synchronized是重量级锁，但是之后版本做了优化
+        * Lock比较灵活，他能控制唤醒哪些线程，而synchronized中只能唤醒所有线程
+        *
+        *
         */
     }
 
@@ -1029,6 +1040,10 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * Iterator 和 Enumeration区别?
+     * 说说ArrayList的Iterator是如何实现的？
+     * 说说HashMap遍历如何实现？
+     * {@link java.util.ArrayList}
+     * {@link java.util.HashMap}
      */
     public void a3_5() {
         /*
@@ -1040,7 +1055,30 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         *      semantics.
         * <li> Method names have been improved.
         *
+        * ========================说说List的Iterator是如何实现的？===========
+        * ArrayList中的Iterator使用的迭代器模式，它里面有cursor初始值为0
+        * 然后调用一次next()函数cursor+1，他访问的还是外部类中了数组
+        * 在调用iterator时不允许添加或者删除元素，否则抛出ConcurrentModificationException
+        * 并发修改异常，这是因为ArrayList中有个modCount来记录List的修改次数
+        * 在Iterator初始化的时候会记录这个值，然后每次next()或者remove会比较这个值
+        * 如果不一致抛出异常。
+        * =======================说说HashMap遍历如何实现？==================
+        * entrySet中返回一个set,里面提供了iterator()，我们知道HashMap中有HashMapEntry[]
+        * 是一个散列表，然后迭代器初始化的时候用while找到第一个HashMapEntry[index]不为null的地方
+        * 然后这就是当前的entry，返回后会判断entry.next是否为null，如果不为null，则next就是
+        * nextEntry。就这么一直遍历，直到index到散列表结尾
+        * ----------------------
+        * keySet原理和Entryset一样，只不过entry中存有key值，每次遍历只返回key即可
         */
+        Set<Map.Entry<Object, Object>> entries = new HashMap<>().entrySet();
+        Iterator<Map.Entry<Object, Object>> iterator = entries.iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Object, Object> next = iterator.next();
+            Object key = next.getKey();
+            Object value = next.getValue();
+        }
+
+        Iterator<Object> iterator1 = new HashMap<>().keySet().iterator();
     }
 
 
@@ -1082,21 +1120,29 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
-     * LinkedHashMap作用？原理？
+     * LinkedHashMap作用？原理？{@link java.util.LinkedHashMap}
      * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
      */
     public void a3_9() {
         /*
         * 有序的HashMap(按插入顺序，或者访问顺序)
         * =================原理==============
-        * 原理就是重写了 addEntry方法 也从写了createEntry 如果是新加入的，那么加入Entry链表的头结点
+        * 原理就是重写了put中调用的 addEntry方法  如果是新加入的，那么加入Entry环的尾结点
+        * 这个是LinkedHashMap中的 LinkedHashMapEntry header变量
+        * 也从写了createEntry，返回LinkedHashMapEntry
         * LinkedHashMapEntry<K,V> extends HashMapEntry<K,V>  里面重写了recordAccess方法，
-        * 每次访问，如果accessOrder=true(按访问顺序)，然后就把这个Entry加入头部
-        * LinkedHashMapEntry 是一个双向列表的格式
+        * 每次访问，如果accessOrder=true(按访问顺序)，然后就把这个Entry加入环的尾节点（
+        * 就是header的前一个节点）
+        *
+        * header是初始化的时候new的一个锚点对象，他的after before都指向自己
         *
         *
+        * LinkedHashMapEntry是一个环的结构，有一个header，每次新加入或者新访问的节点加入环尾
+        * 那么header的after节点是eldest 最老的节点
         */
     }
+
+
     //endregion
 
     //region Java网络

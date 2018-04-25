@@ -1,5 +1,7 @@
 package com.liyafeng.lock;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Created by liyafeng on 2018/3/19.
  */
@@ -18,7 +20,8 @@ public class Main {
      * 互斥锁适用于持有锁时间比较长的时候
      * 自旋锁适合比较短的时间
      * 共享锁，如果这几个线程只是读取，那么用互斥锁的效率太低，这时就可以用共享锁
-     *
+     * <p>
+     * {@link java.util.concurrent.locks.ReentrantLock}
      *
      * @param args
      */
@@ -39,5 +42,19 @@ public class Main {
             e.printStackTrace();
         }
         thread.interrupt();
+
+
+    }
+
+    public void lock() {
+        ReentrantLock reentrantLock = new ReentrantLock(true);
+        reentrantLock.lock();
+        try {
+
+            //do..
+        } finally {
+            reentrantLock.unlock();
+        }
+
     }
 }
