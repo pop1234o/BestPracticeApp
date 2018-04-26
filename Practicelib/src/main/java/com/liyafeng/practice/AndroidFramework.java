@@ -890,10 +890,61 @@ public class AndroidFramework {
         * zygote进程fork出SystemServer进程后，调用了handleSystemServerProcess()
         *     其实调用了fork后，那么接下来的代码就在新fork的进程中执行了，fork操作实际上就是将
         * 上下文代码和内存空间拷贝了一份。
-        *       handleSystemServerProcess()里面调用了 ZygoteInit.zygoteInit（）
-        * 里面调用ZygoteInit.nativeZygoteInit();这个方法是本地方法，调用的是
+        *       handleSystemServerProcess()先创建ClassLoader，PathClassLoader在启动SystemServer后创建
+        * cl = createPathClassLoader(systemServerClasspath, parsedArgs.targetSdkVersion);
+        * 里面调用了 ZygoteInit.zygoteInit（）
+        *   里面调用ZygoteInit.nativeZygoteInit();这个方法是本地方法，调用的是
         * frameworks/base/core/jni/AndroidRuntime.cpp中的com_android_internal_os_RuntimeInit_nativeZygoteInit
         * 这个方法中主要是启动了binder线程池
+        *   ZygoteInit.zygoteInit（）中接下来调用
+        *   RuntimeInit.applicationInit(targetSdkVersion, argv, classLoader);
+        * /frameworks/base/core/java/com/android/internal/os/RuntimeInit.java
+        * applicationInit（）中调用了invokeStaticMain（）
+        * 里面通过反射获取到com.android.server.SystemServer 的main方法Method对象
+        * 然后抛出一个异常throw new ZygoteInit.MethodAndArgsCaller(m, argv)
+        * ZygoteInit.java的main方法会捕获到这个异常，然后调用caller.run();
+        * run（）中执行了反射的方法 mMethod.invoke(null, new Object[] { mArgs });
+        * 即调用了SystemServer.main()
+        * ZygoteInit.main()->ZygoteInit.startSystemServer()->ZygoteInit.handleSystemServerProcess()
+        * ->ZygoteInit.zygoteInit（）/RuntimeInit.applicationInit（）
+        * ->反射获取SystemServer.main()抛出异常->ZygoteInit.main()调用了caller.run()->SystemServer.main()
+        *
+        * frameworks/base/services/java/com/android/server/SystemServer.java
+        * SystemServer.main()中调用new SystemServer().run();
+        * run()方法中
+        *  Looper.prepareMainLooper();//创建MainLooper，这是在SystemServer的进程中
+        *  System.loadLibrary("android_servers");//加载so库
+        *  createSystemContext();-》
+        *        ActivityThread activityThread = ActivityThread.systemMain();
+        *        mSystemContext = activityThread.getSystemContext();
+        *
+        *  mSystemServiceManager = new SystemServiceManager(mSystemContext);// Create the system service manager.
+        *       ArrayList<SystemService> mServices = new ArrayList<SystemService>()
+        *       //SystemServiceManager中有个List，存储它开启的服务
+        *  LocalServices.addService(SystemServiceManager.class, mSystemServiceManager);
+        *  startBootstrapServices();//创建引导服务
+        *       mSystemServiceManager.startService(Installer.class);
+        *       mActivityManagerService = mSystemServiceManager.startService(ActivityManagerService.Lifecycle.class).getService();
+        *       mActivityManagerService.setSystemServiceManager(mSystemServiceManager);
+        *       mActivityManagerService.setInstaller(installer);
+        *       mPowerManagerService = mSystemServiceManager.startService(PowerManagerService.class);
+        *       mPackageManagerService = PackageManagerService.main(mSystemContext, installer,mFactoryTestMode != FactoryTest.FACTORY_TEST_OFF, mOnlyCore);
+        *       //AMS,PMS都是在SystemServer进程启动的时候创建的，所以他们在SystemServer进程
+        *       //startService都是根据反射来创建对象。
+        *  startCoreServices();
+        *         mSystemServiceManager.startService(BatteryService.class);
+        *         mSystemServiceManager.startService(UsageStatsService.class);
+        *  startOtherServices();
+        *       inputManager = new InputManagerService(context);
+        *       wm = WindowManagerService.main(context, inputManager,mFactoryTestMode != FactoryTest.FACTORY_TEST_LOW_LEVEL,!mFirstBoot, mOnlyCore, new PhoneWindowManager());
+        *       ServiceManager.addService(Context.WINDOW_SERVICE, wm);
+        *       ServiceManager.addService(Context.INPUT_SERVICE, inputManager);
+        *       //main中都是new出来的对象并返回
+        *  Looper.loop();//开始接受消息
+        *
+        * SystemServer进程启动后做的事：
+        * 1.创建binder线程池
+        * 2.调用自己的main方法，run方法，然后创建Looper，创建ActivityThread，创建各种服务对象
         *
         *
         */
