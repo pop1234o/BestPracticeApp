@@ -28,4 +28,5 @@
 * http://maoao530.github.io/
   一位联发科Android开发工程师的博客，博客关于Android Framework层的
   对一些系统原理写的比较好
-  
+* https://blog.csdn.net/itachi85
+ 《Android进阶之光》作者，刘望舒，很多关于底层原理的文章很好

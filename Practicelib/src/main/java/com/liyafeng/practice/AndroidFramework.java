@@ -833,9 +833,68 @@ public class AndroidFramework {
 
     /**
      * 说说Android系统开机流程
+     * （很详细的流程)
+     * https://blog.csdn.net/itachi85/article/details/54783506（init）
+     * https://blog.csdn.net/itachi85/article/details/55047104 (zygote)
+     * https://blog.csdn.net/itachi85/article/details/55053356 (systemServer)
      */
     public void a8_3() {
         /*
+        * ======================1 启动init进程========================
+        * android系统基于Linux，所以点击开机按钮后，先启动linux内核
+        * 然后启动init进程，system/core/init/init.cpp ，调用里面的main函数
+        * 里面加载了init.rc文件（位置/system/core/rootdir/init.rc），
+        * 在7.0后，将zygote启动的.rc文件单独分离出来了 /system/core/rootdir/init.zygote64.rc
+        * 部分内容：service zygote /system/bin/app_process64 -Xzygote /system/bin --zygote --start-system-server
+        * 看到指定用app_process这来启动zygote，这是个cmd命令，是由app_main.cpp编译成的可执行文件。
+        * /frameworks/base/cmds/app_process/Android.mk中会看到app_main.cpp变编译成名为app_process的库
+        * 调用后会执行 /frameworks/base/cmds/app_process/app_main.cpp中的main
+        * 在main中调用 runtime.start("com.android.internal.os.ZygoteInit", args, zygote);
+        * 来启动zygote进程
+        *
+        * 所以init进程主要做了三件事
+        * 1,创建文件夹并挂载设备
+        * 2.初始化和启动属性服务（这个用来存储系统的一些属性信息，每次启动要加载，类似于windows的注册表）
+        * 3.解析init.rc配置文件并启动dvm ，绑定c和java的函数，启动zygote进程
+        *
+        * ==========================启动Zygote进程===================
+        * 上面知道app_main.cpp中通过runtime.start("com.android.internal.os.ZygoteInit", args, zygote);
+        * 这个runtime是frameworks/base/core/jni/AndroidRuntime.cpp
+        *
+        * 来启动java的Zygote进程，start方法中，通过Jni_invocation api来启动虚拟机
+        * 启动后调用startReg来动态注册jni函数（使c++函数和java函数手动关联）
+        * 所以我们看native函数的映射关系可以在这里看到。
+        *
+        * 然后通过JNIEnv* env 中的函数来调用 ZygoteInit.java的main函数
+        *
+        * 然后zygote进程就算启动了，这是运行在dvm中的一个进程
+        * /frameworks/base/core/java/com/android/internal/os/ZygoteInit.java
+        *
+        * 接下来是ZygoteInit.java中的main函数
+        * 1，注册zygote用的socket
+        * 2.预加载系统的class文件（Class.forName()）和资源文件 android.R.xxx
+        * 3.启动SystemServer进程（Zygote.forkSystemServer（）+handleSystemServerProcess()）
+        * 4.socket进入无限循环等待，等待ActivityManager中发来的消息
+        * 5.从AM接收到ZygoteConnection，执行ZygoteConnection.runOnce()方法
+        *    里面调用了Zygote.forkAndSpecialize，来创建新的进程（这些进程都共享了预加载的资源和dvm）
+        *
+        * 总结一下Zygote进程启动后做的事情：
+        * 1,注册socket来接收消息
+        * 2.预加载类文件和资源
+        * 3.用fork启动SystemServer进程
+        * 4.循环等待消息来fork出新的进程
+        *
+        * ===================启动SystemServer进程========================
+        * /frameworks/base/core/java/com/android/internal/os/ZygoteInit.java
+        * ZygoteInit的main中启动SystemServer
+        * zygote进程fork出SystemServer进程后，调用了handleSystemServerProcess()
+        *     其实调用了fork后，那么接下来的代码就在新fork的进程中执行了，fork操作实际上就是将
+        * 上下文代码和内存空间拷贝了一份。
+        *       handleSystemServerProcess()里面调用了 ZygoteInit.zygoteInit（）
+        * 里面调用ZygoteInit.nativeZygoteInit();这个方法是本地方法，调用的是
+        * frameworks/base/core/jni/AndroidRuntime.cpp中的com_android_internal_os_RuntimeInit_nativeZygoteInit
+        * 这个方法中主要是启动了binder线程池
+        *
         *
         */
     }
