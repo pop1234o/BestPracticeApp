@@ -803,7 +803,7 @@ public class AndroidFramework {
         * 总结一下
         * 1,launcher调用startActivity
         * 2,ActivityMangerService将launcher进入pause状态
-        * 3.ActivityMangerService判断进程是否启动，没有启动则调用Process.start()来开启一个进程
+        * 3.ActivityMangerService判断进程是否启动，没有启动则调用Process.start()来开启一个进程，其实是zygote进程fork出来的
         * 4.启动进程后dalvik会调用SystemServer.main()方法，这个方法中创建ActivityThread，继而创建ApplicationThread
         * 5,ApplicationThread绑定到ActivityManagerService中？？？
         * 6.ActivityManagerService发送通知让Activity执行创建Application对象,调用onCreate()，
@@ -940,12 +940,22 @@ public class AndroidFramework {
         *       ServiceManager.addService(Context.WINDOW_SERVICE, wm);
         *       ServiceManager.addService(Context.INPUT_SERVICE, inputManager);
         *       //main中都是new出来的对象并返回
+        *       Watchdog.getInstance().start();
         *  Looper.loop();//开始接受消息
         *
         * SystemServer进程启动后做的事：
         * 1.创建binder线程池
         * 2.调用自己的main方法，run方法，然后创建Looper，创建ActivityThread，创建各种服务对象
         *
+        * =========================Launcher的启动=================
+        * 在startOtherServices()中的最后mActivityManagerService.systemReady
+        * 里面经过层层调用，最终调用了ActivityStarter.startActivity（）
+        * 而intent是Launcher应用的过滤条件
+        * <action android:name="android.intent.action.MAIN" />
+        * <category android:name="android.intent.category.HOME" />
+        * <category android:name="android.intent.category.DEFAULT" />
+        * /packages/apps/Launcher3/
+        * 看Launcher源码，里面加载了所有app的信息，显示在一个自定义的RecyclerView上
         *
         */
     }

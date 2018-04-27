@@ -132,4 +132,30 @@ public class Flow {
     public void measureFlow() {
 
     }
+
+
+    /**
+     * at com.liyafeng.MainActivity.onCreate(MainActivity.java:41)
+     * at android.app.Activity.performCreate(Activity.java:6102)
+     * at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1106)
+     * at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2280)
+     * at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2389)
+     * at android.app.ActivityThread.access$800(ActivityThread.java:151)
+     * at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1305)
+     * at android.os.Handler.dispatchMessage(Handler.java:102)
+     * at android.os.Looper.loop(Looper.java:135)
+     * at android.app.ActivityThread.main(ActivityThread.java:5271)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at java.lang.reflect.Method.invoke(Method.java:372)
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:902)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:697)
+     */
+    void startActivityFlow() {
+
+        //新的进程都是从zygote中fork出来的，ZygoteInit有socket接受消息
+        //收到消息后创建新的进程，代码从ZygoteInit中开始，然后创建ActivityThread
+        //里面接受AMS的启动页面消息，收到消息后创建Activity对象
+        //通过WMS来将视图显示
+
+    }
 }
