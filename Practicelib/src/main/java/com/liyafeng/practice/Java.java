@@ -1397,8 +1397,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     //region JVM知识
 
     /**
-     * 哪些情况下的对象会被垃圾回收机制处理掉?
-     * /jvm垃圾回收机制是怎样的?
+     * 哪些情况下的对象会被垃圾回收机制处理掉? /jvm垃圾回收机制是怎样的?
      * <p>
      * https://yunfengsa.github.io/2015/11/12/android-jvm-gc/
      */
@@ -1415,13 +1414,61 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 另外的GC算法还有复制算法（就是定义两个大小相等的区域，一次GC把非垃圾对象
         * 复制到另一块内存中，这样减少了内存碎片）
         * 标记-整理算法，标记非垃圾对象，并且整理到连续的内存中
+        *
+        * ==================标记算法==================
+        * 标记所有垃圾对象，那么标记的算法有两种：引用计数法和根搜索法
+        * 引用计数法：如果对象被引用，则引用计数器加1，如果为0则是垃圾对象
+        *   但是主流vm都没有采用这种算法，因为如果循环引用，那么这种算法则不起作用
+        * 根搜索法：将一些对象视作根对象，从根对象开始遍历引用，遍历到的就是可达的对象
+        *   所以我们可以将不可达的对象清除
+        * 如何选择根对象：
+        *   Java栈中的引用的对象。
+        *   本地方法栈中JNI引用的对象。
+        *   方法区中运行时常量池引用的对象。
+        *   方法区中静态属性引用的对象。
+        *   运行中的线程
+        *   由引导类加载器加载的对象
+        *   GC控制的对象
+        *
+        * 当对象处于不可达状态，且垃圾回收器会调用他的finalize方法
+        * 如果调用完finalize（），对象还是不可达，那么他将被永久回收
+        *
+        * 上面是一个对象如何被标记为垃圾对象的算法，下面是这些垃圾的回收算法
+        * =======================回收算法================================
+        * 1.标记-清除算法：标记后，直接将标记的内存区域清空
+        *   缺点就是产生大量碎片内存，没有足够的连续内存分配给较大的对象，这样就触发下一次gc
+        *   导致频繁gc
+        * 2.复制算法，将内存分为两个区域，只在一个区域中分配内存，标记回收后，将剩下的对象
+        *   复制到另一个区域，这样内存使用就连续了。缺点就是效率低，只能使用一半内存，而且
+        *   如果内存中有大量存活对象，那么复制耗时较长（所以这种算法一般用于新生代中，因为
+        *   新生代内存中对象存活率低）
+        * 3.标记-压缩算法：标记回收后，将存活的对象压缩到内存的一端，这样解决了碎片化问题，
+        *   也解决了内存使用率低的问题。（这种算法广泛应用于老年代中）
+        *
+        * =========================分代收集==========================
+        * 1.将java堆分为新生代Young Generation，和老年代Tenured Generation，
+        *   这样提高了回收的命中率
+        *   新生代又可以分为Eden，from survivor,to survivor，三个空间
+        *   新生代：老年代=1:2    Eden，from survivor,to survivor=8:1:1
+        *   from survivor,to survivor这两个空间只能有一个可用
+        * 2.两种收集类型，一种Minor GC ，一种Full GC(也叫Major GC)
+        *   Minor GC，收集eden空间，和rom survivor,to survivor中的一个
+        *   然后将存活的对象复制到rom survivor,to survivor中的另一个中
+        *   （这就是复制算法），每在Minor GC中存活的对象年龄加1，
+        *   直到年龄到15岁对象会被移动到老年代，
+        *    默认是 15 岁，可以通过参数 -XX:MaxTenuringThreshold 来设定
+        *   Full Gc是老年代满的时候触发的，他采用标记-压缩算法来回收老年代
+        *   
+        *
+        *
+        *
+        *
         */
     }
 
     /**
      * java的安全性如果保证？/说说java安全模型
      * 说说java沙箱机制？
-     * 说说类加载器的双亲委托模型？
      * jvm内存模型？
      * ---------------------------------------
      * 《深入理解java虚拟机》
@@ -1437,29 +1484,6 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 2.class文件检查器
         * 3 。
         *
-        * ===========说说类加载器的双亲委托模型？====================
-        * https://blog.csdn.net/javazejian/article/details/73413292
-        * https://www.ibm.com/developerworks/cn/java/j-lo-classloader/
-        *
-        * 我们有一个启动类加载器/引导类加载器（BootStrap ClassLoader），它是一个独立的类加载器，由C++实现
-        * 还有拓展类加载器，系统类加载器
-        * BootStrap ：由c++实现，负责将 <JAVA_HOME>/lib路径下的核心类库或
-        *   -Xbootclasspath参数指定的路径下的jar包加载到内存中，注意必由于虚拟机是按照文件名识别加载jar包的，
-        *   如rt.jar，如果文件名不被虚拟机识别，即使把jar包丢到lib目录下也是没有作用的
-        *   (出于安全考虑，Bootstrap启动类加载器只加载包名为java、javax、sun等开头的类)。
-        *
-        *  Extension（ExtClassLoader.java）： 扩展类加载器是指Sun公司(已被Oracle收购)实现的sun.misc.Launcher$ExtClassLoader类，
-        *   由Java语言实现的，是Launcher的静态内部类，它负责加载<JAVA_HOME>/lib/ext目录下
-        *   或者由系统变量-Djava.ext.dir指定位路径中的类库，开发者可以直接使用标准扩展类加载器
-        *
-        * System(AppClassLoader.java) 应用程序加载器是指 Sun公司实现的sun.misc.Launcher$AppClassLoader。它负责加载系统类路径java -classpath
-        * 或-D java.class.path 指定路径下的类库，也就是我们经常用到的classpath路径，
-        * 开发者可以直接使用系统类加载器，一般情况下该类加载是程序中默认的类加载器，
-        * 通过ClassLoader#getSystemClassLoader()方法可以获取到该类加载器
-        *
-        * BootStrap 《- ExtClassLoader《- AppClassLoader
-        * 他们虽然不是继承关系 ，但是通过getParent（）方法获取到的就是这个关系
-        * 这个parent是在构造方法中传入的
         * --------------加载原理-------------------
         * 从磁盘中读取相应的class文件，然后获取输入流，然后用native方法
         * 来生成Class对象，从而完成Class文件加载（到jvm的内存中）
@@ -1478,6 +1502,42 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         //线程上下文类加载器，这个获取到与当前程序相同的类加载器
         // 一般是AppClassLoader ,但是在java web环境中可能不是
         Thread.currentThread().getContextClassLoader();
+    }
+
+    /**
+     * 说说类加载器？/说说类加载器的双亲委托模型？
+     * */
+    public void a8_3(){
+        /*
+        *   * ===========说说类加载器的双亲委托模型？====================
+        * https://blog.csdn.net/javazejian/article/details/73413292
+        * https://www.ibm.com/developerworks/cn/java/j-lo-classloader/
+        *
+        * 我们有一个启动类加载器/引导类加载器（BootStrap ClassLoader），它是一个独立的类加载器，由C++实现
+        * 还有拓展类加载器，系统类加载器
+        * BootStrap ：由c++实现，负责将 <JAVA_HOME>/lib路径下的核心类库或
+        *   -Xbootclasspath参数指定的路径下的jar包加载到内存中，注意必由于虚拟机是按照文件名识别加载jar包的，
+        *   如rt.jar，如果文件名不被虚拟机识别，即使把jar包丢到lib目录下也是没有作用的
+        *   (出于安全考虑，Bootstrap启动类加载器只加载包名为java、javax、sun等开头的类)。
+        *
+        * Extension（ExtClassLoader.java）： 扩展类加载器是指Sun公司(已被Oracle收购)实现的sun.misc.Launcher$ExtClassLoader类，
+        *   由Java语言实现的，是Launcher的静态内部类，它负责加载<JAVA_HOME>/lib/ext目录下
+        *   或者由系统变量-Djava.ext.dir指定位路径中的类库，开发者可以直接使用标准扩展类加载器
+        *
+        * System(AppClassLoader.java) 应用程序加载器是指 Sun公司实现的sun.misc.Launcher$AppClassLoader。它负责加载系统类路径java -classpath
+        * 或-D java.class.path 指定路径下的类库，也就是我们经常用到的classpath路径，这个加载器用来加载用户的类
+        * 开发者可以直接使用系统类加载器，一般情况下该类加载是程序中默认的类加载器，
+        * 通过ClassLoader#getSystemClassLoader()方法可以获取到该类加载器
+        * 这个加载器之前会先请求他的父类
+        *
+        *
+        * 以上都是sun/misc/Launcher.class的静态成员内部类，都是URLClassLoader的子类
+        * 在Launcher中先创建ExtClassLoader，然后将它作为parent创建AppClassLoader
+        *
+        * BootStrap 《- ExtClassLoader《- AppClassLoader
+        * 他们虽然不是继承关系 ，但是通过getParent（）方法获取到的就是这个关系
+        * 这个parent是在构造方法中传入的
+        */
     }
     //endregion
 }

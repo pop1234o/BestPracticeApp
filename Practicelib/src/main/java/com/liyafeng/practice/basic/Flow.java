@@ -158,4 +158,21 @@ public class Flow {
         //通过WMS来将视图显示
 
     }
+
+    /**
+     * at com.pinzhikeji.snack.mobile.ui.dialog.MobileNumberDialog$3.onClick(MobileNumberDialog.java:106)
+     * at android.view.View.performClick(View.java:4781)
+     * at android.view.View$PerformClick.run(View.java:19874)
+     * at android.os.Handler.handleCallback(Handler.java:739)
+     * at android.os.Handler.dispatchMessage(Handler.java:95)
+     * at android.os.Looper.loop(Looper.java:135)
+     * at android.app.ActivityThread.main(ActivityThread.java:5271)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at java.lang.reflect.Method.invoke(Method.java:372)
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:902)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:697)
+     */
+    void clickFlow() {
+
+    }
 }
