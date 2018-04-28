@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by liyafeng on 16/11/2017.
@@ -1143,6 +1144,17 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
 
+    /**
+     * ConcurrentHashMap作用？原理？
+     * */
+    public void a3_10(){
+        /*
+        *
+        */
+        ConcurrentHashMap<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
+        concurrentHashMap.put(1,"");
+        String s = concurrentHashMap.get(1);
+    }
     //endregion
 
     //region Java网络
@@ -1537,6 +1549,24 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * BootStrap 《- ExtClassLoader《- AppClassLoader
         * 他们虽然不是继承关系 ，但是通过getParent（）方法获取到的就是这个关系
         * 这个parent是在构造方法中传入的
+        */
+    }
+    //endregion
+
+    //region java8
+
+    /**
+     * 说说接口中的default method
+     * https://blog.idrsolutions.com/2015/01/java-8-default-methods-explained-5-minutes/
+     * */
+    public void a9_1(){
+        /*
+        * java8的特性之一，当我们在接口中新添加一个方法，那么他的实现类肯定要报错
+        * 直到我们的实现类实现了他，那么这种体验不友好，所以就有了default method
+        * 当一个方法被default关键字修饰的时候，那么他的实现类不一定要实现它
+        * 当然我们实现类实现了方法，还想调用接口中的实现方法，Interface.super.Foo()
+        *
+        * 所以在java8中接口中也能有实现的方法了
         */
     }
     //endregion

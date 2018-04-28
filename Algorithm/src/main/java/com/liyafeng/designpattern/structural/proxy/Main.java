@@ -28,10 +28,16 @@ public class Main {
     }
 
 
+    /**
+     *
+     */
     public interface Subject {
         void request();
     }
 
+    /**
+     * 被代理的类
+     */
     public static class RealSubject implements Subject {
 
         @Override
