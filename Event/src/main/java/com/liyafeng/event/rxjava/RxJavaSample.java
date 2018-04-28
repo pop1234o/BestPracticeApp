@@ -2,6 +2,8 @@ package com.liyafeng.event.rxjava;
 
 import android.util.Log;
 
+import org.reactivestreams.Publisher;
+
 import java.util.Observable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -10,6 +12,8 @@ import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -92,5 +96,24 @@ public class RxJavaSample {
             }
         });
 
+    }
+
+    private void do4(){
+        Flowable.range(1,10).flatMap(new Function<Integer, Publisher<?>>() {
+            @Override
+            public Publisher<?> apply(Integer integer) throws Exception {
+                return null;
+            }
+        }).filter(new Predicate<Object>() {
+            @Override
+            public boolean test(Object o) throws Exception {
+                return false;
+            }
+        }).subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+
+            }
+        });
     }
 }
