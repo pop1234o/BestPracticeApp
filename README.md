@@ -41,10 +41,18 @@
 ### 视频音频 (Module: Video)
 * 对于视频编解码的一些理解
 
-### 插件化/热修复
+### 插件化/热修复 (Module: Hotfix)
 * 插庄、Hook原理的一些介绍
 
-### Android应用架构/组件化
+### 自定义Gradle插件（Module: hotfixcustomgradleplugin）
+* 自定义gradle插件，用来插桩
+
+### JNI/Binder/AIDL (Module: JNI)
+* JNI/NDK 的使用
+* Binder原理介绍
+* AIDL的使用
+
+### Android应用架构/组件化 (Module: Architecture)
 * MVC、MVP、MVVM
 * 最新官方的 Android-Architecture-Component 架构
 * 阿里组件化框架Arouter的介绍（TODO）
