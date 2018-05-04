@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.liyafeng.view.camera.CameraActivity;
 import com.liyafeng.view.dialog.DialogActivity;
 import com.liyafeng.view.dialog.MainPopUpWindowActivity;
 import com.liyafeng.view.dialog.ToastActivity;
@@ -55,6 +56,7 @@ public class MainActivity extends Activity {
             "toast",
             "chartView",
             "drawerActivity",
+            "camera",
 
     };
 
@@ -78,6 +80,7 @@ public class MainActivity extends Activity {
             ToastActivity.class,
             ChartActivity.class,
             DrawerActivity.class,
+            CameraActivity.class,
             };
 
     @Override
@@ -132,19 +135,7 @@ public class MainActivity extends Activity {
 //            }
 //        },5000);
 
-        for (int i = 0; i < 100000; i++) {
-            Log.i(TAG, "onCreate: "+i);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
+
     }
 
 

@@ -556,6 +556,19 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      */
     public void a2_2() {
         /*
+        * 首先并发编程需要有三个概念
+        * 一个是原子性，一个是可见性，一个是有序性
+        * 1.原子性，比如在写int型的时候，先写低16位，在写高16位
+        * 当只写了低16位的时候，这个时候另个线程去读取，那么就会
+        * 导致读取的数据错误
+        * 2.可见性，cpu会把变量先读取到寄存器（高速缓存），然后
+        * 对这个变量进行操作，操作完再同步到内存中。所以这就会导致
+        * 多个线程读取的数组不一致
+        * 3.有序性，jvm会对java代码重排序，单保证结果不变
+        * 但是这在多线程就会出问题
+        *
+        * java提供了volatile关键字来保证变量的可见性，阻止重排序问题
+        *
         * volatile只能保证变量的可见性，就是说保证每次读取变量的时候是最新的值
         * 而不是保存在寄存器中的值，它不能保证i++的原子性
         *
@@ -822,19 +835,6 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         */
     }
 
-    /**
-     * volatile关键字作用和原理?
-     * http://www.cnblogs.com/paddix/p/5428507.html
-     */
-    public void a2_18() {
-        /*
-        * 1.可以防止重排序
-        * 2.可见性，一个线程修改了这个变量，另一个线程取到的是最新值，
-        * 3.原子性，long double分为高32位和低32位，我们写入的时候有可能只写了
-        *  低32位，然后这个时候读取出的数值就是错的。
-        *
-        */
-    }
 
 
     /**
@@ -1146,11 +1146,28 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * ConcurrentHashMap作用？原理？
+     * http://www.infoq.com/cn/articles/ConcurrentHashMap
      * */
     public void a3_10(){
         /*
+        * HashMap 在多线程中扩容重hash的时候导致死循环，脏读的问题
+        * =======================ConcurrentHashMap======================
+        * 旧版本采用分段锁，将整个散列表分为很多Segment[]，然后每个Segment
+        * 中又有多个HashEntry[]，所以hashmap在put的时候就先用元素key的hash
+        * 来找到指定Segment
+        * return segments[(hash >>> segmentShift) & segmentMask];
+        * 找到后调用segment的put方法，里面还是通过key的hash值来找到
+        * 指定的HashEntry[index]，
+        *  int index = hash & (tab.length - 1);
+        *  这个时候调用lock来加锁，Segment继承ReentrantLock
+        *  ------------
+        * 后来就变成在某个链表中加锁了，用的synchronized关键字
+        * 配合cas操作来完成同步
+        *
+        *
         *
         */
+        new HashMap<>();
         ConcurrentHashMap<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
         concurrentHashMap.put(1,"");
         String s = concurrentHashMap.get(1);

@@ -174,5 +174,57 @@ public class Flow {
      */
     void clickFlow() {
 
+
+    }
+
+
+    /**
+     * at com.pinzhikeji.snack.view.fragment.orderdish.OrderDishFragment.onCreateView(OrderDishFragment.java:362)
+     * at android.support.v4.app.Fragment.performCreateView(Fragment.java:2080)
+     * at android.support.v4.app.FragmentManagerImpl.moveToState(FragmentManager.java:1108)
+     * at android.support.v4.app.FragmentManagerImpl.moveToState(FragmentManager.java:1290)
+     * at android.support.v4.app.BackStackRecord.run(BackStackRecord.java:801)
+     * at android.support.v4.app.FragmentManagerImpl.execPendingActions(FragmentManager.java:1677)
+     * at android.support.v4.app.FragmentController.execPendingActions(FragmentController.java:388)
+     * at android.support.v4.app.FragmentActivity.onStart(FragmentActivity.java:604)
+     * at android.support.v7.app.AppCompatActivity.onStart(AppCompatActivity.java:178)
+     * at android.app.Instrumentation.callActivityOnStart(Instrumentation.java:1238)
+     * at android.app.Activity.performStart(Activity.java:6302)
+     * at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2379)
+     * at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2476) 
+     * at android.app.ActivityThread.access$900(ActivityThread.java:150) 
+     * at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1344) 
+     * at android.os.Handler.dispatchMessage(Handler.java:102) 
+     * at android.os.Looper.loop(Looper.java:148) 
+     * at android.app.ActivityThread.main(ActivityThread.java:5417) 
+     * at java.lang.reflect.Method.invoke(Native Method) 
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:726) 
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:616) 
+     */
+    void fragmentFlow() {
+
+    }
+
+    /**
+     * Process: com.liyafeng.view, PID: 10301
+     * java.lang.OutOfMemoryError: pthread_create (1040KB stack) failed: Try again
+     * at java.lang.Thread.nativeCreate(Native Method)
+     * at java.lang.Thread.start(Thread.java:729)
+     * at com.liyafeng.view.MainActivity.onCreate(MainActivity.java:149)
+     * at android.app.Activity.performCreate(Activity.java:6861)
+     * at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1119)
+     * at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2693)
+     * at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2801)
+     * at android.app.ActivityThread.-wrap12(ActivityThread.java)
+     * at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1548)
+     * at android.os.Handler.dispatchMessage(Handler.java:102)
+     * at android.os.Looper.loop(Looper.java:163)
+     * at android.app.ActivityThread.main(ActivityThread.java:6365)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:901)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:791)
+     */
+    void oomFlow() {
+
     }
 }
