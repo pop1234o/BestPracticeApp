@@ -4,9 +4,12 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-feature android:name="android.hardware.camera" />
+    <!--表明这个app必须需要相机，在应用商店中没有相机的手机将看不到这个应用-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -49,7 +52,8 @@
         <activity android:name=".slidingmenu.DrawerActivity" />
         <activity android:name=".drawable.DrawableActivity" />
         <activity android:name=".camera.CameraActivity" />
-        <activity android:name=".permission.PermissionActivity"></activity>
+        <activity android:name=".permission.PermissionActivity" />
+        <activity android:name=".camera.SystemCameraActivity"></activity>
     </application>
 
 </manifest>

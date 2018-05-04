@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.liyafeng.view.camera.CameraActivity;
+import com.liyafeng.view.camera.SystemCameraActivity;
 import com.liyafeng.view.dialog.DialogActivity;
 import com.liyafeng.view.dialog.MainPopUpWindowActivity;
 import com.liyafeng.view.dialog.ToastActivity;
@@ -57,6 +58,7 @@ public class MainActivity extends Activity {
             "chartView",
             "drawerActivity",
             "camera",
+            "systemCamera",
 
     };
 
@@ -81,6 +83,7 @@ public class MainActivity extends Activity {
             ChartActivity.class,
             DrawerActivity.class,
             CameraActivity.class,
+            SystemCameraActivity.class,
             };
 
     @Override

@@ -227,4 +227,18 @@ public class Flow {
     void oomFlow() {
 
     }
+
+    /**
+     * java.lang.NullPointerException: Attempt to get length of null array
+     * at com.liyafeng.view.camera.CameraActivity$1$2.onPictureTaken(CameraActivity.java:56)
+     * at android.hardware.Camera$EventHandler.handleMessage(Camera.java:1175)
+     * at android.os.Handler.dispatchMessage(Handler.java:102)
+     * at android.os.Looper.loop(Looper.java:163)
+     * at android.app.ActivityThread.main(ActivityThread.java:6365)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:901)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:791)
+     */
+    void camareFlow() {
+    }
 }

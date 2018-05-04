@@ -30,6 +30,8 @@ public class CameraActivity extends AppCompatActivity {
     /**
      * Camera （api21后弃用）
      * https://developer.android.google.cn/reference/android/hardware/Camera
+     * <p>
+     * https://www.jianshu.com/p/7dd2191b4537(使用介绍)
      *
      * @param savedInstanceState
      */
@@ -47,20 +49,32 @@ public class CameraActivity extends AppCompatActivity {
                 camera.takePicture(new Camera.ShutterCallback() {
                     @Override
                     public void onShutter() {
+                        Log.i("test", "拍照瞬间调用");
+                    }
+                }, new Camera.PictureCallback() {
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera) {
+
+                        if (data == null) {
+                            Log.i("test", "raw数据为null");
+                        } else {
+                            Log.i("test", "raw" + data.length);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                            iv_display.setImageBitmap(bitmap);
+                        }
 
                     }
                 }, new Camera.PictureCallback() {
                     @Override
                     public void onPictureTaken(byte[] data, Camera camera) {
 
-                        Log.i("test", "raw" + data.length);
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                        iv_display.setImageBitmap(bitmap);
-                    }
-                }, new Camera.PictureCallback() {
-                    @Override
-                    public void onPictureTaken(byte[] data, Camera camera) {
-                        Log.i("test", "jpeg" + data.length);
+                        if (data == null) {
+                            Log.i("test", "jpeg数据为null");
+                        } else {
+                            Log.i("test", "jpeg" + data.length);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                            iv_display.setImageBitmap(bitmap);
+                        }
                     }
                 });
             }
@@ -70,6 +84,7 @@ public class CameraActivity extends AppCompatActivity {
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 int permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
 
                 if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -84,7 +99,11 @@ public class CameraActivity extends AppCompatActivity {
                                 new String[]{Manifest.permission.CAMERA},
                                 1);
                     }
+                } else {
+                    Log.i("test", "有权限了");
+                    open();
                 }
+
             }
         });
     }
@@ -113,12 +132,21 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void open() {
-        camera = Camera.open();
+        int numberOfCameras = Camera.getNumberOfCameras();
+        Log.i("test", "数量" + numberOfCameras);
+        if (numberOfCameras >= 2) {
+
+            camera = Camera.open(0);//0后置，1前置
+//            camera = Camera.open(1);//0后置，1前置
+        } else {
+            camera =   Camera.open(0);
+        }
         Camera.Parameters parameters = camera.getParameters();
         parameters.setGpsTimestamp(System.currentTimeMillis());
+//        parameters.setPictureSize(800,800);
         camera.setParameters(parameters);
 
-        camera.setDisplayOrientation(0);
+        camera.setDisplayOrientation(90);//90垂直 180水平
 
 
         SurfaceView sv_view = (SurfaceView) findViewById(R.id.sv_view);
@@ -138,6 +166,8 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        camera.release();
+        if (camera != null) {
+            camera.release();
+        }
     }
 }
