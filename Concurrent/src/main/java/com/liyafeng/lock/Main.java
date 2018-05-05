@@ -11,8 +11,6 @@ import java.util.concurrent.locks.Condition;
 public class Main {
 
 
-    private static ReentrantLock reentrantLock;
-    private static Condition condition;
 
     /**
      * 互斥锁(独立锁)  exclusive lock / Mutex
@@ -51,13 +49,97 @@ public class Main {
      * ReentrantLock。lock方法，调用的FairSync ，NonfairSync的lock方法
      * FairSync。lock调用AQS的acquire(1)方法来申请锁，
      * AQS中
+     * acquire(1){
      * if (!tryAcquire(arg) &&acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
      * selfInterrupt();
+     * }
+     * <p>
      * tryAcquire先尝试获取锁，这个AQS中没有实现，需要子类实现
+     * tryAcquire{
      * FairSync中重写了这个方法，里面先获取锁的状态  int c = getState();
      * 初始是0，如果为0，那么将state用CAS操作设置为0，将当前线程设置为独占线程
      * setExclusiveOwnerThread(current)
-     * 返回true，
+     * 返回true，代表了获取锁成功了（其实就是state改为1了）
+     * }
+     * 那么tryAcquire返回true，acquire中的其他代码就不执行了，lock()会继续执行，
+     * 这就是第一个获取锁的线程，
+     * 那么当第二个线程到来时，调用Lock.lock，调用AQS.acquire，然后调用Sync实现的
+     * tryAcquire,判断状态不为0，而且不是独占的那个线程，那么直接返回false，
+     * 走if的第二个方法 acquireQueued(addWaiter(Node.EXCLUSIVE), arg)
+     * Node.EXCLUSIVE 是null值 ，这个标记是独占锁，
+     * AQS中有个Node  head ,tail 是个链表
+     * private Node addWaiter(Node mode) {
+     * Node node = new Node(mode);
+     * <p>
+     * for (;;) {
+     * Node oldTail = tail;
+     * if (oldTail != null) {//下面的逻辑就是将node加入链表中
+     * U.putObject(node, Node.PREV, oldTail);  node.pre= oldTail
+     * if (compareAndSetTail(oldTail, node)) {  tail = node;
+     * oldTail.next = node;  //到这里是 head->node(tail也指向他)
+     * return node;
+     * }
+     * } else {
+     * initializeSyncQueue();//第一次头尾都为null，然后会new Node,head,tail都指向他
+     * }
+     * }
+     * }
+     * <p>
+     * <p>
+     * 这里是请求加入等待队列
+     * final boolean acquireQueued(final Node node, int arg) {
+     * try {
+     * boolean interrupted = false;
+     * for (;;) {
+     * final Node p = node.predecessor();//获取当前节点的前一个节点，第二个线程就是head
+     * if (p == head && tryAcquire(arg)) {//再次请求锁
+     * setHead(node); //请求成功，head->node,这就是新的head了
+     * p.next = null; // help GC 旧的head.next = null
+     * return interrupted; //这时acquire执行完毕，lock也执行完毕，那么可以继续执行了
+     * }
+     * if (shouldParkAfterFailedAcquire(p, node) && //判断是否应该park，只要没intercept就应该挂起
+     * parkAndCheckInterrupt()) //这里是park操作，等待持有锁的线程释放后唤醒
+     * interrupted = true;
+     * }
+     * } catch (Throwable t) {
+     * cancelAcquire(node);
+     * throw t;
+     * }
+     * }
+     * 这段代码就是将新的节点加入队列尾，然后循环判断是否能获取锁，只有当前
+     * 锁没被持有而且是队列头的节点才能被唤醒
+     * 否则就进入park方法挂起
+     * <p>
+     * -------------------------------------
+     * unlock，是持有锁的线程释放锁，lock.unlock()->AQS.release(1);
+     * public final boolean release(int arg) {
+     * //这里是ReentrantLock中的Sync重写的方法，判断当前status-1后是否为0，
+     * //如果为0那么返回true，表示释放成功，
+     * if (tryRelease(arg)) {
+     * Node h = head;
+     * if (h != null && h.waitStatus != 0)//如果有等待的线程队列，且没有中断
+     * unparkSuccessor(h);
+     * //唤醒head.next线程，调用unpark，这个线程就会再次被唤醒调用treAcquire()这个时候status+1
+     * //然后等最后还会调用unlock，来唤醒下一个线程
+     * return true;
+     * }
+     * return false;
+     * }
+     * <p>
+     * 非公平锁和公平锁的差别在于它允许插队，公平锁是如果在一瞬间线程释放了锁，那么
+     * 下一个进入的是队列头，而非公平是如果这个时候有一个不在队列中的线程申请锁，
+     * 那么他可以得到锁。
+     * <p>
+     * final void lock() {
+     * if (compareAndSetState(0, 1)) //不用加入队列，直接获得锁，将status改为1
+     * setExclusiveOwnerThread(Thread.currentThread());
+     * else
+     * acquire(1);
+     * }
+     *
+     * 模式是非公平锁，因为他的吞吐量高。因为将一个线程唤醒是需要时间的
+     * 一个线程挂起也是需要时间，所以非公平锁是谁正好来，就可以插到前面
+     * 但是当持有锁时间较长，非公平锁带来的效果会不明显
      *
      * @param args
      */
@@ -83,6 +165,8 @@ public class Main {
 
 
     }
+    private static ReentrantLock reentrantLock;
+    private static Condition condition;
 
     public static void signal() {
         reentrantLock.lock();

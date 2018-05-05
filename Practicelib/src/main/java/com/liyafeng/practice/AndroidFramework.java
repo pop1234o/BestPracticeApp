@@ -1091,7 +1091,8 @@ public class AndroidFramework {
      */
     public void a8_6() {
         /*
-        * ThreadLocal中有静态内部类，ThreadLocalMap
+        * Thread中有静态内部类，ThreadLocalMap key是ThreadLocal，value是对应值，因为一个Thread能
+        * 对应多个ThreadLocal实例。
         * 不同ThreadLocal实例 对应不同的值。(一个Thread中可以有多个ThreadLocal变量)
         * 所以在Thread中用一个ThreadLocalMap对象来存储，这个ThreadLocalMap自己实现了散列表
         * ThreadLocalMap key是ThreadLocal对象，value就是泛型的值
@@ -1570,7 +1571,7 @@ public class AndroidFramework {
     public void a11() {
         /*
         * 一个动画 过程是从0-1（100%） 匀速完成的，这个进度定义为 fraction（百分比）
-        * 差值器是重新计算这个fraction，
+        * 差值器是重新计算这个fraction=差值器(fraction)，
         * 而估值器是计算当前百分比时，动画的属性值是多少
         *
         */
