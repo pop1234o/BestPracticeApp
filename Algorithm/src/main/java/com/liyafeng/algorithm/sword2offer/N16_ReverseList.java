@@ -48,27 +48,42 @@ public class N16_ReverseList {
      * 然后指针 pre->node node->next 移动
      * <p>
      * 先缓存，后操作，然后读缓存
+     *=============================
+     * 1->2->3
+     * currentNode = 1;//这个用来缓存当前的node
+     * pre =null;//之个缓存上一个node，一遍我们的next指向他
+     * while(node!=null){
+     *   next = node.next; //缓存当前节点的next
+     *   if(next==null){//这里是遍历完成
+     *       head = node;
+     *   }
+     *   currentNode.next = pre;//当前节点的next重写指向
+     *   pre = currentNode;//向后移动，当前节点变为pre
+     *   node = next;//当前节点变为下一个
+     * }
      *
      * @param list
      * @return
      */
     private static List.Node reverse(List list) {
-        List.Node node = list.head;
-
+        //缓存当前节点和前一个节点
+        List.Node currentNode = list.head;
         List.Node pre = null;
 
+        while (currentNode != null) {
 
-        while (node != null) {
-
-            List.Node next = node.next;
+            //临时缓存下一个节点，作用就是最后当前节点指向下一个
+            List.Node next = currentNode.next;
             if (next == null) {
-                list.head = node;
+                list.head = currentNode;
             }
 
-            node.next = pre;
+            //改变指向
+            currentNode.next = pre;
 
-            pre = node;
-            node = next;
+            //pre, currentNode指针向后移动
+            pre = currentNode;
+            currentNode = next;
 
         }
 

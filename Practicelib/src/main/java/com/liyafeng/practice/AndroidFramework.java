@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.util.LruCache;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.io.File;
 
@@ -323,6 +325,18 @@ public class AndroidFramework {
         /*
         * 循环调用view.getParent
         */
+    }
+    
+    /**
+     * 如何禁止父布局拦截事件？
+     * */
+    public void a1_10(){
+        /*
+        * new ViewGroup().requestDisallowInterceptTouchEvent(true)
+        * 这样父布局就不会调用onInterceptTouchEvent()来判断是否要拦截了
+        * 这个只在Down事件的时候判断
+        */
+//        new ViewGroup().requestDisallowInterceptTouchEvent(true);
     }
     //endregion
 
@@ -688,11 +702,35 @@ public class AndroidFramework {
 
     /**
      * 本地广播和全局广播的差别?
+     * \https://developer.android.google.cn/reference/android/support/v4/content/LocalBroadcastManager
+     *
+     * http://www.cnblogs.com/trinea/archive/2012/11/09/2763182.html（广播详细介绍）
      */
     public void a4_2() {
         /*
         * 本地广播只能在本应用内传播，使用LocalBroadcastManager来注册和发送
+        * 优点：
+        * 1.不必担心隐私数据发送到其他进程
+        * 2.不必担心接收到其他进程不安全的数据
+        * 3.比全局广播更高效（全局广播用的binder，而且要遍历所有系统中注册的广播接受者）
+        *
+        *  LocalBroadcastManager.getInstance(this).registerReceiver();
+        *  位于support-v4中
+        *  原理：
+        *  他其实就和观察者类似，里面用HashMap来存储，用handler来切换线程
+        *
+        *  =================全局广播的分类=======================
+        *  1，黏性广播，在发送后注册的广播还能接受到消息
+        *  （已经不建议使用，因为不安全，可以用别的方式来获取状态）
+        *  需要权限
+        *  <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+        *  Context.sendStickyBroadcast(Intent)
+        *  也可以移除黏性广播removeStickyBroadcast(Intent intent)
+        *  2.有序广播，，通过Context的sendOrderedBroadcast接口发送
+        *  广播接受者通过注册顺序一个个处理广播，
         */
+//        new Context().sendOrderedBroadcast();
+
     }
     //endregion
 
