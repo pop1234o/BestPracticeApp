@@ -3,6 +3,8 @@ package com.liyafeng.concurrent;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.liyafeng.lock.Main;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,6 +17,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Main.main(null);
     }
 
     public void thread(){

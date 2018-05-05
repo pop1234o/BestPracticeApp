@@ -494,6 +494,26 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 //        }
 
     }
+
+
+    /**
+     * 反射修改常量?
+     * */
+    public void a1_17(){
+        /*
+        * 注意需要去除final
+        */
+//        //获取Bean类的INT_VALUE字段
+//        Field field = Bean.class.getField("INT_VALUE");
+//        //将字段的访问权限设为true：即去除private修饰符的影响
+//        field.setAccessible(true);
+//    /*去除final修饰符的影响，将字段设为可修改的*/
+//        Field modifiersField = Field.class.getDeclaredField("modifiers");
+//        modifiersField.setAccessible(true);
+//        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+//        //把字段值设为200
+//        field.set(null, 200);
+    }
     //endregion
 
     //region Java线程
@@ -1584,6 +1604,26 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 当然我们实现类实现了方法，还想调用接口中的实现方法，Interface.super.Foo()
         *
         * 所以在java8中接口中也能有实现的方法了
+        */
+    }
+    //endregion
+    
+    //region Java IO/NIO
+    /**
+     * 说说NIO
+     * http://www.importnew.com/22623.html
+     * https://tech.meituan.com/nio.html
+     *
+     * */
+    public void a10(){
+        /*
+        * Non-Blocking IO
+        * 传统的IO是阻塞式的，我们等待新的连接，等待连接的输入流，都是阻塞的操作
+        * 这个时候线程不能做其他的事情，所以我们传统IO模型都是用线程池来解决
+        * 但是当高并发的时候，多个线程很消耗资源，包括内存分配，线程调度
+        * 而NIO就是非阻塞式的，他提供了选择器，这个是阻塞的，当有数据或者连接到来
+        * 时，会通知当前线程去处理，
+        *
         */
     }
     //endregion

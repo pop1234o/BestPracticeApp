@@ -1,6 +1,7 @@
 package com.liyafeng.practice;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -636,6 +637,25 @@ public class AndroidFramework {
         */
     }
 
+    /**
+     * ViewPager如何设置只初始化当前的Fragment？
+     * https://blog.csdn.net/linglongxin24/article/details/53205878
+     * */
+    public void a3_12(){
+        /*
+        * 1判断当前Fragment是否可见，如果可见才loadData()
+        * 2.或者从低版本v4中拷贝一份，将里面的DEFAULT_OFFSCREEN_PAGES 改为0
+        * 可以通过反射来改变DEFAULT_OFFSCREEN_PAGES的值，但是会不起作用
+        * 因为对于int long String这些基本类型，java在编译的时候会用数值替换掉这个常量
+        * 所以我们修改了常量值，但是代码中的值却已经写死了
+        * http://www.barryzhang.com/archives/188
+        *
+        */
+        Fragment fragment = new Fragment();
+        fragment.setUserVisibleHint(true);
+        boolean userVisibleHint = fragment.getUserVisibleHint();
+
+    }
     //endregion
 
     //region BroadCastReceiver

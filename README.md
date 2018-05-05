@@ -8,6 +8,9 @@
 * SimpleViewPager(模仿support-v4包中ViewPager的实现，里面描述了ViewPager的主要实现原理)
 * CardViewPager(一个卡片式的ViewPager，带缩放效果)
 * SwipeCardLayout（高仿探探的卡片滑动效果，一种非常简单的实现思路）
+* Camera android摄像头的使用和调用系统的照相应用
+* Dialog 各种dialog的显示效果
+* Permission 6.0以上权限动态申请
 
 ### 网络 (Module: NetWork)
 * volley网络框架的原理(包装了HttpURLConnection)

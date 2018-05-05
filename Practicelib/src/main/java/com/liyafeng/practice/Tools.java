@@ -278,4 +278,23 @@ public class Tools {
         context.getResources().getDrawable(R.drawable.git);
     }
     //endregion
+
+    //region systrace
+
+    /**
+     * 如何使用systrace
+     * https://developer.android.google.cn/studio/command-line/systrace（官方介绍）
+     * https://zhuanlan.zhihu.com/p/27331842 （田维术的讲解）
+     * */
+    public void a9(){
+        /*
+        * systrace 在sdk的platform-tools/systrace中
+        * 用来分析app运行的时间信息，方法的耗时
+        * 它是用Python写的，最终生成html的结果
+        *
+        *
+        */
+    }
+    //endregion
+
 }
