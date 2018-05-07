@@ -157,6 +157,43 @@ public class MainActivity extends AppCompatActivity {
      * https://juejin.im/entry/586766331b69e60063d889ea（文章写得很好）
      * Glide借鉴了Picasso的思路，解耦更彻底，但是构成的逻辑更复杂
      * Glide用外观模式将各个模块协调起来。
+     * Glide.with()返回RequestManager
+     * 里面Glide用单例模式，获取RequestManagerRetriever
+     * RequestManagerRetriever.get(Context)获取RequestManager
+     * 这里根据Context类型不同可以绑定生命周期，比如是Activity，
+     * 他activity.getFragmentManager()，来添加一个SupportRequestManagerFragment
+     * 并且将RequestManager和这个Fragment绑定（持有），方便来管理生命周期
+     * ---------------
+     * RequestManager.load(url)来获取了一个RequestBuilder<Drawable>
+     * RequestBuilder.into(imageView)真正开始请求的地方
+     *
+     * 里面先是构建了一个ViewTarget，里面持有了imageView和Drawable对象
+     * 这个类就是负责给imageview设置占位图，显示加载失败的图片的
+     *
+     * //根据Option和Target来构建Request对象，负责请求
+     * buildRequest(target, targetListener, options)
+     * //这里就是发起请求了
+     * requestManager.track(target, request);
+     * TargetTracker持有所有在请求中的imageView对象，然后负责调用他们的生命周期
+     * //执行请求
+     *  requestTracker.runRequest(request);
+     *
+     *  request.begin();SingleRequest的begin方法，
+     *  SingleRequest.onSizeReady->engine.load()真正开始
+     *  Engine负责读取缓存，里面最终用的LruCache来读取缓存
+     *  如果内存中没有，
+     *  engineJob.start(decodeJob); decodeJob中持有diskLruCache
+     *  里面是用了Pool（享元模式）来复用DecodeJob对象
+     * executor.execute(decodeJob);decodeJob是一个Runnable
+     * 会执行run方法-》decodeJob.runWrapped();->runGenerators()
+     * ->currentGenerator.startNext() 这里先从磁盘中读取
+     * DataCacheGenerator.startNext()没有
+     * SourceGenerator.startNext()->ModelLoader.LoadData.fetcher.loadData()
+     * 然后这里有很多类型的DataFetcher,比如HttpUrlFetcher，FileDescriptorLocalUriFetcher
+     * AssetPathFetcher等 这些都是负责从指定位置获取输入流的，比如网络
+     * 里面用的HttpUrlConnection 来请求网络，获取流，通过BitmapFactory.decode来
+     * 解码成bitmap对象，然后返回，存缓存，最终设置到imageview上
+     *
      *
      * @param url
      * @param imageView
