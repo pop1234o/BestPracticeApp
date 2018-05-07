@@ -153,6 +153,11 @@ public class MainActivity extends AppCompatActivity {
      * 4.可以传入Activity或者Fragment，他们onPause的时候可以停止加载，onResume的时候继续加载
      * 缺点：Glide如果要配置占位图等比较麻烦，如果要简单就要配置注解分析器，生成GlideApp代码
      *
+     * ==============================glide源码分析========================
+     * https://juejin.im/entry/586766331b69e60063d889ea（文章写得很好）
+     * Glide借鉴了Picasso的思路，解耦更彻底，但是构成的逻辑更复杂
+     * Glide用外观模式将各个模块协调起来。
+     *
      * @param url
      * @param imageView
      */
