@@ -11,6 +11,9 @@ public class N_Unknow_SumK {
      * <p>
      * 给定 n 个不同的正整数，整数 k（k < = n）以及一个目标数字。在这 n 个数里面找出 k 个数，使得这 k 个数的和等于目标数字，写一个函数实现找到不同的方案的数量。
      * <p>
+     * =========相同题目============
+     * 一个无序，不重复数组，输出N个元素，使得N个元素的和相加为M，给出时间复杂度、空间复杂度
+     * =====================
      * 格式：
      * <p>
      * 输入第一行输入一个整数数组，第二行输入一个整数 k ，第三行输入一个整数 target最后输出使得数组中不同的 k 个数的和为 target 的种类。
@@ -38,7 +41,7 @@ public class N_Unknow_SumK {
         int[] array = {1, 2, 3, 4};
         int k = 2;
         int target = 5;
-        int i = kSum(array, k, target);
+        int i = Solution.kSum(array, k, target);
         System.out.println(i);
     }
 
@@ -76,7 +79,7 @@ public class N_Unknow_SumK {
     }
 
 
-    public class Solution {
+    public static class Solution {
         /**
          * 利用二维数组，像纸币面额问题一样，递归关系：dp[ y ][ z ] += dp[ y-1 ][ z-A[x] ] ，dp[ y ][ z ]代表 y 个数之和为 z 的方案个数。
          * <p>
@@ -87,7 +90,7 @@ public class N_Unknow_SumK {
          * @param target: a integer
          * @return an integer
          */
-        public int kSum(int A[], int k, int target) {
+        public static int kSum(int A[], int k, int target) {
             //   T(n, k, target) = O(n*k*target). area(n, k, target) = O(k*target)
             int n = A.length;
             int[][] dp = new int[k + 1][target + 1];

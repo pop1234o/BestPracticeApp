@@ -22,6 +22,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -914,6 +915,32 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 需要告知服务器，你这次上传是从哪个字节开始
         */
     }
+    
+    /**
+     * 手写生产者-消费者模式
+     * */
+    public void a2_23(){
+        /*
+        * 一个方法take()，一个方法put()
+        * 其实就是取元素，没有就阻塞，一个放入元素，然后唤醒阻塞线程。
+        * ArrayList<T> list = new ArrayList();
+        * synchronized take(){
+        *
+        * while(true){
+        *   if(list.size()>0){
+        *       return list.get(0);
+        *   }else(){
+        *       wait();
+        *   }
+        * }
+        * }
+        *
+        * synchronized put(T t){
+        *   list.add(t);
+        *   notifyAll();
+        * }
+        */
+    }
     //endregion
 
     //region Java集合
@@ -1191,6 +1218,26 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         ConcurrentHashMap<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
         concurrentHashMap.put(1,"");
         String s = concurrentHashMap.get(1);
+    }
+
+
+    /**
+     * TreeMap作用？
+     * {@link java.util.TreeMap}
+     * */
+    public void a3_11(){
+        /*
+        * 这个遍历出来是有序的，元素要实现Comparable,或者传入Comparator
+        * 数据结构是左小右大的二叉树。
+        * 遍历就是中序遍历二叉树
+        *
+        */
+        TreeMap<Integer, String> treeMap = new TreeMap<>();
+        treeMap.put(1,"1");
+        String s = treeMap.get(1);
+        Set<Map.Entry<Integer, String>> entries = treeMap.entrySet();
+        Iterator<Map.Entry<Integer, String>> iterator = entries.iterator();
+
     }
     //endregion
 
