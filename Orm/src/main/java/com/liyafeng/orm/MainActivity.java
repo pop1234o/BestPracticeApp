@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
         //一个DaoSession代表一次任务，如果修改了实体类，但是没有修改库，那么再次查询出来的
         //实体就是修改过的，而不是数据库中真正的，所以要newSession才行
         //如果是修改，那么不同的session会有数据不同步的问题，所以我们session是全局单例的
+        //总之newSession肯定能获取到最新的，但是两个session之间就不能读取最新修改的
         daoSession = daoMaster.newSession();
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,9 +1,13 @@
 package com.liyafeng.practice;
 
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.os.Build;
 import android.os.Parcelable;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import java.io.Serializable;
 import java.lang.ref.PhantomReference;
@@ -20,11 +24,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created by liyafeng on 16/11/2017.
@@ -425,9 +432,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * java中的四种引用的区别以及使用场景?
      * https://blog.csdn.net/u011936381/article/details/11709245
      * http://www.infoq.com/cn/articles/cf-java-garbage-references
-     *
-     * */
-    public void a1_16(){
+     */
+    public void a1_16() {
         /*
         * 我们垃圾回收算法，就是当我们申请内存但是不足时，扫描一遍，回收内存
         * 然后判断回收后内存够不够，如果不够，就会申请更多内存，如果达到上限就OOM
@@ -453,7 +459,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         new SoftReference<Integer>(1);
         ReferenceQueue<Integer> queue = new ReferenceQueue<>();
         new PhantomReference<Integer>(1, queue);
-        if( queue.poll()!=null){
+        if (queue.poll() != null) {
 
         }
 
@@ -499,8 +505,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 反射修改常量?
-     * */
-    public void a1_17(){
+     */
+    public void a1_17() {
         /*
         * 注意需要去除final
         */
@@ -857,7 +863,6 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
 
-
     /**
      * AbstractQueuedSynchronizer原理？
      */
@@ -915,11 +920,11 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 需要告知服务器，你这次上传是从哪个字节开始
         */
     }
-    
+
     /**
      * 手写生产者-消费者模式
-     * */
-    public void a2_23(){
+     */
+    public void a2_23() {
         /*
         * 一个方法take()，一个方法put()
         * 其实就是取元素，没有就阻塞，一个放入元素，然后唤醒阻塞线程。
@@ -1120,7 +1125,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         */
         Set<Map.Entry<Object, Object>> entries = new HashMap<>().entrySet();
         Iterator<Map.Entry<Object, Object>> iterator = entries.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Map.Entry<Object, Object> next = iterator.next();
             Object key = next.getKey();
             Object value = next.getValue();
@@ -1194,8 +1199,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * ConcurrentHashMap作用？原理？
      * http://www.infoq.com/cn/articles/ConcurrentHashMap
-     * */
-    public void a3_10(){
+     */
+    public void a3_10() {
         /*
         * HashMap 在多线程中扩容重hash的时候导致死循环，脏读的问题
         * =======================ConcurrentHashMap======================
@@ -1216,7 +1221,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         */
         new HashMap<>();
         ConcurrentHashMap<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
-        concurrentHashMap.put(1,"");
+        concurrentHashMap.put(1, "");
         String s = concurrentHashMap.get(1);
     }
 
@@ -1224,8 +1229,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * TreeMap作用？
      * {@link java.util.TreeMap}
-     * */
-    public void a3_11(){
+     */
+    public void a3_11() {
         /*
         * 这个遍历出来是有序的，元素要实现Comparable,或者传入Comparator
         * 数据结构是左小右大的二叉树。
@@ -1233,7 +1238,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         *
         */
         TreeMap<Integer, String> treeMap = new TreeMap<>();
-        treeMap.put(1,"1");
+        treeMap.put(1, "1");
         String s = treeMap.get(1);
         Set<Map.Entry<Integer, String>> entries = treeMap.entrySet();
         Iterator<Map.Entry<Integer, String>> iterator = entries.iterator();
@@ -1340,7 +1345,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * 什么是WebSocket?
      * 如何在Android中使用WebSocket?
-     *
+     * <p>
      * https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001472780997905c8f293615c5a42eab058b6dc29936a5c000
      */
     public void a7_4() {
@@ -1381,11 +1386,11 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         *
         */
     }
-    
+
     /**
      * 从网络加载一个10M的图片，说下注意事项?
-     * */
-    public void a7_5(){
+     */
+    public void a7_5() {
         /*
         * 使用断点下载，先存储到磁盘中，然后通过inSampleSize来进行合理的缩放
         * 再加载到内存中
@@ -1394,8 +1399,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * TCP与UDP的区别?
-     * */
-    public void a7_6(){
+     */
+    public void a7_6() {
         /*
         * TCP：
         * 1面向连接 ，建立连接需要开销较多(时间，系统资源)
@@ -1418,8 +1423,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * SPDY 是什么？
      * https://www.jianshu.com/p/52d86558ca57
      * https://www.zhihu.com/question/34074946
-     * */
-    public void a7_7(){
+     */
+    public void a7_7() {
         /*
         * ===================1.1 和1.0的区别===========================
         * 1：添加了请求头
@@ -1450,7 +1455,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         *
         */
     }
-    
+
     /**
      * HTTP与HTTPS的区别
      * https何实现安全性?/tls层的实现原理?
@@ -1459,9 +1464,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * 对加密算法（如RSA）等是否有了解?
      * http://www.techug.com/post/https-ssl-tls.html
      * https://www.barretlee.com/blog/2015/10/05/how-to-build-a-https-server/
-     *
-     * */
-    public void a7_8(Context context){
+     */
+    public void a7_8(Context context) {
         /*
         * ============HTTP与HTTPS的区别=====================
         * 总的区别就是安全 https并不是修改了http协议，而是http协议加上了tls协议或者ssl协议
@@ -1568,8 +1572,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * jvm内存模型？
      * ---------------------------------------
      * 《深入理解java虚拟机》
-     * */
-    public void a8_2(){
+     */
+    public void a8_2() {
         /*
         * ==============java的安全性如果保证？/说说java安全模型=================
         * 为了保证任何不可靠来源（比如网络）的代码对java原有逻辑进行破坏
@@ -1602,8 +1606,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 说说类加载器？/说说类加载器的双亲委托模型？
-     * */
-    public void a8_3(){
+     */
+    public void a8_3() {
         /*
         *   * ===========说说类加载器的双亲委托模型？====================
         * https://blog.csdn.net/javazejian/article/details/73413292
@@ -1642,8 +1646,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     /**
      * 说说接口中的default method
      * https://blog.idrsolutions.com/2015/01/java-8-default-methods-explained-5-minutes/
-     * */
-    public void a9_1(){
+     */
+    public void a9_1() {
         /*
         * java8的特性之一，当我们在接口中新添加一个方法，那么他的实现类肯定要报错
         * 直到我们的实现类实现了他，那么这种体验不友好，所以就有了default method
@@ -1653,16 +1657,94 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 所以在java8中接口中也能有实现的方法了
         */
     }
+
+    /**
+     * lambda表达式
+     * http://www.runoob.com/java/java8-lambda-expressions.html
+     * http://www.importnew.com/16436.html (很详细的例子)
+     */
+    public void a9_2() {
+        /*
+        * (params) -> expression //只有一个表达式，默认是返回值
+        *  (params) -> statement
+        *  (params) -> { statements }
+        */
+        new Thread(() -> System.out.println("")).start();
+        new View(null).setOnClickListener(v -> {//一个参数不用写圆括号
+            Object tag = v.getTag();
+            System.out.println(tag);
+        });
+        //方法体只有一个表达式，不用return,不用花括号
+        Collections.sort(new ArrayList<Integer>(), (o1, o2) -> o1 - o2);
+        Collections.sort(new ArrayList<Integer>(), (o1, o2) -> {
+            int i = o1 - o2;//有一个以上的表达式，需要花括号和return
+            return i;
+        });
+
+        //数组遍历
+        ArrayList<String> strings = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //foreach简化处理
+            strings.forEach(s -> System.out.println(s));
+            strings.forEach(TextUtils::isEmpty);//自动引用参数，这个参数自动传入里面了
+        }
+
+        //断言
+        ArrayList<String> list = new ArrayList<>();
+        filter(list, str -> str.length() > 0);
+        filter(list, str -> str.startsWith("j"));
+
+
+
+    }
+
+    private void filter(ArrayList<String> list, Predicate<String> condition) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            list.forEach(s -> {//过滤打印
+                if (condition.test(s)) System.out.println(s);
+            });
+
+            //流式处理,过滤操作，filter后是一个新的列表
+            list.stream().filter(condition).forEach(System.out::print);
+
+            //重新定义一个Predicate
+            list.stream().filter(s->s.length()>1).forEach(System.out::print);
+
+            //两个Predicate合并
+            Predicate<String> stringPredicate = s -> s.length() > 1;
+            list.stream().filter(stringPredicate.and(condition)).forEach(String::toCharArray);
+
+            //map操作，使得数据流都经过Function处理
+            list.stream().map(s -> s = s + "1").forEach(System.out::print);
+
+            //reduce操作，减少/合并操作 ,将所有的string都相加并返回
+            //每个元素都合并，合并后和其余的元素操作
+            String s3 = list.stream().map(s -> s = s + "1").reduce((s1, s2) -> s1 + s2).get();
+            System.out.println(s3);
+
+            //返回过滤后的集合
+            List<String> collect = list.stream().filter(s -> s.length() > 2).collect(Collectors.toList());
+            collect.forEach(System.out::print);
+
+            //Collectors 是将流中的元素经过处理移动到另一个对象中，
+            String s1 = list.stream().map(s -> s + "1").collect(Collectors.joining(","));
+
+        }
+
+    }
+
+
     //endregion
-    
+
     //region Java IO/NIO
+
     /**
      * 说说NIO
      * http://www.importnew.com/22623.html
      * https://tech.meituan.com/nio.html
-     *
-     * */
-    public void a10(){
+     */
+    public void a10() {
         /*
         * Non-Blocking IO
         * 传统的IO是阻塞式的，我们等待新的连接，等待连接的输入流，都是阻塞的操作
