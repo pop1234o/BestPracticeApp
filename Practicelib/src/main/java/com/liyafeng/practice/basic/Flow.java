@@ -241,4 +241,29 @@ public class Flow {
      */
     void camareFlow() {
     }
+
+
+    /**
+     * WindowAnimator: Failed to dispatch window animation state change.
+     * android.os.DeadObjectException
+     * at android.os.BinderProxy.transactNative(Native Method)
+     * at android.os.BinderProxy.transact(Binder.java:503)
+     * at android.view.IWindow$Stub$Proxy.onAnimationStarted(IWindow.java:520)
+     * at com.android.server.wm.WindowAnimator.updateWindowsLocked(WindowAnimator.java:282)
+     * at com.android.server.wm.WindowAnimator.animateLocked(WindowAnimator.java:678)
+     * at com.android.server.wm.WindowAnimator.access$000(WindowAnimator.java:53)
+     * at com.android.server.wm.WindowAnimator$1.doFrame(WindowAnimator.java:123)
+     * at android.view.Choreographer$CallbackRecord.run(Choreographer.java:856)
+     * at android.view.Choreographer.doCallbacks(Choreographer.java:670)
+     * at android.view.Choreographer.doFrame(Choreographer.java:603)
+     * at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:844)
+     * at android.os.Handler.handleCallback(Handler.java:739)
+     * at android.os.Handler.dispatchMessage(Handler.java:95)
+     * at android.os.Looper.loop(Looper.java:148)
+     * at android.os.HandlerThread.run(HandlerThread.java:61)
+     * at com.android.server.ServiceThread.run(ServiceThread.java:46)
+     */
+    void animatorFlow() {
+
+    }
 }

@@ -141,6 +141,15 @@ public class InterView {
         * 调用restoreState的时候会恢复状态，然后解决方法就是在restore后调用
         * 最后还得通过读源码，理解加载销毁机制，才能理解bug的来源
         *
+        * 主线程更新ui失败问题，
+        * 在一个方法中请求网络，showLoading()，请求，dismissLoading()
+        * 但是在回调中报了一个线程更新UI的错误，WrongThreadException
+        * 回调应该是在主线程啊，但是没多想，加了一个runOnUIThread，
+        * 结果还是报错，后来深入源码发现，必须是创建viewRootImpl的那个
+        * 线程才能更新UI，然后debug一下，原来show的时候是在js回调中
+        * 这是一个js的主线程，所以我们回调会报错，所以我们要将show
+        * 放在我们app的主线程中才行
+        *
         * =============里面使用了哪些框架？为什么使用它？它的原理是什么？=======
         * 事件总线：EventBus
         * 响应式框架 RxJava

@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
         daoMaster = new DaoMaster(openHelper.getWritableDb());
         //一个DaoSession代表一次任务，如果修改了实体类，但是没有修改库，那么再次查询出来的
         //实体就是修改过的，而不是数据库中真正的，所以要newSession才行
+        //如果是修改，那么不同的session会有数据不同步的问题，所以我们session是全局单例的
         daoSession = daoMaster.newSession();
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,23 +49,28 @@ public class MainActivity extends Activity {
         findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doSome1();
+                newSessionSearch();
             }
         });
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doSome2();
+                update();
             }
         });
 
 
+        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                oldSessionSearch();
+            }
+        });
     }
 
-    private void doSome2() {
+    private void update() {
         UserDao userDao = daoSession.getUserDao();
-        Database database = daoSession.getDatabase();
-        database.beginTransaction();
+//        UserDao userDao = daoMaster.newSession().getUserDao();
         List<User> users = userDao.loadAll();
         for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
@@ -73,12 +79,19 @@ public class MainActivity extends Activity {
                 userDao.update(user);
             }
         }
-//        database.setTransactionSuccessful();
-        database.endTransaction();
     }
 
-    private void doSome1() {
+    private void newSessionSearch() {
         DaoSession daoSession = daoMaster.newSession();
+        UserDao userDao = daoSession.getUserDao();
+        List<User> users = userDao.loadAll();
+        for (User u : users) {
+            Log.i("test", "onCreate: " + u.toString());
+        }
+    }
+    private void oldSessionSearch() {
+//        daoSession.clear();//如果要获取最新的要调用这个方法，这里有个hashmap<WeakReference>
+        //里面缓存的数据，所以我们取出来是内存的
         UserDao userDao = daoSession.getUserDao();
         List<User> users = userDao.loadAll();
         for (User u : users) {
@@ -97,7 +110,6 @@ public class MainActivity extends Activity {
         user.setDate(new Date(System.currentTimeMillis()));
 //        userDao.insert(user);
         userDao.insertOrReplace(user);
-
 
     }
 }
