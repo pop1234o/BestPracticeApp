@@ -1877,4 +1877,17 @@ public class AndroidFramework {
         */
     }
     //endregion
+
+
+    //region Android9.0
+    /**
+     * 最新的JetPack使用
+     * https://developer.android.google.cn/jetpack/docs/
+     * */
+    public void a16(){
+        /*
+        *
+        */
+    }
+    //endregion
 }
