@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.IntSummaryStatistics;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1729,6 +1730,18 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
             //Collectors 是将流中的元素经过处理移动到另一个对象中，
             String s1 = list.stream().map(s -> s + "1").collect(Collectors.joining(","));
+
+
+            //distinct 去重 ，去除流中重复的数据
+            List<String> strings = list.stream().distinct().collect(Collectors.toList());
+
+            //::是只有一个参数，返回值，所以默认能识别
+            //将string流转为int流
+            IntSummaryStatistics statistics = list.stream().mapToInt(Integer::parseInt).summaryStatistics();
+            double average = statistics.getAverage();
+            int max = statistics.getMax();
+
+
 
         }
 
