@@ -1080,6 +1080,12 @@ public class AndroidFramework {
         * 调用他的cancel方法，里面调用的futureTask，的cancel方法，因为futureTask.get()方法阻塞，
         * 等待call执行完会将他唤醒，那么现在直接调用interrupt方法将线程中断阻塞。
         *
+        * ===================AsyncTask在执行多个任务时是串行还是并行？==================
+        * 模式是串行的，利用了ArrayDeque<Runnable> 来存储任务队列，一个任务的run方法
+        * 里面是静态的线程池，handler
+        * new 一个AsyncTask只能执行一次，因为他代表一个任务对象，就算你new多个同时执行
+        * 他还是串行执行的。因为里面的线程池是静态的，多个task对象共用一个线程池
+        *
         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
             new AsyncTask<Integer, Double, String>() {
