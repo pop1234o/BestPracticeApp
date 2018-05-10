@@ -60,6 +60,9 @@
 * 最新官方的 Android-Architecture-Component 架构
 * 阿里组件化框架Arouter的介绍（TODO）
 
+### Kotlin (Module: Kotlin)
+* 介绍了Kotlin的用法，基本语法，优势
+
 ### 自动化构建工具 (Module: BuildTool)
 * Gradle的理解
 

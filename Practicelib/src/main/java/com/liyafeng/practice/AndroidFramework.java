@@ -326,11 +326,11 @@ public class AndroidFramework {
         * 循环调用view.getParent
         */
     }
-    
+
     /**
      * 如何禁止父布局拦截事件？
-     * */
-    public void a1_10(){
+     */
+    public void a1_10() {
         /*
         * new ViewGroup().requestDisallowInterceptTouchEvent(true)
         * 这样父布局就不会调用onInterceptTouchEvent()来判断是否要拦截了
@@ -429,8 +429,8 @@ public class AndroidFramework {
     /**
      * ART 和 Dalvik的区别？
      * https://www.zhihu.com/question/29406156
-     * */
-    public void a2_5(){
+     */
+    public void a2_5() {
         /*
         * 1.使用了AOT(Ahead-of-time)代替了JIT(Just-in-time)
         * 2.提高了gc的效率,改成并行执行gc，以前gc的时候程序都要中断
@@ -473,11 +473,11 @@ public class AndroidFramework {
         * 一般优先回收的是最久没有用过的进程。
         */
     }
-    
+
     /**
      * Android为每个应用程序分配的内存大小是多少？
-     * */
-    public void a2_7(){
+     */
+    public void a2_7() {
         /*
         * 初始内存分配的大小配置在 /system/build.prop
         * dalvik.vm.heapstartsize=8m   初始分配
@@ -654,8 +654,8 @@ public class AndroidFramework {
     /**
      * ViewPager如何设置只初始化当前的Fragment？
      * https://blog.csdn.net/linglongxin24/article/details/53205878
-     * */
-    public void a3_12(){
+     */
+    public void a3_12() {
         /*
         * 1判断当前Fragment是否可见，如果可见才loadData()
         * 2.或者从低版本v4中拷贝一份，将里面的DEFAULT_OFFSCREEN_PAGES 改为0
@@ -703,7 +703,7 @@ public class AndroidFramework {
     /**
      * 本地广播和全局广播的差别?
      * \https://developer.android.google.cn/reference/android/support/v4/content/LocalBroadcastManager
-     *
+     * <p>
      * http://www.cnblogs.com/trinea/archive/2012/11/09/2763182.html（广播详细介绍）
      */
     public void a4_2() {
@@ -1448,7 +1448,7 @@ public class AndroidFramework {
         */
 
         //缓存总长度最大为30的字符串
-        LruCache<Long, String> lruCache = new LruCache<Long, String>(30){
+        LruCache<Long, String> lruCache = new LruCache<Long, String>(30) {
             @Override
             protected int sizeOf(Long key, String value) {
                 return value.length();
@@ -1537,20 +1537,20 @@ public class AndroidFramework {
 
     }
 
-    
+
     /**
      * 系统启动流程是什么？（提示：Zygote进程 –> SystemServer进程 –> 各种系统服务 –> 应用进程）
-     * */
-    public void a8_23(){
+     */
+    public void a8_23() {
         /*
         * 
         */
     }
-    
+
     /**
      * 大体说清一个应用程序安装到手机上时发生了什么?/apk安装流程
-     * */
-    public void a8_24(){
+     */
+    public void a8_24() {
         /*
         *
         */
@@ -1774,8 +1774,8 @@ public class AndroidFramework {
     /**
      * 什么是hook？
      * 什么是插桩?
-     * */
-    public void a13_2(){
+     */
+    public void a13_2() {
         /*
         * =================hook==============
         * 中文翻译，钩子，其实就是重写某个方法，运行的时候执行的是重写后的方法
@@ -1810,7 +1810,6 @@ public class AndroidFramework {
     }
 
 
-
     //endregion
 
 
@@ -1820,9 +1819,9 @@ public class AndroidFramework {
     /**
      * binder是什么？
      * Linux进程间通讯机制有哪些？Android为什么用binder?
-     *aidl是是什么？原理是什么？
-     * */
-    public void a14(Context context){
+     * aidl是是什么？原理是什么？
+     */
+    public void a14(Context context) {
         /*
         * ==================binder是什么？===============
         * https://github.com/xdtianyu/SourceAnalysis/blob/master/Binder源码分析.md
@@ -1863,13 +1862,14 @@ public class AndroidFramework {
     }
 
     //endregion
-    
+
     //region Android 音视频
+
     /**
      * 说说SurfaceView
      * {@link android.view.SurfaceView}
-     * */
-    public void a15(){
+     */
+    public void a15() {
         /*
         * 他继承自View,有自己专有的Surface对象，在子线程中渲染，可以执行
         * 频繁的绘制操作
@@ -1879,13 +1879,65 @@ public class AndroidFramework {
     //endregion
 
 
-    //region Android9.0
+    //region Android6.0/7.0/8.0/9.0新特性
+
     /**
      * 最新的JetPack使用
      * https://developer.android.google.cn/jetpack/docs/
-     * */
-    public void a16(){
+     */
+    public void a16() {
         /*
+        *
+        */
+    }
+
+    /**
+     * android 9.0新特性
+     * https://developer.android.google.cn/preview/features
+     * */
+    public void a16_0(){
+        /*
+        * 1.支持 Wi-Fi Round-Trip-Time (RTT)协议，从而支持室内定位
+        * 2.全新的 DisplayCutout 类支持刘海屏
+        * 3.新的旋转模式，为了防止误旋转，当旋转的时候，用户可以选择系统栏
+        * 上的旋转按钮来进行旋转，而不是自动旋转
+        *
+        *
+        */
+    }
+
+    /**
+     * 说说android8.0新特性(o-奥利奥)
+     * https://developer.android.google.cn/about/versions/oreo/android-8.0
+     */
+    public void a16_1() {
+        /*
+        * 1.添加了画中画模式，picture in picture
+        * android:supportsPictureInPicture="true"来使得页面支持画中画
+        * 通过Activity.enterPictureInPictureMode(PictureInPictureParams args) 开启画中画页面
+        * arg接收配置参数
+        * 2.可下载的字体，support包中提供一个下载字体的框架，我们只需要配置好即可从
+        * 网络下载字体，从而减少apk的体积
+        * 3.多屏显示支持，我们可以指定页面显示在哪个屏幕上
+        * 4.使用 SYSTEM_ALERT_WINDOW 权限的应用 无法在其他应用上弹窗
+        * 除非是有 TYPE_APPLICATION_OVERLAY 的新window类型
+        * 5.权限，8.0前，如果我们请求一个权限，那么权限组中其他注册的权限也一同授予
+        * 8.0后则不会，会等到下次使用到组中其他权限的时候才去请求，只不过不会给用户提示
+        *
+        */
+    }
+
+    /**
+     * 说说android7.0新特性  (n-牛轧糖)
+     * https://developer.android.google.cn/about/versions/nougat/android-7.0
+     * */
+    public void a16_2(){
+        /*
+        * 1.多窗口支持
+        * 2.改进的低耗电模式，6.0中是当手机静止的时候延迟app的cpu使用和网络使用
+        * 现在是在运动的情况下也会有限制
+        * 3.改进的SurfaceView，SurfaceView 类可减少屏幕合成对电池的消耗，因为它是在专用硬件中合成，
+        * 与应用窗口内容分隔开。因此，它产生的中间副本少于 TextureView。
         *
         */
     }
