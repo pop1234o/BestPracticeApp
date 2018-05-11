@@ -9,11 +9,17 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
+import io.reactivex.internal.operators.observable.ObservableJust;
+import io.reactivex.internal.operators.observable.ObservableZip;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -40,8 +46,8 @@ import io.reactivex.schedulers.Schedulers;
  * 但是用Rxjava就可以消除这种，将线程操作或者网络请求放到rxjava中的子线程
  * 然后返回直接return，不用回调，然后我们切换到主线程做更新UI的操作
  * 这样就省去了回调，和handler切换线程。代码就会清晰很多。
- *
- *
+ * <p>
+ * <p>
  * ==============================================
  * 扔物线 朱凯写的rxjava详解
  * http://gank.io/post/560e15be2dca930e00da1083#toc_8
@@ -49,13 +55,96 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RxJavaSample {
 
+
+    /**
+     * https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0 (2.0详细用法)
+     *
+     */
     public RxJavaSample() {
 
         do1();
         do2();
         do3();
 
+        observable();
 
+    }
+
+    private void observable() {
+        ObservableJust.just("").map(new Function<String, Integer>() {
+            @Override
+            public Integer apply(String s) throws Exception {
+                return null;
+            }
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+
+                    }
+                });
+
+//        ObservableZip.zip()
+
+        io.reactivex.Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+               //这里是被观察者
+                e.onNext("1");
+                e.onNext("2");
+                if(System.currentTimeMillis()>0){
+                    //只能调用一次，而且下面的语句不再被接收了
+                    e.onError(new NullPointerException());
+                }
+                e.onComplete();
+                //不会执行了
+                e.onNext(":");
+            }
+        }).subscribe(new Observer<String>() {
+            private Disposable d;
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+                this.d = d;
+            }
+
+            @Override
+            public void onNext(String s) {
+
+                if("compelete".equals(s)){
+                    d.dispose();//中断事件流
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
+        io.reactivex.Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                e.onNext(1);
+                e.onNext(1);
+                e.onNext(1);
+                e.onComplete();
+                e.onNext(1);
+            }
+        }).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                //这里只接受onNext中的事件，onComplete后的事件不会接收到
+            }
+        });
     }
 
     private void do3() {
@@ -98,8 +187,8 @@ public class RxJavaSample {
 
     }
 
-    private void do4(){
-        Flowable.range(1,10).flatMap(new Function<Integer, Publisher<?>>() {
+    private void do4() {
+        Flowable.range(1, 10).flatMap(new Function<Integer, Publisher<?>>() {
             @Override
             public Publisher<?> apply(Integer integer) throws Exception {
                 return null;
