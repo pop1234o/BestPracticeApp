@@ -1,9 +1,13 @@
 package com.liyafeng.practice;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Adapter;
@@ -18,6 +22,18 @@ import java.lang.reflect.Method;
 
 public class Util {
 
+
+    public static void refresh(){
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            final Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//            final Uri contentUri = Uri.fromFile(outputFile);
+//            scanIntent.setData(contentUri);
+//            sendBroadcast(scanIntent);
+//        } else {
+//            final Intent intent = new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory()));
+//            sendBroadcast(intent);
+//        }
+    }
     /**
      * 获取状态栏高度
      * @param context
