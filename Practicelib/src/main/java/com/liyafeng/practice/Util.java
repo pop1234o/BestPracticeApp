@@ -8,6 +8,7 @@ import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Adapter;
@@ -24,6 +25,8 @@ public class Util {
 
 
     public static void refresh(){
+//        MediaStore.Images.Media.insertImage(getContentResolver(), data.uri, "title", "description");
+        //这个保存在sd卡的Picture文件夹中
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            final Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 //            final Uri contentUri = Uri.fromFile(outputFile);
