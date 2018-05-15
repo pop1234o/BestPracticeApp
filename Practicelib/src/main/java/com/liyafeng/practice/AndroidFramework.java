@@ -11,6 +11,8 @@ import android.util.LruCache;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.liyafeng.practice.basic.Animal;
+
 import java.io.File;
 
 public class AndroidFramework {
@@ -1560,6 +1562,29 @@ public class AndroidFramework {
         /*
         *
         */
+    }
+
+    /**
+     * 说说android枚举？为什么说它占用内存
+     * */
+    public void a8_25(){
+        /*
+        * android中不建议使用枚举，因为他占用内存，应该使用@XXXDef注解来代替
+        * ==============为什么说它占用内存======================
+        * 我们定义一个枚举
+        * public enum Animal{DOG ,CAT}
+        * 经过javac编译，然后javap反编译，看结果
+        * 看到Animal extends java.lang.Enum<Animal>
+        *  {
+        *   public static final Animal CAT;
+        *   public static final Animal DOG;
+        *   ...
+        *  }
+        * 所以一个枚举的元素实际上就是一个类
+        * 所以一个类占用的空间肯定比int占用的空间大的多
+        *
+        */
+        Animal cat = Animal.CAT;
     }
     //endregion
 

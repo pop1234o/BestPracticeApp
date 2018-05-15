@@ -9,6 +9,9 @@ import android.content.Context;
 public class AndroidFrame {
 
 
+    //region 网络请求框架
+    //region volley
+
     /**
      * 谈谈对Volley的理解?
      */
@@ -52,28 +55,8 @@ public class AndroidFrame {
         */
     }
 
-    /**
-     * 图片库对比?
-     * 图片库的源码分析?
-     * 图片框架缓存实现？
-     */
-    public void a2() {
-        /*
-        * ===========图片库对比?===============
-        * Picasso  square开发，使用双缓存，体积小，使用简单，但是不能加载gif
-        * Glide  谷歌员工根据Picasso改进，功能强大，能加载gif，根据imageview大小进行缓存图片,
-        *        但是需要注解处理器，自动生成代码GlideApp才能简洁配置占位图，错误图
-        * Fresco Facebook开发，功能最强大，加载gif ,webp，将图片存在native堆中，减少OOM
-        *       体积最大（2M），要使用DraweeView，原生不支持ImageView
-        * ===============图片库的源码分析?======================
-        * 都是使用双缓存，先读缓存，没有从网络加载（或者本地），然后写缓存
-        *  分发主线程，渲染到ImageView上
-        * =============图片框架缓存实现？========================
-        * 都是用LruCache，DiskLruCache
-        * Picasso用的http的缓存机制（OKHttp默认实现），不是自己做缓存？？？
-        */
-    }
-
+    //endregion
+    //region okhttp
 
     /**
      * 网络框架对比?
@@ -112,8 +95,8 @@ public class AndroidFrame {
      * ===============OkHttp专题================
      * 说说OkHttp源码？
      * okhttp如何处理网络缓存的？
-     * */
-    public void a4(){
+     */
+    public void a4() {
         /*
         * 主要是使用链式的拦截器，处理请求和响应，然后用Socket来处理请求
         * ================okhttp如何处理网络缓存的？=============
@@ -125,4 +108,48 @@ public class AndroidFrame {
         * 然后请求，如果没有修改，那么服务器直接返回304
         */
     }
+    //endregion
+    
+    //region retrofit
+    /**
+     * 说说retrofit原理
+     * */
+    public void a5(){
+        /*
+        *
+        */
+    }
+    //endregion
+
+
+    //endregion
+
+
+    //region 图片加载框架
+
+    /**
+     * 图片库对比?
+     * 图片库的源码分析?
+     * 图片框架缓存实现？
+     */
+    public void a2() {
+        /*
+        * ===========图片库对比?===============
+        * Picasso  square开发，使用双缓存，体积小，使用简单，但是不能加载gif
+        * Glide  谷歌员工根据Picasso改进，功能强大，能加载gif，根据imageview大小进行缓存图片,
+        *        但是需要注解处理器，自动生成代码GlideApp才能简洁配置占位图，错误图
+        * Fresco Facebook开发，功能最强大，加载gif ,webp，将图片存在native堆中，减少OOM
+        *       体积最大（2M），要使用DraweeView，原生不支持ImageView
+        * ===============图片库的源码分析?======================
+        * 都是使用双缓存，先读缓存，没有从网络加载（或者本地），然后写缓存
+        *  分发主线程，渲染到ImageView上
+        * =============图片框架缓存实现？========================
+        * 都是用LruCache，DiskLruCache
+        * Picasso用的http的缓存机制（OKHttp默认实现），不是自己做缓存？？？
+        */
+    }
+
+    //endregion
+
+
 }
