@@ -111,6 +111,23 @@ public class Java {
     }
 
     /**
+     * 说说Object类中都有哪些方法？
+     * {@link java.lang.Object}
+     */
+    public void a1_1_1() {
+        /*
+        * hashcode equals
+        * wait notify notifyAll
+        * clone
+        * finalize toString
+        *
+        */
+        new StringBuffer().append(1);
+    }
+
+
+
+    /**
      * 说说Java的三大特性？如何理解多态？
      * http://www.runoob.com/java/java-polymorphism.html
      */
@@ -522,6 +539,36 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 //        //把字段值设为200
 //        field.set(null, 200);
     }
+
+
+    /**
+     * 枚举里可以有方法吗？如何使用？
+     */
+    public void a1_18(){
+        /*
+        * 可以有方法
+        *
+        * */
+    }
+
+
+
+    /**
+     * 3按位或4等于多少？
+     */
+    public void a1_19(){
+        /*
+        * 0011 | 0100
+        * 0111 = 7
+        * 2^2+2^1+2^0= 4+2+1=7
+        *
+        * 哪位有1就2^n相加
+        *
+        * */
+    }
+
+
+
     //endregion
 
     //region Java线程
@@ -1243,6 +1290,18 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         String s = treeMap.get(1);
         Set<Map.Entry<Integer, String>> entries = treeMap.entrySet();
         Iterator<Map.Entry<Integer, String>> iterator = entries.iterator();
+
+    }
+
+    /**
+     * ArrayList和LinkedList区别？使用场景？
+     */
+    public void a3_12() {
+        /*
+        * 内部数据结构不同，一个数组实现一个链表实现
+        * 一个适合读（比如取第3个元素），一个适合添加删除（添加删除频繁的用LinkedList）
+        *
+        */
 
     }
     //endregion

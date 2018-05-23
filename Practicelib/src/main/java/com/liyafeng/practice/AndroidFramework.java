@@ -325,7 +325,7 @@ public class AndroidFramework {
      */
     public void a1_9() {
         /*
-        * 循环调用view.getParent
+        * 循环调用view.getParent,直到parent是ViewRootImpl
         */
     }
 
@@ -394,17 +394,6 @@ public class AndroidFramework {
         */
     }
 
-    /**
-     * Android Dalvik虚拟机和JVM的区别？
-     */
-    public void a2_3() {
-        /*
-        * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
-        * 他是.class文件的压缩，这样占用的内存更少
-        * 2.dvm是基于寄存器的，而jvm是基于栈的
-        * http://rednaxelafx.iteye.com/blog/492667
-        */
-    }
 
     /**
      * Android的类加载器？
@@ -425,6 +414,19 @@ public class AndroidFramework {
         * 首先遍历Element[]，依次调用element.findClass(name)
         * 里面调用了DexFile.loadClassBinaryName(),里面最终还是调用native方法
         *
+        */
+    }
+
+
+    /**
+     * Android Dalvik虚拟机和JVM的区别？
+     */
+    public void a2_3() {
+        /*
+        * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
+        * 他是.class文件的压缩，这样占用的内存更少
+        * 2.dvm是基于寄存器的，而jvm是基于栈的
+        * http://rednaxelafx.iteye.com/blog/492667
         */
     }
 
@@ -789,6 +791,7 @@ public class AndroidFramework {
     //endregion
 
 
+
     //endregion
 
 
@@ -815,6 +818,7 @@ public class AndroidFramework {
 
     /**
      * looper架构?
+     * {@link }
      */
     public void a8_1() {
         /*
@@ -1249,7 +1253,9 @@ public class AndroidFramework {
 
     /**
      * Android中存储数据的几种方式？
-     * SP是进程同步的吗?有什么方法做到同步？
+     * SharedPreference中apply和commit的区别？
+     * SP（SharedPreference）是进程同步的吗?有什么方法做到同步？
+     * 使用共享文件进行线程间通讯如何保证同步？{@link}
      * https://developer.android.google.cn/guide/topics/data/data-storage.html
      */
     public void a8_11() {
@@ -1263,9 +1269,16 @@ public class AndroidFramework {
         * ContentProvider
         *
         * FileProvider共享文件 https://developer.android.google.cn/training/secure-file-sharing/index.html
+        * ===============SharedPreference中apply和commit的区别？================
+        * apply是异步的，commit是同步的
         *
-        * =================SP是进程同步的吗?有什么方法做到同步？============================
+        * =================SharedPreference是进程同步的吗?有什么方法做到同步？============================
         * https://www.jianshu.com/p/875d13458538 使用ContentProvider代替
+        *
+        * ===================使用共享文件进行线程间通讯如何保证同步？========================
+        * 使用FileProvider
+        *
+        *
         *
         */
 
@@ -1696,7 +1709,7 @@ public class AndroidFramework {
     }
     //endregion
 
-    //region Android优化
+    //region Android性能优化
 
 
     /**
@@ -1721,14 +1734,16 @@ public class AndroidFramework {
     }
 
     /**
-     * Android布局优化方案？
+     * Android网络优化方案？
      */
     public void a12_1() {
         /*
-        * 少嵌套，
-        * 可以使用ConstraintLayout，来实现扁平布局
-        * 避免overdraw，就是说背景尽量少重叠
-        * 用Android 系统开发者选项中的检测布局边界，来确定布局是否重叠度过高
+        * 目的是减少传输时长
+        * 1.ip直连
+        * 2.﻿实现SPDY协议（http2.0），减少tcp握手次数，
+        * 3.域名收敛，将请求集中在几个域名，提高长连接的复用率
+        *
+        *
         */
     }
 
@@ -1747,6 +1762,50 @@ public class AndroidFramework {
         * ------------------降低内存使用---------------------
         */
     }
+
+    /**
+     * 说说CPU优化？（如何使程序更流畅）
+     */
+    public void a12_3(){
+        /*
+        * 我们用Android Monitor可以捕获cpu执行的时间耗时（精确到方法）
+        * 找出耗时的那个方法，加以优化
+        *
+        * 当然我们可以用sdk中的SysTrace工具来检测，这样更灵活，我们可以指定它
+        * 来统计某个方法的耗时，只需要在代码中添加
+        *  Trace.beginSection("lll");
+        *  Trace.endSection();
+        *
+        * 我们可以通过修改数据结构和算法来提升计算效率，减少cpu占用时间，从而减少耗电
+        * 比如我们用散列表代替数组存储数据，或者用二叉树代替链表，提升查找效率
+        * 比如用SparseArray代替Map，从而减少装箱拆箱所申请的内存，减少gc次数
+        *
+        * */
+    }
+
+
+    /**
+     * 说说CPU优化？（如何使程序更流畅）
+     */
+    public void a12_3(){
+        /*
+        * 我们用Android Monitor可以捕获cpu执行的时间耗时（精确到方法）
+        * 找出耗时的那个方法，加以优化
+        *
+        * 当然我们可以用sdk中的SysTrace工具来检测，这样更灵活，我们可以指定它
+        * 来统计某个方法的耗时，只需要在代码中添加
+        *  Trace.beginSection("lll");
+        *  Trace.endSection();
+        *
+        * 我们可以通过修改数据结构和算法来提升计算效率，减少cpu占用时间，从而减少耗电
+        * 比如我们用散列表代替数组存储数据，或者用二叉树代替链表，提升查找效率
+        * 比如用SparseArray代替Map，从而减少装箱拆箱所申请的内存，减少gc次数
+        *
+        * */
+    }
+
+
+
 
     //endregion
 
@@ -1850,7 +1909,7 @@ public class AndroidFramework {
     /**
      * binder是什么？
      * Linux进程间通讯机制有哪些？Android为什么用binder?
-     * aidl是是什么？原理是什么？
+     * aidl是是什么？如何使用？原理是什么？
      */
     public void a14(Context context) {
         /*
@@ -1908,6 +1967,8 @@ public class AndroidFramework {
         */
     }
     //endregion
+
+
 
 
     //region Android6.0/7.0/8.0/9.0新特性

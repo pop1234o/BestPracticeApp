@@ -1,6 +1,9 @@
 package com.liyafeng.practice;
 
 import android.content.Context;
+import android.os.Trace;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by liyafeng on 16/11/2017.
@@ -294,6 +297,8 @@ public class Tools {
         *
         *
         */
+        Trace.beginSection("lll");
+        Trace.endSection();
     }
     //endregion
 
