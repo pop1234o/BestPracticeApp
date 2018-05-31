@@ -210,6 +210,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * ================================
      * 源码解析：https://www.jianshu.com/p/265c628a0d59
+     *
+     * https://www.fresco-cn.org
+     *
      * 内部网络层用的HttpUrlConnection,当然你可以自己配置成Okhttp
      * 整个fresco结构类似于MVC
      * DraweeView，负责显示加载好的图片，相当于V

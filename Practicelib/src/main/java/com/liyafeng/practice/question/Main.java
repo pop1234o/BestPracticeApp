@@ -24,6 +24,6 @@ public class Main {
      * 响应有可能是缓存，应用拦截器会拦截，网络拦截器不会
      *
      */
-    public static final a1() {
+    public static final a2() {
     }
 }
