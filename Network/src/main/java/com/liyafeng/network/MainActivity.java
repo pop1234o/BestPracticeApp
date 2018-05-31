@@ -34,7 +34,9 @@ import okhttp3.Callback;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import okhttp3.RequestBody;
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -248,7 +250,8 @@ public class MainActivity extends AppCompatActivity {
                 okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
                 okhttp3.Request request = builder.url("http://www.google.com").build();
                 //必须在这定义 //  try-with-resources
-                try (okhttp3.Response response = okHttpClient.newCall(request).execute()) {//  try-with-resources
+                okhttp3.Call call = okHttpClient.newCall(request);
+                try (okhttp3.Response response = call.execute()) {//  try-with-resources
                     //回调形式
 //                    okHttpClient.newCall(request).enqueue(new Callback() {
 //                        @Override
@@ -270,6 +273,16 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
 
+
+//        new okhttp3.Response.Builder()
+//                .request(chain.request())
+//                .protocol(Protocol.HTTP_1_1)
+//                .code(504)
+//                .message("Unsatisfiable Request (only-if-cached)")
+//                .body(Util.EMPTY_RESPONSE)
+//                .sentRequestAtMillis(-1L)
+//                .receivedResponseAtMillis(System.currentTimeMillis())
+//                .build();
     }
 
 
@@ -319,7 +332,9 @@ public class MainActivity extends AppCompatActivity {
     private void requestRetrofit() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com").addConverterFactory(GsonConverterFactory.create()).build();
         RequestService requestService = retrofit.create(RequestService.class);
+        //这里response的body就直接转换为User对象
         final Call<RequestService.User> call = requestService.getUser("myname", "mypassword");
+
 
         new Thread(new Runnable() {
             @Override
