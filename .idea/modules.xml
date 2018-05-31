@@ -19,6 +19,7 @@
       <module fileurl="file://$PROJECT_DIR$/Video/Video.iml" filepath="$PROJECT_DIR$/Video/Video.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewApp/ViewApp.iml" filepath="$PROJECT_DIR$/ViewApp/ViewApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/hotfixcustomgradleplugin/hotfixcustomgradleplugin.iml" filepath="$PROJECT_DIR$/hotfixcustomgradleplugin/hotfixcustomgradleplugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mynewpro.iml" filepath="$PROJECT_DIR$/mynewpro.iml" />
       <module fileurl="file://$PROJECT_DIR$/mypro.iml" filepath="$PROJECT_DIR$/mypro.iml" />
     </modules>
   </component>

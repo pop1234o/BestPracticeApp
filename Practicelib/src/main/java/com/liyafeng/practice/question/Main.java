@@ -15,7 +15,7 @@ public class Main {
      * 这个异常是在静态代码块初始化的时候（包括静态变量）
      * 抛出了异常导致的，这个异常用可能是空指针或者其他异常
      */
-    public static final a1() {
+    public static void a1() {
     }
 
     /**
@@ -24,6 +24,6 @@ public class Main {
      * 响应有可能是缓存，应用拦截器会拦截，网络拦截器不会
      *
      */
-    public static final a2() {
+    public static void a2() {
     }
 }
