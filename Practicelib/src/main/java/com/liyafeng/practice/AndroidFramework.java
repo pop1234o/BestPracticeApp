@@ -8,8 +8,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.util.LruCache;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.liyafeng.practice.basic.Animal;
 
@@ -1740,7 +1738,7 @@ public class AndroidFramework {
         /*
         * 目的是减少传输时长
         * 1.ip直连
-        * 2.﻿实现SPDY协议（http2.0），减少tcp握手次数，
+        * 2.实现SPDY协议（http2.0），减少tcp握手次数，
         * 3.域名收敛，将请求集中在几个域名，提高长连接的复用率
         *
         *
@@ -1783,26 +1781,6 @@ public class AndroidFramework {
         * */
     }
 
-
-    /**
-     * 说说CPU优化？（如何使程序更流畅）
-     */
-    public void a12_3(){
-        /*
-        * 我们用Android Monitor可以捕获cpu执行的时间耗时（精确到方法）
-        * 找出耗时的那个方法，加以优化
-        *
-        * 当然我们可以用sdk中的SysTrace工具来检测，这样更灵活，我们可以指定它
-        * 来统计某个方法的耗时，只需要在代码中添加
-        *  Trace.beginSection("lll");
-        *  Trace.endSection();
-        *
-        * 我们可以通过修改数据结构和算法来提升计算效率，减少cpu占用时间，从而减少耗电
-        * 比如我们用散列表代替数组存储数据，或者用二叉树代替链表，提升查找效率
-        * 比如用SparseArray代替Map，从而减少装箱拆箱所申请的内存，减少gc次数
-        *
-        * */
-    }
 
 
 
