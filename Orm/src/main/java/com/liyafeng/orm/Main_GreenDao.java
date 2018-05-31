@@ -10,7 +10,7 @@ public class Main_GreenDao {
      * @param args 我们在gradle添加 编译插件
      *             然后添加version声明，这个会自动生成代码中体现
      *             然后定义一个Bean，然后加上@Entity注解
-     *             build-》make project，这样就在build-》generated-》source-》greendao中
+     *             build-》make project，这样就在build--》generated-》source-》greendao中
      *             生成DaoMaster，DaoSession，XXXDao，这几个文件
      *             我们要自己定义 MyOpenHelper继承DaoMaster.OpenHelper ，复写onUpgrade()
      *             然后我们在Application中新建 MyOpenHelper对象，getWritableDb()
