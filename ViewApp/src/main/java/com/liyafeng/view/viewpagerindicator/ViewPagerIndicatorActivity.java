@@ -25,6 +25,7 @@ public class ViewPagerIndicatorActivity extends Activity {
         TabLayout tl_view = (TabLayout) findViewById(R.id.tl_view);
         TabLayout.Tab tab = tl_view.newTab();
         tab.setTag("1");
+        tab.setContentDescription("111");
         tl_view.addTab(tab.setText("Tab 1"));
         tl_view.addTab(tl_view.newTab().setText("Tab 2"));
         tl_view.addTab(tl_view.newTab().setText("Tab 3"));
