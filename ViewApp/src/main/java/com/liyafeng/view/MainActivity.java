@@ -33,6 +33,7 @@ import com.liyafeng.view.slidingmenu.SlidingMenuActivity;
 import com.liyafeng.view.swipecard.SwipeCardActivity;
 import com.liyafeng.view.viewpager.CardPagerActivity;
 import com.liyafeng.view.viewpager.ViewPagerActivity;
+import com.liyafeng.view.viewpagerindicator.ViewPagerIndicatorActivity;
 
 public class MainActivity extends Activity {
     public static String TAG = "test";
@@ -59,6 +60,7 @@ public class MainActivity extends Activity {
             "drawerActivity",
             "camera",
             "systemCamera",
+            "ViewPagerIndicator",
 
     };
 
@@ -84,6 +86,7 @@ public class MainActivity extends Activity {
             DrawerActivity.class,
             CameraActivity.class,
             SystemCameraActivity.class,
+            ViewPagerIndicatorActivity.class,
             };
 
     @Override
