@@ -32,6 +32,7 @@ import com.liyafeng.view.slidingmenu.DrawerActivity;
 import com.liyafeng.view.slidingmenu.SlidingMenuActivity;
 import com.liyafeng.view.swipecard.SwipeCardActivity;
 import com.liyafeng.view.viewpager.CardPagerActivity;
+import com.liyafeng.view.viewpager.RoundViewPagerActivity;
 import com.liyafeng.view.viewpager.ViewPagerActivity;
 import com.liyafeng.view.viewpagerindicator.ViewPagerIndicatorActivity;
 
@@ -61,6 +62,7 @@ public class MainActivity extends Activity {
             "camera",
             "systemCamera",
             "ViewPagerIndicator",
+            "RoundViewPagerActivity",
 
     };
 
@@ -87,6 +89,7 @@ public class MainActivity extends Activity {
             CameraActivity.class,
             SystemCameraActivity.class,
             ViewPagerIndicatorActivity.class,
+            RoundViewPagerActivity.class,
             };
 
     @Override
