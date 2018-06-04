@@ -57,7 +57,8 @@
         <activity android:name=".permission.PermissionActivity" />
         <activity android:name=".camera.SystemCameraActivity" />
         <activity android:name=".viewpagerindicator.ViewPagerIndicatorActivity" />
-        <activity android:name=".viewpager.RoundViewPagerActivity"></activity>
+        <activity android:name=".viewpager.RoundViewPagerActivity" />
+        <activity android:name=".webview.WebViewActivity"></activity>
     </application>
 
 </manifest>
