@@ -2,6 +2,7 @@ package com.liyafeng.view.recycleview;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -28,6 +29,12 @@ public class RecyclerViewActivity extends Activity {
 //        recycer.setLayoutManager(new LinearLayoutManager(this));
 //        recycer.setLayoutManager(new GridLayoutManager(this,3));
 
+
+        //设置item的动画，只有用notifyinsert的时候，才起作用，但是有一个问题，就是在屏幕外面的item不执行
+        //动画，导致向下滑动时，只执行第一个item的动画，剩下添加的item因为在屏幕外，所以没有动画
+        DefaultItemAnimator animator = new DefaultItemAnimator();
+        animator.setAddDuration(100);
+        recycer.setItemAnimator(animator);
         recycer.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         adapter = new RecyclerView.Adapter<ListHolder>() {
             @Override
