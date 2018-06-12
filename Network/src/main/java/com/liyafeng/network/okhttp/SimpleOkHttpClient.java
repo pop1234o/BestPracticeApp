@@ -14,14 +14,13 @@ package com.liyafeng.network.okhttp;
  * Using OkHttp is easy. Its request/response API is designed with fluent builders and immutability. It supports both synchronous blocking calls and async calls with callbacks.
  * <p>
  * OkHttp supports Android 2.3 and above. For Java, the minimum requirement is 1.7.
- *
+ * <p>
  * 支持HTTP2/SPDY黑科技
- socket自动选择最好路线，并支持自动重连
- 拥有自动维护的socket连接池，减少握手次数
- 拥有队列线程池，轻松写并发
- 拥有Interceptors轻松处理请求与响应（比如透明GZIP压缩,LOGGING）
- 基于Headers的缓存策略
-
+ * socket自动选择最好路线，并支持自动重连
+ * 拥有自动维护的socket连接池，减少握手次数
+ * 拥有队列线程池，轻松写并发
+ * 拥有Interceptors轻松处理请求与响应（比如透明GZIP压缩,LOGGING）
+ * 基于Headers的缓存策略
  */
 
 import android.util.Log;
@@ -52,6 +51,14 @@ import java.util.ArrayList;
  * chain.proceed->new nextchain -- interceptor.intercept() + nextchain.proceed->第一个
  *
  *
+ * ===============解决closed的问题==============
+ *  ResponseBody body = response.body();
+ String string = body.string();
+ LogUtil.i("test", "响应===" + string);
+
+ Response response_new = response.newBuilder().body(ResponseBody.create(body.contentType(), string)).build();
+
+ *因为string（）一次流就关闭了，所以只能再创建一个
  *
  */
 
@@ -213,7 +220,7 @@ public class SimpleOkHttpClient {
 
     static class Response {
         public Response(String s) {
-            Log.i("test", "Response: "+s);
+            Log.i("test", "Response: " + s);
         }
     }
 

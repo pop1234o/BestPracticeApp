@@ -51,6 +51,7 @@ public class PointLayout extends RelativeLayout {
     private void init() {
         paint = new Paint();
         paint.setColor(Color.RED);
+        //ViewGroup默认情况下，出于性能考虑，会被设置成WILL_NOT_DROW，这样，ondraw就不会被执行了。
         setWillNotDraw(false);
         path = new Path();
         paint1 = new Paint();

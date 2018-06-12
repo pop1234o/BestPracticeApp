@@ -266,4 +266,26 @@ public class Flow {
     void animatorFlow() {
 
     }
+
+
+    /**
+     * java.lang.IllegalStateException: Can't change tag of fragment NewsFragment{85e9cba #0 id=0x7f080058 news}: was news now flash
+     * at android.support.v4.app.BackStackRecord.doAddOp(BackStackRecord.java:405)
+     * at android.support.v4.app.BackStackRecord.replace(BackStackRecord.java:439)
+     * at com.qusukj.baoguan.ui.activity.MainActivity.showFragment(MainActivity.java:109)
+     * at com.qusukj.baoguan.ui.activity.MainActivity.access$700(MainActivity.java:23)
+     * at com.qusukj.baoguan.ui.activity.MainActivity$1.onClick(MainActivity.java:165)
+     * at android.view.View.performClick(View.java:5647)
+     * at android.view.View$PerformClick.run(View.java:22462)
+     * at android.os.Handler.handleCallback(Handler.java:754)
+     * at android.os.Handler.dispatchMessage(Handler.java:95)
+     * at android.os.Looper.loop(Looper.java:163)
+     * at android.app.ActivityThread.main(ActivityThread.java:6365)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:901)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:791)
+     */
+    void click() {
+
+    }
 }

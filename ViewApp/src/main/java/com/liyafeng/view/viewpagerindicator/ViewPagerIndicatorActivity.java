@@ -16,6 +16,12 @@ import com.liyafeng.view.R;
 
 public class ViewPagerIndicatorActivity extends Activity {
 
+    /**
+     * 原理是Tablayout 是个scrollview，然后里面有个linearlayout，SlidingTabStrip，是用来画下划线的
+     * 里面addtab ,是tabview是真正的一个个tab
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
