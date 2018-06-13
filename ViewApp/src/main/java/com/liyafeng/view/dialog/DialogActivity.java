@@ -2,6 +2,7 @@ package com.liyafeng.view.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
      * Button
      */
     private Button mButton9;
+    private ProgressDialog progress;
 
     /**
      * 一个全屏的dialog，想让dialog像Activity一样
@@ -215,6 +217,27 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             //这个居然变成match_content了
 //            setContentView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_full,null));
             show();
+        }
+    }
+
+
+
+
+    public void showLoading() {
+        if (progress == null) {
+            progress = new ProgressDialog(this);
+            progress.setMessage("Wait while loading...");
+            progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+
+        }
+        progress.show();
+
+    }
+
+    public void hideLoading() {
+
+        if (progress != null) {
+            progress.dismiss();
         }
     }
 }

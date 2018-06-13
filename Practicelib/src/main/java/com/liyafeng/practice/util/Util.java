@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -246,7 +247,7 @@ public class Util {
     /**
      * 大陆号码或香港号码均可
      */
-    public static boolean isPhoneLegal(String str)throws PatternSyntaxException {
+    public static boolean isPhoneLegal(String str) throws PatternSyntaxException {
         return isChinaPhoneLegal(str) || isHKPhoneLegal(str);
     }
 
@@ -269,10 +270,26 @@ public class Util {
     /**
      * 香港手机号码8位数，5|6|8|9开头+7位任意数
      */
-    public static boolean isHKPhoneLegal(String str)throws PatternSyntaxException {
+    public static boolean isHKPhoneLegal(String str) throws PatternSyntaxException {
         String regExp = "^(5|6|8|9)\\d{7}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(str);
         return m.matches();
+    }
+
+
+    public static void dismiss(Context context) {
+//        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+////隐藏软键盘 //
+//        imm.hideSoftInputFromWindow(et_edit.getWindowToken(), 0);
+////显示软键盘
+//        imm.showSoftInputFromInputMethod(tv.getWindowToken(), 0);
+//        //切换软键盘的显示与隐藏
+//        imm.toggleSoftInputFromWindow(tv.getWindowToken(), 0, InputMethodManager.HIDE_NOT_ALWAYS);
+//
+//
+//        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+////隐藏软键盘 //
+//        imm.hideSoftInputFromWindow(context.getWindow().getDecorView().getWindowToken(), 0);
     }
 }

@@ -38,4 +38,50 @@ public class Main {
     public void a3() {
 
     }
+
+
+    /**
+     * android TextView setEms 方法名字
+     * android TextView setEms() 作用是设置textview的字符宽度。但是名字很奇怪。
+     * <p>
+     * <p>
+     * <p>
+     * [java] view plain copy
+     * /**
+     * Makes the TextView exactly this many ems wide
+     *
+     * @attr ref android.R.styleable#TextView_ems
+     * @android.view.RemotableViewMethod public void setEms(int ems) {
+     * mMaxWidth = mMinWidth = ems;
+     * mMaxWidthMode = mMinWidthMode = EMS;
+     * <p>
+     * requestLayout();
+     * invalidate();
+     * }
+     * <p>
+     * <p>
+     * [html]
+     * view plain
+     * copy
+     * An em
+     * is a
+     * unit in
+     * the field
+     * of typography
+     * <p>
+     * <p>
+     * em是一个印刷排版的单位，表示字宽的单位。em字面意思为：
+     * equal M   （和M字符一致的宽度为一个单位）简称em。
+     * <p>
+     * ems是em的复数表达。
+     * <p>
+     * <p>
+     * em 的具体来历？
+     * <p>
+     * http://en.wikipedia.org/wiki/Em_%28typography%29
+     */
+
+    public void a4() {
+
+    }
 }
