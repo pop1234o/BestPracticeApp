@@ -58,7 +58,8 @@
         <activity android:name=".camera.SystemCameraActivity" />
         <activity android:name=".viewpagerindicator.ViewPagerIndicatorActivity" />
         <activity android:name=".viewpager.RoundViewPagerActivity" />
-        <activity android:name=".webview.WebViewActivity"></activity>
+        <activity android:name=".webview.WebViewActivity" />
+        <activity android:name=".photo.PhotoActivity"></activity>
     </application>
 
 </manifest>
