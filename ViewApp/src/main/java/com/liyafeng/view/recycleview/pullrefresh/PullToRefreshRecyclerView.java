@@ -1,4 +1,4 @@
-package com.liyafeng.view.pullrefresh;
+package com.liyafeng.view.recycleview.pullrefresh;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -288,4 +288,24 @@ public class Flow {
     void click() {
 
     }
+
+    /**
+     * 24.406 7774-7774/com.qusukj.baoguan E/XgStat: java.lang.IllegalArgumentException: No Retrofit annotation found. (parameter #1)
+     * for method BaoGuanService.addComment
+     * at retrofit2.ServiceMethod$Builder.methodError(ServiceMethod.java:752)
+     * at retrofit2.ServiceMethod$Builder.methodError(ServiceMethod.java:743)
+     * at retrofit2.ServiceMethod$Builder.parameterError(ServiceMethod.java:761)
+     * at retrofit2.ServiceMethod$Builder.parseParameter(ServiceMethod.java:351)
+     * at retrofit2.ServiceMethod$Builder.build(ServiceMethod.java:204)
+     * at retrofit2.Retrofit.loadServiceMethod(Retrofit.java:170)
+     * at retrofit2.Retrofit$1.invoke(Retrofit.java:147)
+     * at java.lang.reflect.Proxy.invoke(Proxy.java:813)
+     * at $Proxy0.addComment(Unknown Source)
+     * at com.qusukj.baoguan.ui.activity.CommentActivity.commit(CommentActivity.java:101)
+     * at com.qusukj.baoguan.ui.activity.CommentActivity.onClick(CommentActivity.java:80)
+     * at
+     */
+    void retrofit() {
+
+    }
 }
