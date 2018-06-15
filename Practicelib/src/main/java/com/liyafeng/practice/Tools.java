@@ -311,6 +311,8 @@ public class Tools {
      * 去jcenter这个网站输入包名即可
      * <p>
      * https://bintray.com/bintray/jcenter
+     *
+     * http://jcenter.bintray.com/包名
      */
     public void a10() {
 
