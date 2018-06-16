@@ -1,6 +1,7 @@
 package com.liyafeng.orm;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,13 @@ public class MainActivity extends Activity {
      * 但是我们经常需要 将 object 和 表中的行 互转，这就是orm  object relational mapping
      * 所以就诞生的orm框架，他底层用的还是Android自带的数据库类，但是上层做了封装
      * 封装好的东西用起来就是爽，少了很多重复的操作
+     * ==============
+     *
+     * 联合主键设置  https://www.jianshu.com/p/513fb2ba5485
+     * @Entity( indexes = {
+     * @Index(value = "id , userId ", unique = true)
+     * }
+     * )
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +83,7 @@ public class MainActivity extends Activity {
         List<User> users = userDao.loadAll();
         for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
-            if(i==0){
+            if (i == 0) {
                 user.setNumber(345);
                 userDao.update(user);
             }
@@ -90,6 +98,7 @@ public class MainActivity extends Activity {
             Log.i("test", "onCreate: " + u.toString());
         }
     }
+
     private void oldSessionSearch() {
 //        daoSession.clear();//如果要获取最新的要调用这个方法，这里有个hashmap<WeakReference>
         //里面缓存的数据，所以我们取出来是内存的
@@ -113,4 +122,15 @@ public class MainActivity extends Activity {
         userDao.insertOrReplace(user);
 
     }
+
+    public void query() {
+//        Cursor cursor = dao
+//                .queryBuilder()
+//                .where(SupportEntityDao.Properties.UserId.eq(userId))
+//                .buildCursor()
+//                .query();
+
+
+    }
+
 }
