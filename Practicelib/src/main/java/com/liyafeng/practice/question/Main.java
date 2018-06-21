@@ -84,4 +84,14 @@ public class Main {
     public void a4() {
 
     }
+
+    /**
+     * edittext不获取焦点
+     * https://blog.csdn.net/WOSHICAIXIANFENG/article/details/7261718
+     * android:focusable="true"
+     * android:focusableInTouchMode="true"
+     */
+    void a5() {
+
+    }
 }
