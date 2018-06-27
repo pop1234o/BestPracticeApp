@@ -72,5 +72,17 @@ public class Main {
      */
     public static void main(String[] args) {
 
+
     }
+
+    /**
+     * https://www.jianshu.com/p/85913ed97af5
+     * 下载apk后安装apk适配6.0 7.0 8.0
+     *
+     * 8.0安装apk需要权限
+     *  <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+     *  也可以在代码中申请
+     *
+     */
+    public void a1(){}
 }

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/liyafeng/Documents/mynewpro/Kotlin/src/main/assets"/><source path="/Users/liyafeng/Documents/mynewpro/Kotlin/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/liyafeng/Documents/mynewpro/Kotlin/src/debug/assets"/></dataSet></merger>
