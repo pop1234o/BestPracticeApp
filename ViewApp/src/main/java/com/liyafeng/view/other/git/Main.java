@@ -83,11 +83,19 @@ public class Main {
      * git push origin branch_fast:branch_fast
      * //查看所有分支
      * git branch -a
-     *
-     *
+     * <p>
+     * //查看远程分支
+     * git branch -r
+     * <p>
+     * git branch -vv查看当前本地分支关联的远程分支
+     * <p>
      * =================
      * 取消当前分支和远程分支的关联
      * git branch --unset-upstream master
+     * <p>
+     * <p>
+     * git branch --set-upstream origin/master
+     * <p>
      * ==================
      * 创建一个新的本地分支，并关联到远程
      * git checkout -b 分支名
@@ -95,6 +103,15 @@ public class Main {
      * 然后你git push -u origin 远程分支名
      * 这样远程就会创建一个分支，并且与本地分支关联，以后修改代码就直接
      * git push就能自动推送到 origin/分支名 中了。
+     * <p>
+     * ====================
+     * 在git reomote add origin 地址.git 后，添加了远程仓库
+     * 然后需要fetch一下才能获取到远程仓库的信息
+     * git fetch origin ，这样就把远程仓库获取到本地了
+     * 这个时候我们可以本地代码分支关联到远程了
+     * 当前我们可以获取拉取本地没有的远程分支，并且关联
+     *
+     * git checkout -b branch1.1 origin/branch1.1
      *
      *
      *

@@ -1,4 +1,0 @@
-#Thu May 31 19:09:07 CST 2018
-base.0=/Users/liyafeng/Documents/mynewpro/Kotlin/build/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex

@@ -22,7 +22,6 @@ public class PermissionActivity extends AppCompatActivity {
      * 运行时请求权限
      * https://developer.android.google.cn/training/permissions/requesting
      *
-     *
      * @param savedInstanceState
      */
     @Override
@@ -40,7 +39,7 @@ public class PermissionActivity extends AppCompatActivity {
 
                     // 当用户之前点击拒绝后，这个方法返回true，这个时候我们最好弹窗给用户解释我们为什么要这个权限
                     //如果用户拒绝而且勾选了dont ask again，此方法返回false
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,Manifest.permission.READ_CONTACTS)) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity, Manifest.permission.READ_CONTACTS)) {
 
                         // Show an expanation to the user *asynchronously* -- don't block
                         // this thread waiting for the user's response! After the user
@@ -98,5 +97,48 @@ public class PermissionActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+
+    /**
+     * 表 1. 危险权限和权限组。
+     * https://developer.android.google.cn/guide/topics/security/permissions?hl=zh-cn
+     * <p>
+     * 权限组	权限
+     * CALENDAR
+     * READ_CALENDAR
+     * WRITE_CALENDAR
+     * CAMERA
+     * CAMERA
+     * CONTACTS
+     * READ_CONTACTS
+     * WRITE_CONTACTS
+     * GET_ACCOUNTS
+     * LOCATION
+     * ACCESS_FINE_LOCATION
+     * ACCESS_COARSE_LOCATION
+     * MICROPHONE
+     * RECORD_AUDIO
+     * PHONE
+     * READ_PHONE_STATE
+     * CALL_PHONE
+     * READ_CALL_LOG
+     * WRITE_CALL_LOG
+     * ADD_VOICEMAIL
+     * USE_SIP
+     * PROCESS_OUTGOING_CALLS
+     * SENSORS
+     * BODY_SENSORS
+     * SMS
+     * SEND_SMS
+     * RECEIVE_SMS
+     * READ_SMS
+     * RECEIVE_WAP_PUSH
+     * RECEIVE_MMS
+     * STORAGE
+     * READ_EXTERNAL_STORAGE
+     * WRITE_EXTERNAL_STORAGE
+     */
+    public void a1() {
     }
 }

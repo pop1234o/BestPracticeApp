@@ -30,6 +30,14 @@ public class Main {
      * 一个app主体可以用Fragment+viewpager+RadioButton，但是viewpager要加懒加载
      * 也可以Fragment+radioButton，这样适合没有滑动效果的主页框架
      *
+     *
+     * ==============fragment重叠问题=============='
+     * https://www.jianshu.com/p/78ec81b42f92
+     * 就是app在后台被销毁，然后销毁前保存了状态，等下次进来恢复，
+     * 我们设置了hide，但是保存状态没有保存这个值，所有恢复的时候所有fragment都显示出来了
+     * 解决方法就是在oncreate中将所有fragment都隐藏一次，而且要用tag来判断
+     *
+     *
      */
     public static void main(String[] args) {
     }
