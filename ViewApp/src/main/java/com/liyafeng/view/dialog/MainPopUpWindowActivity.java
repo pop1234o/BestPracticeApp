@@ -71,6 +71,9 @@ public class MainPopUpWindowActivity extends AppCompatActivity implements View.O
         popupWindow.setOutsideTouchable(true);
         popupWindow.setTouchable(true);
 
+
+        //这个很重要，如果不设置，那么再次点击按钮就不是消失pop，而是消失又弹出，而且键盘没法弹出
+        popupWindow.setFocusable(true);
 //                popupWindow.setAnimationStyle(R.style.);
 
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#88000000")));
