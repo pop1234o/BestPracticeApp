@@ -328,6 +328,7 @@ public class Util {
     public static boolean isShowSoftInput(Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         boolean isOpen = imm.isActive();
+        return isOpen;
     }
 
     /**
