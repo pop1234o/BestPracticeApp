@@ -17,6 +17,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -342,6 +343,22 @@ public class Util {
                 return (event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
             }
         });
+    }
+
+
+    /**
+     * 保留两位小数
+     * @param v
+     * @return
+     */
+    public static double round2(double v) {
+        BigDecimal bg = new BigDecimal(v);
+        return bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+
+//        String.format("%.2f", f)
+
+//        DecimalFormat df = new DecimalFormat("#.00");
     }
 
 }

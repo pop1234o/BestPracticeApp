@@ -538,6 +538,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 //        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 //        //把字段值设为200
 //        field.set(null, 200);
+        //
+        //如果是方法参数是float类型，那么直接用float.class即可
     }
 
 
