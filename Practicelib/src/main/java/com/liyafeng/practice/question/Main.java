@@ -94,4 +94,27 @@ public class Main {
     void a5() {
 
     }
+
+
+    /**
+     * 上传头像图片过大导致 413错误 Request Entity Too Large
+     * cropPhotoIntent.putExtra("crop", "true");
+     * if(android.os.Build.MODEL.contains("HUAWEI"))
+     * {//华为特殊处理 不然会显示圆
+     * cropPhotoIntent.putExtra("aspectX", 9998);
+     * cropPhotoIntent.putExtra("aspectY", 9999);
+     * }
+     * else
+     * {
+     * cropPhotoIntent.putExtra("aspectX", 1);
+     * cropPhotoIntent.putExtra("aspectY", 1);
+     * }
+     * // outputX outputY 是裁剪图片宽高
+     * cropPhotoIntent.putExtra("outputX", 300);
+     * cropPhotoIntent.putExtra("outputY", 300);
+     *
+     * 直接调用系统剪裁
+     */
+    void a6() {
+    }
 }
