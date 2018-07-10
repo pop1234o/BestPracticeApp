@@ -110,14 +110,50 @@ public class Main {
      * git fetch origin ，这样就把远程仓库获取到本地了
      * 这个时候我们可以本地代码分支关联到远程了
      * 当前我们可以获取拉取本地没有的远程分支，并且关联
-     *
+     * <p>
      * git checkout -b branch1.1 origin/branch1.1
-     *
-     *
      *
      * @param args
      */
     public static void main(String[] args) {
 
+    }
+
+    /**
+     * Command line instructions
+     * <p>
+     * <p>
+     * Git global setup
+     * <p>
+     * git config --global user.name "pop"
+     * git config --global user.email "859405648@qq.com"
+     * <p>
+     * Create a new repository
+     * <p>
+     * git clone http://code.jiaoyinhudong.com/baoguan/Android-InsurView.git
+     * cd Android-InsurView
+     * touch README.md
+     * git add README.md
+     * git commit -m "add README"
+     * git push -u origin master
+     * <p>
+     * Existing folder  存在工程，但是没有关联仓库
+     * <p>
+     * cd existing_folder
+     * git init
+     * git remote add origin http://code.jiaoyinhudong.com/baoguan/Android-InsurView.git
+     * git add .
+     * git commit -m "Initial commit"
+     * git push -u origin master
+     * <p>
+     * Existing Git repository 已经存在了一个仓库
+     * <p>
+     * cd existing_repo
+     * git remote rename origin old-origin
+     * git remote add origin http://code.jiaoyinhudong.com/baoguan/Android-InsurView.git
+     * git push -u origin --all
+     * git push -u origin --tags
+     */
+    void a1() {
     }
 }

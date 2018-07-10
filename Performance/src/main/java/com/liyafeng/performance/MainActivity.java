@@ -1,8 +1,6 @@
 package com.liyafeng.performance;
 
 import android.app.Activity;
-import android.os.AsyncTask;
-import android.os.MemoryFile;
 import android.os.Bundle;
 
 public class MainActivity extends Activity {
@@ -15,7 +13,7 @@ public class MainActivity extends Activity {
      * 4.尽量避免轮询（自旋），可以用观察者模式来解决
      * <p>
      * <p>
-     * =================money 压测=============
+     * =================monkey 压测=============
      * https://developer.android.google.cn/studio/test/monkey.html
      * <p>
      * money有参数， 主要`用来约束包，页面，控制事件数量
@@ -26,12 +24,15 @@ public class MainActivity extends Activity {
      * adb shell monkey -p your.package.name -v 500
      * <p>
      * adb shell monkey -p com.qusukj.baoguan  -v 250000 --pct-trackball 100%
-     *
-     *
+     * <p>
+     * <p>
+     * 停止monkey
+     * adb shell ps|grep monkey返回的第一个数字就是monkey的进程号
+     * 2. adb shell kill [进程号]
+     * <p>
      * ========================anr=================
-     *
+     * <p>
      * http://duanqz.github.io/2015-10-12-ANR-Analysis
-     *
      *
      * @param savedInstanceState
      */
