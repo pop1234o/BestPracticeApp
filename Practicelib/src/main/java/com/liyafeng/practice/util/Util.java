@@ -1,5 +1,7 @@
 package com.liyafeng.practice.util;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -8,6 +10,8 @@ import android.graphics.Bitmap.Config;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -359,6 +364,85 @@ public class Util {
 //        String.format("%.2f", f)
 
 //        DecimalFormat df = new DecimalFormat("#.00");
+    }
+
+
+    /**
+     * 判断新版本要比老的大
+     *
+     * @param newVersion
+     * @return
+     */
+    public static boolean isUpdate(Context context,String newVersion) {
+        try {
+            String currentVersion = getAppVersionName(context);
+            if (TextUtils.isEmpty(newVersion) || TextUtils.isEmpty(currentVersion)) {
+                return false;
+            }
+            if (newVersion.equals(currentVersion)) {
+                return false;
+            }
+
+            String[] split = newVersion.split("[.]");
+            //必须有一个从左起对应位置比老版本大才行
+            String[] split_old = currentVersion.split("[.]");
+
+            for (int i = 0; i < split.length; i++) {
+                String newstr = split[i];
+                if (i < split_old.length) {
+                    String current = split_old[i];
+                    int newNum = Integer.parseInt(newstr);
+                    int currentNum = Integer.parseInt(current);
+                    if (newNum > currentNum) {
+                        return true;//新的大，要更新
+                    } else if (newNum < currentNum) {
+                        return false;//服务端返回的小，不用更新
+                    }
+                } else {
+                    break;
+                }
+            }
+
+            //说明两个 版本交集部分相等,而且现在两个不相等
+            if (newVersion.length() > currentVersion.length()) {//如果新的版本长，需要更新
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;//说明新的版本 短或者等于当前版本，说明比当前版本低
+
+    }
+
+
+
+    public static boolean isAlive(Context context) {
+        ActivityManager am = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE));
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            List<ActivityManager.AppTask> appTasks = am.getAppTasks();//这个返回当前应用的task，
+            for (int i = 0; i < appTasks.size(); i++) {
+                ComponentName baseActivity = appTasks.get(i).getTaskInfo().baseActivity;
+                if (context.getPackageName().equals(baseActivity.getPackageName())) {
+                    Log.i("test", "找到了当前应用" + appTasks.get(i).getTaskInfo().topActivity);
+                    break;
+                }
+//                int baseActivity = appTasks.get(i).getTaskInfo().numActivities;
+            }
+        } else {//这种是返回当前app的task和 launcher的task
+            List<ActivityManager.RunningTaskInfo> runningTasks = am.getRunningTasks(50);
+            for (int i = 0; i < runningTasks.size(); i++) {
+                ActivityManager.RunningTaskInfo runningTaskInfo = runningTasks.get(i);
+                if (runningTaskInfo.topActivity.getPackageName().equals(context.getPackageName())) {
+                    int numActivities = runningTaskInfo.numActivities;
+                    Log.i("test", "当前应用页面" + numActivities);
+
+                    break;
+                }
+            }
+        }
+
+        return false;
     }
 
 }
