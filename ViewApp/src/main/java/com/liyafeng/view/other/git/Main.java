@@ -113,6 +113,12 @@ public class Main {
      * <p>
      * git checkout -b branch1.1 origin/branch1.1
      *
+     * ============当一个版本发行后===========
+     * git checkout master 切换到master分支
+     * git merge [分支名] 将分支合并到当前的分支
+     * git branch -d [分支] 删除本地的分支
+     * git push -d [仓库名] [分支名] 删除远程分支
+     *
      * @param args
      */
     public static void main(String[] args) {
