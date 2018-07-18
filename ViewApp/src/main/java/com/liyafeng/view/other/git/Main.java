@@ -96,8 +96,8 @@ public class Main {
      * <p>
      * git branch --set-upstream origin/master
      * <p>
-     * ==================
-     * 创建一个新的本地分支，并关联到远程
+     * ===========创建一个新的本地分支，并关联到远程=======
+     *
      * git checkout -b 分支名
      * 这样就创建了一个新的分支，并且切换到那个分支，这个分支的代码和你当前分支是一样的
      * 然后你git push -u origin 远程分支名

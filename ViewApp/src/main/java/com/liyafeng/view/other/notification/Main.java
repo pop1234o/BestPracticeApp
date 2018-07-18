@@ -1,4 +1,4 @@
-package com.liyafeng.view.other.notify;
+package com.liyafeng.view.other.notification;
 
 import android.app.Notification;
 import android.app.NotificationManager;

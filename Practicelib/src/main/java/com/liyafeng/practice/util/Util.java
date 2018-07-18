@@ -9,12 +9,14 @@ import android.content.res.Resources;
 import android.graphics.Bitmap.Config;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -445,4 +447,35 @@ public class Util {
         return false;
     }
 
+
+    /**
+     * @return
+     */
+    public static String getOkUserAgent(Context context) {
+        try {
+            String userAgent = "";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                try {
+                    userAgent = WebSettings.getDefaultUserAgent(context);
+                } catch (Exception e) {
+                    userAgent = System.getProperty("http.agent");
+                }
+            } else {
+                userAgent = System.getProperty("http.agent");
+            }
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0, length = userAgent.length(); i < length; i++) {
+                char c = userAgent.charAt(i);
+                if (c <= '\u001f' || c >= '\u007f') {
+                    sb.append(String.format("\\u%04x", (int) c));
+                } else {
+                    sb.append(c);
+                }
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "okhttp/" + getAppVersionName(context);
+    }
 }

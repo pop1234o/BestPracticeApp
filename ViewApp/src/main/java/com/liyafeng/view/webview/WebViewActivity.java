@@ -44,6 +44,15 @@ public class WebViewActivity extends Activity {
         settings.setJavaScriptEnabled(true);
 
 
+        //适配网页，宽度
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        //支持缩放，两个要都写上
+        settings.setSupportZoom(true); // 可以缩放
+        settings.setBuiltInZoomControls(true);
+        //不显示webview缩放按钮
+        settings.setDisplayZoomControls(false);
+
         webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 // Activities and WebViews measure progress with different scales.
