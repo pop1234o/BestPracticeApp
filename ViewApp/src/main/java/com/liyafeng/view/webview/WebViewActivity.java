@@ -28,6 +28,13 @@ public class WebViewActivity extends Activity {
      *
      *
      *
+     * 获取html高度
+     * http://stackmirror.caup.cn/page/rhd9k6fnrqcz
+     *
+     * 如何使得其他控件随着webview一起竖直滑动。
+     * match_parent的scrollview->warp_content的LinearLayout->match_parent的webview
+     *
+     *
      * @param savedInstanceState
      */
     @Override
