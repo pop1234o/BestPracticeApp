@@ -109,7 +109,7 @@ public class AndroidFrame {
         */
     }
     //endregion
-    
+
     //region retrofit
     /**
      * 说说retrofit原理
@@ -146,6 +146,17 @@ public class AndroidFrame {
         * =============图片框架缓存实现？========================
         * 都是用LruCache，DiskLruCache
         * Picasso用的http的缓存机制（OKHttp默认实现），不是自己做缓存？？？
+        *
+        * ========fresco和glide对比===========
+        * glide默认加载控件大小的图片，而且缓存的也是，如果下次要加载大图需要重新请求网络
+        * 但是我们可以设置缓存策略，全部缓存
+        *
+        * fresco 默认加载原图，我们可以通过代码来加载指定尺寸的图片，这样节约了内存
+        *
+        *
+        *
+        *
+        * https://www.jianshu.com/p/6729dc17586b
         */
     }
 

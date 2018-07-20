@@ -2,16 +2,12 @@ package com.liyafeng.imageloader;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -152,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
      * 3.Glide支持gif
      * 4.可以传入Activity或者Fragment，他们onPause的时候可以停止加载，onResume的时候继续加载
      * 缺点：Glide如果要配置占位图等比较麻烦，如果要简单就要配置注解分析器，生成GlideApp代码
-     *
+     * <p>
      * ==============================glide源码分析========================
      * https://juejin.im/entry/586766331b69e60063d889ea（文章写得很好）
      * Glide借鉴了Picasso的思路，解耦更彻底，但是构成的逻辑更复杂
@@ -166,24 +162,24 @@ public class MainActivity extends AppCompatActivity {
      * ---------------
      * RequestManager.load(url)来获取了一个RequestBuilder<Drawable>
      * RequestBuilder.into(imageView)真正开始请求的地方
-     *
+     * <p>
      * 里面先是构建了一个ViewTarget，里面持有了imageView和Drawable对象
      * 这个类就是负责给imageview设置占位图，显示加载失败的图片的
-     *
+     * <p>
      * //根据Option和Target来构建Request对象，负责请求
      * buildRequest(target, targetListener, options)
      * //这里就是发起请求了
      * requestManager.track(target, request);
      * TargetTracker持有所有在请求中的imageView对象，然后负责调用他们的生命周期
      * //执行请求
-     *  requestTracker.runRequest(request);
-     *
-     *  request.begin();SingleRequest的begin方法，
-     *  SingleRequest.onSizeReady->engine.load()真正开始
-     *  Engine负责读取缓存，里面最终用的LruCache来读取缓存
-     *  如果内存中没有，
-     *  engineJob.start(decodeJob); decodeJob中持有diskLruCache
-     *  里面是用了Pool（享元模式）来复用DecodeJob对象
+     * requestTracker.runRequest(request);
+     * <p>
+     * request.begin();SingleRequest的begin方法，
+     * SingleRequest.onSizeReady->engine.load()真正开始
+     * Engine负责读取缓存，里面最终用的LruCache来读取缓存
+     * 如果内存中没有，
+     * engineJob.start(decodeJob); decodeJob中持有diskLruCache
+     * 里面是用了Pool（享元模式）来复用DecodeJob对象
      * executor.execute(decodeJob);decodeJob是一个Runnable
      * 会执行run方法-》decodeJob.runWrapped();->runGenerators()
      * ->currentGenerator.startNext() 这里先从磁盘中读取
@@ -193,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
      * AssetPathFetcher等 这些都是负责从指定位置获取输入流的，比如网络
      * 里面用的HttpUrlConnection 来请求网络，获取流，通过BitmapFactory.decode来
      * 解码成bitmap对象，然后返回，存缓存，最终设置到imageview上
-     *
      *
      * @param url
      * @param imageView
@@ -210,9 +205,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * ================================
      * 源码解析：https://www.jianshu.com/p/265c628a0d59
-     *
+     * <p>
      * https://www.fresco-cn.org
-     *
+     * <p>
      * 内部网络层用的HttpUrlConnection,当然你可以自己配置成Okhttp
      * 整个fresco结构类似于MVC
      * DraweeView，负责显示加载好的图片，相当于V
@@ -237,13 +232,32 @@ public class MainActivity extends AppCompatActivity {
 //        draweeView.setController(controller);
 
         //代码中使用Drawees
-     /*   GenericDraweeHierarchyBuilder builder =
-                new GenericDraweeHierarchyBuilder(getResources());
-        GenericDraweeHierarchy hierarchy = builder
-                .setFadeDuration(300)
-                .setPlaceholderImage(R.mipmap.ic_launcher_round)
-                .build();
-        draweeView.setHierarchy(hierarchy);*/
+        /**   GenericDraweeHierarchyBuilder builder =
+         new GenericDraweeHierarchyBuilder(getResources());
+         GenericDraweeHierarchy hierarchy = builder
+         .setFadeDuration(300)
+         .setPlaceholderImage(R.mipmap.ic_launcher_round)
+         .build();
+         draweeView.setHierarchy(hierarchy);*/
+
+
+        /**
+         * 加载指定尺寸
+         *controllerBuilder = Fresco.newDraweeControllerBuilder();
+         *
+         ImageRequestBuilder builder = ImageRequestBuilder.newBuilderWithSource(Uri.parse(uri));
+         if (width > 0 && height > 0) {
+         builder.setResizeOptions(new ResizeOptions(width, height));
+         }
+         ImageRequest request = builder.build();
+         DraweeController controller = controllerBuilder
+         .setImageRequest(request)
+         .setOldController(getController())
+         .build();
+         setController(controller);
+
+         * */
+
 
         draweeView.setImageURI(uri);
     }
