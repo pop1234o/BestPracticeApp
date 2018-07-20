@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -19,21 +18,26 @@ public class WebViewActivity extends Activity {
 
     /**
      * https://developer.android.google.cn/reference/android/webkit/WebView
-     *
+     * <p>
      * webview详解
      * https://blog.csdn.net/carson_ho/article/details/52693322
-     *
+     * <p>
      * 有赞js交互介绍
      * https://segmentfault.com/a/1190000010356403
-     *
-     *
-     *
+     * <p>
+     * <p>
+     * <p>
      * 获取html高度
      * http://stackmirror.caup.cn/page/rhd9k6fnrqcz
-     *
+     * <p>
      * 如何使得其他控件随着webview一起竖直滑动。
      * match_parent的scrollview->warp_content的LinearLayout->match_parent的webview
-     *
+     * 但这个时候ide会给警告，这样写会导致一个问题就是，当页面的高度被js改变的时候，webview的高度
+     * 还是初始时候的高度，这样就导致会有空白，或者页面显示不全，
+     * <p>
+     * 忽略警告
+     * xmlns:tools="http://schemas.android.com/tools"
+     * tools:ignore="WebViewLayout"
      *
      * @param savedInstanceState
      */
@@ -46,7 +50,7 @@ public class WebViewActivity extends Activity {
     }
 
     private void initView() {
-        webview =  findViewById(R.id.webview);
+        webview = findViewById(R.id.webview);
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
 
@@ -64,7 +68,7 @@ public class WebViewActivity extends Activity {
             public void onProgressChanged(WebView view, int progress) {
                 // Activities and WebViews measure progress with different scales.
                 // The progress meter will automatically disappear when we reach 100%
-                Log.i("test","progress"+progress);
+                Log.i("test", "progress" + progress);
             }
 
             @Override
@@ -93,7 +97,7 @@ public class WebViewActivity extends Activity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
-                Log.i("test","width"+view.getWidth()+"  "+view.getContentHeight()+"  "+view.getHeight());
+                Log.i("test", "width" + view.getWidth() + "  " + view.getContentHeight() + "  " + view.getHeight());
             }
         });
 
