@@ -15,7 +15,7 @@ public class RoundViewPagerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round_view_pager);
-        RoundViewPager viewpager = findViewById(R.id.viewpager);
+        RoundViewPager viewpager = (RoundViewPager) findViewById(R.id.viewpager);
         viewpager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {

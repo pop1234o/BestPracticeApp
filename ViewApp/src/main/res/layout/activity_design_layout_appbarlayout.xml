@@ -3,54 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:statusBarBackground="@color/colorPrimaryDark">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        android:background="#ff0000">
 
 
-        <!--scroll|exitUntilCollapsed 这种就是向上滑动后最终就是折起的
-        scroll|enterAlwaysCollapsed|enterAlways 这种就是进入的是折起的
-        两种方式，
-        -->
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
+            android:src="@drawable/ic_back"
+            app:layout_scrollFlags="scroll|enterAlways" />
 
-            <ImageView
-                android:id="@+id/main.backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/f5"
-                app:layout_collapseMode="parallax" />
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="30dp"-->
+        <!--android:text="aaaa"-->
+        <!--android:textColor="#000"-->
+        <!--android:textSize="16sp" />-->
 
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:background="#ff0000"
-                app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/ic_back" />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-
     <!--
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    我们需要这个才能使得NestedScrollView在上面布局的下面
+    这样写就自然吧NestedScrollView和AppBarLayout协调了，因为AppBarLayout默认实现了behavior
+     而且 app:layout_scrollFlags="scroll|enterAlways"必须写在子控件里，表示这个子控件受滑动的控制
+     如果不写，则一直固定在顶部
+    scroll：当NestedScrollView在顶部的时候，AppBarLayout才会显示隐藏滑动，在其他地方都是隐藏的
+    scroll|enterAlways scroll是只有在顶部的时候AppBarLayout中的控件才会进入，
+    而这个是只要向上滑，就出现
+    scroll|enterAlways|enterAlwaysCollapsed 他们仨配合一起使用，有一个最小高度概念？
+    这个属性要配合CollapsingToolbarLayout ，才能有折叠效果
+
+
+    注意：这里向上滑动消失，只到那个设置了layout_scrollFlags控件的高度，而不是AppBarLayout的高度
+    所以AppBarLayout应该设置warp_content
+
     -->
+
     <android.support.v4.widget.NestedScrollView
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,5 +119,6 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
 
 </android.support.design.widget.CoordinatorLayout>

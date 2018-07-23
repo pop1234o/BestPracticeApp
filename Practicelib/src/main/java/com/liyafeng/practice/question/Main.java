@@ -112,7 +112,7 @@ public class Main {
      * // outputX outputY 是裁剪图片宽高
      * cropPhotoIntent.putExtra("outputX", 300);
      * cropPhotoIntent.putExtra("outputY", 300);
-     *
+     * <p>
      * 直接调用系统剪裁
      */
     void a6() {
@@ -121,9 +121,8 @@ public class Main {
 
     /**
      * frecso的oom,新闻列表加载图片，都是大图，如何处理？
-     *
+     * <p>
      * 其实就是加载控件大小的图片即可，或者用glide
-     *
      */
     void a7() {
     }

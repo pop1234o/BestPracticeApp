@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.liyafeng.view.bar.ToolBarActivity;
 import com.liyafeng.view.camera.CameraActivity;
 import com.liyafeng.view.camera.SystemCameraActivity;
 import com.liyafeng.view.dialog.DialogActivity;
@@ -19,7 +20,7 @@ import com.liyafeng.view.dialog.ToastActivity;
 import com.liyafeng.view.drag.DragActivity;
 import com.liyafeng.view.fragment.CustomFragmentActivity;
 import com.liyafeng.view.listview.ListViewActivity;
-import com.liyafeng.view.newlayout.DesignLayoutActivity;
+import com.liyafeng.view.newlayout.CoordinatorLayoutActivity;
 import com.liyafeng.view.newlayout.ScrollingActivity;
 import com.liyafeng.view.recycleview.pullrefresh.PullRefreshActivity;
 import com.liyafeng.view.recycleview.RecyclerViewActivity;
@@ -62,6 +63,7 @@ public class MainActivity extends Activity {
             "systemCamera",
             "ViewPagerIndicator",
             "RoundViewPagerActivity",
+            "toolbar",
 
     };
 
@@ -78,7 +80,7 @@ public class MainActivity extends Activity {
             ListViewActivity.class,
             RecyclerViewActivity.class,
             PullRefreshActivity.class,
-            DesignLayoutActivity.class,
+            CoordinatorLayoutActivity.class,
             ScrollingActivity.class,
             MainPopUpWindowActivity.class,
             DialogActivity.class,
@@ -89,6 +91,8 @@ public class MainActivity extends Activity {
             SystemCameraActivity.class,
             ViewPagerIndicatorActivity.class,
             RoundViewPagerActivity.class,
+            ToolBarActivity.class,
+
             };
 
     @Override

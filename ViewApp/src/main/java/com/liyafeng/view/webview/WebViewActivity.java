@@ -50,7 +50,7 @@ public class WebViewActivity extends Activity {
     }
 
     private void initView() {
-        webview = findViewById(R.id.webview);
+        webview = (WebView) findViewById(R.id.webview);
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
 

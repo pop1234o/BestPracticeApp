@@ -43,7 +43,7 @@
         <activity android:name=".match.MatchActivity" />
         <activity android:name=".svg.SVGActivity" />
         <activity android:name=".newlayout.ConstraintLayoutActivity" />
-        <activity android:name=".newlayout.DesignLayoutActivity" />
+        <activity android:name=".newlayout.CoordinatorLayoutActivity" />
         <activity
             android:name=".newlayout.ScrollingActivity"
             android:label="@string/title_activity_scrolling" />
@@ -59,7 +59,8 @@
         <activity android:name=".viewpagerindicator.ViewPagerIndicatorActivity" />
         <activity android:name=".viewpager.RoundViewPagerActivity" />
         <activity android:name=".webview.WebViewActivity" />
-        <activity android:name=".photo.PhotoActivity"></activity>
+        <activity android:name=".photo.PhotoActivity" />
+        <activity android:name=".bar.ToolBarActivity"></activity>
     </application>
 
 </manifest>

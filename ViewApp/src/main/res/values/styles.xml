@@ -83,4 +83,12 @@
         <item name="android:windowIsFloating">true</item>
 
     </style>
+
+    <style name="style_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">80dp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>
