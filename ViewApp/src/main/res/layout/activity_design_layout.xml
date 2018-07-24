@@ -20,7 +20,10 @@
             android:layout_height="wrap_content"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
+            app:contentScrim="#00ff00"
+            app:scrimAnimationDuration="500"
+            app:scrimVisibleHeightTrigger="80dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/main.backdrop"
@@ -34,8 +37,8 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:background="#ff0000"
+                android:layout_height="50dp"
+                android:background="#88ff0000"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_back" />
 
