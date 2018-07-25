@@ -10,6 +10,7 @@ import android.graphics.Bitmap.Config;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Process;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -478,4 +479,30 @@ public class Util {
         }
         return "okhttp/" + getAppVersionName(context);
     }
+
+
+
+    /**
+     * 获取当前进程名
+     * @return
+     */
+    public static String getProcessName(Context context) {
+        try {
+            int i = Process.myPid();
+            ActivityManager service = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            if (service != null) {
+                List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = service.getRunningAppProcesses();
+                for (ActivityManager.RunningAppProcessInfo procInfo : runningAppProcesses) {
+                    if (procInfo.pid == i) {
+                        return procInfo.processName;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
 }
