@@ -114,9 +114,29 @@ Nonce是一个整型，最大 MAX_VALUE = 2147483647;也就是生成一个区块
 否则我们直接使用正常的数据库来存储信息即可
 
 
+###### 区块链和比特币
+
+2008年11月1日，中本聰(Satoshi Nakamoto)在「http://www.metzdowd.com/」
+网站的密码学邮件列表中发表了一篇论文，
+题为《比特币：一种点对点式的电子现金系统》
+（Bitcoin: A Peer-to-Peer Electronic Cash System）
+http://www.metzdowd.com/pipermail/cryptography/2008-October/014810.html
+
+后来转移到比特币官网
+https://bitcoin.org/bitcoin.pdf
+
+白皮书中文版
+http://www.8btc.com/wiki/bitcoin-a-peer-to-peer-electronic-cash-system
+
+2009年，他发布了首个比特币软件，Bitcoin-Qt
+
+2010年，他逐渐淡出并将项目移交给比特币社区的其他成员
+
+中本聪发明了比特币，而比特币底层用的技术被后来的人叫做区块链
+
 
 ###### 区块链协议
-
+协议都在源码中
 
 
 
