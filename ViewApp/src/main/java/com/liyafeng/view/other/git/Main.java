@@ -97,7 +97,7 @@ public class Main {
      * git branch --set-upstream origin/master
      * <p>
      * ===========创建一个新的本地分支，并关联到远程=======
-     *
+     * <p>
      * git checkout -b 分支名
      * 这样就创建了一个新的分支，并且切换到那个分支，这个分支的代码和你当前分支是一样的
      * 然后你git push -u origin 远程分支名
@@ -112,7 +112,7 @@ public class Main {
      * 当前我们可以获取拉取本地没有的远程分支，并且关联
      * <p>
      * git checkout -b branch1.1 origin/branch1.1
-     *
+     * <p>
      * ============当一个版本发行后===========
      * git checkout master 切换到master分支
      * git merge [分支名] 将分支合并到当前的分支
@@ -159,6 +159,20 @@ public class Main {
      * git remote add origin http://code.jiaoyinhudong.com/baoguan/Android-InsurView.git
      * git push -u origin --all
      * git push -u origin --tags
+     * <p>
+     * <p>
+     * <p>
+     * ===================版本回退==============
+     * git log查看commit的sha1值，就是commit的id
+     * 然后git reset --hard [commitid]
+     * 就回退到那个版本了
+     * <p>
+     * --hard
+     * Resets the index and working tree. Any changes to tracked files
+     * in the working tree since <commit> are discarded.
+     * <p>
+     * git reflog 查看未来版本的commit
+     * 然后同样的命令来前进
      */
     void a1() {
     }
