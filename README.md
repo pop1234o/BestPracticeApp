@@ -1,5 +1,6 @@
 # BestPracticeApp
 一个Android最佳实践的集合，非常适合拿来学习，欢迎fork和star。
+【持续更新。。。】有问题或者建议可以提issue
 
 ### 自定义View列表 (Module: ViewApp)
 * DragView(一个随手指滑动的View)
@@ -9,8 +10,17 @@
 * CardViewPager(一个卡片式的ViewPager，带缩放效果)
 * SwipeCardLayout（高仿探探的卡片滑动效果，一种非常简单的实现思路）
 * Camera android摄像头的使用和调用系统的照相应用
-* Dialog 各种dialog的显示效果
+* Dialog 各种dialog的显示效果,
 * Permission 6.0以上权限动态申请
+* photo 调用系统照片选择和剪切的代码
+* other 一些其他的知识
+{
+git使用
+vi编辑器的使用
+微信，朋友圈，微博，qq分享
+微信，支付宝支付
+查看keystore内的信息
+}
 
 ### 网络 (Module: NetWork)
 * volley网络框架的原理(包装了HttpURLConnection)
@@ -60,20 +70,24 @@
 * 最新官方的 Android-Architecture-Component 架构
 * 阿里组件化框架Arouter的介绍（TODO）
 
-### Kotlin (Module: Kotlin)
+### Kotlin (Module: Kotlin)（这个已经移动到我的github的另一个仓库）
 * 介绍了Kotlin的用法，基本语法，优势
 
 ### 自动化构建工具 (Module: BuildTool)
-* Gradle的理解
-
-### 最佳实践的库 (Module: PracticeLib)
-* 实际上就是面试题集合。。。
+* Gradle的理解和使用
+* Maven的理解和使用（TODO）
 
 ### 性能优化 (Module: Performance)
 * Android Studio Monitor的使用
 * Android Profiler 的使用
 * MAT分析内存泄漏
 * 性能优化的一些建议
+
+
+### 最佳实践的库 (Module: PracticeLib)
+* 实际上就是面试题集合。。。包括Java面试，Android面试，计算机网络，操作系统
+* hr面试，一般问个人综合素质有关的
+* 技术总监面试，一般问项目，问算法，问个人能力
 
 
 ### 算法和数据结构 (Module: Algorithm)
