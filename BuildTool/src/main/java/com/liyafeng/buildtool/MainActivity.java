@@ -164,7 +164,12 @@ import android.os.Bundle;
  * ==============Android Studio之BuildConfig类=============
  * 在build目录下，generated->source->buildConfig->
  * 根据build.grade文件自动生成
+ * <p>
+ * ===============注意版本=================
+ * 如果你用 last.xx这种，最新的版本，就有可能因为类的差异而不同而报错
  *
+ * ================MultiDex=============
+ * http://www.thinkerzhangyan.com/2018/07/22/MultiDex/
  *
  *
  */
