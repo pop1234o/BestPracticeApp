@@ -4,7 +4,8 @@ public class Main {
 
     /**
      * compile 'com.android.support:cardview-v7:25.4.0'
-     * 相当于framealayout
+     * <p>
+     * cardview 相当于framealayout
      * app:cardCornerRadius="5dp"
      * app:cardElevation="5dp"
      * 5.0以下系统会自动设置margin

@@ -126,4 +126,24 @@ public class Main {
      */
     void a7() {
     }
+
+
+    /**
+     * 接入tinker,测试没问题，到正式项目中
+     * 出现  but we found loader classes are found in old secondary dex
+     * 说明tinker的部分代码在class2.dex中，用 AS的build->Analyze apk来分析
+     * 结果真在，网上找方法，说是加 multiDexKeepProguard 来将代码保持在主dex中
+     * 但是试了不行。。。不知道哪出了问题。。。
+     * <p>
+     * 这个时候你只能从原理，分析，Android分包是因为65536，自动将启动需要的代码放入主dex
+     * 然后.pro keep规则你也得了解一下。。。看是不是你这写错了，
+     * gradle 的规则你也得了解一下 看看 multiDexKeepProguard 是不是写错位置了
+     *
+     * -----
+     * 妈的，气死我了，原来点击右边的 assembleDebug 生成的apk tinker就都在
+     * 主dex中，直接run的不行。。。
+     *
+     */
+    void a8() {
+    }
 }

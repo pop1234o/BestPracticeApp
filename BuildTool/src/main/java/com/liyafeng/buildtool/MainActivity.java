@@ -167,9 +167,16 @@ import android.os.Bundle;
  * <p>
  * ===============注意版本=================
  * 如果你用 last.xx这种，最新的版本，就有可能因为类的差异而不同而报错
- *
+ * <p>
  * ================MultiDex=============
  * http://www.thinkerzhangyan.com/2018/07/22/MultiDex/
+ * <p>
+ * <p>
+ * ===============Gradle task===============
+ * https://www.jianshu.com/p/02cb9a0eb2a0
+ * 执行 ./gradlew tasks 列出所有的task
+ * ./gradlew assembleDebug 执行task
+ *
  *
  *
  */

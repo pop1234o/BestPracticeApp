@@ -1,13 +1,5 @@
 package com.liyafeng.view.viewpager;
 
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by liyafeng on 2018/1/4.
  */
@@ -15,6 +7,16 @@ import java.util.List;
 public class Main {
 
     /**
+     * ==========viewpager的一页显示三个item
+     * 首先我们在布局文件中的viewpager和他的`父布局 都设置 android:clipChildren="false"
+     * 然后给viewpager设置边距
+     * android:layout_marginLeft="20dp"
+     * android:layout_marginRight="20dp"
+     * 这时我们一页就能显示三个item了
+     * 接着我们设置
+     * banner_circle.offscreenPageLimit = 3  //一次加载三个
+     * banner_circle.pageMargin =80   item之间的距离
+     *
      * @param args 注意在Adapter中记得container.addView，否则显示不出来
      *             而且必须用addView，不能有inflate(R.layout.xxx,container)，否则显示不出来
      */
