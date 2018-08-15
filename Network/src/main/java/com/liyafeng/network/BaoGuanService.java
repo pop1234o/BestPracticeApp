@@ -1,17 +1,18 @@
 package com.liyafeng.network;
 
 
-import okhttp3.MultipartBody;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-
-
 public interface BaoGuanService {
+
+
+    /**
+     * ======各种注解的用法==
+     * https://www.jianshu.com/p/7687365aa946
+     * 其实最终还是生成http请求的格式
+     *
+     * @Query 这个是get 或者post在url后面拼的参数
+     * @Filed 这个是post专用，放在body里面，配合 @FormUrlEncoded 使用？？？
+     *
+     * */
 
 /*
     @GET("/")
