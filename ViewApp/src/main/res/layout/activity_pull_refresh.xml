@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".recycleview.pullrefresh.PullRefreshActivity">
+    tools:context=".listview.recycleview.pullrefresh.PullRefreshActivity">
 
 
 
-        <com.liyafeng.view.recycleview.pullrefresh.PullToRefreshRecyclerView
+        <com.liyafeng.view.listview.recycleview.pullrefresh.PullToRefreshRecyclerView
             android:id="@+id/recycer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.liyafeng.view.recycleview.pullrefresh.PullToRefreshRecyclerView>
+            android:layout_height="match_parent"></com.liyafeng.view.listview.recycleview.pullrefresh.PullToRefreshRecyclerView>
 
 </RelativeLayout>

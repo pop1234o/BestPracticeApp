@@ -38,8 +38,8 @@
         <activity android:name=".listview.ListViewActivity" />
         <activity android:name=".scrollview.ScrollActivity" />
         <activity android:name=".scroller.ScrollerActivity" />
-        <activity android:name=".recycleview.RecyclerViewActivity" />
-        <activity android:name=".recycleview.pullrefresh.PullRefreshActivity" />
+        <activity android:name=".listview.recycleview.RecyclerViewActivity" />
+        <activity android:name=".listview.recycleview.pullrefresh.PullRefreshActivity" />
         <activity android:name=".match.MatchActivity" />
         <activity android:name=".svg.SVGActivity" />
         <activity android:name=".newlayout.ConstraintLayoutActivity" />

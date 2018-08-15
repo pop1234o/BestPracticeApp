@@ -1,4 +1,4 @@
-package com.liyafeng.view.recycleview;
+package com.liyafeng.view.listview.recycleview;
 
 /**
  * Created by liyafeng on 2018/1/8.

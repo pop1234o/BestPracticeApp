@@ -1,4 +1,4 @@
-package com.liyafeng.view.recycleview;
+package com.liyafeng.view.listview.recycleview;
 
 import android.app.Activity;
 import android.os.Bundle;
