@@ -407,4 +407,20 @@ public class Flow {
     void recyclerview() {
 
     }
+
+
+    /**
+     * at retrofit2.adapter.rxjava2.BodyObservable$BodyObserver.onNext(BodyObservable.java:54)
+     * at retrofit2.adapter.rxjava2.BodyObservable$BodyObserver.onNext(BodyObservable.java:37)
+     * at retrofit2.adapter.rxjava2.CallEnqueueObservable$CallCallback.onResponse(CallEnqueueObservable.java:58)
+     * at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:123)
+     * at okhttp3.RealCall$AsyncCall.execute(RealCall.java:153)
+     * at okhttp3.internal.NamedRunnable.run(NamedRunnable.java:32)
+     * at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+     * at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+     * at java.lang.Thread.run(Thread.java:760)
+     */
+    void retrofitrxjava() {
+
+    }
 }

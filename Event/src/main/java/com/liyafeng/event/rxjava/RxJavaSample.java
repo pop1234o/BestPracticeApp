@@ -4,7 +4,6 @@ import android.util.Log;
 
 import org.reactivestreams.Publisher;
 
-import java.util.Observable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -12,14 +11,12 @@ import io.reactivex.Flowable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.internal.operators.observable.ObservableJust;
-import io.reactivex.internal.operators.observable.ObservableZip;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -58,7 +55,6 @@ public class RxJavaSample {
 
     /**
      * https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0 (2.0详细用法)
-     *
      */
     public RxJavaSample() {
 
@@ -90,10 +86,10 @@ public class RxJavaSample {
         io.reactivex.Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> e) throws Exception {
-               //这里是被观察者
+                //这里是被观察者
                 e.onNext("1");
                 e.onNext("2");
-                if(System.currentTimeMillis()>0){
+                if (System.currentTimeMillis() > 0) {
                     //只能调用一次，而且下面的语句不再被接收了
                     e.onError(new NullPointerException());
                 }
@@ -113,7 +109,7 @@ public class RxJavaSample {
             @Override
             public void onNext(String s) {
 
-                if("compelete".equals(s)){
+                if ("compelete".equals(s)) {
                     d.dispose();//中断事件流
                 }
             }
@@ -204,5 +200,42 @@ public class RxJavaSample {
 
             }
         });
+    }
+
+    void do5() {
+//        Observable.just("").flatMap(new Function<String, ObservableSource<?>>() {
+//            @Override
+//            public ObservableSource<String> apply(String s) throws Exception {
+//                return Observable.just("");
+//            }
+//        }).subscribeOn(Schedulers.newThread())
+//                .observeOn(Schedulers.io())
+//                .doOnNext(new Consumer<String>() {
+//                    @Override
+//                    public void accept(String s) throws Exception {
+//
+//                    }
+//                }).observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<String>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
     }
 }

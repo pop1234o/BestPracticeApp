@@ -46,6 +46,10 @@ public class Main {
      * 我们也可以封装一层callback，如果有统一处理就在model中callback,然后在present中传入callback
      * 如果没有统一处理，那么直接用presenter传入的callback
      *
+     * ====================rxjava的io和 computation======
+     * io用来读取或者写入数据流，线程池是无界的
+     * computation 用来执行计算敏感的逻辑，线程池有界（因为cpu有限，所以并不是线程越多越好
+     * 反而会因为线程多导致频繁切换 ，导致性能开销）
      *
      *
      *
