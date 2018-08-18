@@ -19,9 +19,6 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,13 +27,11 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CacheControl;
-import okhttp3.Callback;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
 import okhttp3.RequestBody;
-import okhttp3.internal.Util;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -198,42 +193,41 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     *
      * ==============================
      * 先用Builder模式来构建Request对象，然后将Request封装成一个Call（RealCall）对象
-     *  调用RealCall.execute。里面使用OkHttpClient.Dispatcher.execute(call)
-     *  里面将call加入Dispatcher中ArrayDeque中，然后再 RealCall.getResponseWithInterceptorChain()
-     *  中创建各种拦截器，（
-     *  BridgeInterceptor 添加请求头，比如User-Agent，Connection，Host
-     *  CacheInterceptor请求头缓存设置，
-     *  ConnectInterceptor获取http连接，判断是1.0还是1.1，
-     *              获取到HttpCodec对象，真正建立起了Socket连接
-     *  CallServerInterceptor 将请求行，请求头写入Socket,然后发送到服务端，接收Socket响应
-     *  这里用的是BufferedSource 是okio，NIO，然后获取到http响应，解析响应行，响应头，响应体
-     *  用ResponseBuilder来创建一个Response，然后返回
-     *  ）
-     *  以上是一个同步的过程，异步的过程类似，就是创建一个AsyncCall然后用线程池执行
-     *  返回Response后调用回调方法回调都是在子线程。
-     *  =================================
-     *  他的巧妙的结构在于 ,链式的调用结构
-     *  Response r = chain.proceed(request)；
-     *
-     *  Interceptor=>
-     *  Response intercept(Chain chain){
-     *      //处理Request
-     *     Response r = chain.proceed(chain.request());
-     *     //处理Response
-     *     return r;
-     *  }
-     *
-     *  Chain=>中方法
-     *  Response proceed(Request request){
-     *      //这里主要遍历取出拦截器
-     *     Response r = interceptors.get(index++).intercept(new Chain());
-     *     return r;
-     *  }
-     *
-     *
+     * 调用RealCall.execute。里面使用OkHttpClient.Dispatcher.execute(call)
+     * 里面将call加入Dispatcher中ArrayDeque中，然后再 RealCall.getResponseWithInterceptorChain()
+     * 中创建各种拦截器，（
+     * BridgeInterceptor 添加请求头，比如User-Agent，Connection，Host
+     * CacheInterceptor请求头缓存设置，
+     * ConnectInterceptor获取http连接，判断是1.0还是1.1，
+     * 获取到HttpCodec对象，真正建立起了Socket连接
+     * CallServerInterceptor 将请求行，请求头写入Socket,然后发送到服务端，接收Socket响应
+     * 这里用的是BufferedSource 是okio，NIO，然后获取到http响应，解析响应行，响应头，响应体
+     * 用ResponseBuilder来创建一个Response，然后返回
+     * ）
+     * 以上是一个同步的过程，异步的过程类似，就是创建一个AsyncCall然后用线程池执行
+     * 返回Response后调用回调方法回调都是在子线程。
+     * =================================
+     * 他的巧妙的结构在于 ,链式的调用结构
+     * Response r = chain.proceed(request)；
+     * <p>
+     * Interceptor=>
+     * Response intercept(Chain chain){
+     * //处理Request
+     * Response r = chain.proceed(chain.request());
+     * //处理Response
+     * return r;
+     * }
+     * <p>
+     * Chain=>中方法
+     * Response proceed(Request request){
+     * //这里主要遍历取出拦截器
+     * Response r = interceptors.get(index++).intercept(new Chain());
+     * return r;
+     * }
+     * <p>
+     * <p>
      * ==============================
      * 使用builder模式创建Request,OkHttpClient
      * 使用工厂模式创建 EventListener
@@ -271,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
 
 
 //        new okhttp3.Response.Builder()
@@ -329,6 +322,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * ======转换器============
+     * 默认情况，retrofit只能反序列化http响应到okhttp的ResponseBody中
+     * 而且请求的@Body注解只能接收okhttp的RequestBody，来序列化成http请求
+     * <p>
+     * =============结合rxjava=============
+     * https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
+     * <p>
+     * implementation 'com.squareup.retrofit2:adapter-rxjava2:latest.version'
+     * <p>
+     * RxJava2CallAdapterFactory.createAsync()
+     * RxJava2CallAdapterFactory.create()
+     * 区别在于 createAsync使用call.enqueue方法来使用okhttp内部的线程池
+     * 而create使用的是rxjava自己的线程池（我们通过代码指定的线程）
+     *
+     *
+     * ==============okhttp回调线程问题=========
+     * 默认的ok都是子线程回调
+     * 加入retrofit，用默认的ExecutorCallAdapterFactory enqueue是在主线程回调
+     * 而如果使用RxJava2CallAdapterFactory，就又会在子线程回调
+     *
+     */
     private void requestRetrofit() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com").addConverterFactory(GsonConverterFactory.create()).build();
         RequestService requestService = retrofit.create(RequestService.class);
@@ -350,6 +365,28 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
 
+        Call<ResponseBody> bodyCall = retrofit.create(RequestService1.class).getUser("", "");
+        bodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                //retrofit2.Response就是原始的http响应
+                // 这里就是讲http的响应体默认转换为ResponseBody
+                ResponseBody body = response.body();
+
+                try {
+                    //将body内容转换为string
+                    String string = body.string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
     }
 
     public interface RequestService {
@@ -361,6 +398,14 @@ public class MainActivity extends AppCompatActivity {
         class User {
 
         }
+    }
+
+    public interface RequestService1 {
+
+        @GET("user/{name}/repo?age=18")
+        Call<ResponseBody> getUser(@Path("name") String username, @Query("password") String password);
+
+
     }
 
 
