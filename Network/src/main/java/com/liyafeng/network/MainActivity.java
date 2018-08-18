@@ -336,13 +336,13 @@ public class MainActivity extends AppCompatActivity {
      * RxJava2CallAdapterFactory.create()
      * 区别在于 createAsync使用call.enqueue方法来使用okhttp内部的线程池
      * 而create使用的是rxjava自己的线程池（我们通过代码指定的线程）
-     *
-     *
+     * <p>
+     * <p>
      * ==============okhttp回调线程问题=========
-     * 默认的ok都是子线程回调
+     * 默认的ok都是子线程回调 enqueue代表的是可以在主线程调用，但是回调还是在子线程
+     * <p>
      * 加入retrofit，用默认的ExecutorCallAdapterFactory enqueue是在主线程回调
      * 而如果使用RxJava2CallAdapterFactory，就又会在子线程回调
-     *
      */
     private void requestRetrofit() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com").addConverterFactory(GsonConverterFactory.create()).build();

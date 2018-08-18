@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Trace;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 /**
  * Created by liyafeng on 16/11/2017.
  */
@@ -311,10 +309,24 @@ public class Tools {
      * 去jcenter这个网站输入包名即可
      * <p>
      * https://bintray.com/bintray/jcenter
-     *
+     * <p>
      * http://jcenter.bintray.com/包名
      */
     public void a10() {
+
+    }
+
+
+    /**
+     * 图片压缩
+     * https://pngquant.org
+     * tinypng.com
+     * 我们对图片压缩很有必要
+     * 用ps给出的图是 32-bit color 的
+     * 我们压缩后变为 8bit-color ,Android加载后足足小了三倍！！
+     * 效果还是很明显的
+     */
+    public void a11() {
 
     }
 }
