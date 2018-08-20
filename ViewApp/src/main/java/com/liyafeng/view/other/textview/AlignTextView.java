@@ -1,4 +1,4 @@
-package com.liyafeng.view.other.aligntextview;
+package com.liyafeng.view.other.textview;
 
 
 import android.content.Context;
