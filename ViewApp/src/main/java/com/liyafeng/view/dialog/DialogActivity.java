@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -181,11 +182,18 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             setContentView(R.layout.dialog_bottom);
             show();
             Window window = getWindow();
-            LinearLayout ll_content = (LinearLayout) window.findViewById(R.id.ll_content);
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) ll_content.getLayoutParams();
-            layoutParams.gravity = Gravity.BOTTOM;
-            ll_content.setLayoutParams(layoutParams);
+
+            //布局高度是包裹内容的
+            window.setGravity(Gravity.BOTTOM);
+
+            //取消边距
+            WindowManager.LayoutParams lp = window.getAttributes();
+            //设置宽
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            //设置高
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+            window.setAttributes(lp);
 
 
         }
