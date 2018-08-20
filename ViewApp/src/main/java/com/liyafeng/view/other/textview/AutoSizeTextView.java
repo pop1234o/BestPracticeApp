@@ -9,6 +9,7 @@ public class AutoSizeTextView {
      * app:autoSizeMinTextSize="12sp"
      * app:autoSizeMaxTextSize="100sp"
      * app:autoSizeStepGranularity="2sp"
+     * android:maxLines="1"
      *
      * @param args
      */
