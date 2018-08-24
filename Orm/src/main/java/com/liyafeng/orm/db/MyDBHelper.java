@@ -9,6 +9,8 @@ import android.util.Log;
 
 /**
  * Created by lenovo on 2017/12/18.
+ *
+ * 这个需要每次在application中new一个出来，传入参数，如果有则打开，没有则创建
  */
 
 public class MyDBHelper extends SQLiteOpenHelper {

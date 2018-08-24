@@ -30,8 +30,32 @@ public class Main_GreenDao {
      *             ==============加密=============
      *             https://blog.csdn.net/qq_33689414/article/details/52304819
      *             compile 'net.zetetic:android-database-sqlcipher:3.5.1'
+     *             <p>
+     *             ===============kotlin中的greendao=====
+     *             <p>
+     *             我们需要在app的gradle中配置,否则会报找不到DaoSession的错误
+     *             android{
+     *             ...
+     *             sourceSets {
+     *             main.java.srcDirs += 'build/generated/source/greendao'
+     *             }
+     *             }
      */
     public static void main(String[] args) {
 
+        /*
+        * //混淆
+        * #greendao
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
+# If you do not use SQLCipher:
+-dontwarn org.greenrobot.greendao.database.**
+# If you do not use Rx:
+-dontwarn rx.**
+        *
+        * */
     }
 }
