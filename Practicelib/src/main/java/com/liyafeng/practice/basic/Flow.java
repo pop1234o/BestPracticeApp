@@ -423,4 +423,26 @@ public class Flow {
     void retrofitrxjava() {
 
     }
+
+
+    /**
+     * 04:10.608 15019-15019/com.insurchain.insur_wallet E/XgStat: java.lang.NullPointerException: Attempt to invoke virtual method 'void android.view.ViewGroup.addView(android.view.View)' on a null object reference
+     * at com.insurchain.insur_wallet.feature.guess.activity.info.GuessInfoActivity.refreshData(GuessInfoActivity.kt:134)
+     * at com.insurchain.insur_wallet.feature.guess.activity.info.GuessInfoPresenter$loadInfo$1.onSuccess(GuessInfoPresenter.kt:15)
+     * at com.insurchain.insur_wallet.feature.guess.activity.info.GuessInfoPresenter$loadInfo$1.onSuccess(GuessInfoPresenter.kt:13)
+     * at com.insurchain.insur_wallet.data.source.observer.HttpObserverV3.onNext(HttpObserverV3.kt:15)
+     * at com.insurchain.insur_wallet.data.source.observer.HttpObserverV3.onNext(HttpObserverV3.kt:9)
+     * at io.reactivex.internal.operators.observable.ObservableSubscribeOn$SubscribeOnObserver.onNext(ObservableSubscribeOn.java:58)
+     * at io.reactivex.internal.operators.observable.ObservableScalarXMap$ScalarDisposable.run(ObservableScalarXMap.java:248)
+     * at io.reactivex.internal.operators.observable.ObservableJust.subscribeActual(ObservableJust.java:35)
+     * at io.reactivex.Observable.subscribe(Observable.java:11442)
+     * at io.reactivex.internal.operators.observable.ObservableSubscribeOn$SubscribeTask.run(ObservableSubscribeOn.java:96)
+     * at io.reactivex.android.schedulers.HandlerScheduler$ScheduledRunnable.run(HandlerScheduler.java:109)
+     * at android.os.Handler.handleCallback(Handler.java:754)
+     * at android.os.Handler.dispatchMessage(Handler.java:95)
+     * at android.os.Looper.loop(Looper.java:163)
+     */
+    void rxjava() {
+
+    }
 }

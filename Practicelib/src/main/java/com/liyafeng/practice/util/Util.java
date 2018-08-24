@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Process;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,10 +26,20 @@ import android.widget.TextView;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+
+import static android.util.Base64.DEFAULT;
 
 /**
  * Created by liyafeng on 2018/1/8.
@@ -342,6 +353,7 @@ public class Util {
 
     /**
      * 禁用回车
+     *
      * @param editText
      */
     public static void disableEnter(EditText editText) {
@@ -356,6 +368,7 @@ public class Util {
 
     /**
      * 保留两位小数
+     *
      * @param v
      * @return
      */
@@ -376,7 +389,7 @@ public class Util {
      * @param newVersion
      * @return
      */
-    public static boolean isUpdate(Context context,String newVersion) {
+    public static boolean isUpdate(Context context, String newVersion) {
         try {
             String currentVersion = getAppVersionName(context);
             if (TextUtils.isEmpty(newVersion) || TextUtils.isEmpty(currentVersion)) {
@@ -417,7 +430,6 @@ public class Util {
         return false;//说明新的版本 短或者等于当前版本，说明比当前版本低
 
     }
-
 
 
     public static boolean isAlive(Context context) {
@@ -481,9 +493,9 @@ public class Util {
     }
 
 
-
     /**
      * 获取当前进程名
+     *
      * @return
      */
     public static String getProcessName(Context context) {
@@ -504,5 +516,100 @@ public class Util {
 
         return "";
     }
+
+
+    /**
+     * 解密
+     *
+     * @param content
+     * @return
+     */
+    public static String decrypt(String content) {
+        try {
+            StringBuilder builder = new StringBuilder("123456");
+            for (int i = 0; i < 10; i++) {
+                builder.append('\0');
+            }
+
+
+            // 创建AES秘钥
+            SecretKeySpec key = new SecretKeySpec(builder.toString().getBytes(), "AES");
+
+            byte[] decode = Base64.decode(content, DEFAULT);
+
+            Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+            // 初始化加密器
+            cipher.init(Cipher.DECRYPT_MODE, key);
+
+            byte[] doFinal = cipher.doFinal(decode);
+            int end = doFinal.length;
+            while (end > 0 && --end > 0 && doFinal[end] == 0) {
+
+            }
+
+            return new String(doFinal, 0, end + 1);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
+
+
+    /**
+     * 加密，然后base64编码
+     *
+     * @param plainText
+     * @return
+     */
+    public static String encrypt(String plainText) {
+        try {
+
+            StringBuilder builder = new StringBuilder("123456");
+            for (int i = 0; i < 10; i++) {
+                builder.append('\0');
+            }
+
+
+            // 创建AES秘钥
+            SecretKeySpec key = new SecretKeySpec(builder.toString().getBytes(), "AES");
+
+
+            Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+            // 初始化加密器
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            byte[] p = plainText.getBytes();
+            int size = (16 - p.length % 16);
+            StringBuilder builder_content = new StringBuilder(plainText);
+            for (int i = 0; i < size; i++) {
+                builder_content.append('\0');
+            }
+
+
+            byte[] result = cipher.doFinal(builder_content.toString().getBytes());
+            byte[] encode = Base64.encode(result, DEFAULT);
+            return new String(encode);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+
+        return plainText;
+    }
+
 
 }
