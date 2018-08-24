@@ -343,6 +343,18 @@ public class MainActivity extends AppCompatActivity {
      * <p>
      * 加入retrofit，用默认的ExecutorCallAdapterFactory enqueue是在主线程回调
      * 而如果使用RxJava2CallAdapterFactory，就又会在子线程回调
+     * <p>
+     * ==================@Body 和@Field============
+     *
+     * @Field 需要  @FormUrlEncoded 一起使用
+     * parameters can only be used with form encoding.
+     * @Body 不能和 @Field 一起使用
+     * <p>
+     * =============================
+     * 这个是 @Field 和@FormUrlEncoded 使用的请求体
+     * aaa=asf&timestamp=1535112905&sign=471AB43304BA669664BB28FB904E5324
+     * @Body 必须是个RequestBody类型，GsonConvertFactory  我们可以直接写实体
+     * @Body entity
      */
     private void requestRetrofit() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com").addConverterFactory(GsonConverterFactory.create()).build();

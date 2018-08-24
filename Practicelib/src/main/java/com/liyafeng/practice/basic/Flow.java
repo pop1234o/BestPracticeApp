@@ -445,4 +445,87 @@ public class Flow {
     void rxjava() {
 
     }
+
+
+    /**
+     * @FormUrlEncoded POST专用
+     * 177-15177/com.insurchain.insur_wallet E/XgStat: java.lang.IllegalArgumentException: @Field parameters can only be used with form encoding. (parameter #2)
+     * for method NewApiStores.likeComment
+     * at retrofit2.ServiceMethod$Builder.methodError(ServiceMethod.java:755)
+     * at retrofit2.ServiceMethod$Builder.methodError(ServiceMethod.java:746)
+     * at retrofit2.ServiceMethod$Builder.parameterError(ServiceMethod.java:764)
+     * at retrofit2.ServiceMethod$Builder.parseParameterAnnotation(ServiceMethod.java:536)
+     * at retrofit2.ServiceMethod$Builder.parseParameter(ServiceMethod.java:339)
+     * at retrofit2.ServiceMethod$Builder.build(ServiceMethod.java:207)
+     * at retrofit2.Retrofit.loadServiceMethod(Retrofit.java:170)
+     * at retrofit2.Retrofit$1.invoke(Retrofit.java:147)
+     * at java.lang.reflect.Proxy.invoke(Proxy.java:813)
+     * at $Proxy4.likeComment(Unknown Source)
+     * at com.insurchain.insur_wallet.data.source.repository.NewApiStores$DefaultImpls.likeComment$default(NewApiStores.kt:64)
+     * at com.insurchain.insur_wallet.data.source.repository.NewDataRepository.likeComment(NewDataRepository.kt:15)
+     * at com.insurchain.insur_wallet.feature.guess.activity.info.GuessInfoListAdapter$CommentHolder$2.onClick(GuessInfoListAdapter.java:110)
+     * at android.view.View.performClick(View.java:5647)
+     * at android.view.View$PerformClick.run(View.java:22462)
+     * at android.os.Handler.handleCallback(Handler.java:754)
+     * at android.os.Handler.dispatchMessage(Handler.java:95)
+     * at android.os.Looper.loop(Looper.java:163)
+     * at android.app.ActivityThread.main(ActivityThread.java:6365)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:901)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:791)
+     * <p>
+     * <p>
+     * ================================
+     * <p>
+     * 17728-17728/com.insurchain.insur_wallet E/AndroidRuntime: FATAL EXCEPTION: main
+     * Process: com.insurchain.insur_wallet, PID: 17728
+     * java.lang.IllegalArgumentException: @Body parameters cannot be used with form or multi-part encoding. (parameter #1)
+     * for method NewApiStores.likeComment
+     * at retrofit2.ServiceMethod$Builder.methodError(ServiceMethod.java:755)
+     * at retrofit2.ServiceMethod$Builder.methodError(ServiceMethod.java:746)
+     * at retrofit2.ServiceMethod$Builder.parameterError(ServiceMethod.java:764)
+     * at retrofit2.ServiceMethod$Builder.parseParameterAnnotation(ServiceMethod.java:704)
+     * at retrofit2.ServiceMethod$Builder.parseParameter(ServiceMethod.java:339)
+     * at retrofit2.ServiceMethod$Builder.build(ServiceMethod.java:207)
+     * at retrofit2.Retrofit.loadServiceMethod(Retrofit.java:170)
+     * at retrofit2.Retrofit$1.invoke(Retrofit.java:147)
+     * at java.lang.reflect.Proxy.invoke(Proxy.java:813)
+     * at $Proxy4.likeComment(Unknown Source)
+     * at com.insurchain.insur_wallet.data.source.repository.NewApiStores$DefaultImpls.likeComment$default(NewApiStores.kt:65)
+     * at com.insurchain.insur_wallet.data.source.repository.NewDataRepository.likeComment(NewDataRepository.kt:15)
+     * at com.insurchain.insur_wallet.feature.guess.activity.info.GuessInfoListAdapter$CommentHolder$2.onClick(GuessInfoListAdapter.java:110)
+     * at android.view.View.performClick(View.java:5647)
+     * at android.view.View$PerformClick.run(View.java:22462)
+     * at android.os.Handler.handleCallback(Handler.java:754)
+     * at android.os.Handler.dispatchMessage(Handler.java:95)
+     * at android.os.Looper.loop(Looper.java:163)
+     * at android.app.ActivityThread.main(ActivityThread.java:6365)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:901)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:791)
+     * 08-24 20:12:56.149 17728-17728/com.insurchain.insur_wallet D/XgStat: [main(1): ProGuard:141] - has caught the following uncaught exception:
+     * 08-24 20:12:56.150 17728-17728/com.insurchain.insur_wallet E/XgStat: java.lang.IllegalArgumentException: @Body parameters cannot be used with form or multi-part encoding. (parameter #1)
+     * for method NewApiStores.likeComment
+     * at retrofit2.ServiceMethod$Builder.methodError(ServiceMethod.java:755)
+     * at retrofit2.ServiceMethod$Builder.methodError(ServiceMethod.java:746)
+     * at retrofit2.ServiceMethod$Builder.parameterError(ServiceMethod.java:764)
+     * at retrofit2.ServiceMethod$Builder.parseParameterAnnotation(ServiceMethod.java:704)
+     * at retrofit2.ServiceMethod$Builder.parseParameter(ServiceMethod.java:339)
+     * at retrofit2.ServiceMethod$Builder.build(ServiceMethod.java:207)
+     * at retrofit2.Retrofit.loadServiceMethod(Retrofit.java:170)
+     * at retrofit2.Retrofit$1.invoke(Retrofit.java:147)
+     * at java.lang.reflect.Proxy.invoke(Proxy.java:813)
+     * at $Proxy4.likeComment(Unknown Source)
+     * at com.insurchain.insur_wallet.data.source.repository.NewApiStores$DefaultImpls.likeComment$default(NewApiStores.kt:65)
+     * at com.insurchain.insur_wallet.data.source.repository.NewDataRepository.likeComment(NewDataRepository.kt:15)
+     * at com.insurchain.insur_wallet.feature.guess.activity.info.GuessInfoListAdapter$CommentHolder$2.onClick(GuessInfoListAdapter.java:110)
+     * at android.view.View.performClick(View.java:5647)
+     * at android.view.View$PerformClick.run(View.java:22462)
+     * at android.os.Handler.handleCallback(Handler.java:754)
+     * at android.os.Handler.dispatchMessage(Handler.java:95)
+     * at android.os.Looper.loop(Looper.java:163)
+     */
+    void retrofitFiel() {
+
+    }
 }
