@@ -612,4 +612,24 @@ public class Util {
     }
 
 
+
+    //解决SwipeRefreshLayout和ViewPager的滑动冲突
+//    fun solveScroll(viewPager: ViewPager, swipeRefreshLayout: SwipeRefreshLayout) {
+//
+//        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+//            override fun onPageScrollStateChanged(state: Int) {
+//                val b = state == ViewPager.SCROLL_STATE_IDLE
+//                swipeRefreshLayout.isEnabled = b
+//            }
+//
+//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//            }
+//
+//            override fun onPageSelected(position: Int) {
+//            }
+//
+//        }
+//        )
+//    }
+
 }
