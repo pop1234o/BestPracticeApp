@@ -119,6 +119,22 @@ public class Main {
      * git branch -d [分支] 删除本地的分支
      * git push -d [仓库名] [分支名] 删除远程分支
      *
+     * =======================tag==================
+     * git tag v1.0 打标签
+     * git tag
+     *
+     * git show <tagname>查看标签信息
+     *
+     * git tag -d v0.1 删除
+     *
+     * git push origin v1.0 推送标签到远程
+     * git push origin --tags 推送所有标签
+     *
+     *
+     * 【删除远程标签】
+     * git tag -d v0.9
+     * git push origin :refs/tags/v0.9
+     *
      * @param args
      */
     public static void main(String[] args) {
