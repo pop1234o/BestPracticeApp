@@ -17,6 +17,7 @@
     而又不想下载整个Android源码，可以用这个网站，它有强大的搜索功能
 * https://github.com/aosp-mirror/platform_frameworks_base 
     Android源码在github上的镜像
+* http://inloop.github.io/shadow4android/ 阴影制作网站
 
 ### 博客
 * http://blog.csdn.net/v_july_v 

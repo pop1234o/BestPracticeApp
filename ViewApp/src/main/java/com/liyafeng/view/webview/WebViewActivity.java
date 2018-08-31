@@ -64,6 +64,18 @@ public class WebViewActivity extends Activity {
         //不显示webview缩放按钮
         settings.setDisplayZoomControls(false);
 
+
+        /*
+        *  webView.settings.domStorageEnabled = true
+        webView.settings.databaseEnabled = true
+        webView.settings.allowFileAccess = true
+
+        webView.settings.setAppCacheEnabled(true)
+        webView.settings.setAppCachePath(cacheDir.absolutePath)
+
+        webView.settings.javaScriptEnabled = true
+        *
+        * */
         webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 // Activities and WebViews measure progress with different scales.
