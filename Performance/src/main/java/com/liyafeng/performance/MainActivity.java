@@ -1,6 +1,7 @@
 package com.liyafeng.performance;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 
 public class MainActivity extends Activity {
@@ -41,6 +42,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
 //        StringBuilder
 
     }
@@ -51,4 +53,26 @@ public class MainActivity extends Activity {
      *
      *
      * */
+
+
+    /**
+     * GPU呈献模式分析
+     * 横线代表16毫秒，（60帧每秒 ftps），一个直线代表一帧，高度代表时间
+     * 一共8种颜色，从下到上
+     * <p>
+     * Misc Time/Vsync Delay 主线程执行的时间
+     * Input Handling  ontouchEvent的执行时间
+     * Animation 动画时间
+     * Measure/Layout的时间
+     * Draw时间
+     * Sync & Upload带绘制图片的时间
+     * Command Issue open gl的执行时间
+     * Swap Buffers GPU处理的时间，  处理完成GPU就直接将像素块显示在屏幕上
+     */
+
+    void gpu() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getDrawable(R.drawable.gpu_line);
+        }
+    }
 }
