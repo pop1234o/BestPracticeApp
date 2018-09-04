@@ -21,10 +21,10 @@ public class DialogDemo extends Dialog {
     private void initView() {
         TextView tv_invite = findViewById(R.id.tv_invite);
         TextView tv_not_invite = findViewById(R.id.tv_not_invite);
-        tv_not_invite.setOnClickListener(v -> dismiss());
-
-        tv_invite.setOnClickListener(v -> {
-        });
+//        tv_not_invite.setOnClickListener(v -> dismiss());
+//
+//        tv_invite.setOnClickListener(v -> {
+//        });
     }
 
 

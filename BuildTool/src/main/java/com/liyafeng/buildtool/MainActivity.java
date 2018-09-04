@@ -176,9 +176,8 @@ import android.os.Bundle;
  * https://www.jianshu.com/p/02cb9a0eb2a0
  * 执行 ./gradlew tasks 列出所有的task
  * ./gradlew assembleDebug 执行task
- *
- *
- *
+ * <p>
+ * <p>
  */
 public class MainActivity extends Activity {
 
@@ -186,5 +185,40 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+
+    /**
+     * * ==================多渠道打包================
+     * android{
+     * <p>
+     * flavorDimensions "default"
+     * productFlavors {
+     * xiaomi {
+     * manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+     * }
+     * _360 {
+     * manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"]
+     * }
+     * <p>
+     * }
+     * }
+     * <p>
+     * androidManifest.xml中
+     * <p>
+     * <application>
+     * <p>
+     * <p>
+     * <meta-data
+     * android:name="UMENG_APPKEY"
+     * android:value="5aa8e90af29d980a0e000087" />
+     * <meta-data
+     * android:name="UMENG_CHANNEL"
+     * android:value="${UMENG_CHANNEL_VALUE}" />
+     * <p>
+     * </application>
+     */
+    void dabao() {
+
     }
 }
