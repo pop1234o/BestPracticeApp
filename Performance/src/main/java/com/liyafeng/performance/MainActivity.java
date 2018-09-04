@@ -68,6 +68,11 @@ public class MainActivity extends Activity {
      * Sync & Upload带绘制图片的时间
      * Command Issue open gl的执行时间
      * Swap Buffers GPU处理的时间，  处理完成GPU就直接将像素块显示在屏幕上
+     * <p>
+     * =======================================
+     * 到这我们能大概找出哪里耗时了
+     * 然后我们用Android Monitor 的 cpu 中的 traceing 来查看具体的哪些方法耗时多少
+     * 找出耗时来解决卡顿
      */
 
     void gpu() {
@@ -75,4 +80,18 @@ public class MainActivity extends Activity {
             getDrawable(R.drawable.gpu_line);
         }
     }
+
+
+    /**
+     *
+     * resolveRtlPropertiesIfNeeded
+     *
+     * 如果支持
+     *   val b = ((context?.applicationInfo?.flags)!! and FLAG_SUPPORTS_RTL) == FLAG_SUPPORTS_RTL;
+     *
+     * 默认不支持，但是引用库有一个支持那么就支持，如果我们要覆盖这个属性
+     * 用这个来覆盖
+     * tool:replace="android:label,android:icon"
+     *
+     * */
 }
