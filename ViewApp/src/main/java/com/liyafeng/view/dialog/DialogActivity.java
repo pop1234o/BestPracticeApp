@@ -211,6 +211,15 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    class CenterDialog1 extends Dialog{
+
+        public CenterDialog1(Context context) {
+            //Base.Theme.AppCompat.Dialog 设置这个主题，然后显示居中
+            super(context,android.R.style.Theme_DeviceDefault_Light_Dialog);
+//            setContentView();
+        }
+    }
+
     public static class FullDiolog extends Dialog{
 
         public FullDiolog(@NonNull Context context) {
