@@ -146,4 +146,19 @@ public class Main {
      */
     void a8() {
     }
+
+
+    /**
+     * java.util.concurrent.TimeoutException: android.os.BinderProxy.finalize() timed out after 10 seconds
+     *
+     * https://blog.csdn.net/jamin0107/article/details/78793021
+     * https://www.jianshu.com/p/0119c682d2b8
+     *
+     * 屏幕息屏，进程被中断，导致gc超时，抛出异常
+     *
+     *
+     */
+    void a9(){
+
+    }
 }
