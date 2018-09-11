@@ -634,6 +634,7 @@ public class Util {
 
     /**
      * 判断是否在主进程，这样application的oncreate方法中判断可以只初始化一次
+     *
      * @param context
      * @return
      */
@@ -648,6 +649,13 @@ public class Util {
             }
         }
         return false;
+    }
+
+    /**
+     * 识别小米设备
+     */
+    private void isMi() {
+        //https://dev.mi.com/doc/p=254/index.html
     }
 
 }
