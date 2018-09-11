@@ -612,7 +612,6 @@ public class Util {
     }
 
 
-
     //解决SwipeRefreshLayout和ViewPager的滑动冲突
 //    fun solveScroll(viewPager: ViewPager, swipeRefreshLayout: SwipeRefreshLayout) {
 //
@@ -631,5 +630,24 @@ public class Util {
 //        }
 //        )
 //    }
+
+
+    /**
+     * 判断是否在主进程，这样application的oncreate方法中判断可以只初始化一次
+     * @param context
+     * @return
+     */
+    private boolean shouldInit(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
+        String mainProcessName = context.getPackageName();
+        int myPid = Process.myPid();
+        for (ActivityManager.RunningAppProcessInfo info : runningAppProcesses) {
+            if (info.pid == myPid && mainProcessName == info.processName) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
