@@ -2,7 +2,9 @@ package com.liyafeng.view.webview;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -76,6 +78,13 @@ public class WebViewActivity extends Activity {
         webView.settings.javaScriptEnabled = true
         *
         * */
+
+//        从Android5.0开始，WebView默认不支持同时加载Https和Http混合模式。如何解决呢：
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
         webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 // Activities and WebViews measure progress with different scales.
@@ -116,4 +125,7 @@ public class WebViewActivity extends Activity {
         webview.loadUrl("https://developer.android.google.cn/");
 
     }
+
+
+
 }

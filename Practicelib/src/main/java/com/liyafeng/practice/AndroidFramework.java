@@ -35,11 +35,23 @@ public class AndroidFramework {
      */
     public void a1() {
         /*
+        * 1.首先说明视图层级，Activity持有PhoneWindow（startActivity时attach()中new出来的）
+        * 然后PhoneWindow持有DecorView（setContentView的时候new出来的，是FrameLayout的子类
+        * 里面自带layout.xml，是一个LinearLayout,里面有id是content的一个FrameLayout,这个会在
+        * PhoneWindow中持有，叫mContentParent)
+        *
+        * 在onResume后DecorView 被WindowManagerImpl.addView ,这时创建了ViewRootImpl
+        * 然后ViewRoot就持有了DecorView，WindowManagerGlobal这个单例持有APP所有的ViewRoot对象（是个List）
+        *
         * 最一开始ViewRootImpl 接收到触摸事件，然后会传递给DecorView
         * 的dispatchTouchEvent()，然后Decorview会将事件分发给子控件
-        * 先判断当前View是否拦截事件，如果拦截就直接调用自己的ontouchevent
-        * 如果没有拦截就依次分发给子view，直到最底层的view，在ontouchevent
-        * 中返回是否消费，如果有消费下次就直接将事件传递给它，如果没有消费就依次
+        * 也就是ViewGroup的dispatchTouchEvent
+        * 先是down事件传入
+        * 判断当前ViewGroup是否拦截事件，调用onInterceptTouchEvent（）
+        * 如果拦截就直接调用自己的ontouchevent（这个是从View中继承的，调用的是View的onTouchEvent）
+        * super.dispatchTouchEvent-》mOnTouchListener.onTouch-》onTouchEvent（）
+        * 如果没有拦截就依次分发给子控件（后添加的最先调用），直到最底层的view，
+        * 在ontouchevent 中返回是否消费，如果有消费下次就直接将事件传递给它，如果没有消费就依次
         * 调用父控件的ontouchevent,直到事件被消费。
         *
         * 整个过程是一个递归调用，是类似于是反向的树的前序遍历
@@ -60,7 +72,7 @@ public class AndroidFramework {
         *
         * ===========================说说onTouch和onTouchEvent的区别？=======================================
         * onTouch是OnTouchListener调用的，是先于onTouchEvent,只有onTouch没有消费事件，才会传入到onTouchEvent
-        *
+        * 他们是在View中的dispatchTouchEvent方法中调用的
         *============================View和ViewGroup分别有哪些事件分发相关的回调方法?===========================
         * onTouch ,onClick onLongClick
         *
@@ -71,6 +83,7 @@ public class AndroidFramework {
 
     /**
      * View的渲染机制
+     * View/Activity是 如何显示在屏幕上的？
      */
     public void a1_1() {
         /*
@@ -85,6 +98,14 @@ public class AndroidFramework {
         *
         * 我们滑动卡顿优化的原理也是根据这个来的
         *
+        * ======View/Activity是 如何显示在屏幕上的？===========
+        * 当Activity onResume后，DecorView被WindowMangerImpl.addView()
+        * 里面new 了ViewRootImpl，setView（DecorView），
+        * 然后里面调用了Session(IWindowSession).addToDisplay()
+        * 然后WindowManagerService.addWindow ，从而分配surface显示？？？
+        *
+        * https://wizardforcel.gitbooks.io/deepin-android-vol3/content/4.html
+        *
         * */
     }
 
@@ -98,7 +119,9 @@ public class AndroidFramework {
         * 首先会将xml解析成对象，addview添加到decorview中
         * 然后执行requestLayout()，最终在ViewRootImpl中执行doTraversals
         * 进行view树的遍历，最先执行performMeasure()初步确定view的宽高,
+        *
         * 然后是performLayout，确定子view在父布局中的位置，left top right bottom 四个参数
+        *
         * 最后执行performDraw ,将canvas对象传入，子view根据自己的ondraw方法进行绘制
         */
     }
@@ -128,7 +151,7 @@ public class AndroidFramework {
         *
         *
         *
-        *  MeasureSpec.UNSPECIFIED是未指定尺寸，这种情况不多 比如scrollView，
+        *  MeasureSpec.UNSPECIFIED是未指定尺寸，这种情况不多 比如scrollView，中的LinearLayout
         *
         *
         * ===========================================
@@ -163,7 +186,8 @@ public class AndroidFramework {
         * 里面调用scheduleTraversals()-》performTraversals  来发送遍历视图树，从新调用他们的onDraw方法重新绘制
         *
         *=======================一个Activity的ViewRootImpl是何时创建的？=================================
-        *  是调用了 onResume后，WindowManager.addView，将视图加入到界面上的时候，在WindowManagerGloble
+        *  是调用了 onResume后，WindowManager.addView，将视图加入到界面上的时候，在WindowManagerGlobal中new出来的
+        *  而且WindowManagerGlobal这个单例持有他
         *
         *===========================ViewRootImpl有什么作用？==========================================
         *  ViewRootImpl实现了ViewParent接口，他是DecorView和WindowManager之间的桥梁，比如我们有触摸事件
@@ -193,6 +217,7 @@ public class AndroidFramework {
     public void a1_7() {
         /*
         * =========Bitmap对象的理解?==============================
+        * Bitmap，位图，存储图像像素点的信息（比如Argb的值，各个通道的值，组成像素点的颜色，像素点组成图片）
         * https://developer.android.google.cn/topic/performance/graphics/manage-memory.html
         * 每个api版本不同，bitmap存放的位置也不同
         * 在3.0以前，bitmap的像素信息存储在native memory中，而bitmap对象存储在 Dalvik heap中
@@ -202,6 +227,12 @@ public class AndroidFramework {
         * Gc会自动回收了。
         *
         * 8.0开始，pixel data存到了 native heap中
+        *
+        * 而fresco的存储位置（https://www.fresco-cn.org/docs/caching.html）
+        * 在5.0以下系统，Bitmap缓存位于ashmem，这样Bitmap对象的创建和释放将不会引发GC，更少的GC会使你的APP运行得更加流畅。
+        *
+        * 5.0及其以上系统，相比之下，内存管理有了很大改进，所以Bitmap缓存直接位于Java的heap上。
+        * 当应用在后台运行时，该内存会被清空。
         * ------------重用bitmap-----------------
         * https://developer.android.google.cn/reference/android/graphics/BitmapFactory.Options.html#inBitmap
         * 每次都要为像素数据 申请内存空间，而被回收的bitmap的内存空间又要被回收，
@@ -240,6 +271,12 @@ public class AndroidFramework {
         * 这样我们就能控制一张图片加载到内存中的大小了，就避免了OOM
         *
         * ==========================如何高效加载多张张图片，比如在ListView或ViewPager中？=====================================
+        * 答：
+        * 1.技术上优化，使用二级缓存（内存缓存和磁盘缓存），按照控件大小加载图片（缩放加载）主流的图片加载框架
+        * Fresco，Gilded，Picasso都是这么做
+        * 2.从业务上优化，在滑动停止的时候才进行加载，防止连续滑动带来大内存的开销
+        * 缩小内存缓存大小，从而防止OOM，或者释放其他地方的缓存来腾出更多控件
+        *
         * 在listview中使用LruCache（内存缓存），我们设置lruCache的大小原则，一般
         * 是jvm为我们可分配最大内存的1/8
         *
@@ -322,9 +359,16 @@ public class AndroidFramework {
     public void a1_8() {
         /*
         * =================如何自定义View===================
+        * 写控件，继承View，如果要支持warp_content，需要重写onMeasure
+        * 然后重写onDraw，在canvas中绘制View，
+        * 如果有交互，那么要重写onTouchEvent，根据xy坐标的变化，或者是相对于
+        * down事件的xy坐标的相对变化，进行相应参数的修改，比如scrollX/Y ，然后invalidate进行刷新，进行重新绘制
         *
+        * 如果是ViewGroup，还要重新onLayout,来确定子View的 上下左右的位置，确定在布局中的位置
+        * 以便于在绘制的时候 将ViewGroup指定Canvas的位置传给子控件来进行绘制
         * =====================自定义View如何考虑机型适配?======================
         * 获取屏幕分辨率，从新进行onLayout，
+        * 或者在onSizeChanged中获取控件宽高进行适配
         * ===========自定义View的事件如何处理？=========================
         * 重写onTouchEvent(),根据业务需求返回true，进行事件消费
         *
@@ -347,8 +391,10 @@ public class AndroidFramework {
     public void a1_10() {
         /*
         * new ViewGroup().requestDisallowInterceptTouchEvent(true)
+        * getParent().requestDisallowInterceptTouchEvent(true)来阻止父控件调用onInterceptEvent
+        *
         * 这样父布局就不会调用onInterceptTouchEvent()来判断是否要拦截了
-        * 这个只在Down事件的时候判断
+        * 这个只在Down事件的时候判断(或者是在Down的时候有控件消费了这个事件，导致mFirstTouchTarget不为null)
         */
 //        new ViewGroup().requestDisallowInterceptTouchEvent(true);
     }
@@ -363,25 +409,64 @@ public class AndroidFramework {
      * */
 
     /**
-     * 说说什么是内存泄漏，说一个典型的例子，怎么避免？
+     * 说说什么是内存泄漏？
+     * 说典型的例子？怎么避免？
+     * 如何检测内存泄露？
+     *
      */
     public void a2_1() {
         /*
         * 本该被回收的对象因为存在对他的强引用而没有被回收
-        * Android中最典型的就是Activity对象的泄漏，比如用Handler发延时消息
-        * 在Activity销毁后消息还存在队列中，但是此时Handler对象持有Activity的引用
-        * 从而使Activity没有被回收，导致内存泄漏，解决方法就是用静态Handler或者在
-        * onDestroy()中移除消息
+        * java内存回收根据 可达性分析，即从gc root（比如静态变量作为gc ）
+        * 到被回收的对象 是可达的，那么他就不会被回收
+        * ===============说典型的例子？怎么避免？==============
+        * Android中最典型的就是Activity对象的泄漏，
+        * 1.比如用Handler发延时消息
+        * 在Activity销毁后消息还存在队列中，但是此时非静态Handler对象持有Activity的引用
+        * 从而使Activity没有被回收，导致内存泄漏
+        *
+        * 解决方法：（使用一个静态内部类继承Handler来使用
+        * 或者在 onDestroy()中移除消息）
         * -------
-        * 还有一个例子是在Activity中使用AsyncTask，当Activity销毁时任务没有执行完
+        *  2.还有一个例子是在Activity中使用匿名内部类，匿名内部类默认持有外部类的引用
+        *  比如AsyncTask，当Activity销毁时任务没有执行完
         * 因为AsyncTask持有Activity的引用，也会导致泄漏，解决方法是在onDestroy调用
         * 他的cancel方法来中断线程
+        *
+        * Activity中开启匿名线程，而页面关闭时未被销毁
+        * 匿名TimerTask
+        *
+        * 解决方法：页面关闭时销毁或者使用静态内部类
+        *
+        * 4。Activity被单例或者静态常量引用
+        *
+        * 解决方法：避免这种情况，或者在页面关闭时变量置空
+        *
+        * 5.Android5.1 webview 引起的泄露，
+        * https://coolpers.github.io/webview/memory/leak/2015/07/16/android-5.1-webview-memory-leak.html
+        *
+        * 解决方法：onDestroy中 webview.getParent().removeView(webview)
+        *
+        *
+        * 6.网络请求在页面关闭时没有被取消
+        * 解决方法：关闭时取消
+        *
+        * ==============如何检测内存泄露？==========
+        * 1.使用Android Profiler中的Memory，打开多个页面，再关闭，Gc一下，然后dump head
+        * 查看是否有Activity没有被回收
+        * 2.使用MAT来分析dump 出的heap （prof） 文件，有个merge gc root 选项，就能查出是哪里持有的引用
+        *
+        * 3.使用Leak Canary ，如果泄露会有通知提示，我们可以直接查看
+        *
         *
         */
     }
 
     /**
-     * Android进程如何保活？系统杀掉后如何重启？为什么要保活？
+     * Android进程如何保活？
+     * Android进程分为哪几种？
+     * 系统杀掉后如何重启？
+     * 为什么要保活？
      * http://blog.csdn.net/andrexpert/article/details/75045678
      */
     public void a2_2() {
@@ -401,6 +486,10 @@ public class AndroidFramework {
         * 普通app的值一般是大于0，系统进程一般是小于0
         * 用adb shell进入手机命令行模式，然后用 ps|grep com.xxx 来查看包下的所有进程
         * 然后用 cat /proc/进程id/oom_adj 来查看进程的优先级数值
+        *
+        * ===============Android进程分为哪几种？===========
+        * 前台进程，可见进程，服务进程，后台进程，空进程查看（a2_6()）
+        *
         *
         *
         */
@@ -470,23 +559,33 @@ public class AndroidFramework {
      */
     public void a2_6() {
         /*
-        * 1.前台进程，
+        * 1.前台进程，foreground process
+        *
         * 这个进程中有一个resume的Activity，
         * 或者一个在执行onReceive()的BroadCastReceiver ,
         * 或者有一个在执行onCreate onStart onDestroy 的Service
         *
-        * 2. 可见进程，
+        * 2. 可见进程， visible process
+        *
         * 进程中有一个没有焦点的Activity，但是它可见，比如一个半透明的Activity 盖住了他
-        * 有个前台的Service，通过Service.startForeground方法来显示一个Notification
+        *
+        * 有个前台的Service，通过Service.startForeground方法来显示一个Notification(比如音乐服务会开一个歌名显示
+        * 在通知栏上)startForeground 将服务变为前台服务，使得它的优先级更高
+        *
         * 有系统用的独特服务，比如动态壁纸，输入法服务
         *
-        * 3.服务进程
+        * 3.服务进程 service process
         * 进程中有startService 方式打开的Service，当前两种进程内存不够用时，将回收这个进程
         * 连续运行30分钟以上有可能会被降级，因为这有可能发生了内存泄漏而占用太多内存
         *
-        * 4.缓存进程
+        * 4.缓存进程 cached process（）后台进程
         * 一般这种进程中有1个或者多个onStop的Activity，这个时候当内存不足时会优先回收
         * 一般优先回收的是最久没有用过的进程。
+        *
+        *
+        * 5.空进程
+        * 进程中没有Activity，没有Service，重启的时候不会执行Application的onCreate
+        *
         */
     }
 
@@ -564,7 +663,7 @@ public class AndroidFramework {
         *
         *
         *
-        * =====================2==================
+        * =====================2 横竖屏切换时的生命周期？如何配置?==================
         * https://blog.csdn.net/xiaoli100861/article/details/50855152
         *  方向切换的时候我们会销毁后重建，当然onSaveInstanceState
         *  onRestoreInstanceState 可以用来恢复数据
@@ -572,11 +671,11 @@ public class AndroidFramework {
         * 我们在清单文件中配置不销毁
         * android:configChanges="orientation|keyboardHidden|screenSize"
         * （这个和操作系统(4.0)和targetApi(12)有关，但是最新的一般都是这样配置）
-        * ================3========================
+        * ================3 显示dialog时 Activity的生命周期 ========================
         * Dialog的出现不会调用Activity的任何生命周期，
         * 调用生命周期是ActivityManager，而dialog是通过WindowManager来管理的
         * （但是好像系统的Dialog会造成onPause???）
-        *====================4=======================
+        *====================4 Activity上有Dialog的时候按Home键（前后台切换）时的生命周期？=======================
         * 有无dialog，Activity的进入后台，切回前台生命周期都是这样的
         *   onPause:
         *   onSaveInstanceState:
@@ -584,13 +683,15 @@ public class AndroidFramework {
         *   onRestart:
         *   onStart:
         *   onResume:
+        * (只有被销毁再回来才调用 onRestoreInstanceState)
         *
-        * ==================5=========================
+        * ==================5 跳转时的生命周期=========================
         * A开启B, A-onPause B-onCreate\onStart\onResume A-onStop
         * B关闭，B-onPause A-onRestart\onStart\onResume  B-onStop\onDestroy
-        * ================6================
+        * ================6 锁屏和解锁后生命周期 ================
         * 锁屏和前后台切换的生命周期相同
-        * ===============7================
+        *
+        * ===============7 永久性质的数据，应该在哪个生命周期方法中保存?================
         * 永久性数据应该在onStop中存储，因为在后台有可能被系统kill掉不调用onDestroy
         * onPause中太频繁
         *
