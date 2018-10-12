@@ -57,6 +57,11 @@ public class RecyclerViewActivity extends Activity {
             public int getItemCount() {
                 return 50;
             }
+
+            @Override
+            public int getItemViewType(int position) {
+                return super.getItemViewType(position);
+            }
         };
         recycer.setAdapter(adapter);
 

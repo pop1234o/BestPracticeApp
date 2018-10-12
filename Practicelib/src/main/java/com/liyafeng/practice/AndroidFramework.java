@@ -2,10 +2,12 @@ package com.liyafeng.practice;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.IntentService;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.os.HandlerThread;
 import android.util.Log;
 import android.util.LruCache;
 
@@ -425,7 +427,7 @@ public class AndroidFramework {
          * 从而使Activity没有被回收，导致内存泄漏
          *
          * 解决方法：（使用一个静态内部类继承Handler来使用
-         * 或者在 onDestroy()中移除消息）
+         * 或者在 onDestroy()中移除消息）或者使用弱引用
          * -------
          *  2.还有一个例子是在Activity中使用匿名内部类，匿名内部类默认持有外部类的引用
          *  比如AsyncTask，当Activity销毁时任务没有执行完
@@ -459,6 +461,35 @@ public class AndroidFramework {
          *
          *
          */
+    }
+
+    /**
+     * 内存泄漏是什么？
+     * 什么情况导致内存泄漏？
+     * 内存泄露的解决方法?
+     * 如何防止线程的内存泄漏？
+     */
+    public void a2_1_1() {
+        /*
+        =============内存泄漏是什么？===============
+        * 当我们要回收的对象无法进行回收的时候，这种叫内存泄漏
+        * ================什么情况导致内存泄漏？======================
+        * 静态变量持有要回收对象的引用
+        * 内部类持有要回收对象的引用（因为内部类默认持有外部类的引用）
+        * 非静态Handler发送延时消息，因为非静态Handler持有外部类（Activity）引用，而msg持有handler，MessageQueue持有msg
+        * ==============内存泄露的解决方法?=========================
+        * 编码：养成良好的编码习惯，我们编码可以用静态的Handler来发送消息，发送的msg要在页面退出时清空
+        * 检测，我们可以用Android自带的内存检测，开启多个页面然后关闭，点击强制GC，然后看哪个页面还存留（1个或者多个）
+        *       那么这个时候发生了内存泄漏
+        * 定位：我们可以用观察代码的形式来判断，比如退出页面，线程没有关闭，msg没有清空，或者有静态变量引用Activity
+        *       还可以用mat，dump heap，然后转化一下文件，然后mat打开，找到对应的类，然后找到最短gc路径，看哪个变量持有Activity，
+        *       这里就是泄漏的地方了
+        *
+        * ==============================如何防止线程的内存泄漏？=============================
+        * 1.及时关闭线程
+        * 2.使得线程持有Activity的弱引用
+        *
+        */
     }
 
     /**
@@ -606,6 +637,37 @@ public class AndroidFramework {
         //mix2 的结果
         //268435456 256m  18250546  17.4m
     }
+
+    /**
+     * oom是什么？
+     * 什么情况导致oom？
+     * android 每个应用能申请多少内存？ https://zhuanlan.zhihu.com/p/27269803
+     * 有什么解决方法可以避免OOM？
+     * Oom 是否可以try catch？为什么？
+     */
+    public void a2_8() {
+        /*===============oom是什么？什么情况导致oom？==============
+         * 内存溢出，是因为我们申请的内存超过jvm可分配内存的最大值，
+         * 我们申请内存前会判断当前内存够不够，如果不够，那么触发gc，
+         * gc后依然不够，那么抛出oom
+         * =====================android 每个应用能申请多少内存？=======
+         * Runtime.getRuntime().maxMemory() 获取app能申请的最大内存
+         * 一般初始化的时候分配16m内存，一般最多是100m+ ，如果在AndroidManifest.xml
+         * 配置android:largeHeap="true" 可能能分配到512m内存
+         * 每个手机的这个配置在/system/build.prop 文件中
+         * dalvik.vm.heapsize=36m
+         *   dalvik.vm.heapstartsize=8m    ----起始分配内存
+         *   dalvik.vm.heapgrowthlimit=192m ---- 一般情况app申请的最大内存 dalvik.vm.heapsize=512m   ---- 设置largeheap时，App可用的最大内存dalvik.vm.heaptargetutilization=0.75  ---- GC相关
+         *   dalvik.vm.heapminfree=512k
+         *   dalvik.vm.heapmaxfree=8m     ----- GC机制相关
+         * ======================有什么解决方法可以避免OOM？=============
+         * 预防，我们提前对app做性能测试，观察app内存变化情况，做出优化
+         * 加载大图可能导致oom，所以要缩放
+         * ==================Oom 是否可以try catch？为什么？===========
+         * 不可以，因为这是jvm终止进程，他是一个Error类型的错误，是不可修复的
+         */
+    }
+
     //endregion
 
     //region Android 四大组件基本知识
@@ -1306,10 +1368,14 @@ public class AndroidFramework {
          * 我们需要在doBackground中调用publishProgress(Progress... p)方法，来回调onProgressUpdate
          * 这个也是通过Handler发送到主线程的
          *
-         * ======================================
+         * ===================总结===================
          * 总结，一个AsyncTask对应一个FutureTask+Callable， 执行，传入参数
          * 用静态的线程池执行FutureTask，调用Callable中的call，调用doBackground
          * 返回结果后，用静态的Handler发送结果到主线程，执行onPostExecute
+         * -----------------
+         * AsyncTask里面就是有个静态的串行执行的线程池（CORE_POOL_SIZE是2-4个，MAXIMUM_POOL_SIZE是2倍的cpu数+1）
+         * 将参数传入，FutureTask后台执行，然后MainHandler发送到主线程返回结果
+         *
          *
          * ======================如何取消AsyncTask？==============
          * 调用他的cancel方法，里面调用的futureTask，的cancel方法，因为futureTask.get()方法阻塞，
@@ -1372,7 +1438,7 @@ public class AndroidFramework {
         /*
          * Thread中有静态内部类，ThreadLocalMap key是ThreadLocal，value是对应值，因为一个Thread能
          * 对应多个ThreadLocal实例。
-         * 不同ThreadLocal实例 对应不同的值。(一个Thread中可以有多个ThreadLocal变量)
+         * 不同ThreadLocal实例 对应不同的值。(一个Thread中可以对应多个ThreadLocal（对象）变量)
          * 所以在Thread中用一个ThreadLocalMap对象来存储，这个ThreadLocalMap自己实现了散列表
          * ThreadLocalMap key是ThreadLocal对象，value就是泛型的值
          * ============作用===========
@@ -1399,6 +1465,10 @@ public class AndroidFramework {
          * 每次创建都赋给TheadLoacl对象不同的 hashcode
          *
          */
+        ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+        threadLocal.set(1);
+        threadLocal.get();
+        threadLocal.remove();
     }
 
     /**
@@ -1406,9 +1476,14 @@ public class AndroidFramework {
      */
     public void a8_7() {
         /*
-         * HandlerThread是Thread的一个子类，也是一个线程，
+        * 一个便捷类，一个有Looper的线程，用他的looper可以来创建handler，
+        * 这样发送的消息就在子线程中执行了
+        *
+        * ======================用法===================
+         * HandlerThread 是Thread的一个子类，也是一个线程，
          * 我们开启这个线程，调用getThreadHandler(),用这个Handler发送的消息
-         *  getThreadHandler().post(new Runnable() {
+         *
+         * handlerThread.getThreadHandler().post(new Runnable() {
          *   @Override
          *   public void run() {
          *       //在子线程中执行
@@ -1423,6 +1498,7 @@ public class AndroidFramework {
          * MessageQueue中取出的消息就在当前线程中执行了
          */
 
+        new HandlerThread("").start();
     }
 
     /**
@@ -1453,9 +1529,13 @@ public class AndroidFramework {
         /*
          * ===============作用====================
          * 作用是开启一个带子线程的Service，我们重写onHandleIntent方法在子线程中执行我们的任务
+         * 并且onHandleIntent执行完毕后会stopSelf
          * ==================原理===============
          * 里面使用的HandlerThread，然后new 了一个Handler 使用了HandlerThread的Looper
+         *
+         *
          */
+
     }
 
 
@@ -1504,6 +1584,16 @@ public class AndroidFramework {
          * =================SharedPreference是进程同步的吗?有什么方法做到同步？============================
          * https://www.jianshu.com/p/875d13458538 使用ContentProvider代替
          *
+         * 默认的SP以Private模式打开，那么他的key-value会读取到内存中，存储在一个map中
+         * 写入的时候先写入内存，然后写入磁盘，commit是同步写入磁盘，apply是开启线程写入磁盘
+         *
+         * 而设置了MODE_MULTI_PROCESS的SP  每次调用Context.getSharedPreferences 的时候 会重新从SP文件中读入数据
+         *
+         * 但这也不能保证多进程安全，因为不能保证读写的时序
+         *
+         * https://extremej.itscoder.com/shared_preferences_source/（源码分析）
+         *
+         *
          * ===================使用共享文件进行线程间通讯如何保证同步？========================
          * 使用FileProvider
          *
@@ -1534,7 +1624,9 @@ public class AndroidFramework {
     }
 
     /**
-     * ListView原理？RecycleView原理?
+     * ListView原理？
+     * RecycleView原理?
+     * 两者区别？
      */
     public void a8_13() {
         /*
@@ -1557,7 +1649,25 @@ public class AndroidFramework {
          * 然后开始layout 一个个item，其实原理有点像LinearLayout，确定了layout后left top...等
          * 我们ListView的画布就会剪裁那段画布给他
          *
+         * ==============两者区别？========================
+         * 1,两者区别就是rv各个模块解耦的更彻底，拓展性更强
+         * 2.rv自带viewholder（可复用view），而lv需要我们手写
+         * 3.lv 重用是ArrayList<View>[getViewTypeCount]  ，
+         *   而rv是RecycledViewPool中的SparseArray<ScrapData> 中有ArrayList<ViewHolder>
+         *  （所以lv的type要是连续的，而rv的type可以不是连续的）
+         *
+         * 比如LayoutManager负责具体的布局，可以是线性的，表格的，瀑布流的(layoutChildren)
+         * （里面核心的地方就是fill，fillChunk）
+         *
+         * 有ItemAnimator 负责item的插入，移除动画
+         *
+         * 有itemTouchHelper 负责item的滑动事件
+         *
+         * ItemDecoration 自定义分割线
+         *
+         *
          */
+
     }
 
 
@@ -1614,65 +1724,8 @@ public class AndroidFramework {
     }
 
 
-    /**
-     * oom是什么？
-     * 什么情况导致oom？
-     * android 每个应用能申请多少内存？ https://zhuanlan.zhihu.com/p/27269803
-     * 有什么解决方法可以避免OOM？
-     * Oom 是否可以try catch？为什么？
-     */
-    public void a8_17() {
-        /*===============oom是什么？什么情况导致oom？==============
-         * 内存溢出，是因为我们申请的内存超过jvm可分配内存的最大值，
-         * 我们申请内存前会判断当前内存够不够，如果不够，那么触发gc，
-         * gc后依然不够，那么抛出oom
-         * =====================android 每个应用能申请多少内存？=======
-         * Runtime.getRuntime().maxMemory() 获取app能申请的最大内存
-         * 一般初始化的时候分配16m内存，一般最多是100m+ ，如果在AndroidManifest.xml
-         * 配置android:largeHeap="true" 可能能分配到512m内存
-         * 每个手机的这个配置在/system/build.prop 文件中
-         * dalvik.vm.heapsize=36m
-         *   dalvik.vm.heapstartsize=8m    ----起始分配内存
-         *   dalvik.vm.heapgrowthlimit=192m ---- 一般情况app申请的最大内存 dalvik.vm.heapsize=512m   ---- 设置largeheap时，App可用的最大内存dalvik.vm.heaptargetutilization=0.75  ---- GC相关
-         *   dalvik.vm.heapminfree=512k
-         *   dalvik.vm.heapmaxfree=8m     ----- GC机制相关
-         * ======================有什么解决方法可以避免OOM？=============
-         * 预防，我们提前对app做性能测试，观察app内存变化情况，做出优化
-         * 加载大图可能导致oom，所以要缩放
-         * ==================Oom 是否可以try catch？为什么？===========
-         * 不可以，因为这是jvm终止进程，他是一个Error类型的错误，是不可修复的
-         */
-    }
 
 
-    /**
-     * 内存泄漏是什么？
-     * 什么情况导致内存泄漏？
-     * 内存泄露的解决方法?
-     * 如何防止线程的内存泄漏？
-     */
-    public void a8_18() {
-        /*
-        =============内存泄漏是什么？===============
-        * 当我们要回收的对象无法进行回收的时候，这种叫内存泄漏
-        * ================什么情况导致内存泄漏？======================
-        * 静态变量持有要回收对象的引用
-        * 内部类持有要回收对象的引用（因为内部类默认持有外部类的引用）
-        * 非静态Handler发送延时消息，因为非静态Handler持有外部类（Activity）引用，而msg持有handler，MessageQueue持有msg
-        * ==============内存泄露的解决方法?=========================
-        * 编码：养成良好的编码习惯，我们编码可以用静态的Handler来发送消息，发送的msg要在页面退出时清空
-        * 检测，我们可以用Android自带的内存检测，开启多个页面然后关闭，点击强制GC，然后看哪个页面还存留（1个或者多个）
-        *       那么这个时候发生了内存泄漏
-        * 定位：我们可以用观察代码的形式来判断，比如退出页面，线程没有关闭，msg没有清空，或者有静态变量引用Activity
-        *       还可以用mat，dump heap，然后转化一下文件，然后mat打开，找到对应的类，然后找到最短gc路径，看哪个变量持有Activity，
-        *       这里就是泄漏的地方了
-        *
-        * ==============================如何防止线程的内存泄漏？=============================
-        * 1.及时关闭线程
-        * 2.使得线程持有Activity的弱引用
-        *
-        */
-    }
 
     /**
      * LruCache作用，原理？{@link android.util.LruCache}
@@ -1865,10 +1918,28 @@ public class AndroidFramework {
     /**
      * 说说MVC MVP MVVM 和Clean架构各自优点和区别？
      */
-    public void a10() {
+    public void a10(Context context) {
         /*
+         *  https://www.tianmaying.com/tutorial/AndroidMVC
+         *
+         * mvc是 view持有controller ,controller处理业务逻辑
+         * model获取或者插入 数据模型，然后model直接返回给view(比如通过handler或者回调)
+         *
+         * 这样缺点是 model和view耦合严重，让view层直接和底层model联系，会导致修改底层model后还要修改
+         * view的代码，
+         *
+         * mvp是 view持有presenter（业务表现层） presenter持有view的接口，这样
+         * ui的展现是依赖于接口而不是实例，任何实现view接口的都可以作为ui层
+         * model和presenter互相持有，model获取数据后通过回调返回给presenter
+         *
+         * mvvm和mvp类似，就是view和viewmodel层相互绑定，比如databinding的库就实现了这种模式
+         * 当数据源发生改变，所绑定的ui也发生改变，使用的观察者模式
+         *
+         *
          *
          */
+
+        context.getResources().getDrawable(R.drawable.mvc_mvp);
     }
 
     //endregion

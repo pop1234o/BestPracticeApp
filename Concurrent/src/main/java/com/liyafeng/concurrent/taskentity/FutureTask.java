@@ -14,6 +14,14 @@ import com.liyafeng.concurrent.util.Executors;
  *  也实现了Runnable 可以在子线程run的特性
  *
  * 可以说futuretask是集Runnable，Future，Callable三者的特性
+ *
+ * ---------------------
+ * A cancellable asynchronous computation
+ * 可取消的异步计算任务
+ *
+ * get()会导致当前线程阻塞，（多个阻塞的线程会加入到等待队列（链表））当有结果的时候，会依次唤醒
+ *
+ *
  */
 
 public class FutureTask<V> implements RunnableFuture<V> {

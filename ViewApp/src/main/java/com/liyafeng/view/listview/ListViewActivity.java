@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.liyafeng.view.R;
@@ -78,37 +80,49 @@ public class ListViewActivity extends Activity {
                 tv.setText(position + "");
                 return tv;
             }
+
+
         });
 
-//        ListView listview = (ListView) findViewById(R.id.listview);
-//
-//        listview.setAdapter(new BaseAdapter() {
-//            @Override
-//            public int getCount() {
-//                return 50;
-//            }
-//
-//            @Override
-//            public Object getItem(int position) {
-//                return null;
-//            }
-//
-//            @Override
-//            public long getItemId(int position) {
-//                return 0;
-//            }
-//
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                if (convertView == null) {
-//                    convertView = new TextView(ListViewActivity.this);
-////                    Log.i(TAG, "getView: 创建"+ ++count);
-//                }
-//                TextView tv = (TextView) convertView;
-//                tv.setText(position + "");
-//                return tv;
-//            }
-//        });
+        ListView listview1 = (ListView) findViewById(R.id.listview);
+
+        listview1.setAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return 50;
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = new TextView(ListViewActivity.this);
+//                    Log.i(TAG, "getView: 创建"+ ++count);
+                }
+                TextView tv = (TextView) convertView;
+                tv.setText(position + "");
+                return tv;
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                return super.getItemViewType(position);//这个要从 0，1 。。开始
+            }
+
+            @Override
+            public int getViewTypeCount() {
+                return 2;
+            }
+        });
 
     }
 }
