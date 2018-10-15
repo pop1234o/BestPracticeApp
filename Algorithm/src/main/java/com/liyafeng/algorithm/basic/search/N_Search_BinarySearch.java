@@ -17,11 +17,20 @@ public class N_Search_BinarySearch {
      */
     public static void main(String[] args) {
 
-        int[] array = {1, 3, 4, 6, 62, 345, 346};
-        int n = 5;
-        int i1 = Arrays.binarySearch(array, n);
-        int i2 = binarySearch(array, n);
-        System.out.println("search:"+i1+" =="+~i2);
+//        int[] array = {1, 3, 4, 6, 62, 345, 346};
+//        int n = 5;
+//        int i1 = Arrays.binarySearch(array, n);
+//        int i2 = binarySearch(array, n);
+//        System.out.println("search:"+i1+" =="+~i2);
+        Object o = new Object();
+        synchronized (o){
+            try {
+               o.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private static int binarySearch(int[] array, int n) {
