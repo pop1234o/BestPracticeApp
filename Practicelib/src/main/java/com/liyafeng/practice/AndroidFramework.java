@@ -2195,7 +2195,7 @@ public class AndroidFramework {
          * Binder机制是Android系统进程间通讯的基础
          * 他采用C、S架构，客户端bindService，获取到远程服务的代理类
          * 然后客户端调用binder的一个代理类，里面封装好数据，调用native
-         * android_util_Binder.cpp的transact()来处理数据，调用BpBinder,cpp的transact()
+         * android_util_Binder.cpp的 transact()来处理数据，调用BpBinder,cpp的transact()
          * 数据通过kernel层/dev/binder来通知服务端的BBinder，然后调用onTransact()
          * 来通知java层的服务，根据封装的数据来调用服务端响应的方法。这样就完成的进程间的
          * 一次通信
@@ -2223,6 +2223,11 @@ public class AndroidFramework {
          * 高效的（只拷贝数据一次）
          *
          *
+         * ===================aidl是是什么？如何使用？原理是什么？================
+         * https://blog.csdn.net/u012203641/article/details/74474664
+         * bindService有三种使用方法，其中后两种可以实现进程间通信。底层原理就是binder进行通信
+         *
+         *
          */
 
         context.getResources().getDrawable(R.drawable.binder_native_stack);
@@ -2233,7 +2238,8 @@ public class AndroidFramework {
     //region Android 音视频
 
     /**
-     * 说说SurfaceView
+     * 说说 SurfaceView 和 TextureView?
+     * 区别？
      * {@link android.view.SurfaceView}
      */
     public void a15() {
@@ -2241,8 +2247,18 @@ public class AndroidFramework {
          * 他继承自View,有自己专有的Surface对象，在子线程中渲染，可以执行
          * 频繁的绘制操作
          *
+         * ===============区别？==================
+         * SurfaceView是独立于视图树的
+         * TextureView 是在视图树中的
+         * 因为TextureView 在视图树中，所以TextureView 刷新，TextureView 也刷新，导致了效率低下
+         *
+         * 所以我们一般在全屏播放的时候，用SurfaceView，他有独立的SurfaceFlinger
+         *
+         * https://source.android.com/devices/graphics/arch-tv
+         * https://zhooker.github.io/2018/03/24/SurfaceTexture的区别/
          */
     }
+
     //endregion
 
 
@@ -2266,11 +2282,15 @@ public class AndroidFramework {
     public void a16_0() {
         /*
          * 1.支持 Wi-Fi Round-Trip-Time (RTT)协议，从而支持室内定位
+         *
          * 2.全新的 DisplayCutout 类支持刘海屏
+         *
          * 3.新的旋转模式，为了防止误旋转，当旋转的时候，用户可以选择系统栏
          * 上的旋转按钮来进行旋转，而不是自动旋转
          *
          *
+         * ==================
+         * 4.ImageDecoder代替BitmapFactory 提供更丰富的功能，
          */
     }
 
@@ -2284,13 +2304,25 @@ public class AndroidFramework {
          * android:supportsPictureInPicture="true"来使得页面支持画中画
          * 通过Activity.enterPictureInPictureMode(PictureInPictureParams args) 开启画中画页面
          * arg接收配置参数
+         *
          * 2.可下载的字体，support包中提供一个下载字体的框架，我们只需要配置好即可从
          * 网络下载字体，从而减少apk的体积
+         *
          * 3.多屏显示支持，我们可以指定页面显示在哪个屏幕上
+         *
          * 4.使用 SYSTEM_ALERT_WINDOW 权限的应用 无法在其他应用上弹窗
          * 除非是有 TYPE_APPLICATION_OVERLAY 的新window类型
+         *
          * 5.权限，8.0前，如果我们请求一个权限，那么权限组中其他注册的权限也一同授予
          * 8.0后则不会，会等到下次使用到组中其他权限的时候才去请求，只不过不会给用户提示
+         *
+         * =========================
+         * 6.Alert windows 类型改变，用TYPE_APPLICATION_OVERLAY这个来显示
+         * https://developer.android.google.cn/about/versions/oreo/android-8.0-changes#cwt
+         *
+         * 7.findViewById() signature change   now return <T extends View> T instead of View.
+         *
+         *
          *
          */
     }
@@ -2304,10 +2336,57 @@ public class AndroidFramework {
          * 1.多窗口支持
          * 2.改进的低耗电模式，6.0中是当手机静止的时候延迟app的cpu使用和网络使用
          * 现在是在运动的情况下也会有限制
+         *
          * 3.改进的SurfaceView，SurfaceView 类可减少屏幕合成对电池的消耗，因为它是在专用硬件中合成，
          * 与应用窗口内容分隔开。因此，它产生的中间副本少于 TextureView。
          *
+         * 4.去掉了一些权限(ACTION_NEW_PICTURE or ACTION_NEW_VIDEO )，
+         *  CONNECTIVITY_ACTION 只能动态申请，或者使用JobScheduler
+         * =========================
+         *
+         *
+         *
          */
+    }
+
+
+
+    /**
+    * 6.0特性（23）
+    * */
+    public void a16_3(){
+
+        /*
+        * https://developer.android.google.cn/about/versions/marshmallow/android-6.0-changes
+        *
+        * 1.动态权限 Runtime Permissions
+        *
+        * 2.新的省电模式 https://developer.android.google.cn/training/monitoring-device-state/doze-standby.html
+        *
+        * 3.Apache HTTP Client Removal
+        *
+        *
+        *
+        *
+        *
+        * */
+    }
+
+    /**
+     * 5.0特性
+     * */
+    public void a16_4(){
+
+        /*
+        * https://developer.android.google.cn/about/versions/android-5.0-changes
+        * 1.art虚拟机代替dvm ，主要变化（Ahead-of-time (AOT) compilation  Improved garbage collection (GC) ）
+        *
+        * 2.WebView默认不支持混合模式（http、https混合） 需要手动设置 setMixedContentMode()
+        *
+        * 3.Material design
+        *
+        *
+        * */
     }
     //endregion
 }
