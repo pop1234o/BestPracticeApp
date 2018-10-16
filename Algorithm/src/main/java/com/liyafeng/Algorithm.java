@@ -263,6 +263,24 @@ public class Algorithm {
         *
         */
     }
+
+
+    /**
+    * 什么AVL树？
+    * 和rbtree（红黑树）效率的比较？
+    *
+    * */
+    public void a5_4(){
+        /*
+        * https://www.zhihu.com/question/19856999
+        * AVL树得名于它的发明者G. M. Adelson-Velsky和E. M. Landis，
+        * 他们在1962年的论文《An algorithm for the organization of information》中发表了它
+        * AVL是自平衡二叉查找树
+        *
+        *
+        *
+        * */
+    }
     //endregion
 
     //region 压缩/加密

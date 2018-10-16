@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.IntSummaryStatistics;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -787,9 +789,9 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         * 因为任意对象都能成为锁
         *
         * Object o = new Object();
-          synchronized (o){
+          synchronized (o){//当前线程 获取o对象的监视器
             try {
-               o.wait();
+               o.wait();//一个线程获取到这个对象的监视器后，才能调用这个方法的wait
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -1071,17 +1073,6 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     //region Java集合
 
     /**
-     * HashMap的实现原理
-     * ------------------------
-     * 如何减少hash碰撞？
-     */
-    public void a3_1() {
-        /*
-         * 数组加链表，拉链法实现的散列表
-         */
-    }
-
-    /**
      * 常用java集合框架简介
      * {@link java.util.Collection}
      * {@link java.util.Map}
@@ -1113,9 +1104,9 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * =》SortedSet
          * =》NavigableSet
          *   TreeSet(内部是TreeMap实现)
-         * ****************************
+         *
          * HashSet (内部是HashMap实现 )
-         * **********************************
+         *
          * android.support.v4.util.ArraySet
          * 数组实现，二分法查找
          *
@@ -1194,6 +1185,165 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     }
 
+
+    /**
+     * HashMap的实现原理
+     * 如何减少hash碰撞？（java用的什么算法来减少hash碰撞？）
+     * 如何处理hash碰撞？
+     * hashmap比较key相等的依据是什么？
+     */
+    public void a3_1() {
+        /*
+         * ===========HashMap的实现原理=================
+         *
+         * 数组加链表，拉链法实现的散列表(后来链表改成红黑树了。。)
+         * 当链表长度大于8，则转换为红黑树，以后就直接插入红黑树中
+         *
+         * =========如何减少hash碰撞？（java用的什么算法来减少hash碰撞？）===========
+         * 一个设计良好的 hash 算法，具有以下特性
+         * 压缩性：任意长度的数据都可以通过hash来压缩（或扩展）到相同长度
+         * 抗计算原性：给定一个hash结果h,寻找原来的M来满足H(M)=h是计算困难的。
+         * 抗碰撞性。找到两个明文M,M’ 使hash值 H(M)=H(M’)是计算困难的
+         *
+         *   static final int hash(Object key) {
+                int h;
+                return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+            }
+         *
+         * =========如何处理hash碰撞？===========
+         * 当有元素发生hash碰撞的时候，就讲碰撞的所有元素组成链表
+         * 依次加入链表尾
+         *
+         * =========hashmap比较key相等的依据是什么？========
+         * 先判断hash值，然后判断 ==（引用相等）或者equals(两者其一就好)
+         * 为什么要先判断==呢？是因为这个是最直观的，高效
+         *
+         */
+    }
+
+    /**
+     * ConcurrentHashMap作用？原理？
+     * http://www.infoq.com/cn/articles/ConcurrentHashMap
+     */
+    public void a3_1_1() {
+        /*
+         * HashMap 在多线程中扩容重hash的时候导致死循环，脏读的问题
+         * =======================ConcurrentHashMap======================
+         * 旧版本采用分段锁，将整个散列表分为很多Segment[]，然后每个Segment
+         * 中又有多个HashEntry[]，所以hashmap在put的时候就先用元素key的hash
+         * 来找到指定Segment
+         * return segments[(hash >>> segmentShift) & segmentMask];
+         * 找到后调用segment的put方法，里面还是通过key的hash值来找到
+         * 指定的HashEntry[index]，
+         *  int index = hash & (tab.length - 1);
+         *  这个时候调用lock来加锁，Segment继承ReentrantLock
+         *  ------------
+         * 后来就变成在某个链表中加锁了，用的synchronized关键字
+         * 配合cas操作来完成同步
+         *
+         *
+         *
+         */
+        new HashMap<>();
+        ConcurrentHashMap<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
+        concurrentHashMap.put(1, "");
+        String s = concurrentHashMap.get(1);
+    }
+
+    /**
+     * LinkedHashMap作用？原理？{@link java.util.LinkedHashMap}
+     * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
+     */
+    public void a3_9() {
+        /*
+         * 有序的HashMap(按插入顺序，或者访问顺序)
+         * Hash table and linked list implementation of the <tt>Map</tt> interface,
+         * with predictable iteration order(有可预料的遍历顺序)
+         * 因为hashmap的iteration是无序的，而这个是可以有序的遍历
+         *
+         * accessOrder为true，则遍历是按访问顺序
+         * false就是按插入顺序
+         *
+         * =================原理==============
+         * 原理就是重写了put中调用的 addEntry方法  如果是新加入的，那么加入Entry环的尾结点
+         * 这个是LinkedHashMap中的 LinkedHashMapEntry header变量
+         * 也从写了createEntry，返回LinkedHashMapEntry
+         * LinkedHashMapEntry<K,V> extends HashMapEntry<K,V>  里面重写了recordAccess方法，
+         * 每次访问，如果accessOrder=true(按访问顺序)，然后就把这个Entry加入环的尾节点（
+         * 就是header的前一个节点）
+         *
+         * header是初始化的时候new的一个锚点对象，他的after before都指向自己
+         *
+         *
+         * LinkedHashMapEntry是一个环的结构，有一个header，每次新加入或者新访问的节点加入环尾
+         * 那么header的after节点是eldest 最老的节点
+         *
+         * -------------------------
+         * 后续改为红黑树的是重写了newTreeNode ，里面将新的node创建后加入了链表
+         *
+         * 基本原理就是插入的时候 ，重写创建node的方法，创建完了加入链表
+         *
+         *
+         *
+         */
+        LinkedHashMap<Integer, String> linkedHashMap = new LinkedHashMap<>();
+        linkedHashMap.put(1, "a");
+
+    }
+
+
+    /**
+     * TreeMap作用？
+     * {@link java.util.TreeMap}
+     */
+    public void a3_11() {
+        /*
+         * A Red-Black tree based {@link NavigableMap} implementation.
+         * 基于红黑树的NavigableMap实现  （Navigable 可导航的）
+         *
+         * 这个遍历出来是有序的，元素要实现Comparable,或者传入Comparator
+         * 数据结构是左小右大的二叉树。
+         * 遍历就是中序遍历二叉树
+         *
+         */
+        TreeMap<Integer, String> treeMap = new TreeMap<>();
+        treeMap.put(1, "1");
+        String s = treeMap.get(1);
+        Set<Map.Entry<Integer, String>> entries = treeMap.entrySet();
+        Iterator<Map.Entry<Integer, String>> iterator = entries.iterator();
+
+    }
+
+
+    /**
+     * ArrayList和LinkedList区别？使用场景？
+     */
+    public void a3_12() {
+        /*
+         * 内部数据结构不同，一个数组实现一个链表实现
+         *
+         * ArrayList适合读（比如取第3个元素），如果插入元素，那么
+         * 要将后面的元素后移，而且要扩容还需要将原数组的数据拷贝
+         *
+         * LinkedList就是双向链表
+         * 适合 添加/删除（添加删除频繁的用LinkedList）
+         * 但是读取就需要遍历来读取了(判断index离头近还是离尾近，就从哪里开始遍历)
+         *
+         */
+
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add("");
+        strings.remove(1);
+        strings.get(1);
+
+        LinkedList<Long> longs = new LinkedList<>();
+        longs.add(1L);
+        longs.remove(1);
+        longs.get(1);
+
+    }
+
+
     /**
      * RandomAccess接口有什么用？
      */
@@ -1270,12 +1420,21 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 如何实现二叉树深度优先和广度优先的遍历？
+     * 图的广度优先遍历？
      */
     public void a3_7() {
         /*
          * 深度优先遍历可以用递归方法来遍历
-         * 广度优先遍历可以用一个栈来存储上一层已经遍历的节点
-         * 然后将新遍历的节点加入栈，直到栈空
+         *
+         * 广度优先遍历可以用一个队列来存储上一层已经遍历的节点
+         * 然后将新遍历的节点加入队列，直到队列空
+         * （比如，定节点入队列，然后进入循环，循环取队列中的元素，直到队列为0，
+         * 取出后，获取他的子节点加入队列，如此循环，则是广度遍历）
+         *
+         * ===========================
+         * 图的广度优先，可以标记已经遍历过的数据（对于有环图）
+         *
+         *
          */
     }
 
@@ -1292,90 +1451,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         context.getResources().getDrawable(R.drawable.tree);
     }
 
-    /**
-     * LinkedHashMap作用？原理？{@link java.util.LinkedHashMap}
-     * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
-     */
-    public void a3_9() {
-        /*
-         * 有序的HashMap(按插入顺序，或者访问顺序)
-         * =================原理==============
-         * 原理就是重写了put中调用的 addEntry方法  如果是新加入的，那么加入Entry环的尾结点
-         * 这个是LinkedHashMap中的 LinkedHashMapEntry header变量
-         * 也从写了createEntry，返回LinkedHashMapEntry
-         * LinkedHashMapEntry<K,V> extends HashMapEntry<K,V>  里面重写了recordAccess方法，
-         * 每次访问，如果accessOrder=true(按访问顺序)，然后就把这个Entry加入环的尾节点（
-         * 就是header的前一个节点）
-         *
-         * header是初始化的时候new的一个锚点对象，他的after before都指向自己
-         *
-         *
-         * LinkedHashMapEntry是一个环的结构，有一个header，每次新加入或者新访问的节点加入环尾
-         * 那么header的after节点是eldest 最老的节点
-         */
-    }
 
-
-    /**
-     * ConcurrentHashMap作用？原理？
-     * http://www.infoq.com/cn/articles/ConcurrentHashMap
-     */
-    public void a3_10() {
-        /*
-         * HashMap 在多线程中扩容重hash的时候导致死循环，脏读的问题
-         * =======================ConcurrentHashMap======================
-         * 旧版本采用分段锁，将整个散列表分为很多Segment[]，然后每个Segment
-         * 中又有多个HashEntry[]，所以hashmap在put的时候就先用元素key的hash
-         * 来找到指定Segment
-         * return segments[(hash >>> segmentShift) & segmentMask];
-         * 找到后调用segment的put方法，里面还是通过key的hash值来找到
-         * 指定的HashEntry[index]，
-         *  int index = hash & (tab.length - 1);
-         *  这个时候调用lock来加锁，Segment继承ReentrantLock
-         *  ------------
-         * 后来就变成在某个链表中加锁了，用的synchronized关键字
-         * 配合cas操作来完成同步
-         *
-         *
-         *
-         */
-        new HashMap<>();
-        ConcurrentHashMap<Integer, String> concurrentHashMap = new ConcurrentHashMap<>();
-        concurrentHashMap.put(1, "");
-        String s = concurrentHashMap.get(1);
-    }
-
-
-    /**
-     * TreeMap作用？
-     * {@link java.util.TreeMap}
-     */
-    public void a3_11() {
-        /*
-         * 这个遍历出来是有序的，元素要实现Comparable,或者传入Comparator
-         * 数据结构是左小右大的二叉树。
-         * 遍历就是中序遍历二叉树
-         *
-         */
-        TreeMap<Integer, String> treeMap = new TreeMap<>();
-        treeMap.put(1, "1");
-        String s = treeMap.get(1);
-        Set<Map.Entry<Integer, String>> entries = treeMap.entrySet();
-        Iterator<Map.Entry<Integer, String>> iterator = entries.iterator();
-
-    }
-
-    /**
-     * ArrayList和LinkedList区别？使用场景？
-     */
-    public void a3_12() {
-        /*
-         * 内部数据结构不同，一个数组实现一个链表实现
-         * 一个适合读（比如取第3个元素），一个适合添加删除（添加删除频繁的用LinkedList）
-         *
-         */
-
-    }
     //endregion
 
     //region Java网络
@@ -1442,7 +1518,25 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
-     * 说说三次握手和四次挥手？为什么要这样做？
+     * 说说OSI七层模型 和 TCP/IP五层模型
+     */
+    public void a7_2_1(Context context) {
+
+        /*
+         * OSI 开放式系统互联通信参考模型
+         * (Open System Interconnection Reference Model)
+         * 由国际标准化 组织提出
+         * */
+
+        context.getResources().getDrawable(R.drawable.osi_7);
+
+    }
+
+    /**
+     * 说说三次握手和四次挥手？
+     * 为什么要三次握手？不是两次？
+     * 为什么要四次挥手？
+     * 什么是全双工/半双工？
      * https://github.com/jawil/blog/issues/14
      * https://hit-alibaba.github.io/interview/basic/network/TCP.html
      */
@@ -1451,8 +1545,37 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 三次握手和四次挥手是Tcp协议中定义，所以他们是建立Tcp连接和断开的基石
          * 利用TCP头部的SYN ACK标记来进行三次握手、
          *
-         * ================为什么要这样做？=======================
+         * 三次握手，先是client向sever发一个tcp请求，SYN标记位为1，告知服务器请求tcp连接
+         * 然后sever返回ACK标记位为1 （这时表明sever是在线的）
+         * 然后客户端收到sever的数据后，再发送一个tcp请求
+         * （表明client知道了sever是在线的，所以client也维持在线的）
+         *
+         *
+         * ================为什么要三次握手？不是两次？=======================
+         * https://blog.csdn.net/xifeijian/article/details/12777187
          * 为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误，浪费服务端资源
+         *
+         * 第一次握手，被阻塞在网络节点很长时间，在失效后才到达服务端
+         * 那么服务端会认为这是一个新的连接请求，然后给客户端发送消息建立连接
+         * 然后等待数据，但是这个时候客户端这个连接已经失效，所以服务端会一直等待
+         * 浪费资源
+         * ----------------
+         * 如果两次握手，那么服务端就可能不知道client是否在线，（client不知道自己在线）
+         * 造成自己不知道该不该保持这个链接来等待client的数据，就造成资源浪费
+         * （如果两次握手sever不知道自己的第二次握手是否传到client，
+         * 所以他不知道还该不该等待client的数据）
+         *
+         * =============为什么要四次挥手？===================
+         * https://blog.csdn.net/xifeijian/article/details/12777187#commentsedit
+         * 因为tcp是全双工的，就是数据可以双向传输
+         * 所以客户端停止传输，需要发送一个请求，然后服务端一个响应（代表服务端知道客户端不会再发送数据了）
+         * 服务端停止传输，也需要向客户端发送一个请求，然后客户端一个响应（代表客户端知道服务端不会发送数据了）
+         * 至此tcp链接断开
+         * 所以断开全双工的连接需要四次挥手
+         *
+         * ===============什么是全双工/半双工？============
+         * 全双工： [1]  指可以同时（瞬时）进行信号的双向传输（A→B且B→A）。指A→B的同时B→A，是瞬时同步的。
+         *   半双工：指一个时间内只有一个方向的信号传输（A→B或B→A）
          *
          */
         context.getResources().getDrawable(R.drawable.tcp_shake_hand);
@@ -1536,7 +1659,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
         /*
          * TCP：
          * 1面向连接 ，建立连接需要开销较多(时间，系统资源)
-         * 2传输可靠(保证数据正确性,保证数据顺序)、
+         * 2传输可靠(保证数据正确性,保证数据顺序（有标记序号）)、
          * 3传输是面向字节流，用于传输大量数据(流模式)
          * 4，tcp报文首部需要20字节
          * 5。一对一，端口对端口的
@@ -1572,16 +1695,29 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 互联网工程任务组（IETF）2015年5推出
          * 1.单一长连接，向单个域名的请求，会用一个tcp连接，这样就减少三次握手带来的开销
          *   而且克服了tcp慢启动（一开始会会限制最大传输速度，如果响应成功，会提高传输速度）
+         *   (同一个tcp连接中发送多个http请求)
+         *
          * 2.（多路复用）head of line blocking 是http1.x的特性，一个请求没有响应之前，后面的请求将会阻塞
-         *       所以我们用二进制分帧的形式将多个请求合并为一个，每个请求编号
-         * 3.二进制分帧（Frame），在Http协议和Tcp协议之间加入 二进制分帧层（Binary Framing）
-         *   将 http请求头加入到HEADER frame 中，将请求体加入  DATA frame 中
-         * 4.首部压缩 ，SPDY 使用的是通用的DEFLATE 算法，而 HTTP/2 则使用了专门为首部压缩而设计的 HPACK 算法
-         * 5.服务端推送（Server Push、Cache Push），一个请求可以有多个响应，比如我们请求A，那么服务端可以
+         *      （浏览器或者手机会限制同一个域名的并发请求的数量，一般是6-8个，如果还有请求，那么必须等待）
+         *
+         *   所以我们用二进制分帧的形式将多个请求合并为一个，每个请求编号，响应也是如此
+         *   这样就提高了并发度
+         *   二进制分帧（Frame），在Http协议和Tcp协议之间加入 二进制分帧层（Binary Framing）
+         *   将 多个http请求头加入到一个HEADER frame 中，将多个请求体加入 一个 DATA frame 中
+         *   然后服务端响应后再拆开
+         *
+         *
+         * 3.首部压缩 ，SPDY 使用的是通用的DEFLATE 算法，而 HTTP/2 则使用了专门为首部压缩而设计的 HPACK 算法
+         *   将http请求头由纯文本压缩
+         *
+         * 4.服务端推送（Server Push、Cache Push），一个请求可以有多个响应，比如我们请求A，那么服务端可以
          *   响应A后，再返回响应B,这样就相当于主动推送了（这在首页初次请求很多资源时很有用）
          *
          * ===================SPDY 是什么？===================
          * （SPeeDY）快速的，是Google用来加快网络速度，降低延迟。
+         * SPDY并不是一种用于替代HTTP的协议，而是对HTTP协议的增强（所以是基于tcp的应用层协议）
+         * 其实SPDY是在http和tcp中间，http请求无需改变，然后交给spdy，然后再交给tcp
+         *
          * 是google为了改进Http1.x的缺陷来制定的协议，后来Http2.0出来，Google就不维护这个协议了
          * 全力支持Http2.0，Http2.0也是根据这个协议改进而来
          *
@@ -1603,9 +1739,11 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 总的区别就是安全 https并不是修改了http协议，而是http协议加上了tls协议或者ssl协议
          * 1.https是在http下层加入了tls层（传输层安全协议）
          * 2 url头部不同，
-         * 3 端口不同，
+         * 3 端口不同，（一个80端口，一个433端口）
          * 4 http内容明文，https是密文
          * ================https何实现安全性?/tls层的实现原理=================
+         * https还需要四次？握手
+         *
          * 1客户端告知服务端可使用的 几套加密算法（对称加密+非对称加密+hash算法）
          * 2.服务器返回选择的一套加密算法，和数字证书（CA颁发，里面用CA私钥加密了服务器的公钥和网站信息）
          * 3.客户端接收到，验证数字证书的合法性，用正规CA机构的公钥解密，成功则数字证书合法
@@ -1614,6 +1752,10 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 4.服务端 用私钥解密 得到随机密码。（此时只有客户端和服务端知道随机密码）
          *   然后服务端将握手消息用随机密码加密发送
          * 5.客户端用随机密码解密 握手消息。此时tls握手完成，客户端以后发送的数据都用随机密码加密后传输
+         *
+         * 一开始非对称加密用来传输 对称加密用的随机密码
+         * 后面双方都有随机密码了，就用对称加密
+         *
          * ======================如何验证（数字）证书的合法性?==============
          * 浏览器内置根证书，验证数字证书链接合法性（用公钥解密，能成功就是合法）
          * 或者去指定CA机构获取公钥解密
@@ -1622,35 +1764,60 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 内容的传输用了对称加密
          *
          */
+        //图片中的key就是客户端生成的随机密码（随机秘钥）
         context.getResources().getDrawable(R.drawable.http_hand_shake_1);
     }
+
+
     //endregion
 
     //region JVM知识
 
     /**
+     * 说说有几种jvm
+     *
+     * */
+    public void a8_0() {
+
+        /*
+        * https://www.zhihu.com/question/29265430
+        *
+        * HotSpot VM
+        * JRockit VM
+        * J9 VM
+        *
+        * 自从Oracle把BEA和Sun都收购了之后，Java SE JVM只能二选一，JRockit就炮灰了
+        * 。
+        * 不同的jvm有不同的gc算法，所以我们一般都是基于HotSpot来说的
+        * */
+    }
+
+    /**
      * 哪些情况下的对象会被垃圾回收机制处理掉? /jvm垃圾回收机制是怎样的?
+     * 如果老年代引用了新生代的对象，而此时触发young gc，新生代是否会被回收？
+     *
      * <p>
      * https://yunfengsa.github.io/2015/11/12/android-jvm-gc/
+     * https://www.cnblogs.com/zhguang/p/3257367.html
      */
     public void a8_1() {
         /*
          *
          * 虚拟机中的内存区域分为新生代和老年代，新分配的对象被存储在新生代中
-         * 当需要申请内存而内存空间不足时，就触发Minor GC来回收新生代的内存，
+         * 当需要申请内存而内存空间不足时，就触发Minor GC（或叫Young GC）
+         * 来回收新生代的内存，Minor（新生的）
          * 如果没被回收的对象就讲它年龄+1，一般到15的时候对象会被转移到老年代
-         * 老年代占满，会触发Major GC，回收老年代的垃圾对象
-         * 直到所有内存都占满，就触发Full GC，回收所有内存空间中的垃圾对象
-         * Android使用的是标记-清除算法来回收垃圾对象
+         * （这里指的是最大15，如果新生代满了就会移动到老年代）
+         * 老年代占满，会触发Major GC（也叫 Full GC），回收老年代的垃圾对象
          *
-         * 另外的GC算法还有复制算法（就是定义两个大小相等的区域，一次GC把非垃圾对象
-         * 复制到另一块内存中，这样减少了内存碎片）
-         * 标记-整理算法，标记非垃圾对象，并且整理到连续的内存中
+         *
+         *
          *
          * ==================标记算法==================
          * 标记所有垃圾对象，那么标记的算法有两种：引用计数法和根搜索法
          * 引用计数法：如果对象被引用，则引用计数器加1，如果为0则是垃圾对象
          *   但是主流vm都没有采用这种算法，因为如果循环引用，那么这种算法则不起作用
+         *
          * 根搜索法：将一些对象视作根对象，从根对象开始遍历引用，遍历到的就是可达的对象
          *   所以我们可以将不可达的对象清除
          * 如何选择根对象：
@@ -1661,6 +1828,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          *   运行中的线程
          *   由引导类加载器加载的对象
          *   GC控制的对象
+         *   回收新生代时老年代持有他的引用，那么老年代也可作为gc root
          *
          * 当对象处于不可达状态，且垃圾回收器会调用他的finalize方法
          * 如果调用完finalize（），对象还是不可达，那么他将被永久回收
@@ -1670,11 +1838,12 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 1.标记-清除算法：标记后，直接将标记的内存区域清空
          *   缺点就是产生大量碎片内存，没有足够的连续内存分配给较大的对象，这样就触发下一次gc
          *   导致频繁gc
-         * 2.复制算法，将内存分为两个区域，只在一个区域中分配内存，标记回收后，将剩下的对象
+         * 2.标记-复制（停止-复制）算法，将内存分为两个区域，
+         *   只在一个区域中分配内存，标记回收后，将剩下的对象
          *   复制到另一个区域，这样内存使用就连续了。缺点就是效率低，只能使用一半内存，而且
          *   如果内存中有大量存活对象，那么复制耗时较长（所以这种算法一般用于新生代中，因为
          *   新生代内存中对象存活率低）
-         * 3.标记-压缩算法：标记回收后，将存活的对象压缩到内存的一端，这样解决了碎片化问题，
+         * 3.标记-压缩（整理）算法：标记回收后，将存活的对象压缩到内存的一端，这样解决了碎片化问题，
          *   也解决了内存使用率低的问题。（这种算法广泛应用于老年代中）
          *
          * =========================分代收集==========================
@@ -1684,16 +1853,26 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          *   新生代：老年代=1:2    Eden，from survivor,to survivor=8:1:1
          *   from survivor,to survivor这两个空间只能有一个可用
          * 2.两种收集类型，一种Minor GC ，一种Full GC(也叫Major GC)
-         *   Minor GC，收集eden空间，和rom survivor,to survivor中的一个
-         *   然后将存活的对象复制到rom survivor,to survivor中的另一个中
+         *   Minor GC，收集eden空间，和from survivor,to survivor中的一个
+         *   然后将存活的对象复制到from survivor,to survivor中的另一个中
          *   （这就是复制算法），每在Minor GC中存活的对象年龄加1，
          *   直到年龄到15岁对象会被移动到老年代，
-         *    默认是 15 岁，可以通过参数 -XX:MaxTenuringThreshold 来设定
+         *    默认是 15 岁（这里）可以通过参数 -XX:MaxTenuringThreshold 来设定
          *   Full Gc是老年代满的时候触发的，他采用标记-压缩算法来回收老年代
          *
          *
          *
+         * ======如果老年代引用了新生代的对象，而此时触发young gc，新生代是否会被回收？=============================
+         * 可能存在年老代对象引用新生代对象的情况，如果需要执行Young GC，
+         * 则可能需要查询整个老年代以确定是否可以清理回收，这显然是低效的。
+         * 解决的方法是，年老代中维护一个512 byte的块——”card table“，
+         * 所有老年代对象引用新生代对象的记录都记录在这里。Young GC时，
+         * 只要查这里即可，不用再去查全部老年代，因此性能大大提高。
          *
+         *
+         * ===============================
+         * 方法区 （就是永久代）
+         * 比如静态属性，常量
          *
          */
     }
@@ -1772,12 +1951,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          */
     }
 
-    /**
-     * 说说有哪些可以作为gc root
-     */
-    public void a8_4() {
 
-    }
     //endregion
 
     //region java8
