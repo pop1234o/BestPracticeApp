@@ -24,10 +24,12 @@ public class N_Sort_InsertionSort {
     }
 
     private static void sort(int[] array) {
-        for (int i = 1; i < array.length; i++) {
-            for (int j = i; j > 0 && array[j] < array[j - 1]; j--) {//依次插入之前已排序好的元素中
-                Util.exchange(array, j, j - 1);
-            }
-        }
+//        for (int i = 1; i < array.length; i++) {
+//            for (int j = i; j > 0 && array[j] < array[j - 1]; j--) {//依次插入之前已排序好的元素中
+//                Util.exchange(array, j, j - 1);
+//            }
+//        }
+
+
     }
 }
