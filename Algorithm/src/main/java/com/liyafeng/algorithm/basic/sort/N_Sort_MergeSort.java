@@ -67,6 +67,36 @@ public class N_Sort_MergeSort {
         }
     }
 
+
+//    int[] aux;
+//
+//    void sort(int[] arrays, int lo, int mid, int hi) {
+//        if (lo >= hi) {
+//            return;
+//        }
+//        sort(arrays, lo, (lo + mid) / 2, mid);
+//        sort(arrays, mid + 1, (hi + mid + 1) / 2, hi);
+//
+//
+//        for (int i = lo; i < hi; i++) {
+//            aux[i] = arrays[i];
+//        }
+//
+//        int i = lo, j = mid + 1;
+//        for (int k = lo; k < hi; k++) {
+//            if (i > mid) {
+//                aux[k] = aux[j++];
+//            } else if (j > hi) {
+//                aux[k] = aux[i++];
+//            } else if (aux[i] < aux[j]) {
+//                aux[k] = aux[i++];
+//            } else {
+//                aux[k] = aux[j++];
+//            }
+//        }
+//    }
+
+
     /**
      * 自顶向下的归并排序，因为他是从顶层开始递归分解数组，直到分解到底层然后对子数组两两归并
      * =======
@@ -87,7 +117,7 @@ public class N_Sort_MergeSort {
             if (low >= high) {
                 return;
             }
-            int mid = low + (high - low) / 2;
+            int mid = (high + low) / 2;
             sort(array, low, mid);//这其实就是一个拆分过程
             sort(array, mid + 1, high);
             merge(array, low, mid, high);//上面的拆分/排序完成，开始左右两个有序数组归并

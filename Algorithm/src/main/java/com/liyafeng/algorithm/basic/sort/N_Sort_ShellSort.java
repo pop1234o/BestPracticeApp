@@ -43,4 +43,10 @@ public class N_Sort_ShellSort {
         }
 
     }
+
+
+    private static void sort1(int[] array){
+
+    }
+
 }

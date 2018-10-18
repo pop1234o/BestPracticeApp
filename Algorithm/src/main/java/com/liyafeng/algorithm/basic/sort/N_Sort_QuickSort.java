@@ -87,7 +87,7 @@ public class N_Sort_QuickSort {
      */
     public static int partition(int[] ints, int lo, int hi) {
 
-        int k = lo;
+        int k = lo;//切分元素
         int start = lo + 1;//start
         int end = hi;//end
 
@@ -146,17 +146,41 @@ public class N_Sort_QuickSort {
         if (lo >= hi) {
             return;
         }
-        int mid = partition1(ints, lo, hi);
-        sort1(ints, lo, mid - 1);
-        sort1(ints, mid + 1, hi);
+//        int mid = partition1(ints, lo, hi);
+//        sort1(ints, lo, mid - 1);
+//        sort1(ints, mid + 1, hi);
     }
 
 
-    public static int partition1(int[] ints, int lo, int hi) {
-
-
-//        int mid = (lo + hi) / 2;
-//        while ()
-    }
+//    public static int partition1(int[] ints, int lo, int hi) {
+//
+//
+//        int pivot = lo;
+//        int start =lo+1,end=hi;
+//        while (true){
+//            while (ints[start]<ints[pivot]){
+//                start++;
+//                if(start>=hi){
+//                    break;
+//                }
+//            }
+//
+//            while (ints[end]<ints[pivot]){
+//                end--;
+//                if(end<=lo){
+//                    break;
+//                }
+//            }
+//            if(start>=end){
+//                break;
+//            }
+//
+//            exchange(ints,start,end);
+//        }
+//
+//        exchange(ints,end,pivot);
+//        return end;
+//
+//    }
 
 }
