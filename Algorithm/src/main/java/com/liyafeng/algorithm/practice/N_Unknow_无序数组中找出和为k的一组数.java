@@ -4,7 +4,7 @@ package com.liyafeng.algorithm.practice;
  * Created by liyafeng on 2018/3/7.
  */
 
-public class N_Unknow_SumK {
+public class N_Unknow_无序数组中找出和为k的一组数 {
 
     /**
      * 算法题：k 数和

@@ -1,6 +1,6 @@
 package com.liyafeng.algorithm.sword2offer;
 
-public class N2_Singleton {
+public class N2_Singleton_单例 {
 
     public static void main(String[] args) {
         Singleton instance1 = Singleton.getInstance();

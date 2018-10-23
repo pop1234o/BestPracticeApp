@@ -1,6 +1,6 @@
 package com.liyafeng.algorithm.sword2offer;
 
-public class N3_SearchInArray {
+public class N3_SearchInArray_有序二维数组中查找k {
     /**
      * 二维数组查找问题
      * <p>

@@ -1,6 +1,6 @@
 package com.liyafeng.algorithm.sword2offer;
 
-public class N1_ObjectSize {
+public class N1_ObjectSize_对象的大小 {
     /**
      * 变量占用的内存数
      * 8 bit  = 1 byte      0000 1111
