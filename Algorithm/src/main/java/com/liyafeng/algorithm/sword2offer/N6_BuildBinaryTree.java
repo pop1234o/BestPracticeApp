@@ -11,7 +11,7 @@ public class N6_BuildBinaryTree {
      * <p>
      * 重点是四个指针
      * 重点是搞清四个指针的位置
-     *
+     * 前序遍历确定根节点是哪个，中序遍历确定，左右子树的集合
      * @param args
      */
     public static void main(String[] args) {
