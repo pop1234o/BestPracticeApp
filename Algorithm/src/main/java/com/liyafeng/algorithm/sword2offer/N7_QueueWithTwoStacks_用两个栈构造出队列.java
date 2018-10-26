@@ -2,7 +2,7 @@ package com.liyafeng.algorithm.sword2offer;
 
 import java.util.Stack;
 
-public class N7_QueueWithTwoStacks {
+public class N7_QueueWithTwoStacks_用两个栈构造出队列 {
 
 
     /**

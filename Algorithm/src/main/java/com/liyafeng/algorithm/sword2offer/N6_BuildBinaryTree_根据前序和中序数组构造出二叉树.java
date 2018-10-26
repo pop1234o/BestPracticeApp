@@ -1,6 +1,6 @@
 package com.liyafeng.algorithm.sword2offer;
 
-public class N6_BuildBinaryTree {
+public class N6_BuildBinaryTree_根据前序和中序数组构造出二叉树 {
     /**
      * 堆是一种遵守特定规则的树
      * 堆是树的一种

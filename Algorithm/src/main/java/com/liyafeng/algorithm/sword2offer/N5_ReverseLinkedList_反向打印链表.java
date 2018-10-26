@@ -1,6 +1,6 @@
 package com.liyafeng.algorithm.sword2offer;
 
-public class N5_ReverseLinkedList {
+public class N5_ReverseLinkedList_反向打印链表 {
 
 
     /**

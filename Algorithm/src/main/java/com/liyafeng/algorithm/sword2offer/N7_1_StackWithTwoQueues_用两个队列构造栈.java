@@ -3,7 +3,7 @@ package com.liyafeng.algorithm.sword2offer;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class N7_1_StackWithTwoQueues {
+public class N7_1_StackWithTwoQueues_用两个队列构造栈 {
 
     /**
      * 这个也是一个出队列，然后剩下最后一个就是要出栈的

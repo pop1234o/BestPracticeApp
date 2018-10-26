@@ -1,6 +1,6 @@
 package com.liyafeng.algorithm.sword2offer;
 
-public class N4_ReplaceString {
+public class N4_ReplaceString_替换字符串中的字符 {
 
     /**
      * String替换过程
