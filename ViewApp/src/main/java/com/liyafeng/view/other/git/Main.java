@@ -56,9 +56,10 @@ public class Main {
      * -----------------------
      * git 初始化，我们提交代码要设置 用户名 和 邮箱
      * <p>
-     * git config --global user.name "John Doe"
-     * git config --global user.email johndoe@example.com
+     * git config --global user.name "pop1234o"
+     * git config --global user.email "859405648@qq.com"
      * 这个要设置，否则commit记录那个色块就没有了
+     * 然后我们第一次push 到master ，关联，会弹出框要求我们填写github的用户名和密码
      * <p>
      * 这时时编辑的是用户目录下的 .gitconfig 文件
      * 查看git 配置
