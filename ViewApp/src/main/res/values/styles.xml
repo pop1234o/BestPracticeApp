@@ -69,13 +69,13 @@
 
     <!--透明的Activity-->
 
-    <style name="transparent_activity">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:windowFullscreen">true</item>
-    </style>
+    <!--<style name="transparent_activity">-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--<item name="android:windowAnimationStyle">@null</item>-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+    <!--</style>-->
 
     <!--如果继承APPCompatActivity ，那么必须要用这个主题，否则崩溃-->
     <style name="transparent_activity" parent="Theme.AppCompat.DayNight.NoActionBar">
