@@ -1,4 +1,4 @@
-package com.liyafeng.view.other.drawable;
+package com.liyafeng.view.other.idedir;
 
 public class Background {
 
