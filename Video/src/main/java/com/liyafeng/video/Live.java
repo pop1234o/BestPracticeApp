@@ -24,6 +24,15 @@ public class Live {
      * 就像现在的电视盒子都是点播，爱奇艺，优酷等看电影都是点播的方式
      * 和电视的实时播放时有区别的。
      *
+     * ==================实时视频聊天============
+     * WebRTC，名称源自网页即时通信（英语：Web Real-Time Communication）的缩写
+     * 是一个支持网页浏览器进行实时语音对话或视频对话的API。
+     * 它于2011年6月1日开源并在Google、Mozilla、Opera支持下被纳入万维网联盟的W3C推荐标准[2][3][4]。
+     * 2010年5月，Google以6820万美元收购VoIP软件开发商Global IP Solutions的GIPS引擎[17][18][19]，并改为名为“WebRTC”
+     * WebRTC使用GIPS引擎，实现了基于网页的视频会议，并支持722，PCM，ILBC，ISAC等编码，
+     * 同时使用谷歌自家的VP8影片解码器；同时支持RTP/SRTP传输等
+     * 2012年1月，谷歌已经把这款软件集成到Chrome浏览器中。
+     *
      * @param args
      */
     public static void main(String[] args) {
