@@ -42,9 +42,13 @@ public class AudioPlayPCM {
      * ====================应用场景===============================
      * 提供了非常强大的控制能力，支持低延迟播放，适合流媒体和VoIP语音电话等场景
      * <p>
-     * =====================================
+     * =================ByteArrayOutputStream====================
      * ByteArrayOutputStream 是讲字节流写入内存中（ByteArrayOutputStream对象内部的byte数组）
      * ByteArrayInputStream(new byte[1024]) 是将new byte[1024]当做数据源，读取到我们指定的容器中
+     *
+     * ======================wav音频文件==========================
+     *
+     *
      */
     public AudioPlayPCM() {
     }
@@ -74,14 +78,14 @@ public class AudioPlayPCM {
         );
 
         //java.lang.IllegalStateException: play() called on uninitialized AudioTrack.
-
+        // 如果是 MODE_STATIC模式，必须先调用write将数据全部写入，才能调用play播放
         audioTrack.play();
 
         byte[] bytes = new byte[2048];
         int length = 0;
         while ((length = inputStream.read(bytes)) != -1) {
             Log.i("test", "play: 写入" + length);
-            audioTrack.write(bytes, 0, length);
+            audioTrack.write(bytes, 0, length);//写入到播放流中，系统自动将pcm数据转化为数字信号，然后是模拟信号
         }
         audioTrack.stop();
         audioTrack.release();
