@@ -64,6 +64,9 @@ public class SimpleSurfaceView extends SurfaceView {
                              * 画布本身的作用就是编辑bitmap
                             * */
                             Canvas canvas = holder.lockCanvas();
+                            if(canvas==null){
+                                return;
+                            }
                             canvas.drawBitmap(bitmap, rect, rect_dst, paint);
 
 

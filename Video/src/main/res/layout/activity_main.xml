@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.liyafeng.video.MainActivity">
 
@@ -10,17 +11,18 @@
         app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SurfaceView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <TextureView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Surface显示图片"
         />
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="录制和播放音频"
+        />
+
+</LinearLayout>

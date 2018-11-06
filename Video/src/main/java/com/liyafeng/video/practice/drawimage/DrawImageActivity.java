@@ -12,6 +12,8 @@ public class DrawImageActivity extends Activity {
      * 1. 在 Android 平台绘制一张图片，使用至少 3 种不同的 API，ImageView，SurfaceView，自定义 View
      * https://developer.android.google.cn/reference/android/view/SurfaceView
      *
+     * 核心思想就是获取到canvas，然后操作其中的bitmap
+     *
      *
      * @param savedInstanceState
      */

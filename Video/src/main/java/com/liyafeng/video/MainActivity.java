@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.liyafeng.video.practice.audiorecord.AudioRecordActivity;
 import com.liyafeng.video.practice.drawimage.DrawImageActivity;
 
 /**
@@ -256,6 +257,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, DrawImageActivity.class));
+            }
+        });
+
+        findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, AudioRecordActivity.class));
             }
         });
     }

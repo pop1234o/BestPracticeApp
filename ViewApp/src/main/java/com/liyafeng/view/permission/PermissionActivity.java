@@ -22,6 +22,9 @@ public class PermissionActivity extends AppCompatActivity {
      * 运行时请求权限
      * https://developer.android.google.cn/training/permissions/requesting
      *
+     * targetApi在 23及以上的时候需要申请动态权限
+     * 而且所有时候权限必须在xml中声名，否则动态申请也不授予权限
+     *
      * @param savedInstanceState
      */
     @Override
