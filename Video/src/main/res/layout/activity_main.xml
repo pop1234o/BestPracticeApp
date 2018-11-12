@@ -25,4 +25,10 @@
         android:text="录制和播放音频"
         />
 
+    <Button
+        android:id="@+id/button_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="录制和播放视频"
+        />
 </LinearLayout>

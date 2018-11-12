@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".practice.drawimage.DrawImageActivity">
+    tools:context=".practice.a_draw_image.DrawImageActivity">
 
     <ImageView
         android:layout_width="50dp"
         android:src="@mipmap/ic_launcher"
         android:layout_height="50dp" />
 
-   <com.liyafeng.video.practice.drawimage.SimpleSurfaceView
+   <com.liyafeng.video.practice.a_draw_image.SimpleSurfaceView
        android:id="@+id/surfaceview"
        android:layout_width="150dp"
        android:layout_height="150dp"/>
 
-    <com.liyafeng.video.practice.drawimage.CustomImageView
+    <com.liyafeng.video.practice.a_draw_image.CustomImageView
         android:layout_width="100dp"
         android:layout_height="100dp" />
     <Button

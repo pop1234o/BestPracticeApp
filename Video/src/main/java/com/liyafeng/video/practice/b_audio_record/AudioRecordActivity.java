@@ -1,4 +1,4 @@
-package com.liyafeng.video.practice.audiorecord;
+package com.liyafeng.video.practice.b_audio_record;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +39,9 @@ public class AudioRecordActivity extends Activity {
      * <p>
      * ====================================
      * PCM16 模式，一个采样点的字节是2个字节
+     * 所以我们从流中读取的数据，每两个字节代表一个音频数据，
+     * 如果是双声道录制模式，那么就是左声道两个字节，右声道两个字节这样排列下来
+     *
      * 所以一个frame的大小就是一个采样点的字节数*声道数
      * ==========================
      * 采样率（率指的是频率 hz ，赫兹是频率的基本单位 代表，周期/1秒   比如），

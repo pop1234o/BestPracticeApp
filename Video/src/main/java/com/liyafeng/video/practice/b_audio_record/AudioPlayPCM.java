@@ -1,4 +1,4 @@
-package com.liyafeng.video.practice.audiorecord;
+package com.liyafeng.video.practice.b_audio_record;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -7,16 +7,15 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AudioPlayPCM {
 
     /**
+     * 如何播放pcm音频文件？
+     *
      * https://www.cnblogs.com/renhui/p/7463287.html（使用 AudioTrack 播放PCM音频）
      * Pulse-code modulation
      * 脉冲编码调制

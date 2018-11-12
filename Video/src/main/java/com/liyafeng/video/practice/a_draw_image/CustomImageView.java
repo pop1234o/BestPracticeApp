@@ -1,4 +1,4 @@
-package com.liyafeng.video.practice.drawimage;
+package com.liyafeng.video.practice.a_draw_image;
 
 import android.content.Context;
 import android.graphics.Bitmap;
