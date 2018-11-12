@@ -18,9 +18,18 @@
         android:layout_width="200dp"
         android:layout_height="200dp" />
 
+    <TextureView
+        android:id="@+id/tv_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
     <Button
         android:id="@+id/button4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="拍照" />
+    <Button
+        android:id="@+id/button_record_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="录制" />
 </LinearLayout>

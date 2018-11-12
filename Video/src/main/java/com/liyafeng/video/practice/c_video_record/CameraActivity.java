@@ -5,16 +5,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.media.CamcorderProfile;
+import android.media.MediaRecorder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.liyafeng.video.R;
@@ -25,11 +31,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import static com.liyafeng.video.MainActivity.TAG;
+
 public class CameraActivity extends Activity {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private FrameLayout sv_content;
     private Camera cameraInstance;
+    private MediaRecorder mMediaRecorder;
+    private CameraPreview cameraPreview;
+    private Button button_record_video;
+    private TextureView tv_content;
+    private SurfaceTexture surfaceTexture;
 
     /**
      * camera api能获取图片和视频，5.0以后推荐camera2
@@ -41,6 +54,11 @@ public class CameraActivity extends Activity {
      * <p>
      * ===================使用camera步骤=================
      * https://developer.android.google.cn/guide/topics/media/camera#custom-camera
+     * ===================拍摄照片====================
+     * （采坑）https://zhuanlan.zhihu.com/p/20559606
+     *
+     * ====================录制视频（带音频）=========
+     * MediaRecorder录制好的是自带给你编码了，支持3gp和mp4
      *
      * @param savedInstanceState
      */
@@ -49,6 +67,30 @@ public class CameraActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         sv_content = (FrameLayout) findViewById(R.id.sv_content);
+        tv_content = (TextureView) findViewById(R.id.tv_content);
+
+        tv_content.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+
+            @Override
+            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                CameraActivity.this.surfaceTexture = surface;
+            }
+
+            @Override
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+            }
+
+            @Override
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                return false;
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
+            }
+        });
         findViewById(R.id.btn_record).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +105,101 @@ public class CameraActivity extends Activity {
                 takePhoto();
             }
         });
+
+        button_record_video = (Button) findViewById(R.id.button_record_video);
+        button_record_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    record();
+            }
+        });
+
     }
+
+    boolean isRecording;
+    private void record() {
+        if (isRecording) {
+            // stop recording and release camera
+            mMediaRecorder.stop();  // stop the recording
+            releaseMediaRecorder(); // release the MediaRecorder object
+            cameraInstance.lock();         // take camera access back from MediaRecorder
+
+            // inform the user that recording has stopped
+//            setCaptureButtonText("Capture");
+            button_record_video.setText("录制");
+            isRecording = false;
+        } else {
+            // initialize video camera
+            if (prepareVideoRecorder()) {
+                // Camera is available and unlocked, MediaRecorder is prepared,
+                // now you can start recording
+                mMediaRecorder.start();
+
+                // inform the user that recording has started
+//                setCaptureButtonText("Stop");
+                button_record_video.setText("停止");
+                isRecording = true;
+            } else {
+                // prepare didn't work, release the camera
+                releaseMediaRecorder();
+                // inform user
+            }
+        }
+    }
+
+    private boolean prepareVideoRecorder() {
+        mMediaRecorder = new MediaRecorder();
+
+        // Step 1: Unlock and set camera to MediaRecorder
+        cameraInstance.unlock();
+        mMediaRecorder.setCamera(cameraInstance);
+
+        // Step 2: Set sources
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+        // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
+        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+
+
+        //设置封装格式 默认是MP4
+//        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+//        //音频编码
+//        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+//        //图像编码
+//        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+//        //声道
+//        mMediaRecorder.setAudioChannels(1);
+
+
+
+
+
+        // Step 4: Set output file
+        File file = new File(getExternalFilesDir(null), System.currentTimeMillis() + ".mp4");
+        mMediaRecorder.setOutputFile(file.getAbsolutePath());
+
+//        mMediaRecorder.setOutputFormat();
+        // Step 5: Set the preview output
+        mMediaRecorder.setPreviewDisplay(cameraPreview.getHolder().getSurface());
+//        mMediaRecorder.setPreviewDisplay(new Surface(surfaceTexture));
+
+        // Step 6: Prepare configured MediaRecorder
+        try {
+            mMediaRecorder.prepare();
+        } catch (IllegalStateException e) {
+            Log.d(TAG, "IllegalStateException preparing MediaRecorder: " + e.getMessage());
+            releaseMediaRecorder();
+            return false;
+        } catch (IOException e) {
+            Log.d(TAG, "IOException preparing MediaRecorder: " + e.getMessage());
+            releaseMediaRecorder();
+            return false;
+        }
+        return true;
+
+    }
+
 
     private void takePhoto() {
         if (cameraInstance != null) {
@@ -155,9 +291,25 @@ public class CameraActivity extends Activity {
                 * */
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
 
+                parameters.setPreviewFormat(ImageFormat.NV21);
                 cameraInstance.setParameters(parameters);
 
-                CameraPreview cameraPreview = new CameraPreview(this, cameraInstance);
+
+                /*
+                * 处理图像的每一帧
+                *
+                * */
+//                cameraInstance.setpre
+                cameraInstance.setPreviewCallback(new Camera.PreviewCallback() {
+                    @Override
+                    public void onPreviewFrame(byte[] data, Camera camera) {
+                        //这里面的Bytes的数据就是NV21格式的数据。(难道是5.0以上的系统没有回调了？？)
+                        Log.i(TAG, "onPreviewFrame: "+data.length);
+                    }
+                });
+
+
+                cameraPreview = new CameraPreview(this, cameraInstance);
                 sv_content.addView(cameraPreview);
             }
         }
@@ -197,4 +349,14 @@ public class CameraActivity extends Activity {
             cameraInstance.release();
         }
     }
+
+    private void releaseMediaRecorder(){
+        if (mMediaRecorder != null) {
+            mMediaRecorder.reset();   // clear recorder configuration
+            mMediaRecorder.release(); // release the recorder object
+            mMediaRecorder = null;
+            cameraInstance.lock();           // lock camera for later use
+        }
+    }
+
 }

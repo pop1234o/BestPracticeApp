@@ -20,6 +20,10 @@ public class SurfaceView {
      * 当需要视图频繁刷新，而且需要做耗时操作的时候
      * surfaceview的刷新在子线程，所以不会阻塞主线程
      *
+     * ===================TextureView===============
+     * TextureView可用于显示内容流。内容流可以是视频或者OpenGL的场景。内容流可来自应用进程或是远程其它进程。
+     * Textureview必须在硬件加速开启的窗口中使用。若是软解，TextureView不会显示东西。
+     * 不同于SurfaceView，TextureView不会建立一个单独的窗口(单独的surface)，而是像一个常规的View一样
      *
      * @param args
      */

@@ -273,5 +273,13 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, CameraActivity.class));
             }
         });
+
+//        findViewById(R.id.button_record_video).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(MainActivity.this, CameraActivity.class));
+//            }
+//        });
+//
     }
 }
