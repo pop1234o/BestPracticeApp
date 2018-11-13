@@ -22,12 +22,22 @@
 ### 博客
 * http://blog.csdn.net/v_july_v 
   专门讲解算法、大数据处理、机器学习的博客，csdn博客专家
+
 * https://joyrun.github.io/ 
   悦跑圈技术博客，讲解的自定义注解处理器很不错
+
 * https://hit-alibaba.github.io/interview
   很全面的网络、数据结构、操作系统知识
 * http://maoao530.github.io/
   一位联发科Android开发工程师的博客，博客关于Android Framework层的
   对一些系统原理写的比较好
+
 * https://blog.csdn.net/itachi85
  《Android进阶之光》作者，刘望舒，很多关于底层原理的文章很好
+
+* http://hukai.me/
+（胡凯的博客，腾讯Android开发，里面有Android Training的中文版）
+
+
+
+

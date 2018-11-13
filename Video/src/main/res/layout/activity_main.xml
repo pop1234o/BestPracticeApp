@@ -31,4 +31,11 @@
         android:layout_height="wrap_content"
         android:text="录制和播放视频"
         />
+
+    <Button
+        android:id="@+id/button_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="open gl绘制三角形"
+        />
 </LinearLayout>

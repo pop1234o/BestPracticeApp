@@ -5,13 +5,14 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <!--如果你照照片需要定位-->
+    <!-- 如果你照照片需要定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
     <uses-feature android:name="android.hardware.location.gps" />
-    <!--指定使用实例-->
+    <!-- 指定使用实例 -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,8 +29,9 @@
         </activity>
         <activity android:name=".practice.a_draw_image.DrawImageActivity" />
         <activity android:name=".practice.b_audio_record.AudioRecordActivity" />
-        <activity android:name=".practice.c_video_record.CameraActivity"></activity>
-        <activity android:name=".practice.c_video_record.Camera2Activity"></activity>
+        <activity android:name=".practice.c_video_record.CameraActivity" />
+        <activity android:name=".practice.c_video_record.Camera2Activity" />
+        <activity android:name=".practice.f_opengl_es.OpenGLES20Activity"></activity>
     </application>
 
 </manifest>
