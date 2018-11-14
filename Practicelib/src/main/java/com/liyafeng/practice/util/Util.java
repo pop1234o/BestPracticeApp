@@ -644,7 +644,7 @@ public class Util {
         String mainProcessName = context.getPackageName();
         int myPid = Process.myPid();
         for (ActivityManager.RunningAppProcessInfo info : runningAppProcesses) {
-            if (info.pid == myPid && mainProcessName == info.processName) {
+            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
                 return true;
             }
         }
