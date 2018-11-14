@@ -35,6 +35,7 @@ import com.liyafeng.view.viewpager.CardPagerActivity;
 import com.liyafeng.view.viewpager.RoundViewPagerActivity;
 import com.liyafeng.view.viewpager.ViewPagerActivity;
 import com.liyafeng.view.viewpagerindicator.ViewPagerIndicatorActivity;
+import com.liyafeng.view.webview.WebViewActivity;
 
 public class MainActivity extends Activity {
     public static String TAG = "test";
@@ -64,6 +65,7 @@ public class MainActivity extends Activity {
             "ViewPagerIndicator",
             "RoundViewPagerActivity",
             "toolbar",
+            "webview",
 
     };
 
@@ -92,7 +94,7 @@ public class MainActivity extends Activity {
             ViewPagerIndicatorActivity.class,
             RoundViewPagerActivity.class,
             ToolBarActivity.class,
-
+            WebViewActivity.class,
             };
 
     @Override

@@ -2,6 +2,7 @@ package com.liyafeng.view.webview;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +50,7 @@ public class WebViewActivity extends Activity {
         setContentView(R.layout.activity_web_view);
 
 
+        initView();
     }
 
     private void initView() {
@@ -122,8 +124,9 @@ public class WebViewActivity extends Activity {
             }
         });
 
-        webview.loadUrl("https://developer.android.google.cn/");
+        webview.loadUrl("http://pxtest.facethink.com/playground/test/index2.html");
 
+        webview.setBackgroundColor(Color.TRANSPARENT);
     }
 
 

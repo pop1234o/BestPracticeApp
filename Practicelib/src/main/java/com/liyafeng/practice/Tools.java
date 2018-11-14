@@ -128,6 +128,17 @@ public class Tools {
      */
     public void a3(Context context) {
         /*
+         * ===================apk中的内容=====================
+         * apk中有
+         * class.dex这个是所有java文件编译成class后合并为一个或多个dex文件
+         * resource.arsc 这个是所有res文件和id的映射
+         * lib 一般是so库
+         * assets 不会编译这个，是存放静态资源，比如html js文件
+         * AndroidManifest.xml 里面声名权限，四大组件等信息
+         * MATA_INF 签名信息，保证apk内容不被篡改，保证是指定私钥签名的
+         *  而不是他人伪造的apk
+         *
+         *
          * ===================反编译查看内容=============================
          * apktool 下载 https://ibotpeaches.github.io/Apktool/install/
          *   反编译出的资源，能查看出Manifest的内容，还有string ,value，layout中的文本
