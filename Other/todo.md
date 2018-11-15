@@ -38,6 +38,8 @@
 * http://hukai.me/
 （胡凯的博客，腾讯Android开发，里面有Android Training的中文版）
 
+* https://tech.meituan.com
+ 美团技术团队，里面有很多Android技术干货 ，比如这篇view渲染原理 https://tech.meituan.com/hardware_accelerate.html
 
 
 
