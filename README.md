@@ -53,15 +53,18 @@ vi编辑器的使用
 
 ### 视频音频 (Module: Video)
 * 一些优秀的音视频博客推荐（见源码中的ReadMe.md）
-* 对于视频编解码的一些理解
+* 视频编解码介绍
 * Camera和Camera2的使用
 * Android音视频录制
 * Android照片拍摄、自定义相机
 * 直播原理
-* OpenGL ES的使用
+* OpenGL介绍，OpenGL ES介绍和使用
+* 显卡、GPU、显示器接口介绍
+* 游戏引擎介绍
 
 ### 插件化/热修复 (Module: Hotfix)
 * 插庄、Hook原理的一些介绍
+* TinkerPatch的使用 (转移到(Module: Kotlin))
 
 ### 自定义Gradle插件（Module: hotfixcustomgradleplugin）
 * 自定义gradle插件，用来插桩

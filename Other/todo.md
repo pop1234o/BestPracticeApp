@@ -6,40 +6,64 @@
 * 《Thinking in Java》中文名《Java编程思想》
 * 《Effective Java》
 * 《深入理解Java虚拟机》
-* 《算法》（这本书非常适合算法入门，讲解简单易懂，阅读时间：90天，每天2小时）
+* 《算法》 这本书非常适合算法入门，讲解简单易懂，算法入门必看！
 * 《算法导论》
 * 《Java并发编程实战》 https://item.jd.com/10922250.html
+* 《Android开发艺术探索》 作者：任玉刚 进阶中级Android必看！
+* 《Android源码设计模式实战与解析》 详细讲述了Android源码中用到的设计模式，非常推荐看
 
 
 ### 网站
-* https://www.coursera.org/ 一个大学课程学习网站
-* androidxref.com 在线查看Android源码的网站，我们要查看某个系统源码
-    而又不想下载整个Android源码，可以用这个网站，它有强大的搜索功能
+* https://www.coursera.org/
+ 一个大学课程学习网站
+
+* androidxref.com
+  在线查看Android源码的网站，我们要查看某个系统源码
+  而又不想下载整个Android源码，可以用这个网站，它有强大的搜索功能
+
 * https://github.com/aosp-mirror/platform_frameworks_base 
-    Android源码在github上的镜像
-* http://inloop.github.io/shadow4android/ 阴影制作网站
+  Android源码在github上的镜像
 
-### 博客
-* http://blog.csdn.net/v_july_v 
-  专门讲解算法、大数据处理、机器学习的博客，csdn博客专家
+* http://inloop.github.io/shadow4android/
+  .9patch 阴影制作网站
 
-* https://joyrun.github.io/ 
-  悦跑圈技术博客，讲解的自定义注解处理器很不错
+### 个人博客
+* http://blog.csdn.net/v_july_v
+  July，湖南娄底人，2011年毕业于东华理工，2015年正式创业，任：七月在线创始人兼CEO
+  专门讲解算法、大数据处理、机器学习的博客
 
-* https://hit-alibaba.github.io/interview
-  很全面的网络、数据结构、操作系统知识
+* https://blog.csdn.net/Luoshengyang
+  罗升阳， 《Android系统源代码情景分析》作者
+  Android源码分析的博客，中国Android源码分析鼻祖
+
 * http://maoao530.github.io/
-  一位联发科Android开发工程师的博客，博客关于Android Framework层的
-  对一些系统原理写的比较好
+  风中老狼， 一位联发科Android开发工程师的博客
+  博客关于Android Framework层的，对一些系统原理写的比较好
 
 * https://blog.csdn.net/itachi85
- 《Android进阶之光》作者，刘望舒，很多关于底层原理的文章很好
+ 刘望舒，《Android进阶之光》作者
+ 很多关于底层原理的文章很好
 
 * http://hukai.me/
-（胡凯的博客，腾讯Android开发，里面有Android Training的中文版）
+ 胡凯，腾讯Android开发
+ 里面有Android Training的中文版
+
+* https://www.jianshu.com/u/45661204c0d6  、 https://github.com/whenSunSet
+ 何时夕，浙江工商大学计算机科学专业，2018毕业，狂拿bat tmd 等大厂offer，
+ 刚毕业找工作的可以看看，很多面试的东西和成长经历
+
+* https://hit-alibaba.github.io/interview 、https://github.com/skyline75489
+  Skyline75489 哈尔滨工业大学软件学院本科  Python/iOS Dev，WI输入法iOS8核心开发成员
+  很全面的网络、数据结构、操作系统知识
+
+### 团队博客
 
 * https://tech.meituan.com
- 美团技术团队，里面有很多Android技术干货 ，比如这篇view渲染原理 https://tech.meituan.com/hardware_accelerate.html
+  美团技术团队
+  里面有很多Android技术干货 ，比如这篇view渲染原理 https://tech.meituan.com/hardware_accelerate.html
 
+* https://joyrun.github.io/
+  悦跑圈技术博客
+  讲解的自定义注解处理器很不错
 
 
