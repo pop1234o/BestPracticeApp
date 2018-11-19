@@ -110,7 +110,25 @@ public class Main {
      * ndk-build 文件是 Android NDK r4 中引入的一个 shell 脚本。
      * 其用途是调用正确的 NDK 构建脚本。其实最终还是会去调用 NDK 自己的编译工具
      *
+     * ================abi和so文件兼容====================
+     * http://blog.coderclock.com/2017/05/07/android/Android-so-files-compatibility-and-adaptation/
      *
+     *  ABI（Application binary interface）应用程序二进制接口
+     *
+     * armeabi设备只兼容armeabi（指令集）写成的程序
+     * armeabi-v7a设备兼容armeabi-v7a、armeabi；
+     * arm64-v8a设备兼容arm64-v8a、armeabi-v7a、armeabi；
+     * X86设备兼容X86、armeabi；
+     * X86_64设备兼容X86_64、X86、armeabi；
+     * mips64设备兼容mips64、mips；
+     * mips只兼容mips；
+     * --------------------------------
+     * 尽管armeabi可以兼容多种平台，仍有些运算在armeabi-v7a、arm64-v8a去使用armeabi的SO文件时
+     * ，性能会非常差强人意，所以还是应该用其对应平台架构的SO文件进行运算
+     * ----------------------------
+     *
+     * =================使用命令行进行cmake编译===========
+     * https://blog.csdn.net/minghuang2017/article/details/78938852
      *
      * @param args
      */
