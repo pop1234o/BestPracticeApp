@@ -82,6 +82,36 @@ public class Main {
      * 这个api可以让我们启动jvm，然后findclass函数来找到对应的类，（根据classpath来查找）
      * 然后会加载class到jvm中执行，最后提供了销毁jvm的方法
      *
+     * =================cmake========================
+     * https://www.jianshu.com/p/6332418b12b1
+     * 跨平台编译工具
+     * CMake的配置文件一般命名为CMakeLists.txt
+     * ----------------
+     * 在Android Studio 2.2 之后，工具中增加了 CMake 的支持
+     * 用cmake替换 ndk-build +Application.mk+Android.mk 来编译 C/C++
+     *
+     * 在 Android Studio 2.2 之后你有2种选择来编译你写的 c/c++ 代码。
+     * 一个是 ndk-build + Android.mk + Application.mk 组合，
+     * 另一个是 CMake + CMakeLists.txt 组合。
+     * 这2个组合与Android代码和c/c++代码无关，只是不同的构建脚本和构建命令。
+     *
+     * ------------------
+     * c/c++ 的编译文件在不同平台是不一样的。Unix 下会使用 makefile 文件编译，
+     * Windows 下会使用 project 文件编译。而 CMake 则是一个跨平台的编译工具，
+     * 它并不会直接编译出对象，而是根据自定义的语言规则（CMakeLists.txt）
+     * 生成 对应 makefile 或 project 文件，然后再调用底层的编译。
+     *
+     *
+     *
+     * =====================ndk=====================
+     * NDK 工具包中提供了完整的一套将 c/c++ 代码编译成静态/动态库的工具
+     * 而 Android.mk 和 Application.mk 你可以认为是描述编译参数和一些配置的文件
+     *
+     * ndk-build 文件是 Android NDK r4 中引入的一个 shell 脚本。
+     * 其用途是调用正确的 NDK 构建脚本。其实最终还是会去调用 NDK 自己的编译工具
+     *
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
