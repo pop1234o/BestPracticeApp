@@ -56,6 +56,12 @@
   Skyline75489 哈尔滨工业大学软件学院本科  Python/iOS Dev，WI输入法iOS8核心开发成员
   很全面的网络、数据结构、操作系统知识
 
+* http://cn.linux.vbird.org/linux_basic/0105computers.php#program_mechin
+  鸟哥？？大学老师
+  里面有计算机概论，Linux系统的起源，计算机网络等基础知识，如果要了解计算机底层知识的值得一看！！！
+
+
+
 ### 团队博客
 
 * https://tech.meituan.com
