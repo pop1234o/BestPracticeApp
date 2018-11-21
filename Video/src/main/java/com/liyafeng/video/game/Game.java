@@ -1,4 +1,4 @@
-package com.liyafeng.video;
+package com.liyafeng.video.game;
 
 public class Game {
 
