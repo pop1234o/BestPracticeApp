@@ -1,6 +1,6 @@
 package com.liyafeng.video.game;
 
-public class Game {
+public class Game_Phone {
 
 
     /**
