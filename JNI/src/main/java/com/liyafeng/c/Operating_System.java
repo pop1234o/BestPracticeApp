@@ -1,6 +1,6 @@
 package com.liyafeng.c;
 
-public class Main {
+public class Operating_System {
 
     /**
      * ### C语言
@@ -65,54 +65,30 @@ public class Main {
      * ==============Visual Studio===================
      * https://visualstudio.microsoft.com/zh-hans/ （官方下载地址）
      *
+     * ======================POSIX=================
+     * 是一套准则
+     * 可移植操作系统接口（英语：Portable Operating System Interface，缩写为POSIX）
+     * 是IEEE为要在各种UNIX操作系统上运行软件，而定义API的一系列互相关联的标准的总称
+     *
+     * 操作系统管理硬件，提供io，用来管理不同的硬件
+     * 那么如果我们直接操作硬件，就需要兼容很多类型的硬件
+     * 所以干脆由系统按照标准提供一套api，软件开发者调用系统api就行
+     * 这样在UNIX 类UNIX windows上开发的软件不用修改调用的api，
+     * 使得开发效率提高
+     * 比如
+     * #include <pthread.h>  //在Linux下编写多线程程序需要包含的头文件
+     * POSIX线程（POSIX threads），简称Pthreads，是线程的POSIX标准。该标准定义了创建和操纵线程的一整套API。
+     *
+     *  在类Unix操作系统（Unix、Linux、Mac OS X等）中，都使用Pthreads作为操作系统的线程。
+     *
+     * 每个cpu处理多线程任务肯定不一样，所以我们直接调用api就能兼容这么多操作系统，效率高
+     *
+     * 操作系统负责线程调度，那操作系统也是c语言写的，所以其实还是串行执行的代码
+     * 只不过是操作系统负责何时执行
+     *
      * @param args
      */
     public static void main(String[] args) {
 
-    }
-
-    /**
-     * mac 自带编译软件，gcc/g++
-     * gcc --version
-     * g++ --help
-     * <p>
-     * =========gcc/g++区别========
-     * 后缀为.c的，gcc把它当作是C程序，而g++当作是c++程序；后缀为.cpp的，两者都会认为是c++程序
-     * 编译阶段，g++会调用gcc，对于c++代码，两者是等价的，
-     * 但是因为gcc命令不能自动和C＋＋程序使用的库联接，所以通常用g++来完成链接，为了统一起见，干脆编译/链接统统用g++了
-     */
-    public void fun1() {
-    }
-
-
-    /**
-     * =========取地址运算符 间接寻址运算符============
-     * int n=5;
-     * &n是返回变量n的地址 （取地址运算符）
-     * <p>
-     * int *p;
-     * <p>
-     * p=&n;
-     * <p>
-     * *p 就是5，p的值是个地址，*是来访问这个地址的值
-     * <p>
-     * ===========指针=======
-     * int    *ip;    一个整型的指针
-     * double *dp;    一个 double 型的指针
-     * float  *fp;    一个浮点型的指针
-     * char   *ch;    一个字符型的指针
-     *
-     * 这是定义指针，代表只用分配地址大小的空间就可以了
-     * 有了地址后，后面多少位是数据？int是32位，所以要声明指针类型
-     *
-     * 地址开始存储的值 = *(地址)
-     *
-     * C++ 支持空指针。NULL 指针是一个定义在标准库中的值为零的常量
-     *
-     *
-     *
-     *
-     */
-    public void fun2() {
     }
 }
