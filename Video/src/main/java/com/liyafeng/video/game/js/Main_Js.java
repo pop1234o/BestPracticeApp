@@ -1,6 +1,18 @@
 package com.liyafeng.video.game.js;
 
 public class Main_Js {
+    /*
+    * js学习资料
+    * 菜鸟教程JavaScript/w3cschool JavaScript
+    * 廖雪峰JavaScript教程
+    * 阮一峰的js教程（http://es6.ruanyifeng.com/#README） 建议配合一个js项目来看
+    * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript （mozilla教程，中文版，值得一看！！）
+    *
+    * 《javascript dom编程艺术》
+    * 《JavaScript高级程序设计》
+    * 《JavaScript权威指南》
+    *
+    * */
 
 
     /**
@@ -16,18 +28,70 @@ public class Main_Js {
      * 万维网：定义了通过互联网（硬件）如何传递信息的规则，比如http/ftp都是万维网上的传输规则
      *  tcp/ip也是规则的一部分
      *
-     * =======================================================
+     * =======================js诞生================================
+     * https://javascript.ruanyifeng.com/introduction/history.html
+     *
+     * 1982年，Tim Berners-Lee 建立 HTML
+     * 1990年底，欧洲核能研究组织（CERN）科学家Tim Berners-Lee 发明www(定义了协议)
+     * 这时html只能展示在命令行里
+     *
+     * 1992年底，美国国家超级电脑应用中心（NCSA）开始开发一个独立的浏览器，
+     * 叫做Mosaic。这是人类历史上第一个浏览器，从此网页可以在图形界面的窗口浏览。
+     *
+     * 1994年10月，NCSA的一个主要程序员Marc Andreessen联合风险投资家Jim Clark，
+     * 成立了Mosaic通信公司（Mosaic Communications），不久后改名为Netscape。这家公司的方向
+     * ，就是在Mosaic的基础上，开发面向普通用户的新一代的浏览器Netscape Navigator。
+     *
+     * 1994年12月，Navigator发布了1.0版，市场份额一举超过90%。
+     *
+     * Netscape 公司很快发现，Navigator浏览器需要一种可以嵌入网页的脚本语言，
+     * 用来控制浏览器行为。当时，网速很慢而且上网费很贵，有些操作不宜在服务器端完成。
+     * 比如，如果用户忘记填写“用户名”，就点了“发送”按钮，到服务器再发现这一点就有点太晚了
+     * ，最好能在用户发出数据之前
+     * ，就告诉用户“请填写用户名”。这就需要在网页中嵌入小程序，让浏览器检查每一栏是否都填写了。
+     *
+     * Netscape公司决定与Sun公司合作，浏览器支持嵌入Java小程序（后来称为Java applet）。
+     * 但是，浏览器脚本语言是否就选用Java，则存在争论。后来，还是决定不使用Java，
+     * 因为网页小程序不需要Java这么“重”的语法。但是，同时也决定脚本语言的语法要接近Java，
+     * 并且可以支持Java程序。这些设想直接排除了使用现存语言，比如Perl、Python和TCL。
+     *
+     * 1995年，Netscape公司雇佣了程序员Brendan Eich开发这种网页脚本语言。
+     * Brendan Eich有很强的函数式编程背景，希望以Scheme语言（函数式语言鼻祖LISP语言的一种方言）为蓝本，实现这种新语言。
+     *
+     * 1995年5月，Brendan Eich只用了10天，就设计完成了这种语言的第一版。
+     * 它是一个大杂烩，语法有多个来源：
+     *
+     *
+     * Netscape 公司的这种浏览器脚本语言，最初名字叫做 Mocha，1995年9月改为LiveScript。
+     * 12月，Netscape公司与Sun公司（Java语言的发明者和所有者）达成协议，
+     * 后者允许将这种语言叫做JavaScript。
+     * 这样一来，Netscape公司可以借助Java语言的声势，而Sun公司则将自己的影响力扩展到了浏览器。
+     *
+     * 1996年3月，Navigator 2.0 浏览器正式内置了 JavaScript 脚本语言。（有了js解析引擎）
+     *
+     * 1996年8月 微软模仿js开发了一个叫jScript ,ie3.0内置（这就出现了两种标准）
+     *
+     *  1996年11月，Netscape公司决定将JavaScript提交给国际标准化组织ECMA（European Computer Manufacturers Association），
+     *  希望JavaScript能够成为国际标准，以此抵抗微软
+     *
+     * ECMA的39号技术委员会（Technical Committee 39）负责制定和审核这个标准，
+     * 成员由业内的大公司派出的工程师组成，目前共25个人。
+     *
+     * 1997年7月，ECMA组织发布262号标准文件（ECMA-262）的第一版，规定了浏览器脚本语言的标准，
+     * 并将这种语言称为ECMAScript。这个版本就是ECMAScript 1.0版。之所以不叫JavaScript，
+     * 一方面是由于商标的关系，Java是Sun公司的商标，根据一份授权协议，
+     * 只有Netscape公司可以合法地使用JavaScript这个名字，且JavaScript已经被Netscape公司注册为商标，
+     * 另一方面也是想体现这门语言的制定者是ECMA，不是Netscape，
+     * 这样有利于保证这门语言的开放性和中立性。因此，ECMAScript和JavaScript的关系是，
+     * 前者是后者的规格，后者是前者的一种实现。在日常场合，这两个词是可以互换的。
+     *
+     * ECMAScript只用来标准化JavaScript这种语言的基本语法结构，与部署环境相关的标准都由其他标准规定，比如DOM的标准就是由W3C组织（World Wide Web Consortium）制定的。
+     *
+     * ECMA-262标准后来也被另一个国际标准化组织
+     * ISO（International Organization for Standardization）批准，标准号是ISO-16262。
      *
      *
      *
-     *
-     * 网景公司创造了
-     *
-     *
-     *
-     * 当网页被加载时，浏览器会创建页面的文档对象模型（Document Object Model）。
-     * HTML DOM 模型被构造为对象的树。
-     * <p>
      * ==========================
      * 全局 JavaScript 变量
      * 在函数外声明的变量是全局变量，网页上的所有脚本和函数都能访问它。

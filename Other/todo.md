@@ -36,6 +36,10 @@
   罗升阳， 《Android系统源代码情景分析》作者
   Android源码分析的博客，中国Android源码分析鼻祖
 
+* http://www.ruanyifeng.com/blog/archives.html
+  阮一峰，博士，2008 年 6 月毕业于上海财经大学世界经济专业
+  擅长前端技术，JS教程，计算机基础教程，很有价值
+
 * http://maoao530.github.io/
   风中老狼， 一位联发科Android开发工程师的博客
   博客关于Android Framework层的，对一些系统原理写的比较好
@@ -60,6 +64,10 @@
   鸟哥？？大学老师
   里面有计算机概论，Linux系统的起源，计算机网络等基础知识，如果要了解计算机底层知识的值得一看！！！
 
+* https://www.liaoxuefeng.com/
+  廖雪峰，全栈工程师，北京邮电大学（2000年）信息工程系
+  先后就职于西门子、摩托罗拉、惠普、Brightcove、火币网等公司。
+  最著名的git教程之一，还有java和js教程
 
 
 ### 团队博客
