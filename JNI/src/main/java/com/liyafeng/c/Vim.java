@@ -17,6 +17,28 @@ public class Vim {
     }
 
     /**
+     * 按a进入insert mode
+     * 按esc进入命令模式
+     * 输入":wq!"这样就将文本保存了
+     * <p>
+     * i    插入当前光标
+     * I   当前行首
+     * a   光标后插入
+     * A   当前行尾
+     * <p>
+     * <p>
+     * x 删除光标后的
+     * X 删除光标前的
+     * d 删除折行
+     * <p>
+     * w 写入
+     * q 退出
+     * q! 强制退出
+     */
+    void fun1() {
+    }
+
+    /**
      * README.txt for version 8.1 of Vim: Vi IMproved.
      * <p>
      * <p>

@@ -601,4 +601,16 @@ public class Main_Js {
        * document.getElementById("header");
        */
       void fun18(){}
+
+
+       /**
+        * Q: .js和.min.js文件分别是什么？
+        * A: .js是JavaScript 源码文件， .min.js是压缩版的js文件。
+        * 压缩：删除 js 代码中所有注释、跳格符号、换行符号及无用的空格，从而压缩
+        * JS 文件大小。
+        * 混淆：经过编码将变量和函数原命名改为毫无意义的命名，删除无用代码，内联函数，等价语句替换等(以防止他人窥视和窃取源码)
+        *
+        * 比如 JavaScript Minifier
+        */
+       void fun19(){}
 }
