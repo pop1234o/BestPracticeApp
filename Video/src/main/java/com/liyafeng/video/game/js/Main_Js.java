@@ -2,81 +2,81 @@ package com.liyafeng.video.game.js;
 
 public class Main_Js {
     /*
-    * js学习资料
-    * 菜鸟教程JavaScript/w3cschool JavaScript
-    * 廖雪峰JavaScript教程
-    * 阮一峰的js教程（http://es6.ruanyifeng.com/#README） 建议配合一个js项目来看
-    * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript （mozilla教程，中文版，值得一看！！）
-    *
-    * 《javascript dom编程艺术》
-    * 《JavaScript高级程序设计》
-    * 《JavaScript权威指南》
-    *
-    * */
+     * js学习资料
+     * 菜鸟教程JavaScript/w3cschool JavaScript
+     * 廖雪峰JavaScript教程
+     * 阮一峰的js教程（http://es6.ruanyifeng.com/#README） 建议配合一个js项目来看
+     * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript （mozilla教程，中文版，值得一看！！）
+     *
+     * 《javascript dom编程艺术》
+     * 《JavaScript高级程序设计》
+     * 《JavaScript权威指南》
+     *
+     * */
 
 
     /**
      * 1990年底，欧洲核能研究组织（CERN）科学家Tim Berners-Lee，
      * 在全世界最大的电脑网络——互联网的基础上，
      * 发明了万维网（World Wide Web），从此可以在网上浏览网页文件。
-     *
+     * <p>
      * 互联网：n个计算机连接起来，集合叫互联网
      * 因特网/Internet：互联网的一种，  比如还有暗网，也是互联网的一种
-     *
-     *  Internet其中定义了指定的转发规则，符合这个规则，且将计算机接入这个网络，这个网络叫internet
-     *
+     * <p>
+     * Internet其中定义了指定的转发规则，符合这个规则，且将计算机接入这个网络，这个网络叫internet
+     * <p>
      * 万维网：定义了通过互联网（硬件）如何传递信息的规则，比如http/ftp都是万维网上的传输规则
-     *  tcp/ip也是规则的一部分
-     *
+     * tcp/ip也是规则的一部分
+     * <p>
      * =======================js诞生================================
      * https://javascript.ruanyifeng.com/introduction/history.html
-     *
+     * <p>
      * 1982年，Tim Berners-Lee 建立 HTML
      * 1990年底，欧洲核能研究组织（CERN）科学家Tim Berners-Lee 发明www(定义了协议)
      * 这时html只能展示在命令行里
-     *
+     * <p>
      * 1992年底，美国国家超级电脑应用中心（NCSA）开始开发一个独立的浏览器，
      * 叫做Mosaic。这是人类历史上第一个浏览器，从此网页可以在图形界面的窗口浏览。
-     *
+     * <p>
      * 1994年10月，NCSA的一个主要程序员Marc Andreessen联合风险投资家Jim Clark，
      * 成立了Mosaic通信公司（Mosaic Communications），不久后改名为Netscape。这家公司的方向
      * ，就是在Mosaic的基础上，开发面向普通用户的新一代的浏览器Netscape Navigator。
-     *
+     * <p>
      * 1994年12月，Navigator发布了1.0版，市场份额一举超过90%。
-     *
+     * <p>
      * Netscape 公司很快发现，Navigator浏览器需要一种可以嵌入网页的脚本语言，
      * 用来控制浏览器行为。当时，网速很慢而且上网费很贵，有些操作不宜在服务器端完成。
      * 比如，如果用户忘记填写“用户名”，就点了“发送”按钮，到服务器再发现这一点就有点太晚了
      * ，最好能在用户发出数据之前
      * ，就告诉用户“请填写用户名”。这就需要在网页中嵌入小程序，让浏览器检查每一栏是否都填写了。
-     *
+     * <p>
      * Netscape公司决定与Sun公司合作，浏览器支持嵌入Java小程序（后来称为Java applet）。
      * 但是，浏览器脚本语言是否就选用Java，则存在争论。后来，还是决定不使用Java，
      * 因为网页小程序不需要Java这么“重”的语法。但是，同时也决定脚本语言的语法要接近Java，
      * 并且可以支持Java程序。这些设想直接排除了使用现存语言，比如Perl、Python和TCL。
-     *
+     * <p>
      * 1995年，Netscape公司雇佣了程序员Brendan Eich开发这种网页脚本语言。
      * Brendan Eich有很强的函数式编程背景，希望以Scheme语言（函数式语言鼻祖LISP语言的一种方言）为蓝本，实现这种新语言。
-     *
+     * <p>
      * 1995年5月，Brendan Eich只用了10天，就设计完成了这种语言的第一版。
      * 它是一个大杂烩，语法有多个来源：
-     *
-     *
+     * <p>
+     * <p>
      * Netscape 公司的这种浏览器脚本语言，最初名字叫做 Mocha，1995年9月改为LiveScript。
      * 12月，Netscape公司与Sun公司（Java语言的发明者和所有者）达成协议，
      * 后者允许将这种语言叫做JavaScript。
      * 这样一来，Netscape公司可以借助Java语言的声势，而Sun公司则将自己的影响力扩展到了浏览器。
-     *
+     * <p>
      * 1996年3月，Navigator 2.0 浏览器正式内置了 JavaScript 脚本语言。（有了js解析引擎）
-     *
+     * <p>
      * 1996年8月 微软模仿js开发了一个叫jScript ,ie3.0内置（这就出现了两种标准）
-     *
-     *  1996年11月，Netscape公司决定将JavaScript提交给国际标准化组织ECMA（European Computer Manufacturers Association），
-     *  希望JavaScript能够成为国际标准，以此抵抗微软
-     *
+     * <p>
+     * 1996年11月，Netscape公司决定将JavaScript提交给国际标准化组织ECMA（European Computer Manufacturers Association），
+     * 希望JavaScript能够成为国际标准，以此抵抗微软
+     * <p>
      * ECMA的39号技术委员会（Technical Committee 39）负责制定和审核这个标准，
      * 成员由业内的大公司派出的工程师组成，目前共25个人。
-     *
+     * <p>
      * 1997年7月，ECMA组织发布262号标准文件（ECMA-262）的第一版，规定了浏览器脚本语言的标准，
      * 并将这种语言称为ECMAScript。这个版本就是ECMAScript 1.0版。之所以不叫JavaScript，
      * 一方面是由于商标的关系，Java是Sun公司的商标，根据一份授权协议，
@@ -84,14 +84,14 @@ public class Main_Js {
      * 另一方面也是想体现这门语言的制定者是ECMA，不是Netscape，
      * 这样有利于保证这门语言的开放性和中立性。因此，ECMAScript和JavaScript的关系是，
      * 前者是后者的规格，后者是前者的一种实现。在日常场合，这两个词是可以互换的。
-     *
+     * <p>
      * ECMAScript只用来标准化JavaScript这种语言的基本语法结构，与部署环境相关的标准都由其他标准规定，比如DOM的标准就是由W3C组织（World Wide Web Consortium）制定的。
-     *
+     * <p>
      * ECMA-262标准后来也被另一个国际标准化组织
      * ISO（International Organization for Standardization）批准，标准号是ISO-16262。
-     *
-     *
-     *
+     * <p>
+     * <p>
+     * <p>
      * ==========================
      * 全局 JavaScript 变量
      * 在函数外声明的变量是全局变量，网页上的所有脚本和函数都能访问它。
@@ -232,7 +232,6 @@ public class Main_Js {
      * 2015	ECMAScript 6	添加类和模块
      * 2016	ECMAScript 7	增加指数运算符 (**)
      * 增加 Array.prototype.includes
-     *
      */
     void fun2() {
     }
@@ -543,74 +542,82 @@ public class Main_Js {
     }
 
 
-     /**
-      * 对象
-      * person=new Object();
-      * person.firstname="John";
-      * person.lastname="Doe";
-      * person.age=50;
-      * person.eyecolor="blue";
-      *
-      * =====================
-      * function person(firstname,lastname,age,eyecolor)
-      * {
-      *     this.firstname=firstname;
-      *     this.lastname=lastname;
-      *     this.age=age;
-      *     this.eyecolor=eyecolor;
-      * }
-      * var myFather=new person("John","Doe",50,"blue");
-      *
-      * ============================
-      * function person(firstname,lastname,age,eyecolor)
-      * {
-      *     this.firstname=firstname;
-      *     this.lastname=lastname;
-      *     this.age=age;
-      *     this.eyecolor=eyecolor;
-      *
-      *     this.changeName=changeName;
-      *     function changeName(name)
-      *     {
-      *         this.lastname=name;
-      *     }
-      * }
-      * ==================================
-      * JavaScript 是面向对象的语言，但 JavaScript 不使用类。
-      * JavaScript 基于 prototype （原型），而不是基于类的。
-      *
-      * =============================
-      * 原型是JavaScript全局构造函数。它可以构建新Javascript对象的属性和方法。
-      * Array.prototype.myUcase=function(){
-      *     for (i=0;i<this.length;i++){
-      *         this[i]=this[i].toUpperCase();
-      *     }
-      * }
-      *
-      *
-      */
-     void fun17(){}
+    /**
+     * 对象
+     * person=new Object();
+     * person.firstname="John";
+     * person.lastname="Doe";
+     * person.age=50;
+     * person.eyecolor="blue";
+     * <p>
+     * =====================
+     * function person(firstname,lastname,age,eyecolor)
+     * {
+     * this.firstname=firstname;
+     * this.lastname=lastname;
+     * this.age=age;
+     * this.eyecolor=eyecolor;
+     * }
+     * var myFather=new person("John","Doe",50,"blue");
+     * <p>
+     * ============================
+     * function person(firstname,lastname,age,eyecolor)
+     * {
+     * this.firstname=firstname;
+     * this.lastname=lastname;
+     * this.age=age;
+     * this.eyecolor=eyecolor;
+     * <p>
+     * this.changeName=changeName;
+     * function changeName(name)
+     * {
+     * this.lastname=name;
+     * }
+     * }
+     * ==================================
+     * JavaScript 是面向对象的语言，但 JavaScript 不使用类。
+     * JavaScript 基于 prototype （原型），而不是基于类的。
+     * <p>
+     * =============================
+     * 原型是JavaScript全局构造函数。它可以构建新Javascript对象的属性和方法。
+     * Array.prototype.myUcase=function(){
+     * for (i=0;i<this.length;i++){
+     * this[i]=this[i].toUpperCase();
+     * }
+     * }
+     */
+    void fun17() {
+    }
 
-      /**
-       * 浏览器对象模型 (BOM) 使 JavaScript 有能力与浏览器"对话"。
-       * 浏览器对象模型（Browser Object Model (BOM)
-       *
-       *
-       * window.document.getElementById("header");
-       * 与此相同：
-       * document.getElementById("header");
-       */
-      void fun18(){}
+    /**
+     * 浏览器对象模型 (BOM) 使 JavaScript 有能力与浏览器"对话"。
+     * 浏览器对象模型（Browser Object Model (BOM)
+     * <p>
+     * <p>
+     * window.document.getElementById("header");
+     * 与此相同：
+     * document.getElementById("header");
+     */
+    void fun18() {
+    }
 
 
-       /**
-        * Q: .js和.min.js文件分别是什么？
-        * A: .js是JavaScript 源码文件， .min.js是压缩版的js文件。
-        * 压缩：删除 js 代码中所有注释、跳格符号、换行符号及无用的空格，从而压缩
-        * JS 文件大小。
-        * 混淆：经过编码将变量和函数原命名改为毫无意义的命名，删除无用代码，内联函数，等价语句替换等(以防止他人窥视和窃取源码)
-        *
-        * 比如 JavaScript Minifier
-        */
-       void fun19(){}
+    /**
+     * Q: .js和.min.js文件分别是什么？
+     * A: .js是JavaScript 源码文件， .min.js是压缩版的js文件。
+     * 压缩：删除 js 代码中所有注释、跳格符号、换行符号及无用的空格，从而压缩
+     * JS 文件大小。
+     * 混淆：经过编码将变量和函数原命名改为毫无意义的命名，删除无用代码，内联函数，等价语句替换等(以防止他人窥视和窃取源码)
+     * <p>
+     * 比如 JavaScript Minifier
+     */
+    void fun19() {
+    }
+
+
+    /**
+     * js window.onlaod 是所有资源加载完毕后调用，包括图片，jq的ready是dom树加载完后就调用
+     */
+    void fun20() {
+    }
 }
