@@ -1,6 +1,6 @@
 package com.liyafeng.view.other.git;
 
-public class Main {
+public class Git_Main {
 
     /**
      * github新建个Repository，然后本地git init 一个仓库
@@ -53,6 +53,9 @@ public class Main {
      * 查看当前分支的commit
      * git log [文件名]
      * <p>
+     * 按q退出
+     *
+     * git show [commit_hash] 查看某次commit的所有改变
      * -----------------------
      * git 初始化，我们提交代码要设置 用户名 和 邮箱
      * <p>
