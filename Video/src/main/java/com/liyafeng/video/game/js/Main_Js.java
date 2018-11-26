@@ -1,6 +1,6 @@
 package com.liyafeng.video.game.js;
 
-public class Main_Js {
+ public class Main_Js {
     /*
      * js学习资料
      * 菜鸟教程JavaScript/w3cschool JavaScript
@@ -620,4 +620,320 @@ public class Main_Js {
      */
     void fun20() {
     }
+
+
+    //region js面向对象
+
+     /**
+      * =============创建js对象=================
+      * http://www.w3school.com.cn/js/pro_js_object_defining.asp
+      * -----------原始的方式-----------------
+      * 对象的属性可以在对象创建后动态定义
+      * person=new Object();
+      * person.firstname="Bill";
+      * person.showColor = function() {
+      *   alert(this.firstname);
+      * };
+      * -----------工厂方式-------------------
+      * 使用工厂函数
+      * function createCar() {
+      *   var oTempCar = new Object;
+      *   oTempCar.color = "blue";
+      *   oTempCar.showColor = function() {
+      *     alert(this.color);
+      *   };
+      *   return oTempCar;
+      * }
+      * var oCar1 = createCar();
+      * 工厂函数还可以有参数
+      * -----------------------改进------------
+      * 上面每创建一个对象都要创建一个函数对象，但其实他们是公用的
+      * function showColor() {
+      *   alert(this.color);
+      * }
+      *
+      * function createCar(sColor,iDoors,iMpg) {
+      *   var oTempCar = new Object;
+      *   oTempCar.color = sColor;
+      *   oTempCar.showColor = showColor;
+      *   return oTempCar;
+      * }
+      * -----------------构造函数方式------------------
+      * 这种方式没有用new，直接用this赋值，然后也不用return，自动return
+      * 函数名一般首字母大写来区分
+      * function Car(sColor,iDoors,iMpg) {
+      *   this.color = sColor;
+      *   this.showColor = function() {
+      *     alert(this.color);
+      *   };
+      * }
+      * var oCar1 = new Car("red",4,23);
+      *
+      * -----------------原型方式----------------------------
+      * js中没有类，定义类直接定义函数就好
+      * function Car() { //创建类Car  ，这是构造函数
+      * }
+      * Car.prototype.color = "blue"; //在构造函数外定义属性
+      * Car.prototype.drivers = new Array("Mike","John");
+      * Car.prototype.showColor = function() {
+      *   alert(this.color);
+      * };
+      *
+      * var oCar1 = new Car();
+      * 调用new Car的时候，属性值才被赋值
+      * alert(oCar1 instanceof Car);
+      * --------------------
+      * 缺点：
+      * 1.所有car实例的drivers属性都指向同一个对象
+      *
+      * ----------------混合的构造函数/原型方式-------------------
+      * 定义属性定义在构造函数中，用原型方式定义函数属性
+      *
+      * function Car(sColor,iDoors,iMpg) {
+      *   this.color = sColor;
+      *   this.doors = iDoors;
+      *   this.mpg = iMpg;
+      *   this.drivers = new Array("Mike","John");
+      * }
+      *
+      * Car.prototype.showColor = function() {//这里直接是Car这个“类名”
+      *   alert(this.color);
+      * };
+      *
+      * var oCar1 = new Car("red",4,23);
+      * ------------------------------
+      * 上面混合的方式还是不完美，因为函数并没有被封装到Car中，而是写在外面
+      * 所以我们用一个标记，将函数的定义写在构造函数内
+      * function Car(sColor,iDoors,iMpg) {
+      *   this.color = sColor;
+      *   this.doors = iDoors;
+      *   this.mpg = iMpg;
+      *   this.drivers = new Array("Mike","John");
+      *
+      *   if (typeof Car._initialized == "undefined") {
+      *     Car.prototype.showColor = function() {
+      *       alert(this.color);
+      *     };
+      *
+      *     Car._initialized = true;
+      *   }
+      * }
+      *
+      *
+      * -----------早绑定和晚绑定------------------
+      * 早绑定（early binding） 实例化对象之前定义它的属性和方法
+      * java就是早绑定，因为定义class定义了类有哪些属性和方法
+      * 在运行时就不能动态的添加了
+      *
+      * ECMAScript 不是强类型语言，所以不支持早绑定
+      *
+      * ----------作用域----------------
+      * java中有public class 和 class 后者只能包内访问
+      *  ECMAScript 中只存在一种作用域 - 公用作用域
+      * 所以对象所有属性都是可见的
+      * 建议性的解决方法
+      * obj._color_ = "blue";
+      * 加_ 代表是私有的
+      *
+      * ECMAScript 并没有静态作用域
+      * 但是函数也是对象，对象可以有属性和方法
+      * function sayHello() {
+      *   alert("hello");
+      * }
+      *
+      * sayHello.alternate = function() {
+      *   alert("hi");
+      * }
+      *
+      * sayHello();		//输出 "hello"
+      * sayHello.alternate();	//输出 "hi"
+      * 这里给函数对象定义了方法
+      *
+      * ---------------this-----------------------
+      * var oCar = new Object;
+      * oCar.color = "red";
+      * oCar.showColor = function() {
+      *   alert(this.color); //代表oCar对象  引用对象的属性时，必须使用 this 关键字
+      * };
+      *
+      * oCar.showColor();
+      * //如果不用对象或 this 关键字引用变量，ECMAScript 就会把它看作局部变量或全局变量。
+      * 函数属于某个对象，this代表调用这个函数的对象
+      *
+      * ==========================
+      * js中定义类，是使用定义函数的方式，里面直接用this创建属性，
+      * 类名.prototype.方法名=function(){}方式定义方法
+      * 妈的，语法简直就是垃圾，定义类和定义函数差不多
+      *
+      * ===============拓展函数====================
+      * Number.prototype.toHexString = function() {
+      *   return this.toString(16);
+      * };
+      * 所有本地对象都继承了 Object 对象
+      *
+      * 函数名只是指向函数的指针
+      *
+      * js中的函数也是对象，js中定义属性指向函数，然后是属性名（参数列表）方式调用函数
+      * 妈的，真是垃圾语法
+      *
+      *
+      */
+     void fun21(){}
+
+      /**
+       * 继承
+       * 本地类是js引擎提供的类,String Object等等。
+       * 宿主类是你运行环境提供的，像chrome这类浏览器提供的 window这个类就是宿主类。
+       *
+       * 出于安全原因，本地类和宿主类不能作为基类
+       * 继承有三种方式，对象冒充，原型链，混合
+       *  ================对象冒充：==============
+       *
+       * function ClassA(sColor) {
+       *     this.color = sColor;
+       *     this.sayColor = function () {
+       *         alert(this.color);
+       *     };
+       * }
+       *
+       * function ClassB(sColor, sName) {
+       *     this.newMethod = ClassA;//函数名只是一个指向函数的指针
+       *     this.newMethod(sColor); //调用的是ClassA这个函数，因为这个函数里面又用了this
+       *                           //那么这个this就是函数调用对象，就是ClassB的实例了
+       *                           这样就实现了对象冒充
+       *     delete this.newMethod;
+       *
+       *     this.name = sName;
+       *     this.sayName = function () {
+       *         alert(this.name);
+       *     };
+       * }
+       * var objA = new ClassA("blue");
+       * var objB = new ClassB("red", "John");
+       * objA.sayColor();	//输出 "blue"
+       * objB.sayColor();	//输出 "red"
+       * objB.sayName();		//输出 "John"
+       *
+       * js可以多重继承，后写的优先级高
+       *
+       *
+       */
+      void fun22(){}
+
+       /**
+        * =============call apply==================
+        * function sayColor(sPrefix,sSuffix) {//函数 sayColor() 在对象外定义，它不属于任何对象
+        *     alert(sPrefix + this.color + sSuffix);
+        * };
+        *
+        * var obj = new Object();
+        * obj.color = "blue";
+        *
+        * sayColor.call(obj, "The color is ", "a very nice color indeed.");
+        *
+        * 方法名就是指针，指向函数对象，所以调用call，第一个传入被调用的对象
+        * -----------------------
+        * function ClassB(sColor, sName) {
+        *     //this.newMethod = ClassA;
+        *     //this.newMethod(color);
+        *     //delete this.newMethod;
+        *     ClassA.call(this, sColor); //新的写法
+        *
+        *     this.name = sName;
+        *     this.sayName = function () {
+        *         alert(this.name);
+        *     };
+        * }
+        * ==============
+        * apply() 方法作用同上，只不过参数不一样
+        * function sayColor(sPrefix,sSuffix) {
+        *     alert(sPrefix + this.color + sSuffix);
+        * };
+        *
+        * var obj = new Object();
+        * obj.color = "blue";
+        *
+        * sayColor.apply(obj, new Array("The color is ", "a very nice color indeed."));
+        * function ClassB(sColor, sName) {
+        *     //this.newMethod = ClassA;
+        *     //this.newMethod(color);//
+        *     //delete this.newMethod;
+        *     ClassA.apply(this, new Array(sColor));
+        *
+        *     this.name = sName;
+        *     this.sayName = function () {
+        *         alert(this.name);
+        *     };
+        * }
+        *
+        * ===================使用protoType实现继承  原型链===================
+        * function ClassB() {
+        * }
+        *
+        * ClassB.prototype = new ClassA();
+        *
+        * ClassB.prototype.name = "";
+        * ClassB.prototype.sayName = function () {
+        *     alert(this.name);
+        * };
+        *
+        * ====================混合============
+        * function ClassA(sColor) {
+        *     this.color = sColor;
+        * }
+        *
+        * ClassA.prototype.sayColor = function () {
+        *     alert(this.color);
+        * };
+        *
+        * function ClassB(sColor, sName) {
+        *     ClassA.call(this, sColor);
+        *     this.name = sName;
+        * }
+        *
+        * ClassB.prototype = new ClassA();//原型链只能用无参数构造函数
+        *
+        * ClassB.prototype.sayName = function () {
+        *     alert(this.name);
+        * };
+        *
+        *
+        */
+       void fun23(){}
+
+
+        /**
+         * https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014344997235247b53be560ab041a7b10360a567422a78000
+         *
+         *
+         * ，prototype 对象是个模板，要实例化的对象都以这个模板为基础。
+         * 总而言之，prototype 对象的任何属性和方法都被传递给那个类的所有实例。
+         * ===================================
+         * 原型链
+         * 当我们调用对象属性，js引擎先在 该对象中查找属性，如果没找到就在原型对象中找
+         * 一直到object.protoType，还没找到，返回undefined
+         *
+         *function Student(name) {
+         *     this.name = name;
+         *     this.hello = function () {
+         *         alert('Hello, ' + this.name + '!');
+         *     }
+         * }
+         * var xiaoming = new Student('小明');
+         *
+         * 不写new，这就是普通函数，this代表window对象，且返回undefined
+         * 写new，就是构造函数，创建Student对象，且返回这个对象
+         * 这个constructor属性指向的是Student这个构造函数对象
+         * xiaoming.constructor === Student.prototype.constructor;//true
+         * Student.prototype.constructor === Student; // true
+         * Object.getPrototypeOf(xiaoming) === Student.prototype; // true
+         * xiaoming instanceof Student; // true
+         *
+         * 函数Student恰好有个属性prototype 指向xiaoming、xiaohong的原型对象
+         * 但是xiaoming、xiaohong这些对象可没有prototype这个属性
+         *
+         *
+         */
+        void fun24(){}
+    //end region
 }

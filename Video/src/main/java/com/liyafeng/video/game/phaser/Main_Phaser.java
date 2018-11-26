@@ -1,6 +1,6 @@
 package com.liyafeng.video.game.phaser;
 
-public class Main_Phaser {
+ class Main_Phaser {
 
 
     /**
@@ -11,7 +11,8 @@ public class Main_Phaser {
      * https://zhuanlan.zhihu.com/p/32846345 （）
      * ================================
      * https://github.com/photonstorm/phaser-examples (示例)
-     *
+     *=====================================
+     * https://github.com/photonstorm/phaser-ce/tree/master/build/custom  (自定义包)
      *
      * @param args
      */
