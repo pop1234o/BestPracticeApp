@@ -15,6 +15,30 @@ public class Tools_Js {
      * 别的项目引用
      *
      *  build Phaser
+     *  =====================安装====================
+     *  https://zhaoda.net/webpack-handbook/install.html
+     * 安装webpack需要npm，所以我们需要安装node.js.因为他里面自带npm
+     *
+     * 然后npm install webpack -g (-g 代表全局安装，安装目录在user下)
+     * 然后 npm install webpack-cli -g
+     * 然后我们运行
+     * webpack --version
+     * 然后就看到版本号了
+     * window上安装在 C:\Users\user\AppData\Roaming\npm 目录下
+     * ============语法=======================
+     * 两个js文件，使用require('./module.js') 来引入另一个js的代码
+     *
+     * =======================使用====================
+     * webpack ./xxx.js --output ./bundle.js
+     * 这样我们就把xx.js 依赖的js文件和依赖的文件树都合并到bundle.js
+     * 中了，
+     * 有个坑，网上说是 webpack xxx.js bundle.js 但是会报错
+     * basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+     * SyntaxError: missing ) after argument list
+     * 这个新版的webpack命令格式已经变了，所以你用之前的有可能会报错
+     * 所以还是 webpack -help来看这个版本的用法
+     *
+     *
      *
      */
     void fun1() {
@@ -49,4 +73,40 @@ public class Tools_Js {
      */
     void fun2() {
     }
+
+
+     /**
+      * CommonJs  ==========定义js模块系统的规范
+      * https://zhaoda.net/webpack-handbook/commonjs.html
+      * 为了解决 浏览器环境之外 的js项目 的 作用域问题
+      * 是一种规范，node.js实现了这个规范
+      *
+      * 因为js开发服务端*（没有前端代码）那么你就无法关联其他文件中的属性和方法
+      * 所以就需要有个规范来规定js的依赖规则
+      * ----------------------
+      * 模块，一个js文件就是一个模块
+      * ==============webpack和commonjs================
+      * commonjs是一个规范，他定义了模块间如何进行依赖（语法）
+      * webpack这个工具就是对commonjs规范的一种实现，
+      * webpack分析commonjs语法，然后生成对应的依赖关系
+      * =========es6 module===============
+      * 也是js模块化的一种规范，用import语法
+      *
+      * =================webpack和es6 module=================
+      * webpack也支持es6 module规范的依赖，也能识别es6 module的语法
+      *
+      * ==============各种模块化规范======================
+      * https://zhaoda.net/webpack-handbook/module-system.html
+      * CommonJS ========服务器端的 Node.js Browserify，浏览器端的 CommonJS 实现
+      * Asynchronous Module Definition 规范 =======RequireJS
+      * Common Module Definition 规范 ====Sea.js
+      * Universal Module Definition 规范
+      * ES6 模块 ---新版的 Node.js才支持
+      *
+      *
+      *
+      *
+      *
+      */
+     void fun3(){}
 }
