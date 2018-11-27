@@ -12,8 +12,9 @@ public class Git_Main {
      * <p>
      * git push
      * <p>
-     * git 查看修改 git diff
-     * git 查看状态 git status
+     * git 查看修改 git diff 这个是查看暂存区的区别，就是git add 之前的文件区别
+     * git 查看状态 git status 查看本地的状态，commit之前的
+     * git status -v 查看具体的改动
      * <p>
      * git丢弃工作区 git checkout .
      * <p>

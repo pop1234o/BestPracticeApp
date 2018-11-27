@@ -910,6 +910,8 @@ package com.liyafeng.video.game.js;
          * 总而言之，prototype 对象的任何属性和方法都被传递给那个类的所有实例。
          * ===================================
          * 原型链
+         * 在 ES2015/ES6 中引入了class关键字，但只是语法糖，JavaScript 仍然是基于原型的
+         *
          * 当我们调用对象属性，js引擎先在 该对象中查找属性，如果没找到就在原型对象中找
          * 一直到object.protoType，还没找到，返回undefined
          *
@@ -932,8 +934,40 @@ package com.liyafeng.video.game.js;
          * 函数Student恰好有个属性prototype 指向xiaoming、xiaohong的原型对象
          * 但是xiaoming、xiaohong这些对象可没有prototype这个属性
          *
+         * ===========================
+         * var one = {x: 1};
+         * var two = new Object();
+         * one.__proto__ === Object.prototype // true
+         * two.__proto__ === Object.prototype // true
+         * one.toString === one.__proto__.toString // true
+         *
+         * 只有函数才有prototype属性
+         *
          *
          */
         void fun24(){}
+
+         /**
+          * http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html
+          * http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html
+          *
+          *
+          * 构造函数
+          * 所谓"构造函数"，其实就是一个普通函数，但是内部使用了this变量。
+          * 对构造函数使用new运算符，就能生成实例，并且this变量会绑定在实例对象上。
+          *
+          * Javascript规定，每一个构造函数都有一个prototype属性，指向另一个对象
+          * 。这个对象的所有属性和方法，都会被构造函数的实例继承。
+          *
+          * 构造函数构造出来的实例，
+          * 都用的是构造函数这个对象的原型对象
+          * Cat.prototype.type 给原型对象设置属性
+          * 根据原型链原理，这样每个实例都有了type属性
+          *
+          *
+          *
+          *
+          */
+         void fun25(){}
     //end region
 }
