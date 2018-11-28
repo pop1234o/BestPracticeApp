@@ -969,5 +969,14 @@ package com.liyafeng.video.game.js;
           *
           */
          void fun25(){}
+
+          /**
+           * [] 运算符
+           * 可以给对象设置属性，和取值
+           * var obj={}
+           * obj.['name']="xxx"
+           *
+           */
+          void fun26(){}
     //end region
 }
