@@ -200,4 +200,21 @@ public class Git_Main {
      */
     void a1() {
     }
+
+    /**
+     * gitlab
+     * gitlab先建立组，然后里面是项目
+     * Brandy/courseware
+     * 然后我们需要fork到自己的命名空间下
+     * yafeng.li/courseware
+     * 然后我们本地需要两个远程仓库
+     * origin 指向 yafeng.li/courseware
+     * originMaster 指向 Brandy/courseware
+     * 每次push之前，要先拉取originMaster的分支更新（这个仓库相当于大家都merge request的仓库）
+     *
+     *
+     *
+     *
+     */
+    void fun1(){}
 }
