@@ -6,10 +6,24 @@ public class Tools_Js {
 
     }
 
+    /*
+    * cli
+    * command line interface
+    * =========为什么需要配置文件============
+    *
+    * 因为一个工具，要执行，需要一些传入
+    * 一些参数，而我们在命令行输入又很麻烦，所以以配置文件的形式
+    * 比如json或者xml
+    *
+    *
+    *
+    * */
 
     /**
      * =========webpack============
      * https://www.webpackjs.com/
+     * https://www.webpackjs.com/concepts/modules/ （什么是模块）
+     * https://www.webpackjs.com/guides/getting-started/  具体使用方法
      *
      * js打包器，js工程有很多js文件和资源，用这个软件打包到一个js文件中，以便于
      * 别的项目引用
@@ -53,6 +67,16 @@ public class Tools_Js {
      * * NPM（node package manager),通常称为node包管理器，主要功能就是管理node包，包括：安装、卸载、更新、查看、搜索、发布等。
      * * NPM是基于couchdb一个数据库，详细记录了每个包的信息（作者、版本、依赖、授权信息等）
      * *
+     *   比如我们js中需要依赖一些工具，和定义一些cli命令，都可以在配置文件中配置
+     *   比如我们要讲我们的js源码打包到一个js中发布，用npm都能轻松实现
+     *   所以配置文件中要配置name version 等信息
+     *  ==================npm使用方法=======================
+     *  找个空文件夹，npm init [-yes]
+     *  会生成一个package.json ，里面是npm的配置文件
+     *
+     *
+     *
+     *
      * * ====================================
      * * npm install xxx # 本地安装
      * * npm install -g xxx # 全局安装
@@ -101,7 +125,7 @@ public class Tools_Js {
       * Asynchronous Module Definition 规范 =======RequireJS
       * Common Module Definition 规范 ====Sea.js
       * Universal Module Definition 规范
-      * ES6 模块 ---新版的 Node.js才支持
+      * ES6（ES2015） 模块 ---新版的 Node.js才支持
       *
       *
       *

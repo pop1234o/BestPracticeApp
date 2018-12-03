@@ -29,7 +29,7 @@ public class Git_Main {
      * git remote add 远程名称 地址
      * git remote remove 删除远程
      * <p>
-     * 更新远程仓库的分支信息
+     * 更新远程仓库的分支信息 fetch
      * git remote update [-p] [remote]
      * -p代表prune 更新同时删除远程已经删除的分支的本地关联
      * <p>
@@ -139,6 +139,9 @@ public class Git_Main {
      * 【删除远程标签】
      * git tag -d v0.9
      * git push origin :refs/tags/v0.9
+     *
+     * =========================删除远程仓库============
+     * git remote rm origin   （只是删除这个名字，并没有真的将远程仓库删除）
      *
      * @param args
      */
