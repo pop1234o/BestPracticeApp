@@ -217,4 +217,37 @@ public class Git_Main {
      *
      */
     void fun1(){}
+
+
+
+     /**
+      * http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
+      * 格式化的commit message 有利于log信息的筛选，而且用命令能自动生成change log
+      *
+      *
+      * commit提交格式
+      * feat：新功能（feature）
+      * fix：修补bug
+      * docs：文档（documentation）
+      * style： 格式（不影响代码运行的变动）
+      * refactor：重构（即不是新增功能，也不是修改bug的代码变动）
+      * test：增加测试
+      * chore：构建过程或辅助工具的变动
+      *
+      * Header部分只有一行，包括三个字段：type（必需）、scope（可选）和subject（必需）。
+      * 类型，影响范围，简短描述
+      *
+      * Body 部分是对本次 commit 的详细描述，可以分成多行。下面是一个范例。
+      *
+      * ============================
+      * Commitizen是一个撰写合格 Commit message 的工具。
+      * 运行下面的命令，使其支持 Angular 的 Commit message 格式。
+      * commitizen init cz-conventional-changelog --save --save-exact
+      * 凡是用到git commit命令，一律改为使用git cz。这时，就会出现选项，用来生成符合格式的 Commit message。
+      *
+      *
+      *
+      *
+      */
+     void fun2(){}
 }
