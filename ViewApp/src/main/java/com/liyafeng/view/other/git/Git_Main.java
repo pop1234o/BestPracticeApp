@@ -250,4 +250,13 @@ public class Git_Main {
       *
       */
      void fun2(){}
+
+      /**
+       * https://help.github.com/articles/removing-sensitive-data-from-a-repository/
+       * https://blog.csdn.net/meteor1113/article/details/4407209
+       * git 永久删除
+       *
+       *
+       */
+      void fun3(){}
 }
