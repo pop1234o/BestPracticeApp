@@ -55,7 +55,7 @@ public class Git_Main {
      * git log [文件名]
      * <p>
      * 按q退出
-     *
+     * <p>
      * git show [commit_hash] 查看某次commit的所有改变
      * -----------------------
      * git 初始化，我们提交代码要设置 用户名 和 邮箱
@@ -123,23 +123,23 @@ public class Git_Main {
      * git merge [分支名] 将分支合并到当前的分支
      * git branch -d [分支] 删除本地的分支
      * git push -d [仓库名] [分支名] 删除远程分支
-     *
+     * <p>
      * =======================tag==================
      * git tag v1.0 打标签
      * git tag
-     *
+     * <p>
      * git show <tagname>查看标签信息
-     *
+     * <p>
      * git tag -d v0.1 删除
-     *
+     * <p>
      * git push origin v1.0 推送标签到远程
      * git push origin --tags 推送所有标签
-     *
-     *
+     * <p>
+     * <p>
      * 【删除远程标签】
      * git tag -d v0.9
      * git push origin :refs/tags/v0.9
-     *
+     * <p>
      * =========================删除远程仓库============
      * git remote rm origin   （只是删除这个名字，并没有真的将远程仓库删除）
      *
@@ -211,52 +211,79 @@ public class Git_Main {
      * origin 指向 yafeng.li/courseware
      * originMaster 指向 Brandy/courseware
      * 每次push之前，要先拉取originMaster的分支更新（这个仓库相当于大家都merge request的仓库）
-     *
-     *
-     *
-     *
      */
-    void fun1(){}
+    void fun1() {
+    }
 
 
+    /**
+     * http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
+     * 格式化的commit message 有利于log信息的筛选，而且用命令能自动生成change log
+     * <p>
+     * <p>
+     * commit提交格式
+     * feat：新功能（feature）
+     * fix：修补bug
+     * docs：文档（documentation）
+     * style： 格式（不影响代码运行的变动）
+     * refactor：重构（即不是新增功能，也不是修改bug的代码变动）
+     * test：增加测试
+     * chore：构建过程或辅助工具的变动
+     * <p>
+     * Header部分只有一行，包括三个字段：type（必需）、scope（可选）和subject（必需）。
+     * 类型，影响范围，简短描述
+     * <p>
+     * Body 部分是对本次 commit 的详细描述，可以分成多行。下面是一个范例。
+     * <p>
+     * ============================
+     * Commitizen是一个撰写合格 Commit message 的工具。
+     * 运行下面的命令，使其支持 Angular 的 Commit message 格式。
+     * commitizen init cz-conventional-changelog --save --save-exact
+     * 凡是用到git commit命令，一律改为使用git cz。这时，就会出现选项，用来生成符合格式的 Commit message。
+     */
+    void fun2() {
+    }
 
-     /**
-      * http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
-      * 格式化的commit message 有利于log信息的筛选，而且用命令能自动生成change log
-      *
-      *
-      * commit提交格式
-      * feat：新功能（feature）
-      * fix：修补bug
-      * docs：文档（documentation）
-      * style： 格式（不影响代码运行的变动）
-      * refactor：重构（即不是新增功能，也不是修改bug的代码变动）
-      * test：增加测试
-      * chore：构建过程或辅助工具的变动
-      *
-      * Header部分只有一行，包括三个字段：type（必需）、scope（可选）和subject（必需）。
-      * 类型，影响范围，简短描述
-      *
-      * Body 部分是对本次 commit 的详细描述，可以分成多行。下面是一个范例。
-      *
-      * ============================
-      * Commitizen是一个撰写合格 Commit message 的工具。
-      * 运行下面的命令，使其支持 Angular 的 Commit message 格式。
-      * commitizen init cz-conventional-changelog --save --save-exact
-      * 凡是用到git commit命令，一律改为使用git cz。这时，就会出现选项，用来生成符合格式的 Commit message。
-      *
-      *
-      *
-      *
-      */
-     void fun2(){}
+    /**
+     * https://help.github.com/articles/removing-sensitive-data-from-a-repository/
+     * https://blog.csdn.net/meteor1113/article/details/4407209
+     * git 永久删除
+     */
+    void fun3() {
+    }
 
-      /**
-       * https://help.github.com/articles/removing-sensitive-data-from-a-repository/
-       * https://blog.csdn.net/meteor1113/article/details/4407209
-       * git 永久删除
-       *
-       *
-       */
-      void fun3(){}
+    /**
+     * ====================重置提交==============
+     * 删除某次commit
+     * git reset --hard <commit_id> 这个是回到这个提交  （丢失历史甚至整个版本库的操作）
+     * git push origin HEAD --force  这个是将HEAD指向这个提交
+     * <p>
+     * ----------------------
+     * git reset --hard HEAD~5  回退到5次commit之前
+     * git push origin master --force
+     * <p>
+     * ==========work flow================
+     * https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E7%BD%AE%E6%8F%AD%E5%AF%86
+     * head总是指向上一次commit
+     * work space =>(add)=> index =>(commit)=> Head->master（local repository）
+     * <p>
+     * git reset  --soft <commit_id>  Head指向这次commit 且 workspace和index都保留变动
+     * git reset  --soft HEAD~   回到上一次commit
+     * git reset  --soft HEAD~5  上5次
+     * <p>
+     * git reset --mixed <commit_id>  workspace 会保留<commit_id>之后的变动，index不会
+     * <p>
+     * git reset --hard <commit_id>   workspace 、index、Head都会重置，
+     * //这样我们的commit流中就没有那个commit了，但是我们git数据库中还有
+     * //git reflog 查看每一次命令，找到那个commitid，reset到那即可
+     */
+    void fun4() {
+    }
+
+    /**
+     * =======显示一行的commit============
+     * git log --pretty=oneline
+     */
+    void fun5() {
+    }
 }
