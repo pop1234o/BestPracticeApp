@@ -286,4 +286,35 @@ public class Git_Main {
      */
     void fun5() {
     }
+
+
+    /**
+     * 取消追踪文件
+     * https://www.cnblogs.com/youyoui/p/8337147.html
+     *
+     * 我们添加.gitignore文件，里面写上需要忽略的文件或者文件夹
+     * 子文件夹中可以有自己的忽略规则
+     * 忽略规则是先看命令行中定义的忽略规则，再看本文件夹中的忽略规则，再看父文件夹中的忽略规则
+     * /bin 忽略根文件中的bin文件夹，子文件中的bin文件夹不匹配
+     * bin/忽略bin文件夹下的内容,子目录中所有的bin都会被忽略
+     * 我们有的新文件设置ignore无效，是因为他们已经在index中了（查看状态是绿色的），我们需要清除
+     * git rm -r --cache file
+     *
+     * =========
+     * 如果文件已经被track，那么需要git rm -r --cache filename 删除这个文件
+     * -r 代表递归， --cache代表只删除index上的，本地工作区还保留
+     * 然后再写上忽略规则
+     * 然后我们git commit -m"update"，
+     * 然后git push 即可
+     *
+     * 工作区-add->index-commit->local repository -push -> remote repository
+     *
+     * remote repository =pull=> 工作区
+     * remote repository =fetch/clone=> local repository
+     * local repository => checkout => 工作区
+     *
+     */
+    void fun6(){
+
+    }
 }
