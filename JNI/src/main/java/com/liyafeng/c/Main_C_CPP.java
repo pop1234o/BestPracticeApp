@@ -3,6 +3,24 @@ package com.liyafeng.c;
 public class Main_C_CPP {
 
 
+    /**
+     * C语言的原型ALGOL 60语言。（也称为A语言）  1963年，
+     * 剑桥大学将ALGOL 60语言发展成为CPL(Combined Programming Language)语言。
+     * 1967年，剑桥大学的Matin Richards 对CPL语言进行了简化，于是产生了BCPL语言。
+     * 1970年，美国贝尔实验室的Ken Thompson将BCPL进行了修改，并为它起了一个有趣的名字“B语言”。
+     * 意思是将CPL语言煮干，提炼出它的精华。并且他用B语言写了第一个UNIX操作系统。
+     * 而在1973年，B语言也给人“煮”了一下，
+     * 美国贝尔实验室的D.M.RITCHIE在B语言的基础上最终设计出了一种新的语言，
+     * 他取了BCPL的第二个字母作为这种语言的名字，这就是C语言。
+     * 所以，最早的C语言编译器使用B语言写的。
+     *
+     * 作者：12345
+     * 链接：https://www.zhihu.com/question/20369232/answer/14920514
+     * 来源：知乎
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
     }
