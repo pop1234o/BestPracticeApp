@@ -14,6 +14,16 @@ public class Linux_Command {
      *
      * netstat -nap  | grep 进程号
      *
+     * ===========brew==========
+     * https://brew.sh/
+     * /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+     *
+     * Homebrew installs the stuff you need that Apple (or your Linux system) didn’t.
+     * 安装软件的工具
+     * ==========sudo=========
+     * sudo 用管理员的权限运行
+     *
+     *
      *
      *
      * @param args
