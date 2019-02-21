@@ -273,9 +273,8 @@ public class MainActivity extends Activity {
         findViewById(R.id.button_video).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, Camera2Activity.class));
-                startActivity(new Intent(MainActivity.this, CameraActivity.class));
-//                startActivity(new Intent(MainActivity.this, Camera1Activity.class));
+//                startActivity(new Intent(MainActivity.this, CameraActivity.class));
+                startActivity(new Intent(MainActivity.this, Camera2Activity.class));
 //                startActivity(new Intent(MainActivity.this, Camera2_1Activity.class));
             }
         });
