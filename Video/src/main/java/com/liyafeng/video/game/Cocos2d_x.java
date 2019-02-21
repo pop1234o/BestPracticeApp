@@ -1,6 +1,5 @@
 package com.liyafeng.video.game;
 
-import com.liyafeng.video.game.js.Main_Js;
 
 public class Cocos2d_x {
 

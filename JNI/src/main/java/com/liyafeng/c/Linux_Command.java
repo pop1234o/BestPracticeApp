@@ -7,7 +7,7 @@ public class Linux_Command {
      *
      * linux命令大全
      * http://man.linuxde.net
-     *
+     * http://www.runoob.com/linux/linux-command-manual.html
      *
      * =====ps=======
      * ps --help
@@ -38,6 +38,11 @@ public class Linux_Command {
      * 功能：使Shell读入指定的Shell程序文件并依次执行文件中的所有语句
      * source命令通常用于重新执行刚修改的初始化文件，使之立即生效，而不必注销并重新登录。
      *
+     * ===========touch ========
+     * Linux touch命令用于修改文件或者目录的时间属性，包括存取时间和更改时间。若文件不存在，系统会建立一个新的文件。
+     *
+     * ls -l 可以显示档案的时间记录。
+     *
      *
      * @param args
      */
@@ -50,6 +55,7 @@ public class Linux_Command {
      * linux shell
      * http://wiki.jikexueyuan.com/project/shell-tutorial/shell-brief-introduction.html
      *
+     * http://www.runoob.com/linux/linux-shell.html(菜鸟教程)
      *
      *
      */

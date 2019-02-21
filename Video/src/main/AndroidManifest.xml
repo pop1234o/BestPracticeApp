@@ -13,10 +13,10 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-
-    <!--0x00020000 代表使用 OpenGL ES 2.0 接口-->
-    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
-
+    <!-- 0x00020000 代表使用 OpenGL ES 2.0 接口 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -36,7 +36,9 @@
         <activity android:name=".practice.b_audio_record.AudioRecordActivity" />
         <activity android:name=".practice.c_video_record.CameraActivity" />
         <activity android:name=".practice.c_video_record.Camera2Activity" />
-        <activity android:name=".practice.f_opengl_es.OpenGLES20Activity"></activity>
+        <activity android:name=".practice.f_opengl_es.OpenGLES20Activity" />
+        <activity android:name=".practice.c_video_record.Camera2_1Activity" />
+        <activity android:name=".practice.c_video_record.Camera1Activity"></activity>
     </application>
 
 </manifest>

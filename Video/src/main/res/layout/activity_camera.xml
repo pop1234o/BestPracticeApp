@@ -16,7 +16,7 @@
     <FrameLayout
         android:id="@+id/sv_content"
         android:layout_width="200dp"
-        android:layout_height="200dp" />
+        android:layout_height="400dp" />
 
     <TextureView
         android:id="@+id/tv_content"

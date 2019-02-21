@@ -12,12 +12,9 @@ import android.media.MediaRecorder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.util.Size;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
@@ -132,7 +129,7 @@ public class CameraActivity extends Activity {
             // initialize video camera
             if (prepareVideoRecorder()) {
                 // Camera is available and unlocked, MediaRecorder is prepared,
-                // now you can start recording
+                // now you can startCamera recording
                 mMediaRecorder.start();
 
                 // inform the user that recording has started
@@ -235,7 +232,7 @@ public class CameraActivity extends Activity {
                     new String[]{Manifest.permission.CAMERA},
                     MY_PERMISSIONS_REQUEST_READ_CONTACTS);
         } else {
-            start();
+            startCamera();
         }
     }
 
@@ -248,7 +245,7 @@ public class CameraActivity extends Activity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.i("test", "授权了！！！");
-                    start();
+                    startCamera();
                 } else {
 
 
@@ -264,7 +261,7 @@ public class CameraActivity extends Activity {
     /**
      * 开启相机
      */
-    private void start() {
+    private void startCamera() {
 
         if (checkCameraHardware(this)) {
             //摄像头数量
@@ -275,13 +272,27 @@ public class CameraActivity extends Activity {
                 cameraInstance.setDisplayOrientation(90);//设置显示角度
                 parameters.setRotation(90);//设置照出的图片角度
 
+                //预览的数据，只能是这种数据
+                parameters.setPreviewFormat(ImageFormat.NV21);
+
                 /*
                 * 这里的照片宽高只能选择系统支持的
                 * */
                 List<Camera.Size> supportedPictureSizes = cameraInstance.getParameters().getSupportedPictureSizes();
-                Camera.Size size = supportedPictureSizes.get(0);//有很多像素选择
-                parameters.setPictureSize(size.width,size.height);
+                Camera.Size size = supportedPictureSizes.get(33);//有很多像素选择  ,120*160
 
+
+//                Camera.Size  sizeOut=null;
+//                for (Camera.Size  size : supportedPictureSizes) {
+//                    if (size.width>=this.getResources().) {
+//                        break;
+//                    }
+//                    sizeOut=size;
+//                }
+
+                //这个size好像必须小于
+                parameters.setPictureSize(size.width,size.height);
+                parameters.setPreviewSize(size.width,size.height);
 
                 parameters.setPictureFormat(ImageFormat.JPEG);
 
@@ -291,7 +302,9 @@ public class CameraActivity extends Activity {
                 * */
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
 
-                parameters.setPreviewFormat(ImageFormat.NV21);
+
+
+
                 cameraInstance.setParameters(parameters);
 
 
@@ -299,14 +312,19 @@ public class CameraActivity extends Activity {
                 * 处理图像的每一帧
                 *
                 * */
-//                cameraInstance.setpre
-                cameraInstance.setPreviewCallback(new Camera.PreviewCallback() {
+//              //!!!!!!!!!!妈了b，这个方法只是通知他回调，所以这个是必须有preview的时候才能加载，这个时候还没有preview
+            /*    cameraInstance.setPreviewCallback(new Camera.PreviewCallback() {
                     @Override
                     public void onPreviewFrame(byte[] data, Camera camera) {
                         //这里面的Bytes的数据就是NV21格式的数据。(难道是5.0以上的系统没有回调了？？)
                         Log.i(TAG, "onPreviewFrame: "+data.length);
+                        //这里的length
+                        //通过android.hardware.Camera 采集的视频源数据为nv21格式的数据，
+                        属于yuv420sp格式的一种，所以数据的总长度为：width*height*3/2
+
+                        所以160*120*1.5 =28800 个字节
                     }
-                });
+                });*/
 
 
                 cameraPreview = new CameraPreview(this, cameraInstance);

@@ -50,7 +50,7 @@ public class Camera2Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        sv_content = (FrameLayout) findViewById(R.id.sv_content);
+//        sv_content = (FrameLayout) findViewById(R.id.sv_content);
         tv_content = (TextureView) findViewById(R.id.tv_content);
 
         tv_content.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
@@ -193,6 +193,7 @@ public class Camera2Activity extends Activity {
         }
 
     private void createCameraPreviewSession() {
+
 
     }
 

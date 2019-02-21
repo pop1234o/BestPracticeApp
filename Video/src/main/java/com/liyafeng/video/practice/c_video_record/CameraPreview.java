@@ -67,6 +67,14 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
 
+
+            mCamera.setPreviewCallback(new Camera.PreviewCallback() {
+                @Override
+                public void onPreviewFrame(byte[] data, Camera camera) {
+                    //这里面的Bytes的数据就是NV21格式的数据。(难道是5.0以上的系统没有回调了？？)
+                    Log.i(TAG, "onPreviewFrame:======= "+data.length);
+                }
+            });
         } catch (Exception e){
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
         }

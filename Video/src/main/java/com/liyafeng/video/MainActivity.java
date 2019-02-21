@@ -7,6 +7,9 @@ import android.view.View;
 
 import com.liyafeng.video.practice.b_audio_record.AudioRecordActivity;
 import com.liyafeng.video.practice.a_draw_image.DrawImageActivity;
+import com.liyafeng.video.practice.c_video_record.Camera1Activity;
+import com.liyafeng.video.practice.c_video_record.Camera2Activity;
+import com.liyafeng.video.practice.c_video_record.Camera2_1Activity;
 import com.liyafeng.video.practice.c_video_record.CameraActivity;
 import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
 
@@ -271,7 +274,10 @@ public class MainActivity extends Activity {
         findViewById(R.id.button_video).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                startActivity(new Intent(MainActivity.this, Camera2Activity.class));
                 startActivity(new Intent(MainActivity.this, CameraActivity.class));
+//                startActivity(new Intent(MainActivity.this, Camera1Activity.class));
+//                startActivity(new Intent(MainActivity.this, Camera2_1Activity.class));
             }
         });
 
