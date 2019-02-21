@@ -290,8 +290,10 @@ public class CameraActivity extends Activity {
 //                    sizeOut=size;
 //                }
 
-                //这个size好像必须小于
                 parameters.setPictureSize(size.width,size.height);
+
+                //这个size必须小于显示控件的宽高，否则报错    java.lang.RuntimeException: setParameters failed
+                //因为你设置浏览的size，小于控件可以拉伸（平铺），大于就没办法舍弃像素了
                 parameters.setPreviewSize(size.width,size.height);
 
                 parameters.setPictureFormat(ImageFormat.JPEG);

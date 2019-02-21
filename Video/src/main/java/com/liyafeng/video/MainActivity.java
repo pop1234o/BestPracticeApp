@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.liyafeng.video.practice.b_audio_record.AudioRecordActivity;
 import com.liyafeng.video.practice.a_draw_image.DrawImageActivity;
-import com.liyafeng.video.practice.c_video_record.Camera1Activity;
 import com.liyafeng.video.practice.c_video_record.Camera2Activity;
 import com.liyafeng.video.practice.c_video_record.Camera2_1Activity;
 import com.liyafeng.video.practice.c_video_record.CameraActivity;
