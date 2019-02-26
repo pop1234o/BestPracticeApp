@@ -301,7 +301,9 @@ public class Git_Main {
      * git rm -r --cache file
      *
      * =========
-     * 如果文件已经被track，那么需要git rm -r --cache filename 删除这个文件
+     * 如果文件已经被track，那么需要git rm -r --cache filename 删除文件
+     * 然后工作区需要rm filename来进行删除
+     *
      * -r 代表递归， --cache代表只删除index上的，本地工作区还保留
      * 然后再写上忽略规则
      * 然后我们git commit -m"update"，
