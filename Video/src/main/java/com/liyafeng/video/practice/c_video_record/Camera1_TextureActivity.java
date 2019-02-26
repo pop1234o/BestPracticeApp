@@ -31,8 +31,6 @@ public class Camera1_TextureActivity extends AppCompatActivity {
     private static final int REQ_CAMERA = 0;
     private SurfaceTexture surfaceTexture;
     private Camera camera;
-    private TextView tv_hand;
-    private View view_face;
     private Handler handler;
     private YuvUtils yuvtool;
     private ImageView iv_img;
@@ -80,12 +78,6 @@ public class Camera1_TextureActivity extends AppCompatActivity {
             }
         });
 
-        tv_hand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkPermission();
-            }
-        });
         initBackgroundHandler();
 
         yuvtool = new YuvUtils();
@@ -98,7 +90,6 @@ public class Camera1_TextureActivity extends AppCompatActivity {
         getBitmap(data);
         byte[] data270rotate = yuvtool.nv21RotateClockwise(data, 640, 480, 270);  // rotation=270
         byte[] data_det_input = yuvtool.nv21MirrorLeftRight(data270rotate, 480, 640);
-
 
 //        engine.detect(data_det_input, 480, 640);
         //这里的preview数据是 -》 这样的，所以要转270度（时钟放向） 然后镜像，才是镜面显示
