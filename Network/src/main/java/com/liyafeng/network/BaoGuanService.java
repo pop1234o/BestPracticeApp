@@ -1,6 +1,13 @@
 package com.liyafeng.network;
 
 
+import com.liyafeng.network.response.CompanyDataEntity;
+import com.liyafeng.network.response.ResponseListEntity;
+
+import retrofit2.Call;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
+
 public interface BaoGuanService {
 
 
@@ -14,15 +21,15 @@ public interface BaoGuanService {
      *
      * */
 
-/*
-    @GET("/")
-    Call<String> getContent();
+
+//    @GET("/")
+//    Call<String> getContent();
 
 
     //获取公司列表
     @POST("/v1/company/list")
     Call<ResponseListEntity<CompanyDataEntity>> getCompanyData(@Query("pageIndex") int pageIndex, @Query("tag_id") long tag_id);
-
+/*
     //获取公司标签
     @GET("v1/company/tag/list")
     Call<ResponseListEntity<CompanyTagEntity>> getCompanyTag();

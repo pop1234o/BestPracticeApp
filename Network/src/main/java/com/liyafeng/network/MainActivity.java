@@ -18,12 +18,16 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.liyafeng.network.response.CompanyDataEntity;
+import com.liyafeng.network.response.NetListCallback;
+import com.liyafeng.network.response.ResponseListEntity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CacheControl;
@@ -411,6 +415,29 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
+
+    void requestMy(){
+        Call<ResponseListEntity<CompanyDataEntity>> call = HttpUtil.getService().getCompanyData(1, 1);
+        call.enqueue(new NetListCallback<CompanyDataEntity>() {
+            @Override
+            public void onSuccess(List<CompanyDataEntity> list) {
+
+            }
+
+            @Override
+            public void onServerFail(String message) {
+
+            }
+
+            @Override
+            public void onNetFail(String message) {
+
+            }
+        });
+    }
+
 
     public interface RequestService1 {
 

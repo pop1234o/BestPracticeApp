@@ -146,19 +146,19 @@ public class WebViewActivity extends AppCompatActivity {
 
 //        webview.loadUrl("http://192.168.1.131:7876/dist/tod/");
 
-        webview.loadUrl("http://47.94.111.47/test/ajax.html");
-//        File file = new File(this.getExternalFilesDir(null), "v1.0.23/index.html");
-//        try {
-//            file.createNewFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        URI uri = file.toURI();
-//        try {
-//            webview.loadUrl(uri.toURL().toString());
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
+//        webview.loadUrl("http://webassembly.org.cn/demo/Tanks/");
+        File file = new File(this.getExternalFilesDir(null), "roateCube/index.html");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        URI uri = file.toURI();
+        try {
+            webview.loadUrl(uri.toURL().toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
         webview.setBackgroundColor(Color.TRANSPARENT);
     }

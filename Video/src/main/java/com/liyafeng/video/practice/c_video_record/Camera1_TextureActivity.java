@@ -169,6 +169,8 @@ public class Camera1_TextureActivity extends AppCompatActivity {
             camera.startPreview();
 
 
+            //这里不推荐使用setPreviewCallback，因为没有复用byte数组，导致内存占用高，频繁gc，导致handler的消息延时执行
+            //这样我们及时取出的帧可能就是很早之前的了
             camera.setPreviewCallbackWithBuffer(new Camera.PreviewCallback() {
                 @Override
                 public void onPreviewFrame(byte[] data, Camera camera) {
