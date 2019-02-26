@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
             ViewPagerIndicatorActivity.class,
             RoundViewPagerActivity.class,
             ToolBarActivity.class,
-            WebViewActivity.class,
+            com.liyafeng.view.webview.WebViewActivity.class,
             };
 
     @Override

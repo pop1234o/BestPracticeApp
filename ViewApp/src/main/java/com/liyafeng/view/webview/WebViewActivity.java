@@ -1,11 +1,16 @@
 package com.liyafeng.view.webview;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -15,7 +20,12 @@ import android.webkit.WebViewClient;
 
 import com.liyafeng.view.R;
 
-public class WebViewActivity extends Activity {
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+
+public class WebViewActivity extends AppCompatActivity {
 
     private WebView webview;
 
@@ -41,6 +51,11 @@ public class WebViewActivity extends Activity {
      * 忽略警告
      * xmlns:tools="http://schemas.android.com/tools"
      * tools:ignore="WebViewLayout"
+     * <p>
+     * <p>
+     * ============================
+     * <p>
+     * https://developer.chrome.com/multidevice/webview/overview
      *
      * @param savedInstanceState
      */
@@ -53,12 +68,16 @@ public class WebViewActivity extends Activity {
         initView();
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void initView() {
         webview = (WebView) findViewById(R.id.webview);
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
 
-
+        //允许解决跨域访问
+        settings.setAllowUniversalAccessFromFileURLs(true);
+        //允许加载本地文件
+        settings.setAllowFileAccessFromFileURLs(true);
         //适配网页，宽度
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
@@ -124,11 +143,25 @@ public class WebViewActivity extends Activity {
             }
         });
 
-        webview.loadUrl("http://pxtest.facethink.com/playground/test/index2.html");
+
+//        webview.loadUrl("http://192.168.1.131:7876/dist/tod/");
+
+        webview.loadUrl("http://47.94.111.47/test/ajax.html");
+//        File file = new File(this.getExternalFilesDir(null), "v1.0.23/index.html");
+//        try {
+//            file.createNewFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        URI uri = file.toURI();
+//        try {
+//            webview.loadUrl(uri.toURL().toString());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
 
         webview.setBackgroundColor(Color.TRANSPARENT);
     }
-
 
 
 }

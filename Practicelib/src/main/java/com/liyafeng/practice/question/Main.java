@@ -161,4 +161,11 @@ public class Main {
     void a9(){
 
     }
+
+
+    /**
+     * 很多jni的部分我们down下来代码，在sdkManager安装cmake和llbs，
+     * 然后需要可能需要 invalidate cache restart ,才能正常
+     */
+    void a10(){}
 }
