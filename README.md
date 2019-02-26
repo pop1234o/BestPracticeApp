@@ -27,6 +27,7 @@ vi编辑器的使用
 * okhttp网络框架的原理（代替HttpURLConnection）
 * retrofit网络框架 （封装了okhttp）
 * 讲解了Http协议，7层网络框架
+* 项目中如何封装okhttp+retrofit
 
 ### 图片加载框架 （Module: ImageLoader）
 * Picasso 使用方法和原理介绍

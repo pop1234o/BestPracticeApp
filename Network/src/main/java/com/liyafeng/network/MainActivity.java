@@ -390,8 +390,11 @@ public class MainActivity extends AppCompatActivity {
                 ResponseBody body = response.body();
 
                 try {
-                    //将body内容转换为string
-                    String string = body.string();
+                    //将body内容转换为string,只能调用一次
+                    if (body != null) {
+                        //相应过大可能造成oom，所以可以用流的方式读取响应
+                        String string = body.string();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
