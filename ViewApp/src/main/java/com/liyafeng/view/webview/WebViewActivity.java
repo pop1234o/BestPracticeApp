@@ -35,6 +35,15 @@ import java.util.TimerTask;
 public class WebViewActivity extends AppCompatActivity {
 
     private WebView webview;
+    private Timer timer;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
 
     /**
      * https://developer.android.google.cn/reference/android/webkit/WebView
@@ -92,30 +101,67 @@ public class WebViewActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
 
+                if (timer != null) {
+                    return;
+                }
                 TimerTask timerTask = new TimerTask() {
+
 
                     @Override
                     public void run() {
+                        Log.i("test", "run: 调用了");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //两种调用js方式，一种loadUrl()；刷新页面?无法获取返回值， 第二种 evaluateJavascript 高效，可以有返回值
+                                webview.evaluateJavascript("javascript:aaa('" + System.currentTimeMillis() + "')", new ValueCallback<String>() {
+                                    @Override
+                                    public void onReceiveValue(String value) {//js返回的方法
+
+                                    }
+                                });
+                            }
+                        });
 
                     }
                 };
 
-                Timer timer = new Timer();
-                timer.scheduleAtFixedRate();
-                //两种调用js方式，一种loadUrl()；刷新页面?无法获取返回值， 第二种 evaluateJavascript 高效，可以有返回值
-                webview.evaluateJavascript("javascript:aaa()", new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String value) {//js返回的方法
+                timer = new Timer();
 
-                    }
-                });
+                timer.scheduleAtFixedRate(timerTask, 0, 1000);
+
             }
         });
 
         initView();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        webview.evaluateJavascript("javascript:goForground()", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {//js返回的方法
+
+            }
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        webview.evaluateJavascript("javascript:goBackground()", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {//js返回的方法
+
+            }
+        });
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
