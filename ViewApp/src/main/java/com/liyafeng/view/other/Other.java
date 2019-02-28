@@ -1,5 +1,14 @@
 package com.liyafeng.view.other;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.SystemClock;
+
+import com.liyafeng.view.webview.WebViewActivity;
+
 public class Other {
 
 
@@ -41,10 +50,71 @@ public class Other {
      * scheduleAtFixedRate - fixed-rate 固定速率，如果一次延时了，那么下一次也在这个绝对时间立即执行（所有执行都是相对第一次执行的时间，
      *              而不是相对前一次）
      *
+     *================alarmManager方式=================
+     *
      *
      *
      */
-    void a2(){
+    void a2(Context context){
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent();
+        intent.setClass(context, WebViewActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), pendingIntent);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), pendingIntent);
+        } else {
+            long TIME_INTERVAL=1000;
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), TIME_INTERVAL, pendingIntent);
+        }
+
+    }
+
+
+    /**
+     * PendingIntent ==
+     *
+     * https://www.kancloud.cn/digest/androidframeworks/127784
+     *
+     *
+     * PendingIntent 的使用场景有三个：
+     *
+     * 使用 AlarmManager 设定闹钟
+     * 在系统状态栏显示 Notification
+     * 在桌面显示 Widget
+     *
+     * ========获取PendingIntent对象========
+     * // 获取 Broadcast 关联的 PendingIntent
+     * PendingIntent.getBroadcast(Context context, int requestCode, Intent intent, int flags)
+     *
+     * // 获取 Activity 关联的 PendingIntent
+     * PendingIntent.getActivity(Context context, int requestCode, Intent intent, int flags)
+     * PendingIntent.getActivity(Context context, int requestCode, Intent intent, int flags, Bundle options)
+     *
+     * // 获取 Service 关联的 PendingIntent
+     * PendingIntent.getService(Context context, int requestCode, Intent intent, int flags)
+     *
+     * =======================
+     * //如果新请求的 PendingIntent 发现已经存在时，取消已存在的，用新的 PendingIntent 替换
+     * int FLAG_CANCEL_CURRENT
+     *
+     * //如果新请求的 PendingIntent 发现已经存在时，忽略新请求的，继续使用已存在的。日常开发中很少使用
+     * int FLAG_NO_CREATE
+     *
+     * //表示 PendingIntent 只能使用一次，如果已使用过，那么 getXXX(...) 将会返回 NULL
+     * //也就是说同类的通知只能使用一次，后续的通知单击后无法打开。
+     * int FLAG_ONE_SHOT
+     *
+     * //如果新请求的 PendingIntent 发现已经存在时, 如果 Intent 有字段改变了，这更新已存在的 PendingIntent
+     * int FLAG_UPDATE_CURRENT
+     *
+     *
+     */
+    void a3(){
 
     }
 }
