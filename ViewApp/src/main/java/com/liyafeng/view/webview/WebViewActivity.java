@@ -11,12 +11,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.liyafeng.view.R;
 
@@ -24,6 +29,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -56,6 +63,13 @@ public class WebViewActivity extends AppCompatActivity {
      * ============================
      * <p>
      * https://developer.chrome.com/multidevice/webview/overview
+     * <p>
+     * =============chrome调试webview================
+     * （）
+     * 更多工具-》开发者工具 （或者按f12）
+     * 右面三个点，more tools -》remote devices
+     * 就能看到每个应用的网络请求，点击inspect(检查) 需翻墙
+     * 就能看到这个网页中的每个请求，包括js css img的请求
      *
      * @param savedInstanceState
      */
@@ -63,7 +77,43 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+        findViewById(R.id.btn_goto).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                EditText et_text = findViewById(R.id.et_text);
+                String url = et_text.getText().toString();
+                if (!TextUtils.isEmpty(url)) {
+                    webview.loadUrl(url);
+                } else {
+                    Toast.makeText(WebViewActivity.this, "请输入链接", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TimerTask timerTask = new TimerTask() {
+
+                    @Override
+                    public void run() {
+
+                    }
+                };
+
+                Timer timer = new Timer();
+                timer.scheduleAtFixedRate();
+                //两种调用js方式，一种loadUrl()；刷新页面?无法获取返回值， 第二种 evaluateJavascript 高效，可以有返回值
+                webview.evaluateJavascript("javascript:aaa()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {//js返回的方法
+
+                    }
+                });
+            }
+        });
 
         initView();
     }
@@ -147,18 +197,18 @@ public class WebViewActivity extends AppCompatActivity {
 //        webview.loadUrl("http://192.168.1.131:7876/dist/tod/");
 
 //        webview.loadUrl("http://webassembly.org.cn/demo/Tanks/");
-        File file = new File(this.getExternalFilesDir(null), "roateCube/index.html");
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        URI uri = file.toURI();
-        try {
-            webview.loadUrl(uri.toURL().toString());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+//        File file = new File(this.getExternalFilesDir(null), "roateCube1/index.html");
+//        try {
+//            file.createNewFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        URI uri = file.toURI();
+//        try {
+//            webview.loadUrl(uri.toURL().toString());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
 
         webview.setBackgroundColor(Color.TRANSPARENT);
     }

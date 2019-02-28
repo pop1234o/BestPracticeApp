@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f00"
+    android:background="#ff0"
     tools:context=".webview.WebViewActivity">
+
+    <EditText
+        android:id="@+id/et_text"
+        android:layout_width="match_parent"
+        android:layout_marginRight="100dp"
+        android:layout_height="60dp" />
+    <Button
+        android:id="@+id/btn_goto"
+        android:layout_width="100dp"
+        android:text="跳转"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="100dp"
+        android:text="调用js"
+        android:layout_below="@+id/btn_goto"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content" />
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/et_text"></WebView>
+</RelativeLayout>

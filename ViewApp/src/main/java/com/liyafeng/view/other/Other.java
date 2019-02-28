@@ -32,4 +32,19 @@ public class Other {
      *
      */
     void a1(){}
+
+
+    /**
+     * Timer的两种执行方式
+     *
+     * schedule - fixed-delay  固定延时，如果一次执行因为gc或者退到后台 而延时了，那么下一次执行也相对延时，
+     * scheduleAtFixedRate - fixed-rate 固定速率，如果一次延时了，那么下一次也在这个绝对时间立即执行（所有执行都是相对第一次执行的时间，
+     *              而不是相对前一次）
+     *
+     *
+     *
+     */
+    void a2(){
+
+    }
 }
