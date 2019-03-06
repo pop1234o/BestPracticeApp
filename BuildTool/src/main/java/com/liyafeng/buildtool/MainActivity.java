@@ -24,7 +24,7 @@ import android.os.Bundle;
  * 一个是初始化脚本 对应Gradle对象，在~/.gradle 目录下配置 init.gradle ，一般是大企业用的，用于统一管理多个project
  * 当然在~/.gradle/init.d/ 目录下的*.gradle也是初始化用的
  * <p>
- * ================================
+ * =============== build script=================
  * 下面主要讲的是 build script
  * 一个build script 包含0个或多个 statements(声明)和 script blocks(脚本块)
  * <p>
@@ -39,7 +39,7 @@ import android.os.Bundle;
  * repositories { } -配置这个project使用的仓库位置
  * 等，见https://docs.gradle.org/4.0/dsl/
  * <p>
- * =========================
+ * ===============plugin==========
  * 一个jar包中用很多pluginID，比如com.android.application com.android.library com.android.test com.android.instantapp
  * 我们要指定使用一个插件 比如 apply plugin:'比如com.android.application'
  * apply这个方法参数是hashmap类型的
@@ -47,7 +47,7 @@ import android.os.Bundle;
  * 然后我们就可以用这个插件中的android{} 这个script block了，里面是build apk的一些参数
  * <p>
  * <p>
- * ============================
+ * ==========dsl==================
  * 下面说dsl ,它实际上就是一种关系映射 是基于Groovy dsl的
  * 比如调用方法 就可以写成
  * <p>
@@ -60,11 +60,11 @@ import android.os.Bundle;
  * <p>
  * <p>
  * <p>
- * ===============================
+ * =================task==============
  * 其实这个插件就是写了很多task，比如编译task ,合并Manifesttask等
  * 我们要查看所有task  : 在project目录下 gradle tasks --all
  * <p>
- * ===================
+ * ==========gradle wrapper=========
  * gradle wrapper 是gradle的一个task  https://guides.gradle.org/creating-new-gradle-builds/
  * <p>
  * 我们来到一个空目录，创建空的build.gradle文件
@@ -80,7 +80,7 @@ import android.os.Bundle;
  * <p>
  * <p>
  * <p>
- * ==================
+ * =======自定义task===========
  * 当然我们还可以定义自己的task，关于更多自定义taks见https://guides.gradle.org/writing-gradle-tasks/
  * task 任务名{
  * task的方法{
@@ -108,7 +108,8 @@ import android.os.Bundle;
  * <p>
  * <p>
  * 这个插件在 项目 的build.gradle下指定 ：
- * ====================
+ *
+ * ============版本========
  * gradle来构建一个Android app https://guides.gradle.org/building-android-apps/
  * <p>
  * 使用gradle3.0  https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html
@@ -119,11 +120,11 @@ import android.os.Bundle;
  * 2.3.0+            3.3+
  * 2.1.3-2.2.3       2.14.1+
  * <p>
- * ====================
+ * =========android plugin dsl（讲解里面可以配置的名称）===========
  * 所有的android plugin dsl 在http://google.github.io/android-gradle-dsl/current/index.html
  * dsl就自定义的，我们可以在里面使用我们定义好的方法，字段
  * 原理就是映射到java的对象中的方法和字段，而这种映射能力是Groovy dsl提供的
- * ====================
+ * =========== 优化构建速度 =========
  * 优化构建速度  https://developer.android.com/studio/build/optimize-your-build.html
  * <p>
  * 1.优化构建配置
@@ -145,7 +146,7 @@ import android.os.Bundle;
  * <p>
  * 禁用一些没必要task ，在debug的时候
  * <p>
- * =========================
+ * =========关于配置你的android project================
  * 关于配置你的android project 见https://developer.android.com/studio/build/index.html#build-process
  * <p>
  * <p>
@@ -178,6 +179,46 @@ import android.os.Bundle;
  * ./gradlew assembleDebug 执行task
  * <p>
  * <p>
+ *
+ *     ==============gradle配置文件内容解析============
+ *  project级别的 build.gradle
+ *
+ *  buildscript {
+ *
+ *     repositories {  //我们需要Android的构建工具，而这里配置构建工具的下载地址
+ *         google()
+ *         jcenter()  //这两个是内置的依赖库，因为最常用
+ *
+ *         //添加 Sensors Analytics maven 库地址
+ *         maven {
+ *             url 'https://dl.bintray.com/zouyuhan/maven'
+ *         }
+ *     }
+ *     dependencies {     //依赖的构建工具，
+ *         classpath 'com.android.tools.build:gradle:3.2.1'
+ *
+ *
+ *         //添加 Sensors Analytics android-gradle-plugin 依赖
+ *         classpath 'com.sensorsdata.analytics.android:android-gradle-plugin2:3.0.2'
+ *
+ *         // NOTE: Do not place your application dependencies here; they belong
+ *         // in the individual module build.gradle files
+ *     }
+ * }
+ *
+ * allprojects {  //所有项目的依赖库都可以从下面下载
+ *     repositories {
+ *         google()
+ *         jcenter()
+ *
+ *         //添加 Sensors Analytics maven 库地址
+ *         maven {
+ *             url 'https://dl.bintray.com/zouyuhan/maven'
+ *         }
+ *     }
+ * }
+ *
+ *
  */
 public class MainActivity extends Activity {
 

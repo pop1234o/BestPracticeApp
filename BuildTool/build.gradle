@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.liyafeng.buildtool"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
@@ -94,12 +94,12 @@ android {
     }
 
 
-    sourceSets {
+    sourceSets {//这是用来指定源码的位置，所以我们代码的目录结构可以改变
         // Encapsulates configurations for the main source set.
         main {
             // Changes the directory for Java sources. The default directory is
             // 'src/main/java'.
-//            java.srcDirs = ['other/java']
+//            java.srcDirs = ['other/java'] 指定java源码的位置
 
             // If you list multiple directories, Gradle uses all of them to collect
             // sources. Because Gradle gives these directories equal priority, if
@@ -117,6 +117,8 @@ android {
             // By default, Android Studio creates a manifest for your main source
             // set in the src/main/ directory.
 //            manifest.srcFile 'other/AndroidManifest.xml'
+
+//            jniLibs.srcDirs = ['zego_libs'] 指定jni的so文件的位置
         }
 
         // Create additional blocks to configure other source sets.
@@ -130,6 +132,17 @@ android {
             // sources only in the src/tests/java/ directory.
 //            setRoot 'src/tests'
         }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+
+    aaptOptions { //aapt是
+        noCompress "tflite"
     }
 
     signingConfigs {

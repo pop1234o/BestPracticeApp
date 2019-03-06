@@ -2,6 +2,9 @@ package com.liyafeng.buildtool;
 
 public class Dex {
 
+    /*
+    * ========apk包内容的知识===========
+    * */
 
     /**
      * 分包
