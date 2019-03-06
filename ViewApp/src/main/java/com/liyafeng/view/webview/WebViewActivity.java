@@ -183,6 +183,9 @@ public class WebViewActivity extends AppCompatActivity {
         //不显示webview缩放按钮
         settings.setDisplayZoomControls(false);
 
+        //js调用Android方法
+        webview.addJavascriptInterface(new JsObject(),"jsBridge");
+
 
         /*
         *  webView.settings.domStorageEnabled = true
@@ -240,7 +243,7 @@ public class WebViewActivity extends AppCompatActivity {
         });
 
 
-//        webview.loadUrl("http://192.168.1.131:7876/dist/tod/");
+        webview.loadUrl("http://10.29.32.217:8080");
 
 //        webview.loadUrl("http://webassembly.org.cn/demo/Tanks/");
 //        File file = new File(this.getExternalFilesDir(null), "roateCube1/index.html");
