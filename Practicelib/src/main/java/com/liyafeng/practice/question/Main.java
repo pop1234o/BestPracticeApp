@@ -168,4 +168,19 @@ public class Main {
      * 然后需要可能需要 invalidate cache restart ,才能正常
      */
     void a10(){}
+
+
+    /**
+     * This file can not be opened as a file descriptor; it is probably compressed
+     * 这个问题是aapt打包的时候对资源压缩导致的
+     * https://github.com/tensorflow/tensorflow/issues/22333
+     * android{
+     * aaptOptions {
+     * noCompress "tflite"
+     * noCompress "lite"
+     * }
+     *
+     *
+     */
+    void a11(){}
 }

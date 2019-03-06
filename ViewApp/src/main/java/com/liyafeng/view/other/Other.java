@@ -151,4 +151,19 @@ public class Other {
      *
      */
     void a4(){}
+
+
+    /**
+     * Gradle下载的 jar或aar在哪？
+     * https://www.zhihu.com/question/40900206
+     *
+     * Mac系统默认下载到：/Users/(用户名)/.gradle/caches/modules-2/files-2.1
+     * Windows系统默认下载到：C:\Users\(用户名)\.gradle\caches\modules-2\files-2.1
+     *
+     * 或者
+     * 视图切换到Project，最下面有External Libraries，里面是这个项目依赖的库，
+     * 右键-》Library Properties 就能查看到目录了，如果是在工程中直接依赖的库，就不会显示路径
+     *
+     */
+    void a5(){}
 }
