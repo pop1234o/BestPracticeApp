@@ -125,8 +125,11 @@ public class Git_Main {
      * git push -d [仓库名] [分支名] 删除远程分支
      * <p>
      * =======================tag==================
+     *
+     * https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE
      * git tag v1.0 打标签
-     * git tag
+     *
+     * git tag 查看标签列表
      * <p>
      * git show <tagname>查看标签信息
      * <p>
