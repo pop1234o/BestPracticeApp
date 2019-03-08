@@ -119,6 +119,11 @@ public class Other {
     }
 
 
+    /**
+     * android查看apk的内容，直接后缀名改为.zip 解压即可
+     *
+     */
+    void a4(){}
 
 
 }

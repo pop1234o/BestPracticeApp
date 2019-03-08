@@ -34,4 +34,14 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+//
+//    implementation 'com.squareup.retrofit2:retrofit:2.5.0'   我们可以去https://mvnrepository.com 这里看最新的版本
+//    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'  这个是转换器
+//    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'   这个是适配器
+//
+//
+//    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'   这个是rx针对Android出的一个辅助
+//
+//    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'  日志拦截
 }

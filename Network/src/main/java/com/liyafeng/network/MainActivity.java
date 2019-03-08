@@ -354,6 +354,13 @@ public class MainActivity extends AppCompatActivity {
      * parameters can only be used with form encoding.
      * @Body 不能和 @Field 一起使用
      * <p>
+     *  ===设计原理============
+     *  用builder模式创建出一个Retrofit类型的对象，里面持有okhttpclient实例
+     *  然后用这个retrofit.create(RequestService.class); 创建出一个
+     *  RequestService的实现类，
+     *  然后调用实现类的请求方法，返回一个call对象，这就是一个请求对象
+     *  然后call。enqueue或者execute来执行这个请求即可
+     *
      * =============================
      * 这个是 @Field 和@FormUrlEncoded 使用的请求体
      * aaa=asf&timestamp=1535112905&sign=471AB43304BA669664BB28FB904E5324
