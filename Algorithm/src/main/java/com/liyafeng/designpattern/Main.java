@@ -41,8 +41,8 @@ public class Main {
      * 4.实心菱形：(composition)组合关系 A-</>B  强依赖，B不存在了，A也不存在了（部门-</>公司）
      *
      * （带箭头的直线）
-     * 5.关联关系(association) 成员变量 A->B B是A的成员变量，表示A知道B，但 B不知道A；
-     * 6.依赖关系(dependency) 参数 A->B B是A的构造方法或者普通方法的参数
+     * 5.实线箭头：关联关系(association) 成员变量 A->B B是A的成员变量，表示A知道B，但 B不知道A；
+     * 6.虚线箭头：依赖关系(dependency) 参数 A--->B B是A的构造方法或者普通方法的参数，或者是方法中new出来的参数
      *
      *
      *
