@@ -30,9 +30,28 @@ public class Main {
      *                  对调用者和执行者之间解耦
      * 结构型设计模式：更好的管理类与类之间的关系，对两个关联类之间解耦
      *
+     *
+     * ==========uml图/UML图==============
+     * https://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html
+     *（带三角的线）
+     * 1.实线箭头，(generalization)继承 suv->car（suv继承自car）
+     * 2.虚线箭头，(realize)实现，suv--->car 实现的是抽象类或接口
+     *
+     * 3.空心菱形：(aggregation)聚合关系 A-<>B  A是B的一部分 不是强依赖的，B不存在了，A还可以在  （员工-<>部门）
+     * 4.实心菱形：(composition)组合关系 A-</>B  强依赖，B不存在了，A也不存在了（部门-</>公司）
+     *
+     * （带箭头的直线）
+     * 5.关联关系(association) 成员变量 A->B B是A的成员变量，表示A知道B，但 B不知道A；
+     * 6.依赖关系(dependency) 参数 A->B B是A的构造方法或者普通方法的参数
+     *
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
 
     }
+
+
+
 }
