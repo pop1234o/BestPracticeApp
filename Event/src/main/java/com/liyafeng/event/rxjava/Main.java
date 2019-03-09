@@ -7,6 +7,9 @@ package com.liyafeng.event.rxjava;
 public class Main {
 
     /**
+     * (官方文档 wiki)
+     * https://github.com/ReactiveX/RxJava/wiki/How-To-Use-RxJava
+     *
      * a library for composing asynchronous
      * and event-based programs by using observable sequences.
      * 一个用来异步的基于事件的库，通过使用被观察者队列。
@@ -30,6 +33,16 @@ public class Main {
      *
      * 一般我们返回一个数据源，然后我们用流式处理他
      *
+     * 这样就使得数据处理的流程和流程中处理数据的细节解耦，在工程复杂的情况下修改逻辑不容易引起bug
+     *
+     *
+     *  可以消除回调地狱，我们之前在model层请求网络或者io操作，
+     * 可能还有localmodel和remotelocal ，还要加回调到model
+     * 然后要回调到presenter，这就要很多回调
+     * 但是用Rxjava就可以消除这种，将线程操作或者网络请求放到rxjava中的子线程
+     * 然后返回直接return，不用回调，然后我们切换到主线程做更新UI的操作
+     * 这样就省去了回调，和handler切换线程。代码就会清晰很多。
+     *
      *
      * ===================rxjava结合mvp=====
      * http://wuxiaolong.me/2016/06/12/mvpRetrofitRxjava/
@@ -51,6 +64,9 @@ public class Main {
      * computation 用来执行计算敏感的逻辑，线程池有界（因为cpu有限，所以并不是线程越多越好
      * 反而会因为线程多导致频繁切换 ，导致性能开销）
      *
+     * ===========什么是背压 backpressure=========
+     * ﻿https://github.com/ReactiveX/RxJava/wiki/Backpressure
+     * ﻿背压是指在异步场景中，被观察者发送事件速度远快于观察者的处理速度的情况下，一种告诉上游的被观察者降低发送速度的策略。
      *
      *
      * @param args

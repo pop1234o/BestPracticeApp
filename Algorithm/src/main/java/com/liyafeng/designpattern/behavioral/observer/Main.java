@@ -11,13 +11,23 @@ public class Main {
     /**
      * 被观察者 持有 观察者对象 的集合
      *
+     * Observable-Observer（update 收到消息）
+     *
+     * Subscriber-Publisher
+     * 订阅者接收消息，发布者发布消息
+     * 订阅者收到订阅的消息 onSubscribe（Subscription）
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
         Observable observable = new Observable();
+
+        //被观察者添加观察者
         observable.addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
+                //收到被观察者发来的通知
                 System.out.println(arg);
             }
         });
