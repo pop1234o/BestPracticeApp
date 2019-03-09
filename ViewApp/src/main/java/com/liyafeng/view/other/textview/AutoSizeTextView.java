@@ -11,6 +11,14 @@ public class AutoSizeTextView {
      * app:autoSizeStepGranularity="2sp"
      * android:maxLines="1"
      *
+     *
+     * =========textview加阴影 ========
+     *
+     *     android:shadowColor="#ff000000" 阴影颜色
+     *         android:shadowDx="5" //偏移，右上角为原点
+     *         android:shadowDy="5"
+     *         android:shadowRadius="10"  //阴影模糊
+     *
      * @param args
      */
     public static void main(String[] args) {

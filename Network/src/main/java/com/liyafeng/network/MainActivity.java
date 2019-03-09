@@ -340,6 +340,10 @@ public class MainActivity extends AppCompatActivity {
      * RxJava2CallAdapterFactory.create()
      * 区别在于 createAsync使用call.enqueue方法来使用okhttp内部的线程池
      * 而create使用的是rxjava自己的线程池（我们通过代码指定的线程）
+     *
+     * createAsync()
+     * #subscribeOn} has no effect on stream types created by this factory
+     *
      * <p>
      * <p>
      * ==============okhttp回调线程问题=========
@@ -368,7 +372,9 @@ public class MainActivity extends AppCompatActivity {
      * @Body entity
      */
     private void requestRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com").addConverterFactory(GsonConverterFactory.create()).build();
+
+        //baseUrl must end in /
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.baidu.com/").addConverterFactory(GsonConverterFactory.create()).build();
         RequestService requestService = retrofit.create(RequestService.class);
         //这里response的body就直接转换为User对象
         final Call<RequestService.User> call = requestService.getUser("myname", "mypassword");

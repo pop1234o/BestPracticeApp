@@ -51,6 +51,15 @@ public class RxJavaSample {
 
     /**
      * https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0 (2.0详细用法)
+     * ==========Function============
+     * io.reactivex.functions.Function<T, R>
+     * 这个接口将一个值转化为另一个
+     *
+     * ==========Predicate=======
+     * io.reactivex.functions.Predicate<T>
+     * A functional interface (callback) that returns true or false for the given input value
+     * 传入一个值，返回true或者false
+     *
      */
     public RxJavaSample() {
 
