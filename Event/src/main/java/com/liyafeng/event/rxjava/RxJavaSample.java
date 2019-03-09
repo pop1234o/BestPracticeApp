@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
@@ -37,7 +38,7 @@ import io.reactivex.schedulers.Schedulers;
  * T代表发布的消息类型
  * <p>
  * =============================
- *
+ * <p>
  * <p>
  * <p>
  * ==============================================
@@ -78,7 +79,11 @@ public class RxJavaSample {
 
 //        ObservableZip.zip()
 
-        io.reactivex.Observable.create(new ObservableOnSubscribe<String>() {
+
+        //==========================================
+        Observable.create(new ObservableOnSubscribe<String>() {
+
+            //当有观察者订阅了我的（Observable）消息
             @Override
             public void subscribe(ObservableEmitter<String> e) throws Exception {
                 //这里是被观察者
@@ -89,36 +94,49 @@ public class RxJavaSample {
                     e.onError(new NullPointerException());
                 }
                 e.onComplete();
-                //不会执行了
+                //onComplete后，不会执行了
                 e.onNext(":");
+
+
+                //这里执行的线程是 subscribeOn指定的
             }
-        }).subscribe(new Observer<String>() {
-            private Disposable d;
+        }).subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .map(new Function<String, Integer>() {
+                    @Override
+                    public Integer apply(String s) throws Exception {
+                        //这里指定的线程是 Schedulers.computation()
+                        return Integer.parseInt(s);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Integer>() {
+                    private Disposable d;
 
-            @Override
-            public void onSubscribe(Disposable d) {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        //Disposable相当于事件对象，用于取消订阅关系？？？
+                        this.d = d;
+                    }
 
-                this.d = d;
-            }
+                    @Override
+                    public void onNext(Integer s) {
+                        //这个线程是最近一个observeOn指定的
+                        if ("compelete".equals(s)) {
+                            d.dispose();//中断事件流
+                        }
+                    }
 
-            @Override
-            public void onNext(String s) {
+                    @Override
+                    public void onError(Throwable e) {
 
-                if ("compelete".equals(s)) {
-                    d.dispose();//中断事件流
-                }
-            }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onComplete() {
 
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+                    }
+                });
 
 
         io.reactivex.Observable.create(new ObservableOnSubscribe<Integer>() {

@@ -67,7 +67,7 @@ public class Main {
      * ===========什么是背压 backpressure=========
      * ﻿https://github.com/ReactiveX/RxJava/wiki/Backpressure
      * ﻿背压是指在异步场景中，被观察者发送事件速度远快于观察者的处理速度的情况下，一种告诉上游的被观察者降低发送速度的策略。
-     *
+     * 如果事件发送快，观察者来不及处理，那么只能将数据缓存，这样很浪费资源，所以我们用背压策略来限制事件的发送速度
      *
      * @param args
      */
