@@ -1,4 +1,4 @@
-package com.liyafeng.view.other;
+package com.liyafeng.view.viewpager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,14 +9,13 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
 
-
 public class LoopHelper {
 
 
     private static final int LOOP_TIME = 5000;
-    private boolean isPause;
+    private boolean isPause = true;
 
-    private Handler handler;
+    private Handler handler = new Myhandler();
     private ViewPager viewPager;
 
     private boolean isRelease;
@@ -45,14 +44,14 @@ public class LoopHelper {
         activity.getFragmentManager().beginTransaction().add(new LifeFragemnt(new LifeListener() {
             @Override
             public void onPause() {
-                setPause(true);
+                pause();
 //                LogUtil.i("test", "暂停");
             }
 
             @Override
             public void onResume() {
 //                LogUtil.i("test", "开始");
-                setPause(false);
+                start();
             }
 
             @Override
@@ -101,19 +100,21 @@ public class LoopHelper {
             }
         });
 
-        handler = new Myhandler();
 //        handler.sendEmptyMessageDelayed(0, LOOP_TIME);
     }
 
-    public void setPause(boolean pause) {
+    public void pause() {
+        isPause = true;
+        handler.removeMessages(0);
+    }
 
-        isPause = pause;
-        if (pause) {
-            handler.removeMessages(0);
-        } else {
+    public void start() {
+        if (isPause) {
             handler.sendEmptyMessageDelayed(0, LOOP_TIME);
+            isPause = false;
         }
     }
+
 
     public void release() {
         isRelease = true;
@@ -135,19 +136,25 @@ public class LoopHelper {
         @Override
         public void onPause() {
             super.onPause();
-            lifeListener.onPause();
+            if (lifeListener != null) {
+                lifeListener.onPause();
+            }
         }
 
         @Override
         public void onResume() {
             super.onResume();
-            lifeListener.onResume();
+            if (lifeListener != null) {
+                lifeListener.onResume();
+            }
         }
 
         @Override
         public void onDestroy() {
             super.onDestroy();
-            lifeListener.onDestroy();
+            if (lifeListener != null) {
+                lifeListener.onDestroy();
+            }
         }
     }
 

@@ -1,15 +1,10 @@
 package com.liyafeng.view.webview;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,10 +20,6 @@ import android.widget.Toast;
 
 import com.liyafeng.view.R;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -90,7 +81,7 @@ public class WebViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText et_text = findViewById(R.id.et_text);
+                EditText et_text = (EditText) findViewById(R.id.et_text);
                 String url = et_text.getText().toString();
                 if (!TextUtils.isEmpty(url)) {
                     webview.loadUrl(url);

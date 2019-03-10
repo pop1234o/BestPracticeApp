@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAlphaBlack">#88000000</color>
+    <color name="point_enable">#f0f</color>
+    <color name="point_disable">#ff0</color>
 </resources>

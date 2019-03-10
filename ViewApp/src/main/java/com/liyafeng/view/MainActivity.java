@@ -20,10 +20,10 @@ import com.liyafeng.view.dialog.ToastActivity;
 import com.liyafeng.view.drag.DragActivity;
 import com.liyafeng.view.fragment.CustomFragmentActivity;
 import com.liyafeng.view.listview.ListViewActivity;
+import com.liyafeng.view.listview.recycleview.RecyclerViewActivity;
+import com.liyafeng.view.listview.recycleview.pullrefresh.PullRefreshActivity;
 import com.liyafeng.view.newlayout.CoordinatorLayoutActivity;
 import com.liyafeng.view.newlayout.ScrollingActivity;
-import com.liyafeng.view.listview.recycleview.pullrefresh.PullRefreshActivity;
-import com.liyafeng.view.listview.recycleview.RecyclerViewActivity;
 import com.liyafeng.view.redpoint.RedPointActivity;
 import com.liyafeng.view.scroller.ScrollerActivity;
 import com.liyafeng.view.scrollview.ChartActivity;
@@ -35,13 +35,13 @@ import com.liyafeng.view.viewpager.CardPagerActivity;
 import com.liyafeng.view.viewpager.RoundViewPagerActivity;
 import com.liyafeng.view.viewpager.ViewPagerActivity;
 import com.liyafeng.view.viewpagerindicator.ViewPagerIndicatorActivity;
-import com.liyafeng.view.webview.WebViewActivity;
 
 public class MainActivity extends Activity {
     public static String TAG = "test";
 
 
-    String[] str = {"drag",
+    String[] str = {
+            "drag",
             "slidingmenu",
             "redpoint",
             "viewpager",
