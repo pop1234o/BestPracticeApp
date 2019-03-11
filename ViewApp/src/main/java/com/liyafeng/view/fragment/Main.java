@@ -21,7 +21,7 @@ public class Main {
      * Fragment本身就是一个View，只不过用FragmentActivity，和FragmentManager来赋予它生命周期
      * 这样就是包装了一层，使得我们可以复用代码
      *
-     * --------------------------------
+     * ------------add replace attach--------------------
      * add后，只是将这个Fragment  addView到布局中，会盖在下面的Fragment上
      * detach相当于removeView，但是没有销毁，下次可以attach
      * replace方法相当于把现在container中的Fragment全都remove，然后将新的Fragment add进去

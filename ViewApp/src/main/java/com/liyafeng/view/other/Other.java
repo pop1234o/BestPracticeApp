@@ -126,4 +126,11 @@ public class Other {
     void a4(){}
 
 
+    /**
+     * Android 实用插件
+     * GsonFormat 自动根据json生成entity
+     *
+     */
+    void a5(){}
+
 }

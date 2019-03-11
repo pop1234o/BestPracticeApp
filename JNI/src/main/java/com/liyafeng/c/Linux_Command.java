@@ -43,6 +43,12 @@ public class Linux_Command {
      *
      * ls -l 可以显示档案的时间记录。
      *
+     * ===========chmod========
+     * http://www.runoob.com/linux/linux-comm-chmod.html
+     * 修改文件访问权限
+     * chmod -x filename
+     *
+     *
      *
      * @param args
      */

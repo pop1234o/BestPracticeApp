@@ -129,6 +129,7 @@ public class Tools {
     public void a3(Context context) {
         /*
          * ===================apk中的内容=====================
+         * 将apk后缀改为zip，解压即可
          * apk中有
          * class.dex这个是所有java文件编译成class后合并为一个或多个dex文件
          * resource.arsc 这个是所有res文件和id的映射
@@ -137,6 +138,8 @@ public class Tools {
          * AndroidManifest.xml 里面声名权限，四大组件等信息
          * MATA_INF 签名信息，保证apk内容不被篡改，保证是指定私钥签名的
          *  而不是他人伪造的apk
+         *
+         * 这里我们只能看到资源文件，而代码在dex中看不到，必须要反编译
          *
          *
          * ===================反编译查看内容=============================
