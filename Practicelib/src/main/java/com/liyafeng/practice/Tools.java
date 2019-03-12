@@ -145,10 +145,22 @@ public class Tools {
          * ===================反编译查看内容=============================
          * apktool 下载 https://ibotpeaches.github.io/Apktool/install/
          *   反编译出的资源，能查看出Manifest的内容，还有string ,value，layout中的文本
-         *   正常解压出来查看是乱码
-         *   apk d[ecode] filename
+         *   正常解压出来查看是乱码!!!
+         *   apk d[ecode] filename   注意不是 -d
+         * 这个需要jdk，配置环境变量
+         * https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+         *
+         * apktool使用方法
+         * https://ibotpeaches.github.io/Apktool/documentation/
+         *
          * dex2jar 下载 https://sourceforge.net/projects/dex2jar/files/
          *    d2j-dex2jar.bat filename.dex 转化为jar包
+         *
+         * 如果执行命令需要权限，那么手动修改权限（MAC）
+         *   chmod -R +x [dir]
+         *  解压后的目录默认在用户根目录下： ~/[name]-dex2jar.jar
+         *
+         *
          * jd-gui http://jd.benow.ca/
          *    点击jd-gui.exe 开启程序，打开上面转化后的jar包，然后就可以查看代码了
          * ===========================从新打包=============================
