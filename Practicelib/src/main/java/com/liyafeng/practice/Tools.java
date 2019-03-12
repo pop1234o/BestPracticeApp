@@ -160,9 +160,11 @@ public class Tools {
          *   chmod -R +x [dir]
          *  解压后的目录默认在用户根目录下： ~/[name]-dex2jar.jar
          *
-         *
+         * -------查看jar中的内容-------------
          * jd-gui http://jd.benow.ca/
          *    点击jd-gui.exe 开启程序，打开上面转化后的jar包，然后就可以查看代码了
+         *
+         * 或者直接复制到Android studio中的lib中，把jar包添加依赖，然后就自动反编译了
          * ===========================从新打包=============================
          * 使用 apktool b[uild] -o new.apk <反编译后的文件夹名称>
          * 这样就生成了 new.apk，但是这种没有 META-INF文件夹，安装会提示失败

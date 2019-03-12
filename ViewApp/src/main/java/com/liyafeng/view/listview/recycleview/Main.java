@@ -77,7 +77,13 @@ public class Main {
      * 的效果，但是这可以接受，不会出现较大的跳动
      *
      *
+     * ============加载更多的原理==============
+     * 这个直接重写adapter的逻辑即可，滑动到最后，判断最后一个item的类型，如果是加载
+     * 而且那么触发加载逻辑
      *
+     * 当然这种是没有拖拽效果的，今日头条，和微信都是滑动到最后一个item时去加载更多
+     *
+     * https://github.com/rockerhieu/rv-adapter-endless/blob/master/library/src/main/java/com/rockerhieu/rvadapter/endless/EndlessRecyclerViewAdapter.java
      *
      */
     public void a1(){}
