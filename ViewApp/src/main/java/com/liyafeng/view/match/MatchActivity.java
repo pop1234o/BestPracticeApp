@@ -25,6 +25,7 @@ public class MatchActivity extends Activity {
      * https://developer.android.google.cn/training/multiscreen/screendensities.html
      * https://www.jianshu.com/p/ec5a1a30694b （适配方案）
      * https://www.jianshu.com/p/220404575079 （Android设备兼容处理（二）：屏幕适配）
+     * https://mp.weixin.qq.com/s/d9QCoBP6kV9VSWvVldVVwA 头条适配方案
      *
      * <p>
      * dpi dots per inch 每英寸的像素点个数 ，一定程度上代表屏幕的大小（屏幕密度）
@@ -70,8 +71,7 @@ public class MatchActivity extends Activity {
      * 所以mipmap用来存放app的启动图片。原来的图片还是放在drawable下
      * <p>
      * <p>
-     * ===================res文件下资源文件夹的命名规则======================
-     * https://developer.android.google.cn/guide/topics/resources/providing-resources.html
+     *
      * <p>
      * <p>
      * <p>
@@ -93,6 +93,7 @@ public class MatchActivity extends Activity {
      * DPI数值	    120	    160	    240	    320	        480	        640
      * 对应比例	    3	    4	    6	    8	        12	        16
      * 1DP=？PX	    0.75	1	    1.5	    2	        3	        4
+     * sw(Smallest-width)   320dp   320dp   360dp       360dp       360dp
      *
      * context.getResources().getDisplayMetrics().density
      * 在160dpi的屏幕上，density = 1  dpi的缩放因子  320dpi就是 density = 2
@@ -122,6 +123,43 @@ public class MatchActivity extends Activity {
      * =========RelativeLayout====
      * 如果里面的控件是 imageview或者textview,是warp_content 这个时候如果外部指定的高度小了
      * 里面会压缩
+     *
+     * =========layout适配===========================
+     * res文件下资源文件夹的命名规则
+     *      * https://developer.android.google.cn/guide/topics/resources/providing-resources.html
+     *
+     * res/layout-sw480dp的意思，sw的意思是smallest width最小宽度，
+     *  设备的 smallestWidth 是屏幕可用高度和宽度的最小尺寸（您也可以将其视为屏幕的“最小可能宽度”）
+     *  应用为多个资源目录提供不同的 smallestWidth 限定符值时，系统会使用最接近（但未超出）设备 smallestWidth 的值。
+     *
+     *
+     * 5.0英寸1080P（1080x1920）的手机屏幕宽度就是1080/(440/160) = 392dp
+     *
+     * layout-sw480dp-land/
+     *
+     *
+     * 限定符命名规则:
+     * 您可以为单组资源指定多个限定符，并使用短划线分隔。例如，drawable-en-rUS-land 适用于横排美国英语设备
+     * 这些限定符必须遵循表 2 中列出的顺序。例如：
+     * 错误：drawable-hdpi-port/
+     * 正确：drawable-port-hdpi/
+     *
+     *
+     * 将备用资源保存到以这些限定符命名的目录中之后，Android 会根据当前设备配置在应用中自动应用这些资源。
+     * 每次请求资源时，Android 都会检查备用资源目录是否包含所请求的资源文件，然后查找最佳匹配资源（下文进行介绍）。
+     * 如果没有与特定设备配置匹配的备用资源，则 Android 会使用相应的默认资源（一组用于不含配置限定符的特定资源类型的资源）
+     *
+     * large限定符是 Android3.2 以前的版本
+     * sw 限定符是 3.2后的版本
+     * a. 版本低于 3.2 的平板会匹配 large的文件
+     * b. 版本高于 3.2 的平板会匹配 sw600dp的文件
+     *
+     * =============平板适配===============
+     * 如下文，很显然，平板的smallest-width 都是600dp以上
+     * 而手机的sw是320dp或者360dp
+     * 所以我们能根据这个来确定哪个是平板，哪个是手机
+     *
+     *
      *
      *
      *
@@ -218,6 +256,12 @@ public class MatchActivity extends Activity {
      * 2560 x 1440
      * 1920 x 1080
      * 1280 x 720
+     *
+     *
+     * =========适配总结================
+     * 使用"wrap_content"、"match_parent"和"weight“来控制视图组件的宽度和高度
+     * 使用ConstantLayout 适配
+     *
      *
      *
      *
