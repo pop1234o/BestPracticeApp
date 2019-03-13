@@ -58,6 +58,9 @@
         fresco:roundWithOverlayColor="@color/colorAccent"
         fresco:roundingBorderWidth="2dp"
         fresco:roundingBorderColor="@color/colorPrimaryDark"
+
         />
+        <!--这里要设置background 的颜色就是方形的，可以这样设置圆形的色块-->
+        <!--  fresco:placeholderImage="@color/color"-->
 
 </android.support.constraint.ConstraintLayout>

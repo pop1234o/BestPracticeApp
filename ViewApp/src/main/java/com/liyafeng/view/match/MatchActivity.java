@@ -83,12 +83,16 @@ public class MatchActivity extends Activity {
      *
      *
      * ===============分辨率对应dpi=========
+     * https://blog.csdn.net/u012741741/article/details/51075518
      * 宽×高(标准值)	240×320	320×480	480×800	720×1280	1080×1920	1440×2560
-     * DPI等级	    LDPI	MDPI	HDPI	XHDPI	XXHDPI	XXXHDPI
-     * DPI数值	    120	    160	    240	    320	    480	    640
-     * 对应比例	    3	    4	    6	    8	    12	    16
-     * 1DP=？PX	    0.75	1	    1.5	    2	    3	    4
+     * DPI等级	    LDPI	MDPI	HDPI	XHDPI	    XXHDPI	    XXXHDPI
+     * DPI数值	    120	    160	    240	    320	        480	        640
+     * 对应比例	    3	    4	    6	    8	        12	        16
+     * 1DP=？PX	    0.75	1	    1.5	    2	        3	        4
      *
+     * =========RelativeLayout====
+     * 如果里面的控件是 imageview或者textview,是warp_content 这个时候如果外部指定的高度小了
+     * 里面会压缩
      *
      *
      *

@@ -129,8 +129,59 @@ public class Other {
     /**
      * Android 实用插件
      * GsonFormat 自动根据json生成entity
-     *
+     * findviewbyid
      */
     void a5(){}
+
+
+    /**
+     * vivo 解析软件包时出现问题
+     * 设置里吧instant run 关闭
+     *
+     */
+    void a6(){}
+
+
+    /**
+     *
+     * https://developer.android.google.cn/studio/build/manifest-merge
+     * tools:replace="android:supportsRtl,android:allowBackup"
+     * 设置高优先级
+     */
+    void a7(){}
+
+
+    /**
+     * ADB 安装 INSTALL_FAILED_TEST_ONLY 问题探究 （vivo手机上）
+     *
+     * https://zhuanlan.zhihu.com/p/32347983
+     *
+     * as运行的安装命令
+     *
+     *     // 把当前的APK推送到手机的 /data/local/tmp/文件夹下面
+     *     $ adb push E:\asworkspace\ArpTets\app\build\outputs\apk\debug\app-debug.apk /data/local/tmp/com.example.wule.arptets
+     *     // 通过使用pm进行apk安装，注意添加参数 -t
+     *     $ adb shell pm install -t -r "/data/local/tmp/com.example.wule.arptets"
+     *
+     * -t代表允许安装测试
+     *
+     * https://developer.android.google.cn/studio/command-line/adb.html
+     *
+     *
+     * Run 按钮生成apk带有testOnly属性，意味着apk只能通过as调试安装。
+     * 如果想生成adb install 安装的apk，选择Build > Build APK.
+     * 生成的apk 在build/output/debug 中，然后adb install xx.apk即可
+     *
+     * 问题的根源在于manifest中有 testOnly=true 属性，而点击run按钮生成的apk都是true,即使你设置的false
+     *
+     * =========adb shell pm=======
+     * https://blog.csdn.net/mmk1992/article/details/56482610
+     * —pm（Package Manager），这个命令主要用于获取和安装在 Android 设备上的应用信息
+     *
+     * 命令行下输入adb shell pm即可获得关于pm的用法帮助
+     *
+     */
+    void a8(){}
+
 
 }
