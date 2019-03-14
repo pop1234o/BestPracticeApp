@@ -277,6 +277,10 @@ public class MatchActivity extends Activity {
      * 使用"wrap_content"、"match_parent"和"weight“来控制视图组件的宽度和高度
      * 使用ConstantLayout 适配
      * <p>
+     *  我们需要一个基准设计图，比如 360dp的，就是像素是 720*1280  1080*1920 1440*2560 其中之一
+     *  用ios的设计图可以改一下宽高，例如我们用 720*1280 的，然后就把上面控件的宽高除以2 就是dp值
+     *  写入xml中，然后在Oncreate中使用头条的适配方案（重新计算density）即可
+     *
      * <p>
      * <p>
      * ==========头条适配方案============
