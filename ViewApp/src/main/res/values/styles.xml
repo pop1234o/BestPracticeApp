@@ -94,6 +94,15 @@
 
     </style>
 
+
+    <!--全屏 隐藏状态栏 https://www.jianshu.com/p/474bf29772a5-->
+    <style name="MyStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
+
     <style name="style_text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

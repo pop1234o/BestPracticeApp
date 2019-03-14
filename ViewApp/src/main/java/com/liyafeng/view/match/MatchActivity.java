@@ -366,7 +366,7 @@ public class MatchActivity extends Activity {
             }
 
 
-            float targetDensity = displayMetrics.widthPixels / 360.0f;
+            float targetDensity = displayMetrics.widthPixels / 360.0f;//横屏情况下width是高，而且横屏要减去状态栏高度
             float targetScaledDensity = targetDensity * (sNoncompatScaledDensity / sNoncompatDensity);
             int targetDensityDpi = (int) (160 * targetDensity);
 
