@@ -6,8 +6,11 @@ import android.content.ComponentCallbacks;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 import com.liyafeng.view.R;
+
+import java.lang.ref.WeakReference;
 
 public class MatchActivity extends Activity {
 
@@ -277,9 +280,9 @@ public class MatchActivity extends Activity {
      * 使用"wrap_content"、"match_parent"和"weight“来控制视图组件的宽度和高度
      * 使用ConstantLayout 适配
      * <p>
-     *  我们需要一个基准设计图，比如 360dp的，就是像素是 720*1280  1080*1920 1440*2560 其中之一
-     *  用ios的设计图可以改一下宽高，例如我们用 720*1280 的，然后就把上面控件的宽高除以2 就是dp值
-     *  写入xml中，然后在Oncreate中使用头条的适配方案（重新计算density）即可
+     * 我们需要一个基准设计图，比如 360dp的，就是像素是 720*1280  1080*1920 1440*2560 其中之一
+     * 用ios的设计图可以改一下宽高，例如我们用 720*1280 的，然后就把上面控件的宽高除以2 就是dp值
+     * 写入xml中，然后在Oncreate中使用头条的适配方案（重新计算density）即可
      *
      * <p>
      * <p>
@@ -340,7 +343,7 @@ public class MatchActivity extends Activity {
     /**
      * 这个在baseActivity的onCreate中调用即可
      */
-    public static class ScreenUtil{
+    public static class ScreenUtil {
         public static float sNoncompatDensity;//原始的Density
         public static float sNoncompatScaledDensity;
 
@@ -356,6 +359,18 @@ public class MatchActivity extends Activity {
                         if (newConfig != null && newConfig.fontScale > 0) {
                             sNoncompatScaledDensity = application.getResources().getDisplayMetrics().scaledDensity;
                         }
+
+
+                        //如果我们是横屏，那么息屏变竖屏，然后唤醒后会发生横竖屏的变化，所以变为横屏的时候需要重新计算一次 density
+//                        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//                            Toast.makeText(BrandyApplication.getInstance(), "现在是竖屏==", Toast.LENGTH_SHORT).show();
+//                        }
+//                        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                            Toast.makeText(BrandyApplication.getInstance(), "现在是横屏==", Toast.LENGTH_SHORT).show();
+//                            WeakReference<Activity> reference = new WeakReference<>(activity);
+//                            ScreenUtil.setCustomDensity(reference.get(), BrandyApplication.getInstance());
+//
+//                        }
                     }
 
                     @Override

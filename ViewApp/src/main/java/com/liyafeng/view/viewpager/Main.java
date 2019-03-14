@@ -17,8 +17,11 @@ public class Main {
      * banner_circle.offscreenPageLimit = 3  //一次加载三个
      * banner_circle.pageMargin =80   item之间的距离
      *
-     * @param args 注意在Adapter中记得container.addView，否则显示不出来
-     *             而且必须用addView，不能有inflate(R.layout.xxx,container)，否则显示不出来
+     * viewpager不显示
+     * 注意在Adapter中记得container.addView，否则显示不出来
+     * 而且必须用addView，不能有inflate(R.layout.xxx,container)，否则显示不出来
+     *
+     * @param args
      */
     public static void main(String[] args) {
 
