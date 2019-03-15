@@ -5,10 +5,10 @@ public class AutoSizeTextView {
     /**
      * 直接用 android.support.v7.widget.AppCompatTextView
      *
-     * app:autoSizeTextType="uniform"
+     * app:autoSizeTextType="uniform" 宽高统一缩放
      * app:autoSizeMinTextSize="12sp"
      * app:autoSizeMaxTextSize="100sp"
-     * app:autoSizeStepGranularity="2sp"
+     * app:autoSizeStepGranularity="2sp" 间隔尺寸(Granularity)
      * android:maxLines="1"
      *
      *

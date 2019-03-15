@@ -1,9 +1,12 @@
 package com.liyafeng.view.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +65,11 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
      * 外面的蒙版，边距，都是DecorView控制的，这个window指的是PhoneWindow.class，里面有DecorView
      * 最终是DecorView加入到WindowManager.addView中，这个DecorView实际上就是LinearLayout(title+FrameLayout)
      * 我们的自定义布局就是在FrameLayout中 id是content;
+     *
+     * ======全屏的dialog===============
+     *     //https://blog.csdn.net/LonelyRoamer/article/details/77430041
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -220,6 +228,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Deprecated //好像不行了
     public static class FullDiolog extends Dialog{
 
         public FullDiolog(@NonNull Context context) {
@@ -236,6 +245,31 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             show();
         }
     }
+
+
+
+    public class InfoDialog extends Dialog {
+
+
+        public InfoDialog(Context context) {
+            super(context);
+        }
+
+        public static void createInfoDialog(Activity activity) {
+            InfoDialog dialog = new InfoDialog(activity);
+            // 这个布局用match_parent也行
+//            View view = LayoutInflater.from(activity).inflate(R.layout.dialog_info, null);
+//            dialog.setContentView(view);
+
+            //设置window背景，默认的背景会有Padding值，不能全屏。当然不一定要是透明，你可以设置其他背景，替换默认的背景即可。
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            //一定要在setContentView之后调用，否则无效
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+            dialog.show();
+        }
+    }
+
 
 
 
