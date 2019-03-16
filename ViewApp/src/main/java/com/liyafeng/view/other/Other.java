@@ -187,30 +187,56 @@ public class Other {
      * android:scrollbarThumbVertical="@drawable/shape_bar_inner"
      * android:scrollbarTrackVertical="@drawable/shape_bar_outer"
      * android:scrollbars="vertical"
-     *
+     * <p>
      * <!-- 2.定义滚动条的大小，垂直时指宽度，水平时指高度 -->
      * android:scrollbarSize="4dp"
-     *
+     * <p>
      * 其中，scrollbaTrackxxx、scrollbarThumbxxx可以使用：
-     *
+     * <p>
      * Shape自定义 Drawable
      * 图片
      * .9.png
-     * @color/xxx的方式使用颜色值
-     * 不可以直接使用#xxxxxx颜色值
      *
+     * @color/xxx的方式使用颜色值 不可以直接使用#xxxxxx颜色值
+     * <p>
      * android:scrollbarStyle
      * 可以定义滚动条的样式和位置，可选值有insideOverlay、insideInset、outsideOverlay、outsideInset四种
-     *
+     * <p>
      * insideOverlay	默认值，表示在padding区域内并且覆盖在view上
      * insideInset	表示在padding区域内并且插入在view后面
      * outsideOverlay	表示在padding区域外并且覆盖在view上
      * outsideInset	表示在padding区域外并且插入在view后面
-     *
-     *
      */
     void a9() {
     }
 
+
+    /**
+     * =======SeekBar========
+     * http://www.runoob.com/w3cnote/android-tutorial-seekbar.html
+     *
+     * <p>
+     * <SeekBar
+     * android:id="@+id/video_progress"
+     * android:layout_width="253dp"
+     * android:layout_height="15dp"
+     * android:layout_marginLeft="5dp"
+     * android:layout_marginRight="5dp"
+     * android:max="0"
+     * android:progress="0"
+     * android:progressDrawable="@drawable/bg_progress_bar"
+     * android:thumb="@drawable/shape_round_white" />
+     * <p>
+     * android:splitTrack="false"
+     * 这个属性 是去掉分割的背景 让 thumb空白区变透明，否则默认是主题色
+     * <p>
+     * android:layout_height="15dp"
+     * 这个height是 bar 和thumb的最大高度，否则会被切
+     * <p>
+     * android:maxHeight="11dp"这个设置的是bar的高度
+     *
+     */
+    void a10() {
+    }
 
 }

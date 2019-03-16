@@ -30,7 +30,13 @@
     </item>
     -->
 
-    <item android:id="@android:id/progress">
+    <item
+        android:id="@android:id/progress"
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp">
+        <!--这个是padding-->
         <clip>
             <shape>
                 <corners android:radius="2dip" />
@@ -41,6 +47,7 @@
                     android:centerY="0.75"
                     android:endColor="#00a0ea"
                     android:startColor="#00a0ea" />
+                <!--270就是从上到下-->
             </shape>
         </clip>
     </item>
