@@ -224,7 +224,7 @@ public class Other {
      * android:layout_marginRight="5dp"
      * android:max="0"
      * android:progress="0"
-     * android:progressDrawable="@drawable/bg_progress_bar"
+     * android:progressDrawable="@drawable/bg_progress_bar"  这个可以是selector
      * android:thumb="@drawable/shape_round_white" />
      * <p>
      * android:splitTrack="false"
