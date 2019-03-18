@@ -248,7 +248,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
-    public class InfoDialog extends Dialog {
+    public static class InfoDialog extends Dialog {
 
 
         public InfoDialog(Context context) {

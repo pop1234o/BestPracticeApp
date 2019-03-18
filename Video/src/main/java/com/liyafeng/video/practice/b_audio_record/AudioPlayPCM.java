@@ -20,6 +20,10 @@ public class AudioPlayPCM {
      * Pulse-code modulation
      * 脉冲编码调制
      * <p>
+     * 因为pcm没有文件头和尾，直接是数据，所以我们必须配置好参数才能播放
+     * 否则播放器也不知道你是 几个声道，采样率多少，数据格式是16位的还是8位的data format
+     * 所以我们要
+     *
      * ============AudioTrack 两种模式================
      * MODE_STREAM 数据多次写入AudioTrack缓冲区
      * MODE_STATIC 一次写入，适合时长较短的音频。
