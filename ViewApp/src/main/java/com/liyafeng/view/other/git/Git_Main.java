@@ -322,4 +322,19 @@ public class Git_Main {
     void fun6(){
 
     }
+
+
+    /**
+     * git 子模块
+     * https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97
+     * 当我们一个项目中需要另个项目的代码，我们可以拷贝，但是当那个项目代码有更新的时候我们就很麻烦了
+     * 所以引入子模块概念，就是一个git项目可以引用另一个git项目当做子模块
+     * 同时跟目录产生一个.gitmodules 文件来对应 模块名称和url
+     *
+     * git clone --recurse-submodules <repo>来拉取子模块的代码，否则子模块只是个空文件夹
+     *
+     *
+     *
+     */
+    void fun7(){}
 }

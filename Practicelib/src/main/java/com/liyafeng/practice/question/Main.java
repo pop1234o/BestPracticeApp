@@ -183,4 +183,23 @@ public class Main {
      *
      */
     void a11(){}
+
+
+    /**
+     * Cause: org.jetbrains.plugins.gradle.tooling.util.ModuleComponentIdentifierImpl.getModuleIdentifier()Lorg/gradle/api/artifacts/ModuleIdentifier;
+     *
+     * classpath 'com.android.tools.build:gradle:3.3.2'
+     * distributionUrl=https\://services.gradle.org/distributions/gradle-5.2.1-all.zip
+     *
+     * 这需要Android studio 版本在3.2以上
+     *
+     */
+    void a12(){}
+
+
+    /**
+     * 项目中有jni，这就需要配置ndk，还有tools 中的lldb 和cmake 工具
+     * 设置中搜sdk，下载即可，或者直接启动sdk manager
+     */
+    void a13(){}
 }
