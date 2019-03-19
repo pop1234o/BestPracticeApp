@@ -146,6 +146,9 @@ public class Git_Main {
      * =========================删除远程仓库============
      * git remote rm origin   （只是删除这个名字，并没有真的将远程仓库删除）
      *
+     * ==============关联远程分支=========
+     *  git branch --set-upstream-to=origin/<branch> master
+     *
      * @param args
      */
     public static void main(String[] args) {
