@@ -26,6 +26,13 @@ public class Main {
      * detach相当于removeView，但是没有销毁，下次可以attach
      * replace方法相当于把现在container中的Fragment全都remove，然后将新的Fragment add进去
      *
+     * 显示：add() replace() show() attach()
+     * 隐藏：remove() hide() detach()
+     *
+     * replace() ,如果布局中已经有了fragment，那么走销毁方法 onPause-onDestroy ,而且会被回收
+     * 新加入的fragment会走onCreate-onResume
+     *
+     *
      * --------------------------
      * 一个app主体可以用Fragment+viewpager+RadioButton，但是viewpager要加懒加载
      * 也可以Fragment+radioButton，这样适合没有滑动效果的主页框架
@@ -36,6 +43,7 @@ public class Main {
      * 就是app在后台被销毁，然后销毁前保存了状态，等下次进来恢复，
      * 我们设置了hide，但是保存状态没有保存这个值，所有恢复的时候所有fragment都显示出来了
      * 解决方法就是在oncreate中将所有fragment都隐藏一次，而且要用tag来判断
+     *
      *
      *
      */

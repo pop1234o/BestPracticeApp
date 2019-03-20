@@ -22,6 +22,7 @@ import com.liyafeng.view.fragment.CustomFragmentActivity;
 import com.liyafeng.view.listview.ListViewActivity;
 import com.liyafeng.view.listview.recycleview.RecyclerViewActivity;
 import com.liyafeng.view.listview.recycleview.pullrefresh.PullRefreshActivity;
+import com.liyafeng.view.measure_layout_draw.MeasureActivity;
 import com.liyafeng.view.newlayout.CoordinatorLayoutActivity;
 import com.liyafeng.view.newlayout.ScrollingActivity;
 import com.liyafeng.view.redpoint.RedPointActivity;
@@ -66,11 +67,12 @@ public class MainActivity extends Activity {
             "RoundViewPagerActivity",
             "toolbar",
             "webview",
+            "measure_layout_draw"
 
     };
 
 
-    Class[] classes ={DragActivity.class,
+    Class[] classes = {DragActivity.class,
             SlidingMenuActivity.class,
             RedPointActivity.class,
             ViewPagerActivity.class,
@@ -95,7 +97,8 @@ public class MainActivity extends Activity {
             RoundViewPagerActivity.class,
             ToolBarActivity.class,
             com.liyafeng.view.webview.WebViewActivity.class,
-            };
+            MeasureActivity.class
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,11 +126,11 @@ public class MainActivity extends Activity {
 
             @Override
             public View getView(final int position, View convertView, ViewGroup parent) {
-                if(convertView ==null){
-                    convertView =new TextView(MainActivity.this);
+                if (convertView == null) {
+                    convertView = new TextView(MainActivity.this);
                     TextView textView = (TextView) convertView;
                     textView.setTextColor(Color.BLACK);
-                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100));
+                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100));
                 }
                 TextView textView = (TextView) convertView;
                 textView.setText(str[position]);
