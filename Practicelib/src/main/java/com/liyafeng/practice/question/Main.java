@@ -138,11 +138,10 @@ public class Main {
      * 这个时候你只能从原理，分析，Android分包是因为65536，自动将启动需要的代码放入主dex
      * 然后.pro keep规则你也得了解一下。。。看是不是你这写错了，
      * gradle 的规则你也得了解一下 看看 multiDexKeepProguard 是不是写错位置了
-     *
+     * <p>
      * -----
      * 妈的，气死我了，原来点击右边的 assembleDebug 生成的apk tinker就都在
      * 主dex中，直接run的不行。。。
-     *
      */
     void a8() {
     }
@@ -150,15 +149,13 @@ public class Main {
 
     /**
      * java.util.concurrent.TimeoutException: android.os.BinderProxy.finalize() timed out after 10 seconds
-     *
+     * <p>
      * https://blog.csdn.net/jamin0107/article/details/78793021
      * https://www.jianshu.com/p/0119c682d2b8
-     *
+     * <p>
      * 屏幕息屏，进程被中断，导致gc超时，抛出异常
-     *
-     *
      */
-    void a9(){
+    void a9() {
 
     }
 
@@ -167,7 +164,8 @@ public class Main {
      * 很多jni的部分我们down下来代码，在sdkManager安装cmake和llbs，
      * 然后需要可能需要 invalidate cache restart ,才能正常
      */
-    void a10(){}
+    void a10() {
+    }
 
 
     /**
@@ -179,27 +177,43 @@ public class Main {
      * noCompress "tflite"
      * noCompress "lite"
      * }
-     *
-     *
      */
-    void a11(){}
+    void a11() {
+    }
 
 
     /**
      * Cause: org.jetbrains.plugins.gradle.tooling.util.ModuleComponentIdentifierImpl.getModuleIdentifier()Lorg/gradle/api/artifacts/ModuleIdentifier;
-     *
+     * <p>
      * classpath 'com.android.tools.build:gradle:3.3.2'
      * distributionUrl=https\://services.gradle.org/distributions/gradle-5.2.1-all.zip
-     *
+     * <p>
      * 这需要Android studio 版本在3.2以上
-     *
      */
-    void a12(){}
+    void a12() {
+    }
 
 
     /**
      * 项目中有jni，这就需要配置ndk，还有tools 中的lldb 和cmake 工具
      * 设置中搜sdk，下载即可，或者直接启动sdk manager
      */
-    void a13(){}
+    void a13() {
+    }
+
+
+    /**
+     * Could not determine artifacts for XXXX: Skipped due to earlier error
+     * <p>
+     * https://www.jianshu.com/p/cf2cbd4d005b
+     * 仓库的地址请求不到，所以后面的同样的url都失败了
+     * <p>
+     * 官网上的解释是因为超时的原因，跳过了对同一仓库的请求，这里就比较明显，其实就是代理的问题。
+     * 国内开发环境一直是一个比较大问题，开发得一直连着代理，但是由于可能公司有自己的内网maven，所以需要过滤掉内网的Host。但是我这个地方是过滤了的，但是不知道什么原因过滤失败了，而且是部分失败。所以我需要关闭掉代理再来尝试，但是gradle这里有有一些坑了，即使你在IDE中关闭了代理，但是gradle还是会缓存代理的设置，所以需要去Users/xxx/.gradle/gradle.properties中删除掉代理。
+     * 然后再进行尝试就ok了。
+     */
+    void a14
+
+    {
+    }
 }
