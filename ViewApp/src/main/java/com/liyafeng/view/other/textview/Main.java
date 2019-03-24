@@ -28,6 +28,10 @@ public class Main {
      * MaskFilterSpan
      *
      *
+     * ===========textview字间距==========
+     * android:letterSpacing="0.6"  0开始
+     *
+     *
      *
      * @param args
      */
