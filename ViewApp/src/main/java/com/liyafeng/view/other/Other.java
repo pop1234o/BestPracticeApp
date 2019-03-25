@@ -174,6 +174,16 @@ public class Other {
      * —pm（Package Manager），这个命令主要用于获取和安装在 Android 设备上的应用信息
      * <p>
      * 命令行下输入adb shell pm即可获得关于pm的用法帮助
+     *
+     *
+     * ========================
+     * run构建出来的包（output/apk/xx.apk）testOnly=true 如果你直接传到手机安装是安装不上的
+     * Android studio 通过上传安装包，设置 adb shell pm install -t -r 来安装的，所以能安装上
+     *
+     * 或者我们选择Build > Build APK. 这样构建出来的包就能安装了 （目录也是 output/apk/xx.apk）
+     *
+     *
+     *
      */
     void a8() {
     }
@@ -238,5 +248,41 @@ public class Other {
      */
     void a10() {
     }
+
+
+    /**
+     * https://www.kancloud.cn/kancloud/android-tutorial/87166
+     *
+     * android:numStars：显示多少个星星，必须为整数
+     * android:rating：默认评分值，必须为浮点数
+     * android:stepSize： 评分每次增加的值，必须为浮点数
+     *
+     * 除了上面这些，还有两种样式供我们选择咧，但是不建议使用，因为这两种样式都好丑... 他们分别是：
+     * style="?android:attr/ratingBarStyleSmall"
+     * style="?android:attr/ratingBarStyleIndicator"
+     *
+     * ——事件处理： 只需为RatingBar设置OnRatingBarChangeListener事件，然后重写下**onRatingChanged()**方法即可！
+     *
+     * ratingbar_full.xml:
+     *
+     * <?xml version="1.0" encoding="utf-8"?>
+     * <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+     *     <item android:id="@android:id/background"
+     *         android:drawable="@mipmap/ic_rating_off1" />
+     *     <item android:id="@android:id/secondaryProgress"
+     *         android:drawable="@mipmap/ic_rating_off1" />
+     *     <item android:id="@android:id/progress"
+     *         android:drawable="@mipmap/ic_rating_on1" />
+     * </layer-list>
+     *
+     *
+     * 设置样式
+     *  <item name="android:progressDrawable">@drawable/ratingbar_full</item>
+     *         <item name="android:minHeight">24dip</item>
+     *         <item name="android:maxHeight">24dip</item>
+     *
+     *
+     */
+    void a11(){}
 
 }
