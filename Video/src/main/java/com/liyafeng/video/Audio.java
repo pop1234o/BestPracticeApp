@@ -10,6 +10,8 @@ public class Audio {
      * Waveform Audio File Format（WAVE，又或者是因为扩展名而被大众所知的WAV），
      * 是微软与IBM公司所开发在个人计算机存储音频流的编码格式
      * <p>
+     * 只是在pcm基础上加上了文件头而已
+     * <p>
      * <p>
      * =================PCM==============
      * PCM(Pulse Code Modulation)也被称为脉冲编码调制。
@@ -23,6 +25,27 @@ public class Audio {
      * 例如，数字激光唱盘(CD－DA，红皮书标准)的标准采样频率为44.lkHz，采样数位为16位，立体声(2声道)，可以几乎无失真地播出频率高达22kHz的声音，这也是人类所能听到的最高频率声音。激光唱盘一分钟音乐需要的存储量为：
      * <p>
      * (44.1*1000*l6*2)*60/8=10，584，000(字节)=10.584MBytes
+     * <p>
+     * <p>
+     * <p>
+     * =================RIFF=============
+     * 其实就是一种约定好的文件格式，前几位放什么数据都规定好，这样统一好进行软件开发
+     * <p>
+     * 资源交换文件格式（英语：Resource Interchange File Format，缩写为RIFF），又译资源互换文件格式，是一种文件格式（meta-format）标准，把数据存储在被标记的区块（tagged chunks）中。它是在1991年时，由Microsoft和IBM提出。它是Electronic Arts在1985提出的Interchange File Format（IFF）的翻版。这两种标准的唯一不同处是在多比特整数的存储方式。 RIFF使用的是小端序，这是IBM PC使用的处理器80x86所使用的格式，而IFF存储整数的方式是使用大端序，这是Amiga和Apple Macintosh计算机使用的处理器，68k，可处理的整数类型。
+     * <p>
+     * Microsoft在AVI和WAV这两种著名的文件格式中，都使用RIFF的格式当成它们的基础。
+     * <p>
+     * RIFF文件由一个简单的表头（header）跟随着多个"chunks"所组。其格式完全跟IFF一样，除整数的存储方式不一样以外。
+     * <p>
+     * 表头（Header）
+     * 4位组（bytes）：固定为"RIFF".
+     * 4位组：little-endian 32-bit正整数，整个文件的大小，扣掉识别字符和长度，共8个字节。
+     * 4位组：这个文件的类型字符，例如："AVI "或"WAVE".
+     * 接下来是区块（Chunks），每个区块包含：
+     * 4位组：此区块的ASCII识别字，例如："fmt "或"data".
+     * 4位组：little-endian 32-bit正整数，表示本区块的长度（这个正整数本身和区块识别字的长度不算在内）。
+     * 不固定长度字段：此区块的数据，大小等同前一栏之正整数。
+     * 假如区块的长度不为偶数，则填入一个byte
      */
     public static void main(String[] args, Context context) {
 
