@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+   <!-- // 设置是否只播放一次，默认为false-->
+
+    <!--// item = 动画图片资源；duration = 设置一帧持续时间(ms)-->
+    <!--<item-->
+<!--android:drawable="@drawable/a0"-->
+<!--android:duration="100" /><item-->
+<!--android:drawable="@drawable/a1"-->
+<!--android:duration="100" /><item-->
+<!--android:drawable="@drawable/a2"-->
+<!--android:duration="100" /><item-->
+<!--android:drawable="@drawable/a3"-->
+<!--android:duration="100" /><item-->
+<!--android:drawable="@drawable/a4"-->
+<!--android:duration="100" />-->
+
+
+    <!--
+
+    帧动画
+     iv.setImageResource(R.drawable.knight_attack);
+                // 1. 设置动画
+                animationDrawable = (AnimationDrawable) iv.getDrawable();
+                // 2. 获取动画对象
+                animationDrawable.start();
+                // 3. 启动动画
+
+//获取帧动画的代码
+ public static AnimationDrawable getAnimationDrawable() {
+        AnimationDrawable animationDrawable = new AnimationDrawable();
+        BrandyApplication instance = BrandyApplication.getInstance();
+        for (int i = 1; i <= 117; i++) {
+            DecimalFormat decimalFormat = new DecimalFormat("0000");
+            String format = decimalFormat.format(i);
+            int id = instance.getResources().getIdentifier("ma" + format, "drawable", instance.getPackageName());
+            Drawable drawable = instance.getResources().getDrawable(id);
+            animationDrawable.addFrame(drawable, 100);
+        }
+        return animationDrawable;
+    }
+    -->
+    </animation-list>
