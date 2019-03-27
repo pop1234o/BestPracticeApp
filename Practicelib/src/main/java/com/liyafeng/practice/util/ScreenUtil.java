@@ -23,6 +23,10 @@ public class ScreenUtil {
 
     /**
      * 屏幕适配
+     * <p>
+     * 如果你的布局中有webview，会导致density等参数被重置
+     * 只有我们将webview动态的加入布局中，然后加入后重新调用这个方法
+     * 即可，否则density会被重置
      *
      * @param activity
      * @param application
@@ -83,7 +87,6 @@ public class ScreenUtil {
     }
 
 
-
     /**
      * 获取屏幕宽度
      *
@@ -105,7 +108,7 @@ public class ScreenUtil {
      * @return
      */
     public static int getScreenHeight(Context context) {
-        WindowManager manager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Point point = new Point();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             manager.getDefaultDisplay().getRealSize(point);
@@ -114,6 +117,7 @@ public class ScreenUtil {
         return point.y;
 //        return BrandyApplication.getInstance().getResources().getDisplayMetrics().heightPixels;
     }
+
     /**
      * 隐藏虚拟栏 ，显示的时候再隐藏掉
      *
