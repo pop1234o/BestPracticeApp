@@ -46,6 +46,12 @@ public class Audio {
      * 4位组：little-endian 32-bit正整数，表示本区块的长度（这个正整数本身和区块识别字的长度不算在内）。
      * 不固定长度字段：此区块的数据，大小等同前一栏之正整数。
      * 假如区块的长度不为偶数，则填入一个byte
+     * ========AGC===========
+     * AGC是自动增益补偿功能（Automatic Gain Control），AGC可以自动调麦克风的收音量，使与会者收到一定的音量水平，不会因发言者与麦克风的距离改变时，声音有忽大忽小声的缺点。
+     *
+     * ANS是背景噪音抑制功能（Automatic Noise Suppression），ANS可探测出背景固定频率的杂音并消除背景噪音，例如：风扇、空调声自动滤除。呈现出与会者清晰的声音。
+     *
+     * AEC是回声消除器（Acoustic Echo Chancellor）,AEC可以消除各种延迟的回声。
      */
     public static void main(String[] args, Context context) {
 

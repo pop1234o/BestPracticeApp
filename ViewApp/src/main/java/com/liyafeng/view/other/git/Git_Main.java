@@ -246,6 +246,9 @@ public class Git_Main {
      * 运行下面的命令，使其支持 Angular 的 Commit message 格式。
      * commitizen init cz-conventional-changelog --save --save-exact
      * 凡是用到git commit命令，一律改为使用git cz。这时，就会出现选项，用来生成符合格式的 Commit message。
+     *
+     * =================git显示远程仓库的地址===========
+     * git remote -v
      */
     void fun2() {
     }
