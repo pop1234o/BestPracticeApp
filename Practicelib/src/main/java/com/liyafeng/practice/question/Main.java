@@ -225,4 +225,37 @@ public class Main {
      */
     void a15() {
     }
+
+
+    /**
+     * https://www.jianshu.com/p/57047a84e559
+     *
+     * Android P(9.0) http网络请求的问题
+     * okhttp 出现 CLEARTEXT communication to [ip]  not permitted by network security policy
+     * HttpUrlConnection 出现 cleartext HTTP traffic to **** not permitted
+     *
+     * 在Android P系统的设备上，如果应用使用的是非加密的明文流量的http网络请求，
+     * 则会导致该应用无法进行网络请求，https则不会受影响，同样地，如果应用嵌套了webview，webview也只能使用https请求。
+     *
+     * 有以下三种解决方案
+     *
+     * APP改用https请求
+     *
+     * targetSdkVersion 降到27以下
+     *
+     * 在 res 下新增一个 xml 目录，然后创建一个名为：network_security_config.xml 文件（名字自定） ，内容如下，大概意思就是允许开启http请求
+     * <?xml version="1.0" encoding="utf-8"?>
+     *
+     * <network-security-config>
+     *
+     *  <base-config cleartextTrafficPermitted="true" />
+     *
+     * </network-security-config>
+     *
+     *
+     * 然后在APP的AndroidManifest.xml文件下的application标签增加以下属性
+     *  android:networkSecurityConfig="@xml/network_security_config"
+     *
+     */
+    void a16(){}
 }
