@@ -1949,6 +1949,21 @@ public class AndroidFramework {
     /**
      * 估值器和差值器的区别
      * https://blog.csdn.net/u012203641/article/details/77823949
+     *
+     * 动画加速进行	@android:anim/accelerate_interpolator	AccelerateInterpolator
+     * 快速完成动画，超出再回到结束样式	@android:anim/overshoot_interpolator	OvershootInterpolator
+     * 先加速再减速	@android:anim/accelerate_decelerate_interpolator	AccelerateDecelerateInterpolator
+     * 先退后再加速前进	@android:anim/anticipate_interpolator	AnticipateInterpolator
+     * 先退后再加速前进，超出终点后再回终点	@android:anim/anticipate_overshoot_interpolator	AnticipateOvershootInterpolator
+     * 最后阶段弹球效果	@android:anim/bounce_interpolator	BounceInterpolator
+     * 周期运动	@android:anim/cycle_interpolator	CycleInterpolator
+     * 减速	@android:anim/decelerate_interpolator	DecelerateInterpolator
+     * 匀速	@android:anim/linear_interpolator
+     * ---------------------
+     * 作者：Carson_Ho
+     * 来源：CSDN
+     * 原文：https://blog.csdn.net/carson_ho/article/details/72863901
+     * 版权声明：本文为博主原创文章，转载请附上博文链接！
      */
     public void a11() {
         /*

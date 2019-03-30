@@ -71,6 +71,10 @@ public class WebViewActivity extends AppCompatActivity {
      * 就能看到每个应用的网络请求，点击inspect(检查) 需翻墙
      * 就能看到这个网页中的每个请求，包括js css img的请求
      *
+     *
+     * ==========
+     * chrome://inspect/#devices
+     *
      * @param savedInstanceState
      */
     @Override
