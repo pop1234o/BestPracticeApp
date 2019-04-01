@@ -8,6 +8,42 @@ import android.graphics.BitmapFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 调用wxapi.sendReq接口，返回true，但微信客户端并未启动，请检查以下几项：
+ * A:
+ * 1）微信是否安装
+ * 2）调用时的Apk包名和签名是否与开放平台填写的一致，签名请使用该工具：点击下载，常发生在安装了debug版本又安装release版本情况，确定包名签名后卸载微信重装或者清除微信数据再做测试
+ * 3）检查发送时的缩略图大小是否超过32k
+ * 4）能够调起微信到选择好友列表，但是点击发送后无响应，请检查proguard配置是否对微信SDK代码进行了混淆，建议不要对SDK对混淆，参考以下proguard配置：
+ * <p>
+ * <p>
+ * -keep class com.tencent.mm.opensdk.** {
+ * *;
+ * }
+ * <p>
+ * -keep class com.tencent.wxop.** {
+ * *;
+ * }
+ * <p>
+ * -keep class com.tencent.mm.sdk.** {
+ * *;
+ * }
+ *
+ *
+ * 微信分享大小限制
+ * public static final int THUMB_LENGTH_LIMIT = 32768; 缩略图大小为32k以下（指的事转为byte[]后的大小）
+ * private static final int TITLE_LENGTH_LIMIT = 512;
+ * private static final int DESCRIPTION_LENGTH_LIMIT = 1024;
+ * private static final int MEDIA_TAG_NAME_LENGTH_LIMIT = 64;
+ * private static final int MESSAGE_ACTION_LENGTH_LIMIT = 2048;
+ * private static final int MESSAGE_EXT_LENGTH_LIMIT = 2048;
+ *
+ * <p>
+ * 作者：亦枫
+ * 链接：https://www.jianshu.com/p/4f64099fcc38
+ * 来源：简书
+ * 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+ */
 public class ThirdPartApi {
 
 

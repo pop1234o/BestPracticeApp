@@ -237,12 +237,15 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
 
         public void createDialog(){
             //这个最外层布局不会变成warp_content,还是原来的布局（如果没有设置windowIsFloating）
-            setContentView(R.layout.dialog_full);
+            setContentView(R.layout.dialog_full);//这里不能用 LayoutInflater ，否则最外层参数无效会变成wrap_content
 
 
             //这个居然变成match_content了
 //            setContentView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_full,null));
             show();
+
+            //有的window背景是白色的
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
     }
 

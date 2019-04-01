@@ -25,6 +25,9 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.security.InvalidKeyException;
@@ -35,6 +38,8 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -740,6 +745,52 @@ public class Util {
         // Finally, combine the values we have found by using the UUID class to create a unique identifier
         return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();
     }
+
+
+
+    /**
+     * 解压zip到指定的路径
+     *
+     * @param zipFileString ZIP的名称
+     * @param outPathString 要解压缩路径
+     * @throws Exception
+     */
+    public static void unZipFolder(String zipFileString, String outPathString) throws Exception {
+        ZipInputStream inZip = new ZipInputStream(new FileInputStream(zipFileString));
+        ZipEntry zipEntry;
+        String szName = "";
+        while ((zipEntry = inZip.getNextEntry()) != null) {
+            szName = zipEntry.getName();
+            if (zipEntry.isDirectory()) {
+                //获取部件的文件夹名
+                szName = szName.substring(0, szName.length() - 1);
+                File folder = new File(outPathString + File.separator + szName);
+                folder.mkdirs();
+            } else {
+//                Log.e(TAG,outPathString + File.separator + szName);
+                File file = new File(outPathString + File.separator + szName);
+                if (!file.exists()) {
+//                    Log.e(TAG, "Create the file:" + outPathString + File.separator + szName);
+                    file.getParentFile().mkdirs();
+                    file.createNewFile();
+                }
+                // 获取文件的输出流
+                FileOutputStream out = new FileOutputStream(file);
+                int len;
+                byte[] buffer = new byte[1024];
+                // 读取（字节）字节到缓冲区
+                while ((len = inZip.read(buffer)) != -1) {
+                    // 从缓冲区（0）位置写入（字节）字节
+                    out.write(buffer, 0, len);
+                    out.flush();
+                }
+                out.close();
+            }
+        }
+        inZip.close();
+    }
+
+
 
 
 }
