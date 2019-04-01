@@ -12,7 +12,7 @@ public class ThirdPartApi {
 
 
    /* public static final String APP_ID = "wxbe8bacbbc41335fe";
-    private static final String APP_SECRET = "8ca1834b8fafe37e3399b90939427356";
+    private static final String APP_SECRET = "8ca1834b8fafe37e3399b90939427356";//这个分享的时候不需要
     private IWXAPI api;
     private static ThirdPartApi thirdPartApi;
 
