@@ -195,5 +195,18 @@ public class ThirdPartApi {
         api.sendReq(req);
 
     }
+
+
+     /**
+     * 是否安装微信
+     *
+     * @return
+     * /
+    public boolean isInstallWeChat() {
+        return api.isWXAppInstalled();
+    }
+
+
+
 */
 }

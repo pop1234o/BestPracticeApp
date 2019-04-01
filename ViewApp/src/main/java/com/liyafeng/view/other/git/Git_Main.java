@@ -16,7 +16,7 @@ public class Git_Main {
      * git 查看状态 git status 查看本地的状态，commit之前的
      * git status -v 查看具体的改动
      * <p>
-     * git丢弃工作区 git checkout .
+     * git丢弃工作区 git checkout .  #本地所有修改的。没有的提交的，都返回到原来的状态
      * <p>
      * git添加 git add .
      * git 提交 git commit -m"aa"
