@@ -48,6 +48,12 @@ public class Linux_Command {
      * 修改文件访问权限
      * chmod -x filename
      *
+     * ========cat命令=======
+     * http://www.runoob.com/linux/linux-comm-cat.html
+     * cat 命令用于连接文件并打印到标准输出设备上。
+     *
+     * cat xxx > xxx
+     * 内容输出
      *
      *
      * @param args
