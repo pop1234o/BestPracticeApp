@@ -161,7 +161,9 @@ public class MatchActivity extends Activity {
      * b. 版本高于 3.2 的平板会匹配 sw600dp的文件
      * <p>
      * =============平板适配===============
-     * 如下文，很显然，平板的smallest-width 都是600dp以上
+     * 如下文，很显然，平板的smallest-width 都是600dp以上（500dp以上，1600*2560是density=3 是533dp）
+     * values-sw500dp
+     * drawable-sw500dp-xxxdpi
      * 而手机的sw是320dp或者360dp
      * 所以我们能根据这个来确定哪个是平板，哪个是手机
      * <p>
