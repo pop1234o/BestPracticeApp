@@ -1,6 +1,6 @@
 package com.liyafeng.practice.question;
 
-public class Main {
+public class Main_Question {
 
     /**
      * @param args
@@ -258,4 +258,31 @@ public class Main {
      *
      */
     void a16(){}
+
+
+    /**
+     * android.view.WindowLeaked: Activity com.tal.brandy.ui.activity.video.VideoActivity has leaked window DecorView@b38aa27[] that was originally added here
+     *         at android.view.ViewRootImpl.<init>(ViewRootImpl.java:496)
+     *         at android.view.WindowManagerGlobal.addView(WindowManagerGlobal.java:349)
+     *         at android.view.WindowManagerImpl.addView(WindowManagerImpl.java:94)
+     *         at android.app.Dialog.show(Dialog.java:332)
+     *         at com.tal.brandy.ui.dialog.QuitDialog.showDialog
+     *  产生原因：
+     * 我们知道Android的每一个Activity都有个WindowManager窗体管理器，同样，构建在某个Activity之上的对话框、PopupWindow也有相应的WindowManager窗体管理器。因为对话框、PopupWindown不能脱离Activity而单独存在着，所以当某个Dialog或者某个PopupWindow正在显示的时候我们去finish()了承载该Dialog(或PopupWindow)的Activity时，就会抛Window Leaked异常了，因为这个Dialog(或PopupWindow)的WindowManager已经没有谁可以附属了，所以它的窗体管理器已经泄漏了。
+     *
+     *
+     * 解决方法：
+     * 关闭(finish)某个Activity前，要确保附属在上面的Dialog或PopupWindow已经关闭(dismiss)了。
+     *
+     *
+     * ---------------------
+     * 作者：u_xtian
+     * 来源：CSDN
+     * 原文：https://blog.csdn.net/u_xtian/article/details/6123945
+     * 版权声明：本文为博主原创文章，转载请附上博文链接！
+     *
+     *
+     *
+     */
+    void a17(){}
 }
