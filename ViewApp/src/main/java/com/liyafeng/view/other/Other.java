@@ -286,19 +286,4 @@ public class Other {
     void a11(){}
 
 
-    /**
-     * ========EditText maxEms和 maxLength ============
-     * http://blog.csdn.net/JavaLive09/article/details/38661773
-     * https://blog.csdn.net/beiminglei/article/details/9317997
-     *
-     * maxLength是字符串长度
-     *
-     * An em is a unit in the field of typography
-     * em是一个印刷排版的单位，表示字宽的单位。 em字面意思为：equal M   （和M字符一致的宽度为一个单位）简称em。
-     *  ems是em的复数表达。
-     *
-     *
-     *
-     */
-    void a12(){}
 }
