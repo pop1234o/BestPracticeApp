@@ -178,6 +178,9 @@ public class WebViewActivity extends AppCompatActivity {
         //不显示webview缩放按钮
         settings.setDisplayZoomControls(false);
 
+        //用户代理
+        settings.setUserAgentString("user-agent");
+
         //js调用Android方法
         webview.addJavascriptInterface(new JsObject(),"jsBridge");
 

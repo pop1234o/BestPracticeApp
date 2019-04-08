@@ -252,7 +252,7 @@ public class Util {
         int verCode = -1;
         try {
             verCode = context.getPackageManager().getPackageInfo(
-                    "com.demo", 0).versionCode;
+                    context.getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
         }
         return verCode;
@@ -262,7 +262,7 @@ public class Util {
         String verName = "";
         try {
             verName = context.getPackageManager().getPackageInfo(
-                    "com.demo", 0).versionName;
+                    context.getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
         }
         return verName;
