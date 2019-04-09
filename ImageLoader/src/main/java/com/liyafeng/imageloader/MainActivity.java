@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
      *                    />
      *
      *
-     *
+     * ============= fresco native heap一直申请内存的问题=======
+     * 因为你的url返回null，导致fresco一直重试请求，导致native heap一直暴涨
      *
      * @param savedInstanceState
      */
