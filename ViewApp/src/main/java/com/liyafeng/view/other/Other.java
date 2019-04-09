@@ -286,4 +286,12 @@ public class Other {
     void a11(){}
 
 
+    /**
+     * 根据字符串获取view id
+     * int id = context.getResources().getIdentifier("res_name", "drawable", context.getPackageName());
+     * Drawable drawable = context.getResources().getDrawable(id);
+     */
+    void a12(){}
+
+
 }
