@@ -285,4 +285,11 @@ public class Main_Question {
      *
      */
     void a17(){}
+
+
+    /**
+     * fresco 内存占用问题
+     * 是因为setImage 为 null 导致一直请求
+     */
+    void a18(){}
 }
