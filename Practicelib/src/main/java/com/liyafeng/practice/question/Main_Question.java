@@ -292,4 +292,17 @@ public class Main_Question {
      * 是因为setImage 为 null 导致一直请求
      */
     void a18(){}
+
+
+    /**
+     *     Process: com.tal.brandy, PID: 4773
+     *     java.lang.UnsupportedOperationException
+     *         at java.util.AbstractList.add(AbstractList.java:148)
+     *         at java.util.AbstractList.add(AbstractList.java:108)
+     *         at java.util.AbstractCollection.addAll(AbstractCollection.java:344)
+     *         at com.tal.brandy.ui.activity.video.BaseVideoActivity$11.onUserUpdate(BaseVideoActivity.java:593)
+     *         at com.zego.zegoliveroom.ZegoLiveRoom$35.run(ZegoLiveRoom.java:3933)
+     *
+     */
+    void a19(){}
 }

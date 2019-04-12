@@ -685,7 +685,9 @@ public class Util {
      * @param window
      */
     static public void hideNavigationBar(final Window window) {
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                //布局位于状态栏下方 不设置会导致 bar隐藏了，但是布局还在bar上方
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         window.getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
