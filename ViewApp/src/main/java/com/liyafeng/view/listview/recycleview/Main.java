@@ -39,6 +39,11 @@ public class Main {
      * （其实可以直接设置为true，当需要改变宽高的时候就用notifyDataSetChanged()去整体刷新一下）
      *
      *
+     * =======adapter.notifyDataSetChanged()无效/ 不起作用=========
+     * 使用 adapter.notifyDataSetChanged() 时，必须保证传进 Adapter 的数据 List 是同一个 List
+     * 而不能是其他对象，否则无法更新 listview。
+     * 也就是一个list，如果重新指向其他list，那么刷新无效
+     *
      *
      * @param args
      */
