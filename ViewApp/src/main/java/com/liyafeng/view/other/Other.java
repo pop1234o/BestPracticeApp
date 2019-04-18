@@ -174,16 +174,13 @@ public class Other {
      * —pm（Package Manager），这个命令主要用于获取和安装在 Android 设备上的应用信息
      * <p>
      * 命令行下输入adb shell pm即可获得关于pm的用法帮助
-     *
-     *
+     * <p>
+     * <p>
      * ========================
      * run构建出来的包（output/apk/xx.apk）testOnly=true 如果你直接传到手机安装是安装不上的
      * Android studio 通过上传安装包，设置 adb shell pm install -t -r 来安装的，所以能安装上
-     *
+     * <p>
      * 或者我们选择Build > Build APK. 这样构建出来的包就能安装了 （目录也是 output/apk/xx.apk）
-     *
-     *
-     *
      */
     void a8() {
     }
@@ -244,7 +241,6 @@ public class Other {
      * 这个height是 bar 和thumb的最大高度，否则会被切
      * <p>
      * android:maxHeight="11dp"这个设置的是bar的高度
-     *
      */
     void a10() {
     }
@@ -252,38 +248,37 @@ public class Other {
 
     /**
      * https://www.kancloud.cn/kancloud/android-tutorial/87166
-     *
+     * <p>
      * android:numStars：显示多少个星星，必须为整数
      * android:rating：默认评分值，必须为浮点数
      * android:stepSize： 评分每次增加的值，必须为浮点数
-     *
+     * <p>
      * 除了上面这些，还有两种样式供我们选择咧，但是不建议使用，因为这两种样式都好丑... 他们分别是：
      * style="?android:attr/ratingBarStyleSmall"
      * style="?android:attr/ratingBarStyleIndicator"
-     *
+     * <p>
      * ——事件处理： 只需为RatingBar设置OnRatingBarChangeListener事件，然后重写下**onRatingChanged()**方法即可！
-     *
+     * <p>
      * ratingbar_full.xml:
-     *
+     * <p>
      * <?xml version="1.0" encoding="utf-8"?>
      * <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-     *     <item android:id="@android:id/background"
-     *         android:drawable="@mipmap/ic_rating_off1" />
-     *     <item android:id="@android:id/secondaryProgress"
-     *         android:drawable="@mipmap/ic_rating_off1" />
-     *     <item android:id="@android:id/progress"
-     *         android:drawable="@mipmap/ic_rating_on1" />
+     * <item android:id="@android:id/background"
+     * android:drawable="@mipmap/ic_rating_off1" />
+     * <item android:id="@android:id/secondaryProgress"
+     * android:drawable="@mipmap/ic_rating_off1" />
+     * <item android:id="@android:id/progress"
+     * android:drawable="@mipmap/ic_rating_on1" />
      * </layer-list>
-     *
-     *
+     * <p>
+     * <p>
      * 设置样式
-     *  <item name="android:progressDrawable">@drawable/ratingbar_full</item>
-     *         <item name="android:minHeight">24dip</item>
-     *         <item name="android:maxHeight">24dip</item>
-     *
-     *
+     * <item name="android:progressDrawable">@drawable/ratingbar_full</item>
+     * <item name="android:minHeight">24dip</item>
+     * <item name="android:maxHeight">24dip</item>
      */
-    void a11(){}
+    void a11() {
+    }
 
 
     /**
@@ -291,35 +286,74 @@ public class Other {
      * int id = context.getResources().getIdentifier("res_name", "drawable", context.getPackageName());
      * Drawable drawable = context.getResources().getDrawable(id);
      */
-    void a12(){}
+    void a12() {
+    }
 
 
     /**
      * 全局替换字体
      * https://developer.android.google.cn/guide/topics/ui/look-and-feel/fonts-in-xml#java
-     *
+     * <p>
      * res/font/myfontfamliy.xml
      * 将字体也放入 font文件夹中 ，支持 otf ttf
-     *
+     * <p>
      * 如果我们要全局替换，那么在appTheme 中设置
      * <item name="android:fontFamily">@font/font</item>、
      * 这样就可以全局替换字体了
-     *
+     * <p>
      * //代码中获取对象
      * Typeface typeface = ResourcesCompat.getFont(context, R.font.myfont);
-     *
+     * <p>
      * 这个是Android 8.0加入的， 如果支持 api16(4.1)以上 需要导入
      * implementation 'com.android.support:support-v4:28.0.0'
      * 然后xml中
      * <?xml version="1.0" encoding="utf-8"?>
      * <font-family xmlns:app="http://schemas.android.com/apk/res-auto">
-     *     <font app:fontStyle="normal" app:fontWeight="400" app:font="@font/myfont-Regular"/>
-     *     <font app:fontStyle="italic" app:fontWeight="400" app:font="@font/myfont-Italic" />
+     * <font app:fontStyle="normal" app:fontWeight="400" app:font="@font/myfont-Regular"/>
+     * <font app:fontStyle="italic" app:fontWeight="400" app:font="@font/myfont-Italic" />
      * </font-family>
-     *
-     *
      */
-    void a13(){}
+    void a13() {
+    }
+
+
+    /**
+     * android音量类型
+     * 音量控制
+     * 手机
+     * STREAM_VOICE_CALL通话音量
+     * STREAM_RING 铃声音量
+     * STREAM_MUSIC 媒体音量
+     * STREAM_ALARM 闹钟音量
+     *
+     * pad
+     * STREAM_NOTIFICATION 通知音量
+     * STREAM_MUSIC 媒体音量
+     * STREAM_ALARM 闹钟音量
+     * 如果页面有通话类型的音频流 那么也有 STREAM_VOICE_CALL
+     *
+     *
+     * /** Used to identify the volume of audio streams for phone calls *
+     * <p>
+     * public static final int STREAM_VOICE_CALL = AudioSystem.STREAM_VOICE_CALL;
+     * /** Used to identify the volume of audio streams for system sounds *
+     * <p>
+     * public static final int STREAM_SYSTEM = AudioSystem.STREAM_SYSTEM;
+     * /** Used to identify the volume of audio streams for the phone ring *
+     * <p>
+     * public static final int STREAM_RING = AudioSystem.STREAM_RING;
+     * /** Used to identify the volume of audio streams for music playback *
+     * <p>
+     * public static final int STREAM_MUSIC = AudioSystem.STREAM_MUSIC;
+     * /** Used to identify the volume of audio streams for alarms *
+     * <p>
+     * public static final int STREAM_ALARM = AudioSystem.STREAM_ALARM;
+     * /** Used to identify the volume of audio streams for notifications *
+     * <p>
+     * public static final int STREAM_NOTIFICATION = AudioSystem.STREAM_NOTIFICATION;
+     */
+    void a14() {
+    }
 
 
 }
