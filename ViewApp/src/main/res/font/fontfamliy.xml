@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--全局更换字体-->
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+        <font app:fontStyle="normal" app:fontWeight="400" app:font="@font/myfont-Regular"/>
+        <font app:fontStyle="italic" app:fontWeight="400" app:font="@font/myfont-Italic" />
+    </font-family>
+
+</font-family>

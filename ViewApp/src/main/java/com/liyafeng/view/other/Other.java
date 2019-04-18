@@ -294,4 +294,32 @@ public class Other {
     void a12(){}
 
 
+    /**
+     * 全局替换字体
+     * https://developer.android.google.cn/guide/topics/ui/look-and-feel/fonts-in-xml#java
+     *
+     * res/font/myfontfamliy.xml
+     * 将字体也放入 font文件夹中 ，支持 otf ttf
+     *
+     * 如果我们要全局替换，那么在appTheme 中设置
+     * <item name="android:fontFamily">@font/font</item>、
+     * 这样就可以全局替换字体了
+     *
+     * //代码中获取对象
+     * Typeface typeface = ResourcesCompat.getFont(context, R.font.myfont);
+     *
+     * 这个是Android 8.0加入的， 如果支持 api16(4.1)以上 需要导入
+     * implementation 'com.android.support:support-v4:28.0.0'
+     * 然后xml中
+     * <?xml version="1.0" encoding="utf-8"?>
+     * <font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+     *     <font app:fontStyle="normal" app:fontWeight="400" app:font="@font/myfont-Regular"/>
+     *     <font app:fontStyle="italic" app:fontWeight="400" app:font="@font/myfont-Italic" />
+     * </font-family>
+     *
+     *
+     */
+    void a13(){}
+
+
 }
