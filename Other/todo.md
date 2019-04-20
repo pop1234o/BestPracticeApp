@@ -52,11 +52,11 @@
  胡凯，腾讯Android开发
  里面有Android Training的中文版
 
-* https://www.jianshu.com/u/45661204c0d6  、 https://github.com/whenSunSet
+* https://www.jianshu.com/u/45661204c0d6  | https://github.com/whenSunSet
  何时夕，浙江工商大学计算机科学专业，2018毕业，狂拿bat tmd 等大厂offer，
  刚毕业找工作的可以看看，很多面试的东西和成长经历
 
-* https://hit-alibaba.github.io/interview 、https://github.com/skyline75489
+* https://hit-alibaba.github.io/interview | https://github.com/skyline75489
   Skyline75489 哈尔滨工业大学软件学院本科  Python/iOS Dev，WI输入法iOS8核心开发成员
   很全面的网络、数据结构、操作系统知识
 
@@ -69,6 +69,11 @@
   先后就职于西门子、摩托罗拉、惠普、Brightcove、火币网等公司。
   最著名的git教程之一，还有java和js教程
 
+* https://www.crifan.com/ | https://github.com/crifan
+  李茂，全栈开发，苏州人
+  里面讲解了科学上网的方法
+  
+  
 
 ### 团队博客
 
