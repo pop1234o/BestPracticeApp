@@ -12,6 +12,9 @@ public class FixMemLeak {
 
     /**
      * 解决华为泄漏问题 InputManager mLastSrvView
+     *
+     * 设置匿名内部类的callback
+     *
      * @param context
      */
     public static void fixLeak(Context context) {

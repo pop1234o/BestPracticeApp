@@ -85,4 +85,59 @@ public class Main {
      *
      */
     public void a1(){}
+
+
+    /**
+     * FileProvider的使用方法
+     * https://developer.android.google.cn/reference/android/support/v4/content/FileProvider
+     * ===============
+     * FileProvider is a special subclass of ContentProvider that
+     * facilitates secure sharing of files associated with an app by creating
+     * a content:// Uri for a file instead of a file:/// Uri.
+     * 安全的多进程共享文件，用content:// 而不是file:///
+     *
+     * ========使用方法=========
+     * 定义
+     * <manifest>
+     *     ...
+     *     <application>
+     *         ...
+     *         <provider
+     *             android:name="android.support.v4.content.FileProvider"
+     *             android:authorities="com.mydomain.fileprovider" //你自己的域名
+     *             android:exported="false"
+     *             android:grantUriPermissions="true">
+     *              <meta-data
+     *                  android:name="android.support.FILE_PROVIDER_PATHS"
+     *                  android:resource="@xml/file_paths" />
+     *         </provider>
+     *         ...
+     *     </application>
+     * </manifest>
+     *
+     * 在res下创建xml文件夹 ，定义 file_paths.xml 声明哪些文件夹（路径）是对外公开的
+     * <paths xmlns:android="http://schemas.android.com/apk/res/android">
+     *     <files-path name="my_images" path="images/"/>
+     *     <files-path name="my_docs" path="docs/"/>
+     *     path表明了files-path下的子目录
+     *     ...
+     * </paths>
+     *
+     * files-path 对应 Context.getFilesDir()
+     * cache-path 对应 Context.getCacheDir()
+     * external-path 对应 Environment.getExternalStorageDirectory()
+     * external-files-path 对应 Context.getExternalFilesDir(String)
+     * external-cache-path 对应 Context.getExternalCacheDir()
+     *
+     *
+     * File imagePath = new File(Context.getFilesDir(), "images");
+     * File newFile = new File(imagePath, "default_image.jpg");
+     * Uri contentUri = getUriForFile(getContext(), "com.mydomain.fileprovider", newFile);
+     *
+     *  As a result of the previous snippet, getUriForFile() returns the content URI
+     * content://com.mydomain.fileprovider/my_images/default_image.jpg.//my_images只是个名称
+     *
+     *
+     */
+    public void a2(){}
 }

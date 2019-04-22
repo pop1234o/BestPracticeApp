@@ -125,6 +125,9 @@ public class UpdateService extends Service {
 
             startActivity(intents);
 
+
+
+
         }
 
     }
