@@ -5,6 +5,8 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
@@ -2026,7 +2028,9 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             list.forEach(s -> {//过滤打印
-                if (condition.test(s)) System.out.println(s);
+                if (condition.test(s)) {
+                    System.out.println(s);
+                }
             });
 
             //流式处理,过滤操作，filter后是一个新的列表
@@ -2090,5 +2094,40 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          *
          */
     }
+
+    /**
+     * FileWriter和BufferedWriter区别和用法
+     * 如果同时使用2者，那么性能会大大提高，而单独使用FileWriter操作字符，每写一次数据，磁盘就有一个写操作，性能很差
+     * 如果加了缓冲，那么会等到缓冲满了以后才会有写操作，效率和性能都有很大提高。
+     *
+     *  只有Bufferedxxx 才实现了 flush方法
+     *  BufferedWriter 、BufferedOutputStream
+     *  看源码，这个是在java层加了缓存，然后达到一定大小后一次写入磁盘
+     *
+     * ===========什么时候使用 Buffered?======
+     * have multiple writes between flush/close
+     * the writes are small compared with the buffer size.
+     * 在 flush/close 之间多次调用writes
+     * 每次写入的数据很小，可以用缓冲
+     *
+     *
+     */
+    public void a10_1(){
+
+    }
+
+    /**
+     * IO 中的flush()方法
+     * https://blog.csdn.net/dabing69221/article/details/16996877
+     * 只有Bufferedxxx 才实现了 flush方法
+     *
+     * 此方法将缓冲区的数据写入磁盘
+     *
+     */
+    public void a10_2(){
+
+//        new BufferedOutputStream().flush();
+    }
+
     //endregion
 }
