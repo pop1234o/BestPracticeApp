@@ -305,4 +305,48 @@ public class Main_Question {
      *
      */
     void a19(){}
+
+
+    /**
+     * java.lang.UnsatisfiedLinkError，ClassLoader找不到相关的so库
+     * https://blog.51cto.com/weijiancheng/1891876
+     * 问题一、Android支持哪些cpu架构？
+     *
+     * 答案很容易搜索到：android目前支持7种架构
+     *
+     * x86_64
+     *
+     * x86
+     *
+     * mips64
+     *
+     * mips
+     *
+     * armeabi-v7a
+     *
+     * armeabi
+     *
+     * arm64-v8a
+     *
+     * 问题二、系统是怎么查找so库的呢？
+     *
+     * 查找so库规则：
+     *
+     *       运行的时候，系统会到Jnidirs目录里查找so库，会根据当前平台架构查找对应的目录。这里面有一个规则是这个问题的元凶。当你只提供了armeabi目录时，armeabi-v7a、arm64-v8a架构的程序都会去armeabi里寻找，而当你同时也提供了armeabi-v7a、armeabi-v8a目录，而里面又不存在对应的so库时，系统就不会再去armeabi里面寻找了，直接找不到报错。
+     *
+     *       而签名包里面这七个目录都有，这个问题后面讨论。
+     *
+     * 验证猜想：
+     *
+     *       将app-release.apk使用打包软件打开，删除其中的armeabi-v7a目录，发现联想手机可以正常运行了（去armeabi里面寻找了）。移除x86_64文件夹，模拟器可以正常运行（去x86里面寻找了）。
+     *
+     *  问题三、签名包为什么七个目录全都有？
+     *
+     *       对应Jnidirs目录中的七个目录。打开签名包，发现这七个目录都有。奇怪的是我的项目里只有x86、armeabi和arm64-v8a三个类型的so库。
+     *       打开其他的目录发现都是只有一个so文件：libgenius_graphics.so。百思不得其解这个从何而来，查找build-gradle的时候发现：compile 'net.qiujuer.genius:graphics:2.0.0-beta8' 非常相似，这是一个开源的UI库。猜测是引入这个库在编译的时候自动生成各个平台下的libgenius_graphics.so文件。移除之，rebuild，确实如此，只剩下原本的三个文件夹
+     *
+     * 查阅许多文档都说x86是兼容armeabi的so文件的，验证时必须保证x86文件夹为空，或者根本没有x86文件夹)
+     *
+     */
+    void a20(){}
 }

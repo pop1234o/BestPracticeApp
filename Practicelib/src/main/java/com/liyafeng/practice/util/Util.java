@@ -39,6 +39,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import javax.crypto.BadPaddingException;
@@ -792,6 +793,17 @@ public class Util {
         inZip.close();
     }
 
+
+    /**
+     * 获取zip的文件个数（包含文件夹）
+     * @param zipFileString
+     */
+    public void getZipSize(String zipFileString){
+
+        ZipFile zipFile = new ZipFile(zipFileString);
+        int zipCount= zipFile.size();
+
+    }
 
 
 
