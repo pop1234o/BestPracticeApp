@@ -355,5 +355,17 @@ public class Other {
     void a14() {
     }
 
+    /**
+     * https://segmentfault.com/a/1190000002590577
+     * <application
+     *         android:allowBackup="true">
+     *         </application>
+     * 这个属性默认为true，允许通过adb backup 备份数据（不root的情况下）
+     * adb restore 来恢复数据，比如我们登录了一个app，备份了数据
+     * 在另一个手机上恢复数据，这样就直接是登录状态了
+     *
+     */
+    void a15(){}
+
 
 }
