@@ -108,7 +108,7 @@ import android.os.Bundle;
  * <p>
  * <p>
  * 这个插件在 项目 的build.gradle下指定 ：
- *
+ * <p>
  * ============版本========
  * gradle来构建一个Android app https://guides.gradle.org/building-android-apps/
  * <p>
@@ -179,46 +179,44 @@ import android.os.Bundle;
  * ./gradlew assembleDebug 执行task
  * <p>
  * <p>
- *
- *     ==============gradle配置文件内容解析============
- *  project级别的 build.gradle
- *
- *  buildscript {
- *
- *     repositories {  //我们需要Android的构建工具，而这里配置构建工具的下载地址
- *         google()
- *         jcenter()  //这两个是内置的依赖库，因为最常用
- *
- *         //添加 Sensors Analytics maven 库地址
- *         maven {
- *             url 'https://dl.bintray.com/zouyuhan/maven'
- *         }
- *     }
- *     dependencies {     //依赖的构建工具，
- *         classpath 'com.android.tools.build:gradle:3.2.1'
- *
- *
- *         //添加 Sensors Analytics android-gradle-plugin 依赖
- *         classpath 'com.sensorsdata.analytics.android:android-gradle-plugin2:3.0.2'
- *
- *         // NOTE: Do not place your application dependencies here; they belong
- *         // in the individual module build.gradle files
- *     }
+ * <p>
+ * ==============gradle配置文件内容解析============
+ * project级别的 build.gradle
+ * <p>
+ * buildscript {
+ * <p>
+ * repositories {  //我们需要Android的构建工具，而这里配置构建工具的下载地址
+ * google()
+ * jcenter()  //这两个是内置的依赖库，因为最常用
+ * <p>
+ * //添加 Sensors Analytics maven 库地址
+ * maven {
+ * url 'https://dl.bintray.com/zouyuhan/maven'
  * }
- *
+ * }
+ * dependencies {     //依赖的构建工具，
+ * classpath 'com.android.tools.build:gradle:3.2.1'
+ * <p>
+ * <p>
+ * //添加 Sensors Analytics android-gradle-plugin 依赖
+ * classpath 'com.sensorsdata.analytics.android:android-gradle-plugin2:3.0.2'
+ * <p>
+ * // NOTE: Do not place your application dependencies here; they belong
+ * // in the individual module build.gradle files
+ * }
+ * }
+ * <p>
  * allprojects {  //所有项目的依赖库都可以从下面下载
- *     repositories {
- *         google()
- *         jcenter()
- *
- *         //添加 Sensors Analytics maven 库地址
- *         maven {
- *             url 'https://dl.bintray.com/zouyuhan/maven'
- *         }
- *     }
+ * repositories {
+ * google()
+ * jcenter()
+ * <p>
+ * //添加 Sensors Analytics maven 库地址
+ * maven {
+ * url 'https://dl.bintray.com/zouyuhan/maven'
  * }
- *
- *
+ * }
+ * }
  */
 public class MainActivity extends Activity {
 
@@ -262,4 +260,33 @@ public class MainActivity extends Activity {
     void dabao() {
 
     }
+
+    /**
+     * 命令行构建项目
+     * https://developer.android.com/studio/build/building-cmdline?hl=zh-CN
+     *
+     * ./gradlew task-name
+     *
+     * 查看所有task
+     * ./gradlew tasks
+     *
+     * ./gradlew assemble 打包apk 在build/outputs/apk 中
+     *
+     * gradlew assembleDebug
+     * 或者直接安装
+     * gradlew installDebug
+     *
+     *
+     */
+    void a1() {
+    }
+
+
+    /**
+     * 从命令行对apk进行签名
+     * https://developer.android.com/studio/publish/app-signing.html?hl=zh-CN
+     *
+     *
+     */
+    void a2(){}
 }
