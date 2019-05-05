@@ -1,8 +1,8 @@
 package com.liyafeng.practice.util;
 
 
-import com.google.gson.Gson;
-import com.tal.brandy.net.EHttp;
+
+import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -27,7 +27,7 @@ public class DingDingMessageUtil {
                 try {
                     Message message = new Message();
                     message.setMsgtype("text");
-                    String mess = "[" + serverName + "];" + msg+"  url:"+ EHttp.getInstance().getBaseUrl();
+                    String mess = "[" + serverName + "];" + msg+"  url:";
                     message.setText(new MessageInfo(mess));
                     //https://oapi.dingtalk.com/robot/send?access_token=f356ee163c1eafa966f6b0fecc8c642372aefcc969d79ac690e50b53c4b845bf
                     URL url = new URL("https://oapi.dingtalk.com/robot/send?access_token=" + access_token);
@@ -41,7 +41,8 @@ public class DingDingMessageUtil {
                     conn.setRequestProperty("Content-Type", "application/Json; charset=UTF-8");
                     conn.connect();
                     OutputStream out = conn.getOutputStream();
-                    String textMessage = new Gson().toJson(message);
+//                    String textMessage = new JSONObject(message).toString();
+                    String textMessage = "json string";
                     byte[] data = textMessage.getBytes();
                     out.write(data);
                     out.flush();

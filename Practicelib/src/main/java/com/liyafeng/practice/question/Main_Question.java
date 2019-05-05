@@ -349,4 +349,15 @@ public class Main_Question {
      *
      */
     void a20(){}
+
+
+    /**
+     * Android之安装报错INSTALL_PARSE_FAILED_NO_CERTIFICATES
+     * Android 7.0 引入一项新的应用签名方案 APK Signature Scheme v2，它能提供更快的应用安装时间和更多针对未授权 APK 文件更改的保护。在默认情况下，Android Studio 2.2 和 Android Plugin for Gradle 2.2 会使用 APK Signature Scheme v2 和传统签名方案来签署您的应用。
+     *
+     * 同时勾选Signature Versions V1（兼容低版本） 和 V2（支持高版本）
+     *
+     * 开发工具版本Android Studio 2.3.1 在Generate signed apk 后，在Android 7.0以下版本的手机安装报错：INSTALL_PARSE_FAILED_NO_CERTIFICATES
+     */
+    void a21(){}
 }
