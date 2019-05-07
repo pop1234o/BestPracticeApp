@@ -1,7 +1,10 @@
 package com.liyafeng.architecture.component;
 
-import android.arch.lifecycle.*;
-import android.arch.lifecycle.MutableLiveData;
+//import android.arch.lifecycle.*;
+//import android.arch.lifecycle.MutableLiveData;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by liyafeng on 2017/12/27.

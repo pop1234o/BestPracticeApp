@@ -1,7 +1,10 @@
 package com.liyafeng.architecture.component;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
+//import android.arch.lifecycle.LiveData;
+//import android.arch.lifecycle.ViewModel;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 /**
  * Created by liyafeng on 2017/12/27.

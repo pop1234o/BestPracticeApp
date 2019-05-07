@@ -28,4 +28,45 @@ public class Main_Android_Architecture_Components {
     public static void main(String[] args) {
 
     }
+
+
+    /**
+     * AndroidX===============
+     *
+     *
+     * 新库老库对照表
+     * https://developer.android.com/jetpack/androidx/migrate
+     * 以前老库的版本号一般是跟着编译的版本号走，这几个库一般版本一样 比如 27.0.2
+     * （除了constraint-layout）
+     *
+     *
+     * com.android.support.constraint:constraint-layout
+     * androidx.constraintlayout:constraintlayout:1.1.2
+     *
+     * com.android.support:cardview-v7
+     * androidx.cardview:cardview:1.0.0
+     *
+     * com.android.support:recyclerview-v7
+     * androidx.recyclerview:recyclerview:1.0.0
+     *
+     * com.android.support:coordinatorlayout
+     * androidx.coordinatorlayout:coordinatorlayout:1.0.0
+     *
+     * com.android.support:design
+     * com.google.android.material:material:1.0.0-rc01
+     *
+     * com.android.support:appcompat-v7
+     * androidx.appcompat:appcompat:1.0.0
+     *
+     * com.android.support:support-v4
+     * androidx.legacy:legacy-support-v4:1.0.0
+     *
+     * com.android.support:support-v13
+     * androidx.legacy:legacy-support-v13:1.0.0
+     *
+     *
+     *
+     *
+     */
+    void a1(){}
 }
