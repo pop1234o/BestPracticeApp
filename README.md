@@ -2,6 +2,7 @@
 一个Android最佳实践的集合，非常适合拿来学习，欢迎fork和star。
 【持续更新。。。】有问题或者建议可以提issue
 
+
 ### 自定义View列表 (Module: ViewApp)
 * DragView(一个随手指滑动的View)
 * SimpleSlidingMenu(一个简单的滑动侧边栏，支持三种模式，支持自定义)
@@ -115,5 +116,8 @@ vi编辑器的使用
 ### 其他 （Other）
 * 一些优秀的Android书籍和技术博客推荐！
 * 一些基本的学习技巧
+
+
+>这个Project包含多个Module，因为构建所有Module时间太长，所以在settings.gradle可以配置指定的Module名称，来加快构建速度
 
 by popli 
