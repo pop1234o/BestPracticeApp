@@ -109,16 +109,6 @@ import android.os.Bundle;
  * <p>
  * 这个插件在 项目 的build.gradle下指定 ：
  * <p>
- * ============版本========
- * gradle来构建一个Android app https://guides.gradle.org/building-android-apps/
- * <p>
- * 使用gradle3.0  https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html
- * <p>
- * gradle 和 Android plugin for gradle 版本对应  https://developer.android.com/studio/releases/gradle-plugin.html#updating-plugin
- * <p>
- * plugin           gradle
- * 2.3.0+            3.3+
- * 2.1.3-2.2.3       2.14.1+
  * <p>
  * =========android plugin dsl（讲解里面可以配置的名称）===========
  * 所有的android plugin dsl 在http://google.github.io/android-gradle-dsl/current/index.html
@@ -264,19 +254,17 @@ public class MainActivity extends Activity {
     /**
      * 命令行构建项目
      * https://developer.android.com/studio/build/building-cmdline?hl=zh-CN
-     *
+     * <p>
      * ./gradlew task-name
-     *
+     * <p>
      * 查看所有task
      * ./gradlew tasks
-     *
+     * <p>
      * ./gradlew assemble 打包apk 在build/outputs/apk 中
-     *
+     * <p>
      * gradlew assembleDebug
      * 或者直接安装
      * gradlew installDebug
-     *
-     *
      */
     void a1() {
     }
@@ -285,8 +273,43 @@ public class MainActivity extends Activity {
     /**
      * 从命令行对apk进行签名
      * https://developer.android.com/studio/publish/app-signing.html?hl=zh-CN
+     */
+    void a2() {
+    }
+
+
+    /**
+     * ============gradle版本对应========
+     * gradle来构建一个Android app https://guides.gradle.org/building-android-apps/
+     * <p>
+     * 使用gradle3.0  https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html
+     * <p>
+     * <p>
+     * gradle对应的Android插件版本  classpath 'com.android.tools.build:gradle:3.4.0'
+     * gradle版本在gradle/wrapper/gradle-wrapper.properties中配置
+     * <p>
+     * gradle 和 Android plugin for gradle 版本对应  https://developer.android.com/studio/releases/gradle-plugin.html#updating-plugin
+     * <p>
+     * plugin           gradle
+     * 1.0.0 - 1.1.3	2.2.1 - 2.3
+     * 1.2.0 - 1.3.1	2.2.1 - 2.9
+     * 1.5.0	        2.2.1 - 2.13
+     * 2.0.0 - 2.1.2	2.10 - 2.13
+     * 2.1.3 - 2.2.3	2.14.1+
+     * 2.3.0+	        3.3+
+     * 3.0.0+	        4.1+
+     * 3.1.0+	        4.4+
+     * 3.2.0 - 3.2.1	4.6+
+     * 3.3.0 - 3.3.2	4.10.1+
+     * 3.4.0+	        5.1.1+
+     * <p>
      *
+     * ===========Android gradle插件版本和 build tools版本对应 ====================
+     * To suppress this warning, remove "buildToolsVersion '27.0.2'" from your build.gradle file,
+     * as each version of the Android Gradle Plugin now has a default version of the build tools.
+     * 我们可以移除这个配置，使用gradle插件中默认的build tools 版本
      *
      */
-    void a2(){}
+    void a3() {
+    }
 }
