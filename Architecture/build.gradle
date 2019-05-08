@@ -54,10 +54,12 @@ dependencies {
     implementation deps.support.cardview
     implementation deps.support.constraint
 
-    // Architecture components
+    // Architecture components -lifecycle
     implementation deps.lifecycle.runtime
     implementation deps.lifecycle.extensions
     annotationProcessor deps.lifecycle.compiler
+
+    //  Architecture components - room
     implementation deps.room.runtime
     annotationProcessor deps.room.compiler
 }
