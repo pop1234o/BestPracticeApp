@@ -77,8 +77,10 @@ vi编辑器的使用
 * AIDL的使用
 
 ### Android应用架构/组件化 (Module: Architecture)
-* MVC、MVP、MVVM
-* 最新官方的 Android-Architecture-Component 架构
+* MVC、MVP、MVVM 架构讲解
+* ~~最新官方的 Android-Architecture-Component 架构~~（过时）
+* 官方Android Jetpack套件介绍
+* AndroidX介绍
 * 阿里组件化框架Arouter的介绍（TODO）
 
 ### Kotlin (Module: Kotlin)（这个已经移动到我的github的另一个仓库）
