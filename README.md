@@ -47,6 +47,7 @@ vi编辑器的使用
 
 ### ORM框架  (Module: Orm)
 * GreenDao框架
+* Room框架（TODO）
 
 ### 依赖注入框架（Module: DependencyInjection）
 * 依赖注入介绍
@@ -78,8 +79,8 @@ vi编辑器的使用
 
 ### Android应用架构/组件化 (Module: Architecture)
 * MVC、MVP、MVVM 架构讲解
-* ~~最新官方的 Android-Architecture-Component 架构~~（过时）
-* 官方Android Jetpack套件介绍
+* ~~最新官方的 Android-Architecture-Component 架构~~（过时，已成为Jetpack一部分）
+* 官方Android Jetpack 套件介绍
 * AndroidX介绍
 * 阿里组件化框架Arouter的介绍（TODO）
 

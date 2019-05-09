@@ -31,19 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * =========Android Jetpack============
-     *
-     * Jetpack 是 Android 软件组件的集合，使您可以更轻松地开发出色的 Android 应用。
-     * 这些组件可帮助您遵循最佳做法、让您摆脱编写样板代码的工作并简化复杂任务，以便您将精力集中放在所需的代码上。
-     *
-     * Jetpack 包含与平台 API 解除捆绑的 androidx.* 软件包库，这意味着，它可以提供向后兼容性，
-     * 且比 Android 平台的更新频率更高，以此确保您始终可以获取最新且最好的 Jetpack 组件版本。
-     *
-     *
-     *
-     */
-    public void a1(){}
 
     /**
      * =========ui controller=========
