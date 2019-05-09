@@ -31,6 +31,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * =========ui controller=========
+     * UI controllers such as activities and fragments are primarily intended to display UI data,
+     * react to user actions, or handle operating system communication, such as permission requests.
+     * activities fragments 主要是展示ui数据，相应用户操作，处理系统会话，比如权限请求
+     * 他们不应持有数据，和处理数据
+     *
+     * ==========
+     *
+     *
+     *
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
      *
      * 整个结构用的就是观察者加弱引用来防止内存泄漏，代码解耦
      *
-     *
+     *==========ProcessLifecycleOwner===========
+     * https://developer.android.google.cn/reference/androidx/lifecycle/ProcessLifecycleOwner.html
+     * 这个一般用于app 切换前后台的通知
      *
      */
     public static class MyLocationListener implements LifecycleObserver {
