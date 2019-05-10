@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModelProviders;
@@ -72,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         UserProfileViewModel viewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
 
-        viewModel.getUser(123L).observe(this, new Observer<User>() {
+        LiveData<com.liyafeng.architecture.component.User> user = viewModel.getUser(123L);
+        user.observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
                 Log.i("test", "获取了" + user.toString());

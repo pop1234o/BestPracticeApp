@@ -16,13 +16,24 @@ public class Main_Android_Architecture_Components {
      *
      * ============acc包含的组件============
      * lifecycle-aware components 帮助你管理生命周期，避免内存泄漏，使得加载数据到ui更容易
-     * LiveData  构建一个数据对象，当数据发生改变，通知view
+     * LiveData  构建一个数据对象，当数据发生改变，通知view (LiveData 是一种可观察的数据存储器)
      * ViewModel 存储ui相关的数据，屏幕旋转不销毁
      * Room  一个orm 框架（数据库框架） 支持返回  RxJava, Flowable and LiveData observables.
      *
+     * ================Android官方推荐的架构原则=============
+     * https://developer.android.com/jetpack/docs/guide#addendum
      *
+     * 1.我们在操作app的同时有可能有其他app调用，比如电话来了，
+     *  因此您不应在应用组件中存储任何应用数据或状态，并且应用组件不应相互依赖
      *
+     * 2.分离关注点，一种常见的错误是在一个 Activity 或 Fragment 中编写所有代码
      *
+     * 3.另一个重要原则是您应该通过模型驱动界面（最好是持久性模型）。持久性是理想之选，原因如下：
+     * 如果 Android 操作系统销毁应用以释放资源，您的用户就不会丢失数据。
+     * 当网络连接不稳定或不可用时，应用会继续工作。
+     * 应用所基于的模型类应明确定义数据管理职责，这样将使应用更可测试且更一致。
+     *
+     * 4.
      *
      *
      * @param args

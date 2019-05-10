@@ -15,6 +15,7 @@ public class UserProfileViewModel extends ViewModel {
 
 
     LiveData<User> users;
+    UserRepository repository = new UserRepository();//应该是单例
 
     public UserProfileViewModel() {
     }
@@ -25,12 +26,8 @@ public class UserProfileViewModel extends ViewModel {
         if (users == null) {
             users = new MutableLiveData<User>();
             //模拟网络请求
-            new android.os.Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    users.setValue(new User());
-                }
-            });
+            users = repository.getUser(userId);
+
         }
 
         return users;
