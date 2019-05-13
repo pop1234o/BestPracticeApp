@@ -1,2 +1,2 @@
-include  ':Architecture'
+include  ':Algorithm'
 //':ViewApp', ':Event', ':Video', ':BuildTool', ':Network', ':Practicelib', ':Orm', ':Algorithm', ':Performance', ':Concurrent', ':Architecture', ':DependencyInjection', ':ImageLoader', ':HotFix', ':hotfixcustomgradleplugin', ':JNI'

@@ -1,4 +1,4 @@
-package com.liyafeng.algorithm.leetcode;
+package com.liyafeng.algorithm.leetcode.array;
 
 /**
  * Created by liyafeng on 2018/3/2.
@@ -84,9 +84,14 @@ public class LeetCode_4_MedianOfTwoSortedArrays_Hard {
     }
 
 
+    /**
+     *  这个思路是归并排序，然后取中值即可
+     *
+     * 知识点：数组，归并排序
+     */
     class Solution {
         /**
-         * 这个思路是归并排序，然后取中值即可
+
          * @param nums1
          * @param nums2
          * @return

@@ -1,10 +1,12 @@
-package com.liyafeng.algorithm.leetcode;
+package com.liyafeng.algorithm.leetcode.array;
+
+import java.util.HashMap;
 
 public class LeetCode_1_TwoSum_Easy {
 
     /**
-     * 给定一个数组，和一个目标值，找出数组中和是目标值的两个元素
-     *
+     * 给定一个数组，和一个目标值，找出数组中和是目标值的两个元素的位置
+     * <p>
      * ===========
      * Given an array of integers, return indices of the two numbers such that they add up to a specific target.
      * <p>
@@ -23,6 +25,7 @@ public class LeetCode_1_TwoSum_Easy {
      * 时间复杂度n+nlogn
      * =================考点=================
      * 找规律，如果两个元素和大于sum，那么肯定要减小某个元素，那肯定只能减小end
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -46,5 +49,31 @@ public class LeetCode_1_TwoSum_Easy {
         }
 
         return null;
+    }
+
+
+    /**
+     * One-pass Hash Table
+     * 一次遍历 使用hash表
+     *
+     * 遍历，将元素入hash表，然后做差看是否在map中
+     *
+     * 时间复杂度 O(n)  空间复杂度 O(n)
+     *
+     * =================
+     * 知识点：数组，哈希表
+     */
+    class Solution {
+        public int[] twoSum(int[] nums, int target) {
+            HashMap<Integer, Integer> map = new HashMap<>(nums.length);
+            for (int i = 0; i < nums.length; i++) {
+                int complement = target - nums[i];
+                if (map.containsKey(complement)) {
+                    return new int[]{map.get(complement), i};
+                }
+                map.put(nums[i], i);
+            }
+            throw new IllegalArgumentException("No two sum solution");
+        }
     }
 }
