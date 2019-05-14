@@ -53,6 +53,9 @@ public class LeetCode_15_3Sum_Medium {
      * 如果 sum 等于 -ai ，就加入list，然后两个指针向中间靠拢（跳过不一样的元素）
      * sum小了，lo要++  大了，hi--
      * 直到遍历结束
+     * ==============
+     * 时间复杂度 O(n^2)
+     * 空间  O(1)
      *
      * @param nums
      * @return
