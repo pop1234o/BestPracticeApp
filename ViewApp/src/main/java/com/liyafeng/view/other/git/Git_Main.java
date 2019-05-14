@@ -109,6 +109,11 @@ public class Git_Main {
      * 这样远程就会创建一个分支，并且与本地分支关联，以后修改代码就直接
      * git push就能自动推送到 origin/分支名 中了。
      * <p>
+     *
+     * 重命名本地分支
+     * git branch -m devel develop
+     *
+     *
      * ====================
      * 在git reomote add origin 地址.git 后，添加了远程仓库
      * 然后需要git fetch 远程仓库名，一下才能获取到远程仓库的信息
@@ -133,16 +138,25 @@ public class Git_Main {
      * <p>
      * git show <tagname>查看标签信息
      * <p>
-     * git tag -d v0.1 删除
      * <p>
      * git push origin v1.0 推送标签到远程
      * git push origin --tags 推送所有标签
+     *
+     * 获取远程tag
+     * git fetch origin tag <tagname>
      * <p>
      * <p>
      * 【删除远程标签】
-     * git tag -d v0.9
+     * git tag -d v0.9 删除本地标签
      * git push origin :refs/tags/v0.9
      * <p>
+     * 查看tag代码（但是不能编辑）
+     * git checkout tag_name
+     *
+     * 如果要在 tag 代码的基础上做修改，你需要一个分支：
+     * git checkout -b branch_name tag_name
+     *
+     *
      * =========================删除远程仓库============
      * git remote rm origin   （只是删除这个名字，并没有真的将远程仓库删除）
      *
