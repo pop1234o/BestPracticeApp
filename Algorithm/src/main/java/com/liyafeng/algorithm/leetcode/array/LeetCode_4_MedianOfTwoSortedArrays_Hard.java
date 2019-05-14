@@ -87,7 +87,7 @@ public class LeetCode_4_MedianOfTwoSortedArrays_Hard {
     /**
      *  这个思路是归并排序，然后取中值即可
      *
-     * 知识点：数组，归并排序
+     * 知识点:数组+归并排序
      */
     class Solution {
         /**

@@ -61,7 +61,7 @@ public class LeetCode_1_TwoSum_Easy {
      * 时间复杂度 O(n)  空间复杂度 O(n)
      *
      * =================
-     * 知识点：数组，哈希表
+     * 知识点:数组+哈希表
      */
     class Solution {
         public int[] twoSum(int[] nums, int target) {

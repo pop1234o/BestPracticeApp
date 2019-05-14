@@ -22,6 +22,9 @@ public class LeetCode_11_ContainerWithMostWater_Medium {
      * ---------------
      * 2.两个指针解法
      *
+     * ==================
+     * 知识点:数组+两个指针
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -34,10 +37,12 @@ public class LeetCode_11_ContainerWithMostWater_Medium {
         int low = 0, high = height.length - 1;
         int max = 0;
         while (low < high) {
+            //计算面积
             int sum = (high - low) * (height[low] < height[high] ? height[low] : height[high]);
             if (sum > max) {
                 max = sum;
             }
+            //左右指针向中间靠拢
             if (height[low] < height[high]) {
                 low++;
             } else {
