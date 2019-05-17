@@ -19,6 +19,8 @@ public class Main {
      * 微信支付时序图
      * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_3
      *
+     * 微信支付参数注释
+     * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
      *
      *
      * @param args
