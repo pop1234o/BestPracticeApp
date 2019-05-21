@@ -249,6 +249,7 @@ package com.liyafeng.network;
  * 服务端获取到request的content-type后，就知道以什么方式来解析request body中的内容了
  * 这个操作都是约定好的，是很多语言框架中所支持的
  * <p>
+ * ================文件上传=====================
  * 同样支持的还有  multipart/form-data
  * 用来上传文件
  * 他的request body是一块一块的
@@ -267,6 +268,28 @@ package com.liyafeng.network;
  * [png的内容]
  * <p>
  * ---xxxxxxxxxxxxx--
+ * <p>
+ * ================================
+ * 媒体格式 Content-Type
+ * <p>
+ * text/html ： HTML格式
+ * text/plain ：纯文本格式
+ * text/xml ：  XML格式
+ * image/gif ：gif图片格式
+ * image/jpeg ：jpg图片格式
+ * image/png：png图片格式
+ * <p>
+ * application/xhtml+xml ：XHTML格式
+ * application/xml     ： XML数据格式
+ * application/atom+xml  ：Atom XML聚合格式
+ * application/json    ： JSON数据格式
+ * application/pdf       ：pdf格式
+ * application/msword  ： Word文档格式
+ * application/octet-stream ： 二进制流数据（如常见的文件下载）
+ * application/x-www-form-urlencoded ： <form encType=””>中默认的encType，form表单数据被编码为key/value格式发送到服务器（表单默认的提交数据的格式）
+ * <p>
+ * <p>
+ * multipart/form-data ： 需要在表单中进行文件上传时，就需要使用该格式
  */
 
 public class HttpProtocol {
@@ -365,9 +388,9 @@ public class HttpProtocol {
  * ======================https连接、请求/响应过程===============
  * https://blog.csdn.net/think_program/article/details/60780843
  * 首先进行tls握手
- *
+ * <p>
  * ( 注意！！！tcp的三次握手不变，Tcp连接成功后进行tls层的握手，成功后才能进行http的Request、Response)
- *
+ * <p>
  * 1.浏览器将自己支持的一套加密规则发送给网站。
  * 2.网站从中选出一组加密算法与HASH算法，并将自己的身份信息以证书的形式发回给浏览器。
  * 证书里面包含了网站地址，加密公钥，以及证书的颁发机构等信息。
@@ -397,7 +420,7 @@ public class HttpProtocol {
  * =====================为什么内容用对称加密=================
  * 因为非对称加密是很消耗性能，所以我们用对称加密，但是让服务端知道随机密码的过程也不安全
  * 所以这个可以用非对称加密
- *
+ * <p>
  * =================HTTPS一般使用的加密算法和HASH算法===============
  * <p>
  * 非对称加密算法：RSA，DSA/DSS
