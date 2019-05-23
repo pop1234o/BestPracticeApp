@@ -70,6 +70,9 @@ package com.liyafeng.network;
  * trace 请求服务器回送收到的请求信息，主要用于测试或诊断
  * connect 保留将来使用
  * ------------------请求头---------------
+ * https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Connection （请求头讲解）
+ *
+ *
  * Host: www.example.com（没有端口号默认是80）
  * User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)     客户端信息
  * Cache-Control:no-cache;no-store;max-age=60;max-stale=60;min-fresh=60;only-if-cached   缓存控制
@@ -320,6 +323,18 @@ public class HttpProtocol {
      *
      */
     void a2(){}
+
+
+    /**
+     * http connection 请求头
+     *     在http1.1中，client和server都是默认对方支持长链接的， 如果client使用http1.1协议，
+     *     但又不希望使用长链接，则需要在header中指明connection的值为close；如果server方也不想支持长链接，
+     *     则在response中也需要明确说明connection的值为close.
+     *     不论request还是response的header中包含了值为close的connection，都表明当前正在使用的tcp链接在请求处理完毕后会被断掉。
+     *     以后client再进行新的请求时就必须创建新的tcp链接了
+     *     。 HTTP Connection的 close设置允许客户端或服务器中任何一方关闭底层的连接双方都会要求在处理请求后关闭它们的TCP连接。
+     */
+    void a3(){}
 
 }
 
