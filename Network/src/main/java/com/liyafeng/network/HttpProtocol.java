@@ -249,27 +249,7 @@ package com.liyafeng.network;
  * 服务端获取到request的content-type后，就知道以什么方式来解析request body中的内容了
  * 这个操作都是约定好的，是很多语言框架中所支持的
  * <p>
- * ================文件上传=====================
- * 同样支持的还有  multipart/form-data
- * 用来上传文件
- * 他的request body是一块一块的
- * <p>
- * 他的request body 的约定格式是：
- * boundary=---xxxxxxxxxxxxxx
- * [换行]
- * ---xxxxxxxxxxxxx
- * content-description:from-data;name="key"
- * <p>
- * value
- * ---xxxxxxxxxxxxx
- * content-description:from-data;name="file";filename="xxx.png"
- * content-type:image/png
- * <p>
- * [png的内容]
- * <p>
- * ---xxxxxxxxxxxxx--
- * <p>
- * ================================
+ * ===========Content-Type的 mime类型=====================
  * 媒体格式 Content-Type
  * <p>
  * text/html ： HTML格式
@@ -294,6 +274,52 @@ package com.liyafeng.network;
 
 public class HttpProtocol {
 
+
+    /**
+     * http 文件上传（注意文件上传）
+     *
+     * http格式：
+     *
+     * POST http://test2.aibrandy.com/api-manager/upload/uploadFile http/1.1
+     * Content-Type: multipart/form-data; boundary=be5b4fe6-a570-49e4-9380-4515cdf87483
+     * Content-Length: 564772
+     * 【换行】
+     * --be5b4fe6-a570-49e4-9380-4515cdf87483
+     * Content-Disposition: form-data; name="file"; filename="melo.log"  //这个name其实就是key，如果是文件上传就加个filename
+     * Content-Type: multipart/form-data
+     * Content-Length: 564561 [这个可以不要]
+     * 【换行】
+     * 【文件内容】
+     * --be5b4fe6-a570-49e4-9380-4515cdf87483
+     * Content-Disposition: form-data; name="key"
+     * 【换行】
+     * value
+     * --be5b4fe6-a570-49e4-9380-4515cdf87483--
+     *
+     *
+     *
+     *
+     * ======================
+     *
+     *
+     */
+    void a1(){}
+
+
+    /**
+     * =========post请求格式==============
+     * POST http://test2.aibrandy.com/api-manager/upload/uploadFile http/1.1
+     * Content-Type:application/x-www-form-urlencoded
+     * Content-Length: 21
+     * [这里需要有个换行]
+     * key=value&testKey=testValue
+     *
+     *
+     * 我们看到这种格式就不好是文件上传了
+     *
+     *
+     */
+    void a2(){}
 
 }
 
