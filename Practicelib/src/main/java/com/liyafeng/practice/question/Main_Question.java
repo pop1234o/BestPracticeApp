@@ -360,4 +360,43 @@ public class Main_Question {
      * 开发工具版本Android Studio 2.3.1 在Generate signed apk 后，在Android 7.0以下版本的手机安装报错：INSTALL_PARSE_FAILED_NO_CERTIFICATES
      */
     void a21(){}
+
+
+    /**
+     *
+     * app内安装apk报错 FileProvider 没有授权
+     *     java.lang.SecurityException: Permission Denial: reading android.support.v4.content.FileProvider uri content://com.tal.brandy.fileProvider/download/appv1.0.0.apk from pid=9663, uid=10018 requires the provider be exported, or grantUriPermission()
+     *         at android.content.ContentProvider.enforceReadPermissionInner(ContentProvider.java:777)
+     *         at android.content.ContentProvider$Transport.enforceReadPermission(ContentProvider.java:540)
+     *         at android.content.ContentProvider$Transport.enforceFilePermission(ContentProvider.java:530)
+     *         at android.content.ContentProvider$Transport.openTypedAssetFile(ContentProvider.java:458)
+     *         at android.content.ContentProviderNative.onTransact(ContentProviderNative.java:302)
+     *         at android.os.Binder.execTransact(Binder.java:708)
+     * 2019-05-24 20:39:14.517 9663-15818/? W/InstallStaging: Error staging apk from content URI
+     *     java.lang.SecurityException: Permission Denial: reading android.support.v4.content.FileProvider uri content://com.tal.brandy.fileProvider/download/appv1.0.0.apk from pid=9663, uid=10018 requires the provider be exported, or grantUriPermission()
+     *         at android.os.Parcel.readException(Parcel.java:2013)
+     *         at android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:183)
+     *         at android.database.DatabaseUtils.readExceptionWithFileNotFoundExceptionFromParcel(DatabaseUtils.java:146)
+     *         at android.content.ContentProviderProxy.openTypedAssetFile(ContentProviderNative.java:698)
+     *         at android.content.ContentResolver.openTypedAssetFileDescriptor(ContentResolver.java:1520)
+     *         at android.content.ContentResolver.openAssetFileDescriptor(ContentResolver.java:1357)
+     *         at android.content.ContentResolver.openInputStream(ContentResolver.java:1071)
+     *         at com.android.packageinstaller.ll1l1l.l11(InstallStaging.java:234)
+     *         at com.android.packageinstaller.ll1l1l.doInBackground(InstallStaging.java:211)
+     *         at android.os.AsyncTask$2.call(AsyncTask.java:333)
+     *         at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+     *         at android.os.AsyncTask$SerialExecutor$1.run(AsyncTask.java:245)
+     *         at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1162)
+     *         at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:636)
+     *         at java.lang.Thread.run(Thread.java:764)
+     * ============解决方法==========
+     * Stack Overflow的解决方案
+     *  List<ResolveInfo> resInfoList = BrandyApplication.getInstance().getPackageManager().queryIntentActivities(install, PackageManager.MATCH_DEFAULT_ONLY);
+     *                 for (ResolveInfo resolveInfo : resInfoList) {
+     *                     String packageName = resolveInfo.activityInfo.packageName;
+     *                     BrandyApplication.getInstance().grantUriPermission(packageName, contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+     *                 }
+     *
+     */
+    void a22(){}
 }
