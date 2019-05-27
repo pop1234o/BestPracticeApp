@@ -397,6 +397,21 @@ public class Main_Question {
      *                     BrandyApplication.getInstance().grantUriPermission(packageName, contentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
      *                 }
      *
+     *
+     * ====================
+     *  W/InstallStaging: Error staging apk from content URI
+     *     java.io.FileNotFoundException: No content provider: content://com.tal.brandy.fileProvider/download/app1.0.3.apk
+     *         at android.content.ContentResolver.openTypedAssetFileDescriptor(ContentResolver.java:1489)
+     *         at android.content.ContentResolver.openAssetFileDescriptor(ContentResolver.java:1340)
+     *         at android.content.ContentResolver.openInputStream(ContentResolver.java:1060)
+     *         at com.android.packageinstaller.InstallStaging$StagingAsyncTask.doInBackground(InstallStaging.java:167)
+     *         at com.android.packageinstaller.InstallStaging$StagingAsyncTask.doInBackground(InstallStaging.java:160)
+     *         at android.os.AsyncTask$2.call(AsyncTask.java:333)
+     *         at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+     *         at android.os.AsyncTask$SerialExecutor$1.run(AsyncTask.java:245)
+     *         at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+     *         at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+     *         at java.lang.Thread.run(Thread.java:764)
      */
     void a22(){}
 }
