@@ -89,6 +89,17 @@ public class InstallUtil {
         //添加这一句表示对目标应用临时授权该Uri所代表的文件
         install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         install.setDataAndType(apkUri, "application/vnd.android.package-archive");
+        //在魅族手机上不加会包解析包失败，还是没有权限，你得循环赋权
+        try {
+            List<ResolveInfo> resInfoList = BrandyApplication.getInstance().getPackageManager().queryIntentActivities(install, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                BrandyApplication.getInstance().grantUriPermission(packageName, apkUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         mAct.startActivity(install);
     }
 
