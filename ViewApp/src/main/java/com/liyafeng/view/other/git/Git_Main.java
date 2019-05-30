@@ -135,6 +135,7 @@ public class Git_Main {
      * git tag v1.0 打标签
      *
      * git tag 查看标签列表
+     * git tag --list
      * <p>
      * git show <tagname>查看标签信息
      * <p>
