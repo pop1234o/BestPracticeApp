@@ -44,6 +44,8 @@ public class N_Search_BinarySearch {
      * 1,2
      * 0 1
      *
+     * 1
+     *
      * 除以2指针是在左侧的那个（如果是偶数个元素）
      *
      * @param array
