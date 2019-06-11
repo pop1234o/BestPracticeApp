@@ -196,7 +196,7 @@ public class LeetCode_55_JumpGame_Medium {
     static class Solution4 {
         public boolean canJump(int[] nums) {
             int lastCanJumpPostion = nums.length - 1;
-            for (int i = nums.length - 2; i > 0; i--) {
+            for (int i = nums.length - 2; i >= 0; i--) {
                 //当前index是否能到达上一个 （能到达最后一个元素）的元素
                 if (i + nums[i] >= lastCanJumpPostion) {
                     lastCanJumpPostion = i;
