@@ -118,4 +118,24 @@ public class Main_Leetcode {
 
 
     }
+
+    /**
+     * ==============动态规划=============
+     * This is a dynamic programming[1] question. Usually, solving and fully understanding a dynamic programming problem is a 4 step process:
+     *
+     * Start with the recursive backtracking solution
+     * Optimize by using a memoization table (top-down[2] dynamic programming)
+     * Remove the need for recursion (bottom-up dynamic programming)
+     * Apply final tricks to reduce the time / memory complexity（Greedy）
+     *
+     * All solutions presented below produce the correct result, but they differ in run time and memory requirements.
+     * 动态规划4部曲
+     * 1.递归解法
+     * 2.通过备忘录（一个成员变量的数组来存储结果，不用每次都计算了）来优化（自顶向下的动态规划）
+     * 3.取消递归（自底向上的动态规划）
+     * 4.通过技巧减少时间、空间的复杂度（比如贪心算法）
+     *
+     *
+     */
+    void a3(){}
 }
