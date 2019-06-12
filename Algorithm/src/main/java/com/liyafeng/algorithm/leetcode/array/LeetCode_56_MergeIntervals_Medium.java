@@ -43,22 +43,45 @@ public class LeetCode_56_MergeIntervals_Medium {
      */
     public static void main(String[] args) {
 
+        int[][] array = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+        int[][] merge = merge(array);
+        for (int[] ints : merge) {
+            for (int anInt : ints) {
+                System.out.print(anInt + ",");
+            }
+            System.out.println();
+        }
 
     }
 
-//    public int[][] merge(int[][] intervals) {
-//
-//        Arrays.sort(intervals, new Comparator<int[]>() {
-//            @Override
-//            public int compare(int[] t1, int[] t2) {
-//                return t1[0] - t2[0];
-//            }
-//        });
-//
-//        ArrayList<Integer> integers = new ArrayList<>();
-//        for (int i = 0; i < intervals.length; i++) {
-//
-//        }
-//    }
+    public static int[][] merge(int[][] intervals) {
+
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] t1, int[] t2) {
+                return t1[0] - t2[0];
+            }
+        });
+        //新的数组
+        ArrayList<int[]> integers = new ArrayList<>();
+        for (int i = 0; i < intervals.length; i++) {
+            //intervals待加入的数组中的第一个元素的start大于已有数组的end,那么代表没有重叠，直接加入数组
+            if (integers.size() == 0 || ((int[]) integers.get(integers.size() - 1))[1] < intervals[i][0]) {
+                integers.add(intervals[i]);
+            } else {
+                //有交集，end判断哪个大就用哪个
+                int end = integers.get(integers.size() - 1)[1];
+                int endIn = intervals[i][1];
+                integers.get(integers.size() - 1)[1] = end > endIn ? end : endIn;
+            }
+        }
+
+        int[][] ints = new int[integers.size()][];
+
+        for (int i = 0; i < integers.size(); i++) {
+            ints[i] = integers.get(i);
+        }
+        return ints;
+    }
 
 }
