@@ -9,6 +9,8 @@ public class LeetCode_35_SearchInsertPosition_Easy {
      * <p>
      * 给定一个有序数组，找到一个数的插入位置。
      *
+     * ======知识点======
+     * 二分查找
      * @param args
      */
     public static void main(String[] args) {

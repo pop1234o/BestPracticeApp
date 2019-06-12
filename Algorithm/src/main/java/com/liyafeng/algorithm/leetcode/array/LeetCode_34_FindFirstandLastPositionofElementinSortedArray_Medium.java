@@ -25,7 +25,7 @@ public class LeetCode_34_FindFirstandLastPositionofElementinSortedArray_Medium {
      * <p>
      * <p>
      * <p>
-     * =============
+     * ======知识点=======
      * 知识点:数组+二分法查找
      *
      * @param args

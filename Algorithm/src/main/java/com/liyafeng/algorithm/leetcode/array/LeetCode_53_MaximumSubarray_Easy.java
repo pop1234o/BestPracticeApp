@@ -28,7 +28,8 @@ public class LeetCode_53_MaximumSubarray_Easy {
      * maxSubArray(A,i) = A[i]+ ( maxSubArray(A,i-1)>0?maxSubArray(A,i-1):0 )
      *
      *
-     * =============
+     * ========知识点=====
+     * 动态规划
      *
      * @param args
      */

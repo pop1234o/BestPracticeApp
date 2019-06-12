@@ -37,7 +37,7 @@ public class LeetCode_56_MergeIntervals_Medium {
      * <p>
      * <p>
      * <p>
-     * =============
+     * ========知识点=====
      *
      * @param args
      */

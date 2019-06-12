@@ -27,7 +27,7 @@ public class LeetCode_55_JumpGame_Medium {
      * <p>
      * =========思路==============
      * 动态规划
-     * =============
+     * ========知识点=====
      *
      * @param args
      */

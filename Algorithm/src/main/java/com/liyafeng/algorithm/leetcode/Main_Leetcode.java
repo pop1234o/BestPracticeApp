@@ -145,4 +145,14 @@ public class Main_Leetcode {
      *
      */
     void a3(){}
+
+
+    /**
+     * 不通过额外空间交换两个整数 m n
+     * m = m+n;
+     * n = m-n;
+     * m = m-n;
+     *
+     */
+    void a4(){}
 }

@@ -40,7 +40,8 @@ public class LeetCode_48_RotateImage_Medium {
      * 将旋转转化为 上下交换+对角线交换
      * <p>
      * <p>
-     * =============
+     * ========知识点=====
+     * 举例分析法
      *
      * @param args
      */
