@@ -57,7 +57,14 @@ public class Main_Leetcode {
      * 很显然 n^2是双层遍历，  nlogn就是一次遍历，然后二分思想
      * n的解法就是一次遍历
      *
-     *
+     * *************二维数组 和 一维数组的转换**********
+     *  n * m matrix convert to an array =>
+     *      matrix[x][y] => a[x * m + y]
+     *  二维数组的x y ,在一维中就是  a[x * m + y]
+     * an array convert to n * m matrix =>
+     *      a[x] =>matrix[x / m][x % m];
+     *  一维数组的 x   在二维就是 matrix[x / m][x % m];
+     *   x/列数 = 所在行   x%列数 =所在列
      *
      *
      *
