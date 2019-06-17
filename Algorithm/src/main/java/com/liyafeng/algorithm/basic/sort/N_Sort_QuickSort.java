@@ -129,16 +129,6 @@ public class N_Sort_QuickSort {
     }
 
 
-    /**
-     * 三向切分的快速排序
-     * =====================
-     * <p>
-     * ========优点==============
-     * 能处理含有大量重复元素的数组
-     */
-    class Quick3Way {
-
-    }
 
 
     public static void sort1(int[] ints, int lo, int hi) {
@@ -183,4 +173,64 @@ public class N_Sort_QuickSort {
 //
 //    }
 
+
+
+
+
+
+
+    public class QuickSortBasic {
+
+        public void sort (int[] input){
+
+            //KnuthShuffle.shuffle(input);
+            sort (input, 0, input.length-1);
+        }
+
+        private void sort(int[] input, int lowIndex, int highIndex) {
+
+            if (highIndex<=lowIndex){
+                return;
+            }
+
+            int partIndex=partition (input, lowIndex, highIndex);
+
+            sort (input, lowIndex, partIndex-1);
+            sort (input, partIndex+1, highIndex);
+        }
+
+        private int partition(int[] input, int lowIndex, int highIndex) {
+
+            int i=lowIndex;
+            int pivotIndex=lowIndex;
+            int j=highIndex+1;
+
+            while (true){
+
+                while (input[++i]< input[pivotIndex]){
+                    if (i==highIndex) {
+                        break;
+                    }
+                }
+
+                while (input[pivotIndex]< input[--j]){
+                    if (j==lowIndex){
+                        break;
+                    }
+                }
+
+                if (i>=j) {
+                    break;
+                }
+
+                exchange(input, i, j);
+
+            }
+
+            exchange(input, pivotIndex, j);
+
+            return j;
+        }
+
+    }
 }
