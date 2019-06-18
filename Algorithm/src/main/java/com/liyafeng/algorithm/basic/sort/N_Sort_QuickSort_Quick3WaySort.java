@@ -55,6 +55,8 @@ public class N_Sort_QuickSort_Quick3WaySort {
      * 第一个指针是lt ,它代表小于基准,初始值0
      * 第二个指针是gt ,它代表大于基准,初始值 length-1
      * 第三个指针i ,遍历整个数组和基准值比较,初始值lo+1
+     * （这里为什么要lo+1? 因为我们取第一个元素为基准值，i和lt比较永远相等，然后i++ ，
+     *  就相当于i从 lo+1开始了）
      *
      * lt一直指向的事基准值的第一个元素
      * xx 333 xx
@@ -64,6 +66,7 @@ public class N_Sort_QuickSort_Quick3WaySort {
      * 所以后面再进行递归
      *  sort(input, lowIndex, lt - 1);
      *  sort(input, gt + 1, highIndex);
+     *
      *
      *
      */
