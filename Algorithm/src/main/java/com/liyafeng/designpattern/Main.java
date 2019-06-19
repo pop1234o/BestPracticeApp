@@ -32,6 +32,28 @@ public class Main {
      *
      *
      * ==========uml图/UML图==============
+     * ===========什么是uml===============
+     * https://www.visual-paradigm.com/cn/guide/uml-unified-modeling-language/what-is-uml/
+     * UML 是统一建模语言的简称，它是一种由一整套图表组成的标准化建模语言。
+     * 用图表当语音来描述软件系统，不同的图（图表）要描述的内容不同
+     * UML主要使用图形符号来表示软件项目的设计，使用UML可以帮助项目团队沟通、探索潜在的设计和验证软件的架构设计
+     *
+     * =============uml的起源=========
+     * 在UML之前就有很多软件分析方法，
+     * 对象建模技术OMT [James Rumbaugh 1991] - 最适合分析和数据密集型信息系统。
+     * Booch [Grady Booch 1994]强项为设计和實作。Grady Booch 曾经为 Ada 语言方面做过广泛的工作，并且一直是该语言面向对象技术发展的主要参与者。尽管 Booch 方法很强大，但是但并未广为接受 （因为他的模型包含着很多云状，序人不整齐的感觉）
+     * OOSE（面向对象的软件工程[Ivar Jacobson 1992]） - 有一个称为用例的模型。
+     *
+     * 1994年，OMT 的创始人 Jim Rumbaugh 离开了通用电气公司 （General Electric），转投了 Rational，与 Grady Booch 并肩作战。这使得软件世界惊呆的合作，为的是要把二人的想法结合成一个统一的方法（项目名称也就是 “统一方法”）。
+     *
+     * 到了 1995 年，OOSE的创建者 Ivar Jacobson 也加入了Rational，他的想法（特别是有关“用例” (Use Case) 的概念）被整合于统一方法中，成为“统一建模语言”。Rumbaugh，Booch 和 Jacobson 的团队则被称为“三友”
+     *
+     *
+     * =============uml的优点=========
+     *
+     *
+     *
+     * ============uml类图==========
      * https://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html
      *（带三角的线）
      * 1.实线箭头，(generalization)继承 suv->car（suv继承自car）
