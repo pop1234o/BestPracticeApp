@@ -77,19 +77,49 @@ public class Main {
      *
      *
      * ============uml类图==========
-     * https://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html
-     *（带三角的线）
-     * 1.实线箭头，(generalization)继承 suv->car（suv继承自car）
-     * 2.虚线箭头，(realize)实现，suv--->car 实现的是抽象类或接口
+     * https://www.cnblogs.com/shindo/p/5579191.html （类图讲解）
      *
-     * 3.空心菱形：(aggregation)聚合关系 A-<>B  A是B的一部分 不是强依赖的，B不存在了，A还可以在  （员工-<>部门）
-     * 4.实心菱形：(composition)组合关系 A-</>B  强依赖，B不存在了，A也不存在了（部门-</>公司）
+     * https://design-patterns.readthedocs.io/zh_CN/latest/read_uml.html
+     *（带空心三角的线）
+     * 1.实线箭头，(generalization)继承/泛化 suv->小汽车（suv继承自小汽车）
+     * 2.虚线箭头，(realize)实现，小汽车--->车 实现的是接口 。抽象类应该用继承
+     *
+     * 3.空心菱形：(aggregation)聚合关系 A<-<>B  A是B的一部分 不是强依赖的，B不存在了，A还可以在  （员工-<>部门）
+     * 4.实心菱形：(composition)组合关系 A<-</>B  强依赖，B不存在了，A也不存在了（部门-</>公司）
+     *  有的类图菱形另一侧有箭头
+     * 组合和聚合关系都是(可能)以成员变量的形式存在
+     * 组合的成员变量对象是类内new出来的，聚合的成员变量是构造参数传过来的。
+     *
+     * 雁群<>->大雁  大雁离了雁群还可以存在
+     * 大雁</>->翅膀  翅膀离了大雁就不能单独存在
      *
      * （带箭头的线）
      * 5.实线箭头：关联关系(association) 成员变量 A->B B是A的成员变量，表示A知道B，但 B不知道A；
      * 6.虚线箭头：依赖关系(dependency) 参数 A--->B B是A的构造方法或者普通方法的参数，或者是方法中new出来的参数
      *
      *
+     * 聚合 和 关联的关系类似。
+     *
+     * 关系表示的联系强弱程度：继承>实现>组合>聚合>关联>依赖
+     *
+     * 类名
+     * 属性列表
+     * 方法列表
+     *
+     *  + ：表示public
+     *  - ：表示private
+     *  #：表示protected（friendly也归入这类）
+     *
+     * 示例
+     *  ClassName
+     *  ------
+     *  + attribute1:type = defaultValue
+     *  + attribute2:type
+     *  - attribute3:type
+     *  ------
+     *  + operation1(params):returnType
+     *  - operation2(params)
+     *  - operation3()
      *
      * @param args
      */
