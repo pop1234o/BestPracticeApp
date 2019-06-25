@@ -14,6 +14,9 @@ public class LeetCode_26_RemoveDuplicatesFromSortedArray_Easy {
      * <p>
      * <p>
      * =========思路==============
+     * 两个指针，第一个i遍历数组，第二个currentIndex表示当前不重复的数
+     * 如果遇到于当前不一样的，直接将当前的数换为后面的数即可
+     *
      *
      * <p>
      * =============
@@ -48,6 +51,7 @@ public class LeetCode_26_RemoveDuplicatesFromSortedArray_Easy {
             return 0;
         }
         int currentIndex = 0;
+        //注意这里是从1开始遍历的
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] != nums[currentIndex]) {
                 nums[++currentIndex] = nums[i];

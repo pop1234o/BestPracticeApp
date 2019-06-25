@@ -8,7 +8,7 @@ public class LeetCode_80_RemoveDuplicatesFromSortedArrayII_Medium {
     /**
      * Given a sorted array nums, remove the duplicates in-place such
      * that duplicates appeared at most twice and return the new length.
-     *
+     * <p>
      * Do not allocate extra space for another array,
      * you must do this by modifying the input array in-place with O(1) extra memory.
      * <p>
@@ -22,83 +22,77 @@ public class LeetCode_80_RemoveDuplicatesFromSortedArrayII_Medium {
      * <p>
      * Example 1:
      * Given nums = [1,1,1,2,2,3],
-     *
+     * <p>
      * Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3 respectively.
-     *
+     * <p>
      * It doesn't matter what you leave beyond the returned length.
-     *
-     *
+     * <p>
+     * <p>
      * Example 2:
      * Given nums = [0,0,1,1,1,1,2,3,3],
-     *
+     * <p>
      * Your function should return length = 7, with the first seven elements of nums being modified to 0, 0, 1, 1, 2, 3 and 3 respectively.
-     *
+     * <p>
      * It doesn't matter what values are set beyond the returned length.
      * <p>
      * =========思路==============
      * 双指针遍历
+     * 一个指针遍历数组，一个指针指向当前小于两个的元素
      * <p>
      * <p>
      * <p>
      * =======知识点======
-     * DFS  deep first search 深度优先遍历
+     *
      * <p>
      * =============
      *
      * @param args
      */
     public static void main(String[] args) {
-
-        char[][] board = {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
-        boolean exist = exist(board, "ABCCED");
-        System.out.println("是否存在" + exist);
+//        int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+//        int[] nums = {0, 0, 1, 1, 1, 1, 2, 3, 3};
+        int[] nums = {1, 2};
+        int length = removeDuplicates(nums);
+        for (int i = 0; i < length; i++) {
+            System.out.print(nums[i] + " ");
+        }
 
     }
 
+    public static int removeDuplicates(int[] nums) {
+        if (nums == null) {
+            return 0;
+        }
+        if (nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return 1;
+        }
 
-    public static boolean exist(char[][] board, String word) {
-        //遍历每一个字符
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[0].length; col++) {
-                //从word的第0个单词开始查找
-                if (charExist(row, col, board, word, 0)) {
-                    return true;
-                }
+
+        int currentIndex = 0;
+
+        //当前元素的重复个数
+        int count = 1;
+        //注意这里是从1开始遍历的
+        for (int i = 1; i < nums.length; i++) {
+            //如果不相等，那么直接赋值
+            if (nums[i] != nums[currentIndex]) {
+                nums[++currentIndex] = nums[i];
+                count = 1;
+            } else if (count < 2) {
+                //相等，但是没到两个重复，currentIndex向后
+                //这里要赋值一下
+                nums[++currentIndex] = nums[i];
+                count++;
             }
-        }
+            //相等，而且count为2，那么 i 继续向后遍历，直到遇到一个不相等的为止。
 
-        return false;
+        }
+        return currentIndex + 1;
+
     }
 
-    private static boolean charExist(int row, int col, char[][] board, String word, int i) {
-
-        //i到最后一个了，说明word查找到了，返回true
-        if (i == word.length()) {
-            return true;
-        }
-
-        //查找超出边界了
-        if (row < 0 || col < 0 || row >= board.length || col >= board[0].length) {
-            return false;
-        }
-
-        //不匹配
-        if (board[row][col] != word.charAt(i)) {
-            return false;
-        }
-
-        //不再查找这个单词了，所以置为0，这样就匹配不到了
-        board[row][col] = 0;
-
-        //查找下一个字母是否存在于相邻的点中，上下左右共四个点
-        boolean existNext = charExist(row + 1, col, board, word, i + 1)
-                || charExist(row - 1, col, board, word, i + 1)
-                || charExist(row, col + 1, board, word, i + 1)
-                || charExist(row, col - 1, board, word, i + 1);
-
-        //恢复这个单词
-        board[row][col] = word.charAt(i);
-        return existNext;
-    }
 
 }
