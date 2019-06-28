@@ -3,6 +3,13 @@ package com.liyafeng.practice.question;
 public class Main_Question {
 
     /**
+     * 排除法
+     * 找一个可以工作的逻辑，一点点比较不同，注释掉一部分异常代码，如果可以，那么问题肯定出在被注释的代码中
+     *
+     *
+     * 查看源码法，debug，这个是正向推理
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -414,4 +421,20 @@ public class Main_Question {
      *         at java.lang.Thread.run(Thread.java:764)
      */
     void a22(){}
+
+
+    /**
+     * setMargin突然无效，
+     * jni线程中 更新ui，
+     * ViewRootImpl 中，
+     *   public void invalidateChild(View child, Rect dirty) 有checkThread()方法
+     *
+     *  throw new CalledFromWrongThreadException(
+     * "Only the original thread that created a view hierarchy can touch its views.");
+     *
+     * jni线程中报出异常不崩溃，但是ui渲染器就停止了。
+     *
+     *
+     */
+    void a23(){}
 }
