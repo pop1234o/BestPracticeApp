@@ -219,6 +219,7 @@ public class WebViewActivity extends AppCompatActivity {
         webview.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 //                Toast.makeText(activity, "Oh no! " + description, Toast.LENGTH_SHORT).show();
+                //显示断网界面
             }
 
 

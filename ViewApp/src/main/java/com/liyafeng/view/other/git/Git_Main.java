@@ -338,6 +338,10 @@ public class Git_Main {
      * 然后我们git commit -m"update"，
      * 然后git push 即可
      *
+     * ----------
+     * 我们可以删除.idea下所有文件，但是项目一下就没了，我们需要重新打开ide即可
+     * ----------
+     *
      * 工作区-add->index-commit->local repository -push -> remote repository
      *
      * remote repository =pull=> 工作区
@@ -348,6 +352,7 @@ public class Git_Main {
     void fun6(){
 
     }
+
 
 
     /**
@@ -363,4 +368,11 @@ public class Git_Main {
      *
      */
     void fun7(){}
+
+
+    /**
+     * 解决冲突
+     * 当你拉下代码有冲突的时候，我们解决完冲突，git add filename 就可以标记为已解决了
+     */
+    void fun8(){}
 }
