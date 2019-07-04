@@ -3,6 +3,11 @@ package com.liyafeng.view.other.git;
 public class Git_Main {
 
     /**
+     * gitlab有namespace的概念，
+     * 你登录你的账户在 company的命名空间下创建一个项目，然后再fork到你的命名空间下，当然你要有权限
+     *
+     *
+     * ====================
      * github新建个Repository，然后本地git init 一个仓库
      * 本地添加远程 git remote add origin git@github.com:pop1234o/Algorithm.git
      * git pull orgin
