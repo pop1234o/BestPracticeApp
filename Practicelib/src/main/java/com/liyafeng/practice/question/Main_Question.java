@@ -441,4 +441,11 @@ public class Main_Question {
      *
      */
     void a23(){}
+
+
+    /**
+     * 如果控件在RelativeLayout是居中的，那么padding对他无效，而且会被剪裁
+     * padding top的部分在居中时完全没有用，坑爹了word RelativeLayout
+     */
+    void a24(){}
 }

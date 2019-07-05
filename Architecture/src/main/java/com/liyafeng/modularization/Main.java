@@ -105,6 +105,10 @@ public class Main {
      *         buildConfigField "String", "StartPage", "${StartPage}"
      *         //...
      *     }
+     *
+     *     xxx{
+     *         initWith debug  // initWith允许你把其他type的配置复制过来，可以新增，也可以覆盖
+     *     }
      * }
      *
      * public final class BuildConfig {
