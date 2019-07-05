@@ -153,7 +153,8 @@ public class Camera1_TextureActivity extends AppCompatActivity {
             List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
 //            Camera.Size size = supportedPreviewSizes.get(33);
 
-            //如果textureview的大小比这个大那么就会拉伸
+            //如果textureview的大小比这个比例 大 那么就会拉伸,或者压缩
+            //如果比例一样，会模糊，或者缩小
             parameters.setPreviewSize(640, 480);
             int pixel_format = ImageFormat.NV21;
             parameters.setPreviewFormat(pixel_format);
