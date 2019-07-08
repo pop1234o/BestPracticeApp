@@ -11,18 +11,17 @@ import com.tal.lib_common.app.BaseApplication;
 
 import java.util.Calendar;
 
-public class SensorUtil implements  SensorEventListener {
+public class SensorUtil implements SensorEventListener {
 
     public static final String TAG = "SensorControler";
     private SensorManager mSensorManager;
     private Sensor mSensor;
 
-    private int mX, mY, mZ;
+    private float mX, mY, mZ;
     private long lastStaticStamp = 0;
 //    Calendar mCalendar;
 
     boolean isFocusing = false;
-    boolean canFocusIn = false;  //内部是否能够对焦控制机制
     boolean canFocus = false;
 
     public static final int DELEY_DURATION = 200;
@@ -60,7 +59,7 @@ public class SensorUtil implements  SensorEventListener {
         restParams();
         canFocus = true;
         mSensorManager.registerListener(this, mSensor,
-                SensorManager.SENSOR_DELAY_NORMAL);
+                SensorManager.SENSOR_DELAY_UI);
     }
 
     public void onStop() {
@@ -84,63 +83,60 @@ public class SensorUtil implements  SensorEventListener {
             restParams();
             return;
         }
+//        Log.i(TAG,"检测手机"+event.sensor.getType());
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            int x = (int) event.values[0];
-            int y = (int) event.values[1];
-            int z = (int) event.values[2];
+            float x =  event.values[0];
+            float y =  event.values[1];
+            float z =  event.values[2];
             long stamp = System.currentTimeMillis();
 
 
             if (STATUE != STATUS_NONE) {
-                int px = Math.abs(mX - x);
-                int py = Math.abs(mY - y);
-                int pz = Math.abs(mZ - z);
+                float px = Math.abs(mX - x);
+                float py = Math.abs(mY - y);
+                float pz = Math.abs(mZ - z);
 //                Log.d(TAG, "pX:" + px + "  pY:" + py + "  pZ:" + pz + "    stamp:"
 //                        + stamp + "  second:" + second);
                 double value = Math.sqrt(px * px + py * py + pz * pz);
-                if (value > 0.7) {
+                if (value > 0.6) {
 //                    textviewF.setText("检测手机在移动..");
-//                    Log.i(TAG,"检测手机在移动"+value);
+                    Log.i(TAG, "检测手机在移动" + value);
                     STATUE = STATUS_MOVE;
+
+                    mX = x;
+                    mY = y;
+                    mZ = z;
                 } else {
+//                    Log.i(TAG, "检测静止" + value + " " + STATUE);
 //                    textviewF.setText("检测手机静止..");
 //                    Log.i(TAG,"mobile static");
                     //上一次状态是move，记录静态时间点
-                    if (STATUE == STATUS_MOVE) {
-                        lastStaticStamp = stamp;
-                        canFocusIn = true;
-                    }
 
-                    if (canFocusIn) {
-                        if (stamp - lastStaticStamp > DELEY_DURATION) {
+                    if (STATUE == STATUS_MOVE) {
+//                        if (stamp - lastStaticStamp > DELEY_DURATION) {
+                            lastStaticStamp = stamp;
                             //移动后静止一段时间，可以发生对焦行为
                             if (!isFocusing) {
-                                canFocusIn = false;
-//                                Log.i(TAG,"检测手机静止");
+                                Log.i(TAG, "检测手机静止========");
                                 if (mCameraFocusListener != null) {
                                     mCameraFocusListener.onFocus();
                                 }
                             }
-                        }
+//                        }
+                        STATUE = STATUS_STATIC;
                     }
 
-                    STATUE = STATUS_STATIC;
                 }
             } else {
-                lastStaticStamp = stamp;
                 STATUE = STATUS_STATIC;
             }
 
-            mX = x;
-            mY = y;
-            mZ = z;
         }
     }
 
     private void restParams() {
         STATUE = STATUS_NONE;
-        canFocusIn = false;
         mX = 0;
         mY = 0;
         mZ = 0;
