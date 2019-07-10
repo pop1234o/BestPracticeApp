@@ -725,6 +725,7 @@ public class Util {
         // Thanks http://www.pocketmagic.net/?p=1662!
         // Try not to use DISPLAY, HOST or ID - these items could change.
         // If there are collisions, there will be overlapping data
+        //Build.CPU_ABI 这个不靠谱，代表App支持的abi，有可能会变，所以要把这个去掉
         String m_szDevIDShort = "35" + (Build.BOARD.length() % 10) + (Build.BRAND.length() % 10) + (Build.CPU_ABI.length() % 10) + (Build.DEVICE.length() % 10) + (Build.MANUFACTURER.length() % 10) + (Build.MODEL.length() % 10) + (Build.PRODUCT.length() % 10);
 
         // Thanks to @Roman SL!
