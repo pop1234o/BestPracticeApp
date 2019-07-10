@@ -71,8 +71,8 @@ package com.liyafeng.network;
  * connect 保留将来使用
  * ------------------请求头---------------
  * https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Connection （请求头讲解）
- *
- *
+ * <p>
+ * <p>
  * Host: www.example.com（没有端口号默认是80）
  * User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)     客户端信息
  * Cache-Control:no-cache;no-store;max-age=60;max-stale=60;min-fresh=60;only-if-cached   缓存控制
@@ -280,9 +280,9 @@ public class HttpProtocol {
 
     /**
      * http 文件上传（注意文件上传）
-     *
+     * <p>
      * http格式：
-     *
+     * <p>
      * POST http://test2.aibrandy.com/api-manager/upload/uploadFile http/1.1
      * Content-Type: multipart/form-data; boundary=be5b4fe6-a570-49e4-9380-4515cdf87483
      * Content-Length: 564772
@@ -298,15 +298,14 @@ public class HttpProtocol {
      * 【换行】
      * value
      * --be5b4fe6-a570-49e4-9380-4515cdf87483--
-     *
-     *
-     *
-     *
+     * <p>
+     * <p>
+     * <p>
+     * <p>
      * ======================
-     *
-     *
      */
-    void a1(){}
+    void a1() {
+    }
 
 
     /**
@@ -316,26 +315,201 @@ public class HttpProtocol {
      * Content-Length: 21
      * [这里需要有个换行]
      * key=value&testKey=testValue
-     *
-     *
+     * <p>
+     * <p>
      * 我们看到这种格式就不好是文件上传了
-     *
-     *
      */
-    void a2(){}
+    void a2() {
+    }
 
 
     /**
      * http connection 请求头
-     *     在http1.1中，client和server都是默认对方支持长链接的， 如果client使用http1.1协议，
-     *     但又不希望使用长链接，则需要在header中指明connection的值为close；如果server方也不想支持长链接，
-     *     则在response中也需要明确说明connection的值为close.
-     *     不论request还是response的header中包含了值为close的connection，都表明当前正在使用的tcp链接在请求处理完毕后会被断掉。
-     *     以后client再进行新的请求时就必须创建新的tcp链接了
-     *     。 HTTP Connection的 close设置允许客户端或服务器中任何一方关闭底层的连接双方都会要求在处理请求后关闭它们的TCP连接。
+     * 在http1.1中，client和server都是默认对方支持长链接的， 如果client使用http1.1协议，
+     * 但又不希望使用长链接，则需要在header中指明connection的值为close；如果server方也不想支持长链接，
+     * 则在response中也需要明确说明connection的值为close.
+     * 不论request还是response的header中包含了值为close的connection，都表明当前正在使用的tcp链接在请求处理完毕后会被断掉。
+     * 以后client再进行新的请求时就必须创建新的tcp链接了
+     * 。 HTTP Connection的 close设置允许客户端或服务器中任何一方关闭底层的连接双方都会要求在处理请求后关闭它们的TCP连接。
      */
-    void a3(){}
+    void a3() {
+    }
 
+
+    /**
+     * ===========AES加密 高级加密标准(AES,Advanced Encryption Standard) ==============
+     * https://zhuanlan.zhihu.com/p/45155135
+     * <p>
+     * <p>
+     * <p>
+     * 为最常见的对称加密算法(微信小程序加密传输就是用这个加密算法的)。对称加密算法也就是加密和解密用相同的密钥，具体的加密流程如下图：
+     * <p>
+     * 明文+秘钥=》加密函数=》密文 ---网络传输 --- =》密文+秘钥=》解密函数 =》明文
+     * <p>
+     * 是美国联邦政府采用的一种区块加密标准。这个标准用来替代原先的DES
+     * <p>
+     * 算法    秘钥长度  分数长度    加密轮数
+     * AES-128	4	    4	        10   性能最高，因为加密轮数最少
+     * AES-192	6	    4	        12
+     * AES-256	8	    4	        14   安全最高
+     * <p>
+     * 128代表秘钥的长度是128位，8位1个字节，所以长度就是4个字节
+     * <p>
+     * <p>
+     * AES的分组加密特性。
+     * AES算法在对明文加密的时候，并不是把整个明文一股脑加密成一整段密文，而是把明文拆分成一个个独立的明文块，每一个明文块长度128bit。
+     * 这些明文块经过AES加密器的复杂处理，生成一个个独立的密文块，这些密文块拼接在一起，就是最终的AES加密结果。
+     * <p>
+     * <p>
+     * 总明文分成一个个128位（16字节）的明文
+     * 【128位的明文】...【128位的明文】
+     * =》秘钥+加密器
+     * 【128位的密文】...【128位的密文】
+     * <p>
+     * 但是这里涉及到一个问题：
+     * 假如一段明文长度是192bit，如果按每128bit一个明文块来拆分的话，第二个明文块只有64bit，
+     * 不足128bit。这时候怎么办呢？就需要对明文块进行填充（Padding）。
+     * <p>
+     * NoPadding： 不做任何填充，但是要求明文必须是16字节的整数倍。
+     * <p>
+     * PKCS5Padding（默认）： 如果明文块少于16个字节（128bit），在明文块末尾补足相应数量的字符，且每个字节的值等于缺少的字符数。
+     * 比如明文：{1,2,3,4,5,a,b,c,d,e},缺少6个字节，则补全为{1,2,3,4,5,a,b,c,d,e,6,6,6,6,6,6}
+     * <p>
+     * ISO10126Padding： 如果明文块少于16个字节（128bit），在明文块末尾补足相应数量的字节，最后一个字符值等于缺少的字符数，其他字符填充随机数。
+     * 比如明文：{1,2,3,4,5,a,b,c,d,e},缺少6个字节，则可能补全为{1,2,3,4,5,a,b,c,d,e,5,c,3,G,$,6}
+     * <p>
+     * PKCS7Padding : PKCS5Padding 是他的子集，用
+     * <p>
+     * -------PKCS7Padding 与 PKCS5Padding区别---------------
+     * https://crypto.stackexchange.com/questions/9043/what-is-the-difference-between-pkcs5-padding-and-pkcs7-padding
+     * https://stackmirror.com/questions/29232705
+     * <p>
+     * PKCS#5 padding is defined for 8-byte block sizes,
+     * PKCS#7 padding would work for any block size from 1 to 255 bytes.
+     * <p>
+     * -------------
+     * java中用 PKCS7Padding
+     * PKCS5 padding is not valid for AES, but Java still provides it which means
+     * that Java is lying and is actually using PKCS7 padding in which case PKCS5Padding and PKCS7Padding
+     * are the same for all intends and purposes
+     * <p>
+     * PKCS5对于AES算法无效，但java仍然使用它，说明java在说谎，实际上java用的是PKCS7填充方式
+     * <p>
+     * <p>
+     * 用什么填充加密的，就得用什么填充解密，因为这样程序才能知道哪些是填充要去掉
+     * -------------------
+     * .模式  明文变为密文的处理方式
+     * AES的工作模式，体现在把明文块加密成密文块的处理过程中。AES加密算法提供了五种不同的工作模式：
+     * ECB、CBC、CTR、CFB、OFB
+     * 模式之间的主题思想是近似的，在处理细节上有一些差别。我们这一期只介绍各个模式的基本定义。
+     * ECB模式（默认）：
+     * 电码本模式 Electronic Codebook Book
+     * CBC模式：
+     * 密码分组链接模式 Cipher Block Chaining
+     * CTR模式：
+     * 计算器模式 Counter
+     * CFB模式：
+     * 密码反馈模式 Cipher FeedBack
+     * OFB模式：
+     * 输出反馈模式 Output FeedBack
+     * <p>
+     * ---------------------
+     * AES/CBC/PKCS7Padding
+     * 加密算法 /模式/填充方式
+     * <p>
+     * <p>
+     * 在这里我们重新梳理一下：
+     * 1.把明文按照128bit拆分成若干个明文块。
+     * 2.按照选择的填充方式来填充最后一个明文块。
+     * 3.每一个明文块利用AES加密器和密钥，加密成密文块。
+     * 4.拼接所有的密文块，成为最终的密文结果。
+     * <p>
+     * --------------------
+     * CBC模式（Cipher Block Chaining）引入了一个新的概念
+     * 初始向量IV（Initialization Vector）。
+     * IV是做什么用的呢？它的作用和MD5的“加盐”有些类似，目的是防止同样的明文块始终加密成同样的密文块。
+     * CBC模式在每一个明文块加密前会让明文块和一个值先做异或操作。IV作为初始化变量，参与第一个明文块的异或，后续的每一个明文块和它前一个明文块所加密出的密文块相异或。
+     * 这样以来，相同的明文块加密出的密文块显然是不一样的。
+     * CBC模式的好处是什么呢？
+     * 安全性更高
+     * 坏处也很明显：
+     * 1.无法并行计算，性能上不如ECB
+     * 2.引入初始化向量IV，增加复杂度。
+     */
+    void a4() {
+    }
+
+
+    public static String encrypt(String plainText) {
+        try {
+
+            StringBuilder builder = new StringBuilder("12345678123456781234567812345678");
+
+
+            // 创建AES秘钥
+            SecretKeySpec key = new SecretKeySpec(builder.toString().getBytes(), "AES");
+
+            //获得加密器
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+            IvParameterSpec ivParameterSpec = new IvParameterSpec("1234567812345678".getBytes());
+            // 初始化加密器
+            cipher.init(Cipher.ENCRYPT_MODE, key, ivParameterSpec);
+
+            //明文进行加密
+            byte[] result = cipher.doFinal(plainText.getBytes());
+            byte[] encode = Base64.encode(result, Base64.DEFAULT);
+            return new String(encode);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+
+        return plainText;
+    }
+
+    /**
+     * 解密
+     *
+     * @param content
+     * @return
+     */
+    public static String decrypt(String content) {
+        try {
+            StringBuilder builder = new StringBuilder("12345678123456781234567812345678");
+
+
+            // 创建AES秘钥
+            SecretKeySpec key = new SecretKeySpec(builder.toString().getBytes(), "AES");
+
+            Cipher cipherDecrypt = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+            IvParameterSpec ivParameterSpec = new IvParameterSpec("1234567812345678".getBytes());
+
+            cipherDecrypt.init(Cipher.DECRYPT_MODE, key, ivParameterSpec);
+
+            byte[] doFinal = cipherDecrypt.doFinal(Base64.decode(content, Base64.DEFAULT));
+            return new String(doFinal);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
 }
 
 /**
@@ -458,9 +632,21 @@ public class HttpProtocol {
  * 而数字证书的作用是验证服务端发来的公钥是可靠的
  * <p>
  * <p>
- * =====================为什么内容用对称加密=================
+ * =====================为什么内容用对称加密  =================
  * 因为非对称加密是很消耗性能，所以我们用对称加密，但是让服务端知道随机密码的过程也不安全
  * 所以这个可以用非对称加密
+ * <p>
+ * ==============对称加密和非对称加密的区别===========
+ * 对称加密算法
+ * 加密和解密用到的密钥是相同的，这种加密方式加密速度非常快，适合经常发送数据的场合。缺点是密钥的传输比较麻烦。
+ * 因为秘钥传输中有可能被泄漏
+ * <p>
+ * 非对称加密算法
+ * 加密和解密用的密钥是不同的，这种加密方式是用数学上的难解问题构造的，通常加密解密的速度比较慢，适合偶尔发送数据的场合。
+ * 优点是密钥传输方便。常见的非对称加密算法为RSA、ECC和EIGamal。
+ * <p>
+ * 实际中，一般是通过RSA加密AES的密钥，传输到接收方，接收方解密得到AES密钥，然后发送方和接收方用AES密钥来通信。
+ * 这样保证了秘钥的安全性，也保证了加密速度
  * <p>
  * =================HTTPS一般使用的加密算法和HASH算法===============
  * <p>

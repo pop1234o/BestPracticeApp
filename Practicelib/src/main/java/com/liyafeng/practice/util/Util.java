@@ -590,7 +590,7 @@ public class Util {
             // 创建AES秘钥
             SecretKeySpec key = new SecretKeySpec(builder.toString().getBytes(), "AES");
 
-
+            //获得加密器
             Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
             // 初始化加密器
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -601,7 +601,7 @@ public class Util {
                 builder_content.append('\0');
             }
 
-
+            //明文进行加密
             byte[] result = cipher.doFinal(builder_content.toString().getBytes());
             byte[] encode = Base64.encode(result, DEFAULT);
             return new String(encode);
