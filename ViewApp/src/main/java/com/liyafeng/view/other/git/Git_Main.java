@@ -6,6 +6,16 @@ public class Git_Main {
      * gitlab有namespace的概念，
      * 你登录你的账户在 company的命名空间下创建一个项目，然后再fork到你的命名空间下，当然你要有权限
      *
+     * =========git work flow========
+     * workspace -> index -> local repository -> remote repository
+     *
+     *
+     * =======git add =======
+     * 三者的区别
+     * git add -A stages all changes
+     * git add . stages new files and modifications, without deletions
+     * git add -u stages modifications and deletions, without new files
+     *
      *
      * ====================
      * github新建个Repository，然后本地git init 一个仓库
@@ -212,17 +222,7 @@ public class Git_Main {
      * <p>
      * <p>
      * <p>
-     * ===================版本回退==============
-     * git log查看commit的sha1值，就是commit的id
-     * 然后git reset --hard [commitid]
-     * 就回退到那个版本了
-     * <p>
-     * --hard
-     * Resets the index and working tree. Any changes to tracked files
-     * in the working tree since <commit> are discarded.
-     * <p>
-     * git reflog 查看未来版本的commit
-     * 然后同样的命令来前进
+     *
      */
     void a1() {
     }
@@ -305,6 +305,18 @@ public class Git_Main {
      * git reset --hard <commit_id>   workspace 、index、Head都会重置，
      * //这样我们的commit流中就没有那个commit了，但是我们git数据库中还有
      * //git reflog 查看每一次命令，找到那个commitid，reset到那即可
+     *  ===================版本回退==============
+     *  git log查看commit的sha1值，就是commit的id
+     *  然后git reset --hard [commitid]
+     *  就回退到那个版本了
+     *  <p>
+     *  --hard
+     *  Resets the index and working tree. Any changes to tracked files
+     *  in the working tree since <commit> are discarded.
+     *  <p>
+     *  git reflog 查看未来版本的commit
+     *   然后同样的命令来前进
+     *
      */
     void fun4() {
     }
