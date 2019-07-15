@@ -35,6 +35,20 @@ public class EditText_Main {
      * * </shape>
      * *
      *
+     * ===============自定义下划线颜色============
+     * https://segmentfault.com/a/1190000009507919
+     * 让这个Activity用这个主题即可
+     * <style name="MyEditText" parent="Theme.AppCompat.Light">
+     *         <item name="colorControlNormal">@android:color/darker_gray</item>
+     *         <item name="colorControlActivated">@android:color/holo_orange_dark</item>
+     *     </style>
+     * colorControlNormal 表示控件默认的颜色，colorControlActivated 表示控件被激活时的颜色，这样，我们就可以分别设置EditText不被选中和选中时的颜色了。这里我将选中的颜色设为橙色。
+     *
+     * 下划线和光标的颜色都一样
+     *
+     * 如果只想改光标，那么可以下划线还用background，这样下划线就能自定义了
+     *
+     *
      * @param args
      */
 
