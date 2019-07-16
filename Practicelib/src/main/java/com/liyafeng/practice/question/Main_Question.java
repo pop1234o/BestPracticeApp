@@ -469,4 +469,19 @@ public class Main_Question {
      *
      */
     void a25(){}
+
+
+    /**
+     * 2019-7-16
+     *
+     * 今天用retrofit写获取验证码的接口，post请求，然后回调onError
+     * 查看错误
+     * java.lang.ClassCastException: okhttp3.RequestBody$2 cannot be cast to okhttp3.FormBody
+     * 这是什么鬼。。。
+     * 网上查也没有。。。
+     * 还以为自己post写错了。。
+     * 后来e.printStackTrace()才发现是自己的拦截器里报的异常。。醉了
+     *
+     */
+    void a26(){}
 }

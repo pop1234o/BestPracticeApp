@@ -185,6 +185,29 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    /**
+     * 如果直接style设置为空的，
+     * 而且window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+     * 这样就是全屏的dialog，而且背景是白色的
+     *
+     * 注意，show一定要在前调用
+     *   window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+     *
+     * 如果要设置背景是半透明黑色
+     *   <item name="android:windowBackground">@color/transparent</item>
+     *         <item name="android:windowFrame">@null</item>
+     *         <item name="android:windowNoTitle">true</item>
+     *         <item name="android:windowIsFloating">true</item>
+     *         <item name="android:windowIsTranslucent">true</item>
+     *         <item name="android:windowAnimationStyle">@style/Animation_Translucent</item>
+     *
+     *    如果背景完全透明
+     *
+     * 去掉 <item name="android:windowIsFloating">true</item>
+     *
+     *
+     *
+     */
     class CustomDialog extends android.app.Dialog {
 
         public CustomDialog(@NonNull Context context) {
