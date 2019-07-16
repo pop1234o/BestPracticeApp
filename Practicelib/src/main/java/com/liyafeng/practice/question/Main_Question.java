@@ -3,7 +3,7 @@ package com.liyafeng.practice.question;
 public class Main_Question {
 
     /**
-     * 排除法
+     * 比较排除法
      * 找一个可以工作的逻辑，一点点比较不同，注释掉一部分异常代码，如果可以，那么问题肯定出在被注释的代码中
      *
      * 时间点判断法
@@ -448,4 +448,25 @@ public class Main_Question {
      * padding top的部分在居中时完全没有用，坑爹了word RelativeLayout
      */
     void a24(){}
+
+
+    /**
+     * ARouter::ARouter init logistics center exception
+     * 在我将一个有@Route 的Activity移动到新的module的时候，在ARouter.init的时候崩溃
+     * 之前是好的，看新module配置也没问题，而且我主App也还没依赖那个module
+     * 网上搜，都不是一个问题。。。
+     * 没办法，只能一点点比较排除了，先新建module，没问题，一点点添加逻辑，都没问题，
+     * 最后删除主App中的 有@Route 的Activity 时候就有问题了。。。
+     * 所以这是什么鬼。。
+     * 最后删除App，手动删除build下的文件，重装，搞定！ 原来是有缓存
+     *
+     * 期间还看了Arouter源码，看源码理解为什么崩溃是有效的。。。但是成本太高
+     * 你都读懂需要很长时间，而且你还不一定短时间能读懂。。。
+     * 这个问题搞了一个下午。。
+     *
+     * 还有
+     * dont matched 问题，也是要清空缓存
+     *
+     */
+    void a25(){}
 }
