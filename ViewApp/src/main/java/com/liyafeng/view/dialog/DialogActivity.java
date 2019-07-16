@@ -89,6 +89,15 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
      * Theme.AppCompat.Light.DarkActionBar
      * 否则会报异常，
      *
+     * 使用方法
+     * https://developer.android.google.cn/reference/android/support/v7/app/AlertDialog
+     *
+     * A subclass of Dialog that can display one, two or three buttons. If you only want to display a String in this dialog box, use the setMessage() method. If you want to display a more complex view, look up the FrameLayout called "custom" and add your view to it:
+     *
+     *  FrameLayout fl = findViewById(android.R.id.custom);
+     *  fl.addView(myView, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
