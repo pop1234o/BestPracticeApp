@@ -110,4 +110,12 @@
         <item name="android:textColor">#000</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+
+    <!--这是<item name="android:windowAnimationStyle">@style/Animation_Bottom</item> 只有这样才能控制进入退出动画否则无效-->
+    <style name="Animation_Bottom">
+        <item name="android:windowEnterAnimation">@anim/activity_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/activity_bottom_out</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_alpha_out</item>
+    </style>
 </resources>
