@@ -484,4 +484,25 @@ public class Main_Question {
      *
      */
     void a26(){}
+
+
+    /**
+     * 为了加快冷启动速度，所以设置splash为透明
+     * Only fullscreen opaque activities can request orientation
+     * https://blog.csdn.net/starry_eve/article/details/82777160
+     *
+     * 安卓8.0版本时为了支持全面屏，增加了一个限制：如果是透明的Activity，则不能固定它的方向，因为它的方向其实是依赖其父Activity的（因为透明）。然而这个bug只有在8.0中有，8.1中已经修复。具体crash有两种：
+     * 1.Activity的风格为透明，在manifest文件中指定了一个方向，则在onCreate中crash
+     * 2.Activity的风格为透明，如果调用setRequestedOrientation方法固定方向，则crash
+     *
+     *
+     * 解决方法为：
+     * MainActivity设置android:windowIsTranslucent=false，然后指定屏幕方向，而其他activity则可使用android:windowIsTranslucent=true，然后设置android:screenOrientation=”behind”，这样就可以保持屏幕方向统一了。
+     * ---------------------
+     * 作者：Samlss
+     * 来源：CSDN
+     * 原文：https://blog.csdn.net/Samlss/article/details/80791042
+     * 版权声明：本文为博主原创文章，转载请附上博文链接！
+     */
+    void a27(){}
 }
