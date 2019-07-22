@@ -20,41 +20,41 @@ public class MainActivity extends AppCompatActivity {
      * http://stormzhang.com/opensource/2016/06/26/android-open-source-project-recommend1/
      * 图片加载框架
      * 这个必须要加网络请求权限
-     * ====================================
+     * ==================Picasso==================
      * Picasso Square公司创造 A powerful image downloading and caching library for Android
      * http://square.github.io/picasso/
      * <p>
-     * ======================================
+     * ====================Glide==================
      * Glide google员工写的 一个快速高效的Android图片加载库，注重于平滑的滚动。
      * https://muyangmin.github.io/glide-docs-cn/
      * =========================================
      * Fresco  Facebook出品，主要将bitmap存入native堆中，不受jvm控制，减少OOM
      * https://www.fresco-cn.org/docs/index.html
-     *
-     * =============圆角图片边缘被拉伸的问题================
+     * <p>
+     * =============fresco 圆角图片边缘被拉伸的问题================
      * https://www.fresco-cn.org/docs/rounded-corners-and-circles.html
      * 当图片尺寸小于view控件的时候，而且设置了圆角，图片边缘会被拉伸
-     *
+     * <p>
      * 当使用BITMAP_ONLY（默认）模式时的限制：
-     *
+     * <p>
      * 并非所有的图片分支部分都可以实现圆角，目前只有占位图片和实际图片可以实现圆角，我们正在努力为背景图片实现圆角功能。
      * 只有BitmapDrawable 和 ColorDrawable类的图片可以实现圆角。我们目前不支持包括NinePatchDrawable和 ShapeDrawable在内的其他类型图片。（无论他们是在XML或是程序中声明的）
      * 动画不能被圆角。
      * 由于Android的BitmapShader的限制，当一个图片不能覆盖全部的View的时候，边缘部分会被重复显示，而非留白。对这种情况可以使用不同的缩放类型（比如centerCrop）来保证图片覆盖了全部的View。
-     *
+     * <p>
      * OVERLAY_COLOR模式没有上述限制，但由于这个模式使用在图片上覆盖一个纯色图层的方式来模拟圆角效果，因此只有在图标背景是静止的并且与图层同色的情况下才能获得较好的效果。
-     *
+     * <p>
      * <com.tal.brandy.view.BGImageView
-     *                         android:layout_width="match_parent"
-     *                         android:layout_height="match_parent"
-     *                         app:actualImageScaleType="centerCrop"
-     *                         app:placeholderImage="@color/colorGray"
-     *                         app:placeholderImageScaleType="centerCrop"
-     *                         app:roundedCornerRadius="5dp"
-     *                         app:roundWithOverlayColor="#fff"  用OVERLAY_COLOR解决图片过小拉伸问题，这个颜色可以是背景色
-     *                    />
-     *
-     *
+     * android:layout_width="match_parent"
+     * android:layout_height="match_parent"
+     * app:actualImageScaleType="centerCrop"
+     * app:placeholderImage="@color/colorGray"
+     * app:placeholderImageScaleType="centerCrop"
+     * app:roundedCornerRadius="5dp"
+     * app:roundWithOverlayColor="#fff"  用OVERLAY_COLOR解决图片过小拉伸问题，这个颜色可以是背景色
+     * />
+     * <p>
+     * <p>
      * ============= fresco native heap一直申请内存的问题=======
      * 因为你的url返回null，导致fresco一直重试请求，导致native heap一直暴涨
      *
@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
      * 4.可以传入Activity或者Fragment，他们onPause的时候可以停止加载，onResume的时候继续加载
      * 缺点：Glide如果要配置占位图等比较麻烦，如果要简单就要配置注解分析器，生成GlideApp代码
      * <p>
+     * <p>
      * ==============================glide源码分析========================
      * https://juejin.im/entry/586766331b69e60063d889ea（文章写得很好）
      * Glide借鉴了Picasso的思路，解耦更彻底，但是构成的逻辑更复杂
@@ -226,11 +227,29 @@ public class MainActivity extends AppCompatActivity {
 
         //调用这个需要在Application添加注解，而且要依赖额外的注解处理的库
 //        GlideApp.with(this).load(url).placeholder(R.mipmap.ic_launcher).into(imageView);
+
+
+        //加载圆形图片
+//        RequestOptions mRequestOptions = RequestOptions.circleCropTransform()
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)//不做磁盘缓存
+//                .skipMemoryCache(true);//不做内存缓存
+//
+//        Glide.with(mContext).load(userInfo.getImage()).apply(mRequestOptions).into(mUserIcon);
+
+
+        //圆角图片
+        //设置图片圆角角度
+//        RoundedCorners roundedCorners= new RoundedCorners(6);
+////通过RequestOptions扩展功能,override:采样率,因为ImageView就这么大,可以压缩图片,降低内存消耗
+//        RequestOptions options=RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
+//
+//        Glide.with(context).load(files.getFilePath()).apply(options).into(mUserPhoto);
+
     }
 
 
     /**
-     * ================================
+     * ==============fresco==================
      * 源码解析：https://www.jianshu.com/p/265c628a0d59
      * <p>
      * https://www.fresco-cn.org
@@ -282,7 +301,6 @@ public class MainActivity extends AppCompatActivity {
          .setOldController(getController())
          .build();
          setController(controller);
-
          * */
 
 
@@ -292,12 +310,18 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      *  类型	        SCHEME	                    示例
-     远程图片	http://, https://	            HttpURLConnection 或者参考 使用其他网络加载方案
-     本地文件	file://	                        FileInputStream
-     Content provider	content://	            ContentResolver
-     asset目录下的资源	asset://	            AssetManager
-     res目录下的资源	res://	                    Resources.openRawResource
-     Uri中指定图片数据	data:mime/type;base64,	数据类型必须符合 rfc2397规定 (仅支持 UTF-8)
+     * 远程图片	http://, https://	            HttpURLConnection 或者参考 使用其他网络加载方案
+     * 本地文件	file://	                        FileInputStream
+     * Content provider	content://	            ContentResolver
+     * asset目录下的资源	asset://	            AssetManager
+     * res目录下的资源	res://	                    Resources.openRawResource
+     * Uri中指定图片数据	data:mime/type;base64,	数据类型必须符合 rfc2397规定 (仅支持 UTF-8)
      *
+     * Uri.parse("android.resource://your.package.here/drawable/image_name")
+     * 或者
+     * Uri uri =  Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+     * 					    + r.getResourcePackageName(R.drawable.vod_image_default) + "/"
+     * 					    + r.getResourceTypeName(R.drawable.vod_image_default) + "/"
+     * 					    + r.getResourceEntryName(R.drawable.vod_image_default));
      * */
 }
