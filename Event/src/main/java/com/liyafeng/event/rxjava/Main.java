@@ -27,6 +27,12 @@ public class Main {
      * io.reactivex.Single: a flow of exactly 1 item or an error,
      * io.reactivex.Completable: a flow without items but only a completion or error signal,
      * io.reactivex.Maybe: a flow with no items, exactly one item or an error.
+     * ================如何学习rxjava================
+     * https://mcxiaoke.gitbooks.io/rxdocs/content/
+     * 我们最好先理解 被观察者 向 观察者发送事件的原理
+     * 然后学习操作符，操作符很多，我们最好看图来记
+     * 时间线，事件，error等
+     *
      * <p>
      * ============================为什么要用rxjava=========================
      * 从我们传统的imperative（命令） 编程转化为 reactive（响应式） 编程
