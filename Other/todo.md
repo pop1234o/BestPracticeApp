@@ -37,7 +37,7 @@
   Android源码分析的博客，中国Android源码分析鼻祖
 
 * http://www.ruanyifeng.com/blog/archives.html
-  阮一峰，博士，2008 年 6 月毕业于上海财经大学世界经济专业
+  阮一峰，70后，经济学博士，2008 年 6 月毕业于上海财经大学世界经济专业
   擅长前端技术，JS教程，计算机基础教程，很有价值
 
 * http://maoao530.github.io/
