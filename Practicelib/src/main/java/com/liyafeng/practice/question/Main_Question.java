@@ -505,4 +505,14 @@ public class Main_Question {
      * 版权声明：本文为博主原创文章，转载请附上博文链接！
      */
     void a27(){}
+
+
+    /**
+     * Gradle's dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)
+     *
+     * gradle版本要和配置版本一致，而且要和studio版本对应
+     *
+     *
+     */
+    void a28(){}
 }

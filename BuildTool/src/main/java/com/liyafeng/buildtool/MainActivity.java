@@ -304,6 +304,11 @@ public class MainActivity extends Activity {
      * 3.4.0+	        5.1.1+
      * <p>
      *
+     * classpath 'com.android.tools.build:gradle:3.4.0'
+     *
+     * gradle-wrapper.properties
+     * distributionUrl=https\://services.gradle.org/distributions/gradle-5.1.1-all.zip
+     *
      * ===========Android gradle插件版本和 build tools版本对应 ====================
      * To suppress this warning, remove "buildToolsVersion '27.0.2'" from your build.gradle file,
      * as each version of the Android Gradle Plugin now has a default version of the build tools.
