@@ -1986,7 +1986,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
-     * lambda表达式
+     * lambda表达式 lambda是java8c出来的，其实就是简化函数定义，函数也可以作为参数传递
      * http://www.runoob.com/java/java8-lambda-expressions.html
      * http://www.importnew.com/16436.html (很详细的例子)
      */
@@ -2024,6 +2024,9 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     }
 
+    /**
+     * lambda表达式
+     */
     private void filter(ArrayList<String> list, Predicate<String> condition) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
