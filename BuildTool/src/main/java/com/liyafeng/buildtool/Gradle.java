@@ -14,10 +14,10 @@ public class Gradle {
      * 版权声明：本文为博主原创文章，转载请附上博文链接！
      *
      *
-     * =========api和implement区别==========
+     * =========api 和 implementation 区别==========
      * api和implement区别
      * api完全等于compile，implement依赖的包只能在本模块中引用到
-     * 而api可以
+     * 而api可以任何模块中使用
      *
      * @param args
      */
