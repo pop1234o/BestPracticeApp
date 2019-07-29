@@ -10,10 +10,21 @@ https://www.teambition.com
 https://tower.im
 管理项目任务 共享文档文件，撰写团队周报，提高团队协作效率
 
+### confluence
+https://www.atlassian.com/zh/software/confluence
+文档协作工具，加入你项目所在的空间
+一般吧团队的产品文档，技术文档，项目日历啥的都放到这
+
+
+### 石墨文档
+
 
 ### bugtags
 https://www.bugtags.cn/
 bug管理，崩溃管理
+
+
+
 
 
 
