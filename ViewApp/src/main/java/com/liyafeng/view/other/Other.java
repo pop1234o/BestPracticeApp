@@ -325,14 +325,14 @@ public class Other {
      * STREAM_RING 铃声音量
      * STREAM_MUSIC 媒体音量
      * STREAM_ALARM 闹钟音量
-     *
+     * <p>
      * pad
      * STREAM_NOTIFICATION 通知音量
      * STREAM_MUSIC 媒体音量
      * STREAM_ALARM 闹钟音量
      * 如果页面有通话类型的音频流 那么也有 STREAM_VOICE_CALL
-     *
-     *
+     * <p>
+     * <p>
      * /** Used to identify the volume of audio streams for phone calls *
      * <p>
      * public static final int STREAM_VOICE_CALL = AudioSystem.STREAM_VOICE_CALL;
@@ -358,42 +358,65 @@ public class Other {
     /**
      * https://segmentfault.com/a/1190000002590577
      * <application
-     *         android:allowBackup="true">
-     *         </application>
+     * android:allowBackup="true">
+     * </application>
      * 这个属性默认为true，允许通过adb backup 备份数据（不root的情况下）
      * adb restore 来恢复数据，比如我们登录了一个app，备份了数据
      * 在另一个手机上恢复数据，这样就直接是登录状态了
-     *
      */
-    void a15(){}
+    void a15() {
+    }
 
 
     /**
      * ==========语义化版本 Semantic Versioning ==============
      * https://semver.org/
      * 这个是版本号管理的一套规范
-     *
+     * <p>
      * 版本格式：主版本号.次版本号.修订号，版本号递增规则如下：
-     *
+     * <p>
      * 主版本号：当你做了不兼容的 API 修改，
      * 次版本号：当你做了向下兼容的功能性新增，
      * 修订号：当你做了向下兼容的问题修正。
      * 先行版本号及版本编译元数据可以加到“主版本号.次版本号.修订号”的后面，作为延伸。
-     *
+     * <p>
      * -----------------
      * 第一版开发阶段
      * 0.1.0 作为你的初始化开发版本，并在后续的每次发行时递增次版本号
      * 第一个稳定版本
      * 1.0.0
-     *
+     * <p>
      * ------------
      * The androidx packages 就严格使用此规则进行版本号管理
      * https://developer.android.com/jetpack/androidx
-     *
-     *
-     *
      */
-    void a16(){}
+    void a16() {
+    }
+
+
+    /**
+     * 　　ScaleType的值分别代表的意义： ImageView是Android中的基础图片显示控件，该控件有个重要的属性是ScaleType，该属性用以表示显示图片的方式，共有8种取值
+     * <p>
+     * 　　ScaleType.CENTER：：图片大小为原始大小，如果图片大小大于ImageView控件，则截取图片中间部分，若小于，则直接将图片居中显示。
+     * <p>
+     * 　　ScaleType.CENTER_CROP：将图片等比例缩放，让图像的短边与ImageView的边长度相同，即不能留有空白，缩放后截取中间部分进行显示。
+     * <p>
+     * 　　ScaleType.CENTER_INSIDE：将图片大小大于ImageView的图片进行等比例缩小，直到整幅图能够居中显示在ImageView中，小于ImageView的图片不变，直接居中显示。
+     * <p>
+     *     区别 这个小于imageview的图片不放大，下面那个放大
+     *
+     * 　　ScaleType.FIT_CENTER：ImageView的默认状态，大图等比例缩小，使整幅图能够居中显示在ImageView中，小图等比例放大，同样要整体居中显示在ImageView中。
+     * <p>
+     * 　　ScaleType.FIT_END：缩放方式同FIT_CENTER，只是将图片显示在右方或下方，而不是居中。
+     * <p>
+     * 　　ScaleType.FIT_START：缩放方式同FIT_CENTER，只是将图片显示在左方或上方，而不是居中。
+     * <p>
+     * 　　ScaleType.FIT_XY：将图片非等比例缩放到大小与ImageView相同。
+     * <p>
+     * 　　ScaleType.MATRIX：是根据一个3x3的矩阵对其中图片进行缩放
+     */
+    void a17() {
+    }
 
 
 }
