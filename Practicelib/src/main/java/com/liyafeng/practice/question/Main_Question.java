@@ -526,4 +526,15 @@ public class Main_Question {
      *  android:hardwareAccelerated="true"
      */
     void a29(){}
+
+
+    /**
+     * 遇到一个问题，在给一个宽度是match—parent高度是wrap_content的imageView设置bitmap的时候
+     * imageview的高度不会随着图片宽度变小而变化，导致view的高度还是缩放前的bitmap的高度
+     *
+     * 加入下面两句即可，保持imageview宽高比，同时要fitxy
+     *   android:scaleType="fitXY"
+     *   android:adjustViewBounds="true"
+     */
+    void a30(){}
 }
