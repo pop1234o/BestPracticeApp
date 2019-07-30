@@ -515,4 +515,15 @@ public class Main_Question {
      *
      */
     void a28(){}
+
+
+    /**
+     * webview加载不了 cocosjs ,webview开启硬件加速就可以了
+     *
+     * webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+     *
+     * <application ...
+     *  android:hardwareAccelerated="true"
+     */
+    void a29(){}
 }

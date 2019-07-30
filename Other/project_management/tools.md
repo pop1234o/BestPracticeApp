@@ -24,6 +24,9 @@ https://www.bugtags.cn/
 bug管理，崩溃管理
 
 
+=========打包=======
+jenkins 自动打包
+测试可以自动选择分支，里面url都自动变，
 
 
 
@@ -33,8 +36,7 @@ bug管理，崩溃管理
 
 
 
-
-===========
+===========会议
 
 ### Kick-off Meeting 项目启动会议
 https://www.douban.com/note/671899566/
