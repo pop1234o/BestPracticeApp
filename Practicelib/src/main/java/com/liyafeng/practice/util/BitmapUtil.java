@@ -47,6 +47,20 @@ class BitmapUtils {
                 (bitmap.getHeight() - cropWidth) / 2, cropWidth, cropWidth);
     }
 
+    /**
+     * 绘制圆角的三种方式
+     * https://www.jianshu.com/p/818e1284158d
+     * 使用BitmapShader
+     * 使用Xfermode
+     * 使用RoundedBitmapDrawable
+     *
+     * 从性能上讲并没有太大的区别，但是从使用灵活性上说，个人推荐使用BitmapShader。
+     *
+     *
+     *
+     * @param bitmap
+     * @return
+     */
     public static Bitmap getCircleBitmap(Bitmap bitmap) {//把图片裁剪成圆形
         if (bitmap == null) {
             return null;
@@ -76,5 +90,8 @@ class BitmapUtils {
             return bitmap;
         }
     }
+
+
+
 
 }
