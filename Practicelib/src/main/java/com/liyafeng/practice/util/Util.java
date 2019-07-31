@@ -85,29 +85,42 @@ public class Util {
     }
 
 
-    /**
-     * 底部栏高度
-     *
-     * @param context
-     * @return
-     */
-    public static int getNavigationBarHeight(Context context) {
-        try {
-            boolean hasPermanentMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey();
-            if (hasPermanentMenuKey) {
-                Resources resources = context.getResources();
-                int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-                int height = resources.getDimensionPixelSize(resourceId);
-                return height;
-            } else {
-                return 0;
-            }
 
-        } catch (Resources.NotFoundException e) {
-            e.printStackTrace();
+    /**
+     * 获得NavigationBar的高度
+     */
+    public static int getNavigationBarHeight(Activity activity) {
+        int result = 0;
+        Resources resources = activity.getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0 && checkHasNavigationBar(activity)) {
+            result = resources.getDimensionPixelSize(resourceId);
         }
-        return 0;
+        return result;
     }
+
+    public static boolean checkHasNavigationBar(Activity activity) {
+        WindowManager windowManager = activity.getWindowManager();
+        Display d = windowManager.getDefaultDisplay();
+
+        DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            d.getRealMetrics(realDisplayMetrics);
+        }
+
+        int realHeight = realDisplayMetrics.heightPixels;
+        int realWidth = realDisplayMetrics.widthPixels;
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        d.getMetrics(displayMetrics);
+
+        int displayHeight = displayMetrics.heightPixels;
+        int displayWidth = displayMetrics.widthPixels;
+
+        return (realWidth - displayWidth) > 0 || (realHeight - displayHeight) > 0;
+    }
+
+
 
     public static int px2dp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
