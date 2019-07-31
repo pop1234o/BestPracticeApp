@@ -537,4 +537,110 @@ public class Main_Question {
      *   android:adjustViewBounds="true"
      */
     void a30(){}
+
+
+    /**
+     * 点击run
+     * Compilation failed; see the compiler error output for details.
+     *
+     * 看到
+     * org.gradle.api.internal.tasks.compile.CompilationFailedException: Compilation failed; see the compiler error output for details.
+     * 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:52)
+     * 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:37)
+     * 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.delegateAndHandleErrors(NormalizingJavaCompiler.java:98)
+     * 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.execute(NormalizingJavaCompiler.java:51)
+     * 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.execute(NormalizingJavaCompiler.java:37)
+     * 	at org.gradle.api.internal.tasks.compile.CleaningJavaCompilerSupport.execute(CleaningJavaCompilerSupport.java:35)
+     * 	at org.gradle.api.internal.tasks.compile.CleaningJavaCompilerSupport.execute(CleaningJavaCompilerSupport.java:25)
+     * 	at org.gradle.api.internal.tasks.compile.incremental.IncrementalResultStoringDecorator.execute(IncrementalResultStoringDecorator.java:41)
+     * 	at org.gradle.api.internal.tasks.compile.incremental.IncrementalResultStoringDecorator.execute(IncrementalResultStoringDecorator.java:27)
+     * 	at org.gradle.api.internal.tasks.compile.incremental.IncrementalAnnotationProcessingCompiler.execute(IncrementalAnnotationProcessingCompiler.java:50)
+     * 	at org.gradle.api.internal.tasks.compile.incremental.IncrementalAnnotationProcessingCompiler.execute(IncrementalAnnotationProcessingCompiler.java:36)
+     * 	at org.gradle.api.tasks.compile.JavaCompile.performCompilation(JavaCompile.java:156)
+     * 	at org.gradle.api.tasks.compile.JavaCompile.compile(JavaCompile.java:126)
+     * 	at com.android.build.gradle.tasks.factory.AndroidJavaCompile.compile(AndroidJavaCompile.java:125)
+     *
+     * 	什么鬼。。。
+     *
+     * 	原来具体错误要点击左侧 toggle view来查看 ,切换到Messages View
+     * 	错误: ARouter::Compiler An exception is encountered, [The inject fields CAN NOT BE 'private'!!! please check field [correctNum] in class [com.tal.module_oral.ui.activity.share.ResultShareActivity]]
+     *       at com.alibaba.android.arouter.compiler.processor.AutowiredProcessor.categories(AutowiredProcessor.java:266)
+     *       at com.alibaba.android.arouter.compiler.processor.AutowiredProcessor.process(AutowiredProcessor.java:94)
+     *       at com.sun.tools.javac.processing.JavacProcessingEnvironment.callProcessor(JavacProcessingEnvironment.java:794)
+     *       at com.sun.tools.javac.processing.JavacProcessingEnvironment.discoverAndRunProcs(JavacProcessingEnvironment.java:705)
+     *       at com.sun.tools.javac.processing.JavacProcessingEnvironment.access$1800(JavacProcessingEnvironment.java:91)
+     *       at com.sun.tools.javac.processing.JavacProcessingEnvironment$Round.run(JavacProcessingEnvironment.java:1035)
+     *       at com.sun.tools.javac.processing.JavacProcessingEnvironment.doProcessing(JavacProcessingEnvironment.java:1176)
+     *       at com.sun.tools.javac.main.JavaCompiler.processAnnotations(JavaCompiler.java:1170)
+     *       at com.sun.tools.javac.main.JavaCompiler.compile(JavaCompiler.java:856)
+     *       at com.sun.tools.javac.main.Main.compile(Main.java:523)
+     *       at com.sun.tools.javac.api.JavacTaskImpl.doCall(JavacTaskImpl.java:129)
+     *       at com.sun.tools.javac.api.JavacTaskImpl.call(JavacTaskImpl.java:138)
+     *       at org.gradle.api.internal.tasks.compile.IncrementalAnnotationProcessingCompileTask.call(IncrementalAnnotationProcessingCompileTask.java:73)
+     *       at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:50)
+     *       at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:37)
+     *       at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.delegateAndHandleErrors(NormalizingJavaCompiler.java:98)
+     *       at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.execute(NormalizingJavaCompiler.java:51)
+     *       at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.execute(NormalizingJavaCompiler.java:37)
+     *       at org.gradle.api.internal.tasks.compile.CleaningJavaCompilerSupport.execute(CleaningJavaCompilerSupport.java:35)
+     *       at org.gradle.api.internal.tasks.compile.CleaningJavaCompilerSupport.execute(CleaningJavaCompilerSupport.java:25)
+     *       at org.gradle.api.internal.tasks.compile.incremental.IncrementalResultStoringDecorator.execute(IncrementalResultStoringDecorator.java:41)
+     *       at org.gradle.api.internal.tasks.compile.incremental.IncrementalResultStoringDecorator.execute(IncrementalResultStoringDecorator.java:27)
+     *       at org.gradle.api.internal.tasks.compile.incremental.IncrementalAnnotationProcessingCompiler.execute(IncrementalAnnotationProcessingCompiler.java:50)
+     *       at org.gradle.api.internal.tasks.compile.incremental.IncrementalAnnotationProcessingCompiler.execute(IncrementalAnnotationProcessingCompiler.java:36)
+     *       at org.gradle.api.tasks.compile.JavaCompile.performCompilation(JavaCompile.java:156)
+     *       at org.gradle.api.tasks.compile.JavaCompile.compile(JavaCompile.java:126)
+     *       at com.android.build.gradle.tasks.factory.AndroidJavaCompile.compile(AndroidJavaCompile.java:125)
+     *       at sun.reflect.GeneratedMethodAccessor491.invoke(Unknown Source)
+     *       at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+     *       at java.lang.reflect.Method.invoke(Method.java:498)
+     *       at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:73)
+     *       at org.gradle.api.internal.project.taskfactory.IncrementalTaskAction.doExecute(IncrementalTaskAction.java:50)
+     *       at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:39)
+     *       at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:26)
+     *       at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter$1.run(ExecuteActionsTaskExecuter.java:124)
+     *       at org.gradle.internal.progress.DefaultBuildOperationExecutor$RunnableBuildOperationWorker.execute(DefaultBuildOperationExecutor.java:336)
+     *       at org.gradle.internal.progress.DefaultBuildOperationExecutor$RunnableBuildOperationWorker.execute(DefaultBuildOperationExecutor.java:328)
+     *       at org.gradle.internal.progress.DefaultBuildOperationExecutor.execute(DefaultBuildOperationExecutor.java:199)
+     *       at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:110)
+     *       at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeAction(ExecuteActionsTaskExecuter.java:113)
+     *       at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:95)
+     *       at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:73)
+     *       at org.gradle.api.internal.tasks.execution.OutputDirectoryCreatingTaskExecuter.execute(OutputDirectoryCreatingTaskExecuter.java:51)
+     *       at org.gradle.api.internal.tasks.execution.SkipUpToDateTaskExecuter.execute(SkipUpToDateTaskExecuter.java:59)
+     *       at org.gradle.api.internal.tasks.execution.ResolveTaskOutputCachingStateExecuter.execute(ResolveTaskOutputCachingStateExecuter.java:54)
+     *       at org.gradle.api.internal.tasks.execution.ValidatingTaskExecuter.execute(ValidatingTaskExecuter.java:59)
+     *       at org.gradle.api.internal.tasks.execution.SkipEmptySourceFilesTaskExecuter.execute(SkipEmptySourceFilesTaskExecuter.java:101)
+     *       at org.gradle.api.internal.tasks.execution.FinalizeInputFilePropertiesTaskExecuter.execute(FinalizeInputFilePropertiesTaskExecuter.java:44)
+     *       at org.gradle.api.internal.tasks.execution.CleanupStaleOutputsExecuter.execute(CleanupStaleOutputsExecuter.java:91)
+     *       at org.gradle.api.internal.tasks.execution.ResolveTaskArtifactStateTaskExecuter.execute(ResolveTaskArtifactStateTaskExecuter.java:62)
+     *       at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:59)
+     *       at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:54)
+     *       at org.gradle.api.internal.tasks.execution.ExecuteAtMostOnceTaskExecuter.execute(ExecuteAtMostOnceTaskExecuter.java:43)
+     *       at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:34)
+     *       at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker$1.run(DefaultTaskGraphExecuter.java:256)
+     *       at org.gradle.internal.progress.DefaultBuildOperationExecutor$RunnableBuildOperationWorker.execute(DefaultBuildOperationExecutor.java:336)
+     *       at org.gradle.internal.progress.DefaultBuildOperationExecutor$RunnableBuildOperationWorker.execute(DefaultBuildOperationExecutor.java:328)
+     *       at org.gradle.internal.progress.DefaultBuildOperationExecutor.execute(DefaultBuildOperationExecutor.java:199)
+     *       at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:110)
+     *       at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:249)
+     *       at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:238)
+     *       at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor$TaskExecutorWorker.processTask(DefaultTaskPlanExecutor.java:123)
+     *       at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor$TaskExecutorWorker.access$200(DefaultTaskPlanExecutor.java:79)
+     *       at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor$TaskExecutorWorker$1.execute(DefaultTaskPlanExecutor.java:104)
+     *       at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor$TaskExecutorWorker$1.execute(DefaultTaskPlanExecutor.java:98)
+     *       at org.gradle.execution.taskgraph.DefaultTaskExecutionPlan.execute(DefaultTaskExecutionPlan.java:663)
+     *       at org.gradle.execution.taskgraph.DefaultTaskExecutionPlan.executeWithTask(DefaultTaskExecutionPlan.java:597)
+     *       at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor$TaskExecutorWorker.run(DefaultTaskPlanExecutor.java:98)
+     *       at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:63)
+     *       at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:46)
+     *       at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+     *       at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+     *       at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:55)
+     *       at java.lang.Thread.run(Thread.java:745)
+     *
+     * 原来Arouter的注解的变量不能是private的，f**k!
+     *
+     */
+    void a31(){}
 }
