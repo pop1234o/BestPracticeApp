@@ -92,10 +92,21 @@ public class Util {
      * @return
      */
     public static int getNavigationBarHeight(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        return height;
+        try {
+            boolean hasPermanentMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey();
+            if (hasPermanentMenuKey) {
+                Resources resources = context.getResources();
+                int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+                int height = resources.getDimensionPixelSize(resourceId);
+                return height;
+            } else {
+                return 0;
+            }
+
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public static int px2dp(Context context, float pxValue) {
