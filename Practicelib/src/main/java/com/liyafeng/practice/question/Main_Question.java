@@ -643,4 +643,15 @@ public class Main_Question {
      *
      */
     void a31(){}
+
+
+    /**
+     * 使用jsbridge webview报错
+     * java.lang.NoClassDefFoundError: Failed resolution of: Landroid/webkit/SafeBrowsingResponse
+     *
+     *  if (Build.VERSION.SDK_INT >= 26) {
+     *             webSettings.setSafeBrowsingEnabled(false);
+     *         }
+     */
+    void a32(){}
 }
