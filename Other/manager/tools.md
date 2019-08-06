@@ -1,3 +1,4 @@
+=============项目工具
 ### 禅道
 从需求管理，到研发周期管理，到bug管理，包含了产品的整个生命周期
 可以见禅道使用手册
@@ -23,13 +24,20 @@ https://www.atlassian.com/zh/software/confluence
 https://www.bugtags.cn/
 bug管理，崩溃管理
 
+### 蓝湖
+https://lanhuapp.com
+上传设计图，可以看标注，取色值，可以自定义单位，直接下载切图
+把宽度调整到360dp,就是Android用的尺寸
+切图可以单独在一张图片中
 
 =========打包=======
 jenkins 自动打包
 测试可以自动选择分支，里面url都自动变，
-
-
-
+根据buildtype 打包
+debug - 联调环境  和后端联调的环境
+beta - 测试环境  给测试人员测试的环境  
+prepare - 预上线环境/仿真环境  和线上用的一个库，模仿线上环境
+online - 线上环境  用户用的环境
 
 
 
@@ -55,10 +63,32 @@ Who（与会者）
 昨天做了什么，今天做了什么，有什么风险，每个人轮流组织
 这样不仅能杜绝迟到，还能激励你多做事
 
+### 技术分享
+App组件化分享
 
 
+=============邮件
+### 提测邮件
 
+提测需求版本： V1.0
+提测环境：http://test-monkey-api.tiku.100tal.com
+提测类型：正常提测
+提测分支：feature/20190726_v1.0
+Git地址：https://git.100tal.com/monkey_correction_mobile/monkey-homework-android/tree/feature/20190726_v1.0
+开发人员：xxx
+提测时间：2019.08.05.18:00
+apk下载地址：https://fx.100tal.com/download/087db14f9fe435156fbf21cbe55fc39b
+apk下载二维码：
 
+提测内容：
+1智能讲解
+2智能推题
+3拍照优化（横屏、倾斜、过暗检测）
+4结构页分享
+5结果页激励
+相关内容链接
+需求地址：https://wiki.zhiyinlou.com/pages/viewpage.action?pageId=23494979
+设计地址：https://lanhuapp.com/web/#/item/project/board?pid=4b3cfbbc-96e2-4a26-b8b5-ce0dc19816b5
 
 
 
