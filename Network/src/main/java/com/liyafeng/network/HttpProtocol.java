@@ -120,7 +120,7 @@ package com.liyafeng.network;
  * 203 Non-Authoritative Information 文档已经正常地返回，但一些应答头可能不正确，因为使用的是文档的拷贝（HTTP 1.1新）。
  * 204 No Content 没有新文档，浏览器应该继续显示原来的文档。如果用户定期地刷新页面，而Servlet可以确定用户文档足够新，这个状态代码是很有用的。
  * 205 Reset Content 没有新的内容，但浏览器应该重置它所显示的内容。用来强制浏览器清除表单输入内容（HTTP 1.1新）。
- * 206 Partial Content 客户发送了一个带有Range头的GET请求，服务器完成了它（HTTP 1.1新）。
+ * 206 Partial(局部的) Content 客户发送了一个带有Range头的GET请求，服务器完成了它（HTTP 1.1新）。
  * 300 Multiple Choices 客户请求的文档可以在多个位置找到，这些位置已经在返回的文档内列出。如果服务器要提出优先选择，则应该在Location应答头指明。
  * 301 Moved Permanently 客户请求的文档在其他地方，新的URL在Location头中给出，浏览器应该自动地访问新的URL。
  * 302 Found 类似于301，但新的URL应该被视为临时性的替代，而不是永久性的。注意，在HTTP1.0中对应的状态信息是“Moved Temporatily”。
@@ -547,10 +547,14 @@ public class HttpProtocol {
      * 服务器端创建资源，生成ETAG，每次修改也更新ETAG。
      * 客户端首次访问资源，服务器返回资源实体内容和在头区中返回ETAG值，客户端保存实体内容和ETAG值。
      * 客户端再次访问资源的时候，在头域（header）中加入“If-match:etag值”指令。
-     * 服务器接受到请求后，检查资源的ETAG值是否与请求的If-match指定的etag值相同（强匹配），如果匹配则响应304 Not Modified，表示资源未改变，客户端可以直接使用前面请求中保存的资源，如果不匹配才返回资源实体（entity,也就是body体）.或者：客户端再次访问资源的时候，在header中加入“If-None-Match:etag值”，如果服务器的ETAG值匹配客户端请求  的etag值则返回412，表示条件冲突，不匹配则返回实体内容。
+     * 服务器接受到请求后，检查资源的ETAG值是否与请求的If-match指定的etag值相同（强匹配），如果匹配则响应304 Not Modified，
+     * 表示资源未改变，客户端可以直接使用前面请求中保存的资源，如果不匹配才返回资源实体（entity,也就是body体）.
+     *
+     * 或者：客户端再次访问资源的时候，在header中加入“If-None-Match:etag值”，如果服务器的ETAG值匹配客户端请求
+     * 的etag值则返回412，表示条件冲突，不匹配则返回实体内容。
      * 客户端继续使用缓存的资源。
      * ================实际使用==================
-     * If-Match:匹配则返回实体内容，否则响应307，不返回实体内容。
+     * If-Match:匹配则返回实体内容，否则响应304，不返回实体内容。
      * If-None-Match:不匹配则返回实体内容，否则响应412错误。
      *
      * =========ETag比Last-Modified和 Expires 的优势
@@ -566,8 +570,38 @@ public class HttpProtocol {
      * 云存储中最为文件的tag，标记文件是否改变。一般使用MD5判断文件是否改变，也可以直接使用MD5值作为ETAG值。
      * =============问题：
      * 对大文件，修改一小部分内容后，更新ETAG，从新计算MD5，效率太低,解决方案啊~？
+     *
+     * ================
+     * https://imweb.io/topic/5795dcb6fb312541492eda8c (HTTP缓存控制小结)
+     *
+     * 如果服务器发现ETag匹配不上，那么直接以常规GET 200回包形式将新的资源（当然也包括了新的ETag）发给客户端；
+     * 如果ETag是一致的，则直接返回304知会客户端直接使用本地缓存即可。
+     * 那么客户端是如何把标记在资源上的 ETag 传回给服务器的呢？请求报文中有两个首部字段可以带上 ETag 值：
+     *
+     * ⑴ If-None-Match: ETag-value
+     * 示例为 If-None-Match: "5d8c72a5edda8d6a:3239" 告诉服务端如果 ETag 没匹配上需要重发资源数据，
+     * 否则直接回送304 和响应报头即可。 当前各浏览器均是使用的该请求首部来向服务器传递保存的 ETag 值。
+     *
+     * ⑵ If-Match: ETag-value
+     * 告诉服务器如果没有匹配到ETag，或者收到了“*”值而当前并没有该资源实体，则应当返回412(Precondition Failed) 状态码给客户端。
+     * 否则服务器直接忽略该字段。
+     * 需要注意的是，如果资源是走分布式服务器（比如CDN）存储的情况，需要这些服务器上计算ETag唯一值的算法保持一致，
+     * 才不会导致明明同一个文件，在服务器A和服务器B上生成的ETag却不一样。
+     *
      */
     void a5(){}
+
+
+    /**
+     * =======Last-Modified 来使用缓存数据==========
+     * 第一次请求 返回响应中带有Last-Modified  ，把响应缓存，然后Last-Modified 的value（时间）也缓存
+     * 示例： Thu, 08 Aug 2019 02:41:14 GMT
+     * 下次请求的时候 带上这个时间 If-Modified-Since: Last-Modified-value
+     * 如果响应没有改变，返回304，改变了返回200
+     *
+     *
+     */
+    void a6(){}
 }
 
 /**
