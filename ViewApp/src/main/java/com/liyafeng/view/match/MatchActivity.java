@@ -126,6 +126,14 @@ public class MatchActivity extends Activity {
      * <p>
      * 一般手机的宽度不变，高度可以变，所以根据手机宽度能确定他是哪个 dpi
      * <p>
+     *
+     * =================ImageView wrap_content时候的宽高======
+     * 比如一个图片是1000*1000放在 xxhdpi 下 ， 在小米 mix2 上，density 为2.75
+     *
+     * 那么ImageView宽高就是， 1000* （2.75/3）
+     * 因为在 xxhdpi下转换为dp是 1000/3,但是这个density是2.75,没有准确对应的 xxhdpi目录
+     * 所以找接近的，然后按比例缩放即可
+     *
      * =========RelativeLayout====
      * 如果里面的控件是 imageview或者textview,是warp_content 这个时候如果外部指定的高度小了
      * 里面会压缩
