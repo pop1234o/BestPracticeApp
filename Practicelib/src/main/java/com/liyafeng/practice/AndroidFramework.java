@@ -115,6 +115,8 @@ public class AndroidFramework {
     /**
      * View的测量 绘制流程(measure ，layout ,draw )
      * http://www.liyafeng.com/c/Android_APIsetContentView流程分析
+     * https://blog.csdn.net/qq_30379689/article/details/54588736 (Android进阶——Android视图工作机制之measure、layout、draw)
+     * https://developer.android.google.cn/guide/topics/ui/how-android-draws ( how-android-draws)
      */
     public void a1_2() {
         /*
