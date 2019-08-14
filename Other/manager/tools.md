@@ -44,13 +44,13 @@ beta - 测试环境  给测试人员测试的环境
 prepare - 预上线环境/仿真环境  和线上用的一个库，模仿线上环境
 online - 线上环境  用户用的环境
 
-【繁星打包】通知
+【打包】通知
 
-小猴作业_android打包成功
-打包分支: origin/feature/20190726_v1.0
-包名: sign-monkey_android_v0.3.1_beta_20190807141409.apk
+打包成功
+打包分支: 
+包名: 
 打包环境: test
-构建产物: 下载包(https://fx.100tal.com/catkin-upload/android/%E5%B0%8F%E7%8C%B4%E4%BD%9C%E4%B8%9A/test/2019-08-07/sign-monkey_android_v0.3.1_beta_20190807141409.apk)
+构建产物: 下载包()
 跳转到：繁星平台
 包描述:【二维码扫描下载】
 
@@ -98,24 +98,19 @@ App测试阶段，后台和ui可以先行，如果有需求改动也可以这个
 ### 提测邮件
 
 提测需求版本： V1.0
-提测环境：http://test-monkey-api.tiku.100tal.com
+提测环境：
 提测类型：正常提测
-提测分支：feature/20190726_v1.0
-Git地址：https://git.100tal.com/monkey_correction_mobile/monkey-homework-android/tree/feature/20190726_v1.0
+提测分支：
+Git地址：
 开发人员：xxx
-提测时间：2019.08.05.18:00
-apk下载地址：https://fx.100tal.com/download/087db14f9fe435156fbf21cbe55fc39b
+提测时间：
+apk下载地址：
 apk下载二维码：
 
 提测内容：
-1智能讲解
-2智能推题
-3拍照优化（横屏、倾斜、过暗检测）
-4结构页分享
-5结果页激励
 相关内容链接
-需求地址：https://wiki.zhiyinlou.com/pages/viewpage.action?pageId=23494979
-设计地址：https://lanhuapp.com/web/#/item/project/board?pid=4b3cfbbc-96e2-4a26-b8b5-ce0dc19816b5
+需求地址：
+设计地址：
 
 
 
