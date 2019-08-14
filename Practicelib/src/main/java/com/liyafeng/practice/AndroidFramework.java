@@ -113,7 +113,7 @@ public class AndroidFramework {
 
 
     /**
-     * View的绘制流程
+     * View的测量 绘制流程(measure ，layout ,draw )
      * http://www.liyafeng.com/c/Android_APIsetContentView流程分析
      */
     public void a1_2() {
@@ -125,6 +125,50 @@ public class AndroidFramework {
          * 然后是performLayout，确定子view在父布局中的位置，left top right bottom 四个参数
          *
          * 最后执行performDraw ,将canvas对象传入，子view根据自己的ondraw方法进行绘制
+         *
+         *
+         * 所以 measure ，layout ,draw 都是在 onResume后执行的，因为在onResume的时候才把view添加到window上？？
+         *
+         * ==============他们的作用======
+         * measure：确定View的宽高
+         *  layout：确定View的位置
+         *  draw：绘制出View的形状
+         *
+         * 查看 ViewGroup的 measureChildren方法
+         *
+         *  //最外层，这里传过来的是屏幕的宽高
+         *   protected void measureChildren(int widthMeasureSpec, int heightMeasureSpec) {
+         *      final int size = mChildrenCount;
+         *      final View[] children = mChildren;
+         *     for (int i = 0; i < size; ++i) {
+         *      final View child = children[i];
+         *      if ((child.mViewFlags & VISIBILITY_MASK) != GONE) { //gone的不测量宽高
+         *          measureChild(child, widthMeasureSpec, heightMeasureSpec);
+         *      }
+         *   }
+         *   }
+         *
+         * //这里根据 父布局的宽，padding ，子控件的宽，来确定测量子控件的宽度
+         * //比如match_parent就是 父控件宽减padding ， warp_content那么子控件宽最大就是父控件宽减padding
+         * protected void measureChild(View child, int parentWidthMeasureSpec,
+         *  int parentHeightMeasureSpec) {
+         *      final LayoutParams lp = child.getLayoutParams();
+         *      final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
+         *      mPaddingLeft + mPaddingRight, lp.width);
+         *       final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
+         *      mPaddingTop + mPaddingBottom, lp.height);
+         *      child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+         *  }
+         *
+         * // view.measure()主要调用 onMeasure方法，然后里面调用 setMeasuredDimension，判断是否有最小高度等逻辑
+         * //这个时候 ，view的 mMeasuredWidth mMeasuredHeight 都已经确定了
+         *
+         *
+         * 至此，measure的逻辑就结束了，主要确定了  mMeasuredWidth mMeasuredHeight 的值
+         *
+         *
+         *
+         *
          */
     }
 
@@ -1476,10 +1520,10 @@ public class AndroidFramework {
      */
     public void a8_7() {
         /*
-        * 一个便捷类，一个有Looper的线程，用他的looper可以来创建handler，
-        * 这样发送的消息就在子线程中执行了
-        *
-        * ======================用法===================
+         * 一个便捷类，一个有Looper的线程，用他的looper可以来创建handler，
+         * 这样发送的消息就在子线程中执行了
+         *
+         * ======================用法===================
          * HandlerThread 是Thread的一个子类，也是一个线程，
          * 我们开启这个线程，调用getThreadHandler(),用这个Handler发送的消息
          *
@@ -1724,9 +1768,6 @@ public class AndroidFramework {
     }
 
 
-
-
-
     /**
      * LruCache作用，原理？{@link android.util.LruCache}
      * DiskLruCache作用，原理？
@@ -1949,7 +1990,7 @@ public class AndroidFramework {
     /**
      * 估值器和差值器的区别
      * https://blog.csdn.net/u012203641/article/details/77823949
-     *
+     * <p>
      * 动画加速进行	@android:anim/accelerate_interpolator	AccelerateInterpolator
      * 快速完成动画，超出再回到结束样式	@android:anim/overshoot_interpolator	OvershootInterpolator
      * 先加速再减速	@android:anim/accelerate_decelerate_interpolator	AccelerateDecelerateInterpolator
@@ -2365,43 +2406,42 @@ public class AndroidFramework {
     }
 
 
-
     /**
-    * 6.0特性（23）
-    * */
-    public void a16_3(){
+     * 6.0特性（23）
+     */
+    public void a16_3() {
 
         /*
-        * https://developer.android.google.cn/about/versions/marshmallow/android-6.0-changes
-        *
-        * 1.动态权限 Runtime Permissions
-        *
-        * 2.新的省电模式 https://developer.android.google.cn/training/monitoring-device-state/doze-standby.html
-        *
-        * 3.Apache HTTP Client Removal
-        *
-        *
-        *
-        *
-        *
-        * */
+         * https://developer.android.google.cn/about/versions/marshmallow/android-6.0-changes
+         *
+         * 1.动态权限 Runtime Permissions
+         *
+         * 2.新的省电模式 https://developer.android.google.cn/training/monitoring-device-state/doze-standby.html
+         *
+         * 3.Apache HTTP Client Removal
+         *
+         *
+         *
+         *
+         *
+         * */
     }
 
     /**
      * 5.0特性
-     * */
-    public void a16_4(){
+     */
+    public void a16_4() {
 
         /*
-        * https://developer.android.google.cn/about/versions/android-5.0-changes
-        * 1.art虚拟机代替dvm ，主要变化（Ahead-of-time (AOT) compilation  Improved garbage collection (GC) ）
-        *
-        * 2.WebView默认不支持混合模式（http、https混合） 需要手动设置 setMixedContentMode()
-        *
-        * 3.Material design
-        *
-        *
-        * */
+         * https://developer.android.google.cn/about/versions/android-5.0-changes
+         * 1.art虚拟机代替dvm ，主要变化（Ahead-of-time (AOT) compilation  Improved garbage collection (GC) ）
+         *
+         * 2.WebView默认不支持混合模式（http、https混合） 需要手动设置 setMixedContentMode()
+         *
+         * 3.Material design
+         *
+         *
+         * */
     }
     //endregion
 }
