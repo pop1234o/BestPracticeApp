@@ -654,4 +654,27 @@ public class Main_Question {
      *         }
      */
     void a32(){}
+
+
+    /**
+     * android studio  点击rebuild project 或者 clean project 无反应
+     * 或者 android studio 报错（代码报错） 但是可以正常运行的问题
+     *
+     * https://blog.csdn.net/hx7013/article/details/79971980 （AndroidStudio 代码报错（引入红色），但可正常运行解决方法（4种方式））
+     *
+     * 这种一般就是有缓存
+     *
+     * 1.点击AndroidStudio菜单File -> Invalidate Caches/Restar
+     *
+     * 2.关闭AndroidStudio，进入工程根目录，删除.gradle、.idea两个文件夹。重新打开AndroidStudio会自动Sync，等待同步完成。
+     *
+     * 3.关闭AndroidStudio，删除C:\Users\xUser\.gradle。重新打开AndroidStudio会自动Sync，等待同步完成。
+     * 注意:删除该文件夹所有的classpath、gradle、compile、implementation等，都需要重新从网上同步。
+     *
+     * 4.关闭AndroidStudio，进入C:\Users\xUser.AndroidStudio3.1(3.1为当前AS版本号)，删除除了config以外的文件。重新打开AndroidStudio会自动Sync，等待同步完成。
+     *
+     *
+     *
+     */
+    void a33(){}
 }
