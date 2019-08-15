@@ -1,13 +1,6 @@
-package com.tal.brandy.utils;
 
 import android.util.Base64;
 
-import com.tal.brandy.BrandyApplication;
-import com.tal.brandy.data.DataCallback;
-import com.tal.brandy.data.DataRepository;
-import com.tal.brandy.data.entity.EmptyEntity;
-import com.tal.brandy.data.entity.UpLoadFileEntity;
-import com.tal.brandy.net.EHttp;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

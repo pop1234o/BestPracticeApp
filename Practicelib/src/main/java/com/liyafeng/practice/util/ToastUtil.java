@@ -1,4 +1,3 @@
-package com.tal.lib_common.utils;
 
 import android.support.annotation.IdRes;
 import android.view.Gravity;
@@ -8,8 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tal.lib_common.R;
-import com.tal.lib_common.app.BaseApplication;
 
 public class ToastUtil {
 

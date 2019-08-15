@@ -1,4 +1,3 @@
-package com.tal.lib_common.utils;
 
 import android.app.Activity;
 import android.hardware.Sensor;
@@ -7,7 +6,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-import com.tal.lib_common.app.BaseApplication;
 
 import java.util.Calendar;
 

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
      * <p>
      * OVERLAY_COLOR模式没有上述限制，但由于这个模式使用在图片上覆盖一个纯色图层的方式来模拟圆角效果，因此只有在图标背景是静止的并且与图层同色的情况下才能获得较好的效果。
      * <p>
-     * <com.tal.brandy.view.BGImageView
+     * <com.brandy.view.BGImageView
      * android:layout_width="match_parent"
      * android:layout_height="match_parent"
      * app:actualImageScaleType="centerCrop"

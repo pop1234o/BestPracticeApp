@@ -32,8 +32,8 @@ public class Main {
      * 条目类型: PrivateKeyEntry
      * 证书链长度: 1
      * 证书[1]:
-     * 所有者: CN=brandyKey, OU=brandy, O=tal.brandy, L=beijing, ST=beijing, C=cn
-     * 发布者: CN=brandyKey, OU=brandy, O=tal.brandy, L=beijing, ST=beijing, C=cn
+     * 所有者: CN=brandyKey, OU=brandy, O=brandy, L=beijing, ST=beijing, C=cn
+     * 发布者: CN=brandyKey, OU=brandy, O=brandy, L=beijing, ST=beijing, C=cn
      * 序列号: 64df0480
      * 有效期为 Mon Mar 25 14:37:14 CST 2019 至 Fri Mar 18 14:37:14 CST 2044
      * 证书指纹:

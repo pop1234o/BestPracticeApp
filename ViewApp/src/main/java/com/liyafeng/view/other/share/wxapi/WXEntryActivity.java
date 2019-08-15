@@ -17,8 +17,6 @@ public class WXEntryActivity{}
 //                    android:launchMode="singleTask">
 
 
-//import com.tal.brandy.utils.LogUtil;
-//import com.tal.brandy.utils.third.ThirdPartApi;
 //import com.tencent.mm.opensdk.modelbase.BaseReq;
 //import com.tencent.mm.opensdk.modelbase.BaseResp;
 //import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;

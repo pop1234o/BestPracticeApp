@@ -272,12 +272,12 @@ public class Main_Question {
 
 
     /**
-     * android.view.WindowLeaked: Activity com.tal.brandy.ui.activity.video.VideoActivity has leaked window DecorView@b38aa27[] that was originally added here
+     * android.view.WindowLeaked: Activity com.brandy.ui.activity.video.VideoActivity has leaked window DecorView@b38aa27[] that was originally added here
      *         at android.view.ViewRootImpl.<init>(ViewRootImpl.java:496)
      *         at android.view.WindowManagerGlobal.addView(WindowManagerGlobal.java:349)
      *         at android.view.WindowManagerImpl.addView(WindowManagerImpl.java:94)
      *         at android.app.Dialog.show(Dialog.java:332)
-     *         at com.tal.brandy.ui.dialog.QuitDialog.showDialog
+     *         at com.brandy.ui.dialog.QuitDialog.showDialog
      *  产生原因：
      * 我们知道Android的每一个Activity都有个WindowManager窗体管理器，同样，构建在某个Activity之上的对话框、PopupWindow也有相应的WindowManager窗体管理器。因为对话框、PopupWindown不能脱离Activity而单独存在着，所以当某个Dialog或者某个PopupWindow正在显示的时候我们去finish()了承载该Dialog(或PopupWindow)的Activity时，就会抛Window Leaked异常了，因为这个Dialog(或PopupWindow)的WindowManager已经没有谁可以附属了，所以它的窗体管理器已经泄漏了。
      *
@@ -306,12 +306,12 @@ public class Main_Question {
 
 
     /**
-     *     Process: com.tal.brandy, PID: 4773
+     *     Process: com.brandy, PID: 4773
      *     java.lang.UnsupportedOperationException
      *         at java.util.AbstractList.add(AbstractList.java:148)
      *         at java.util.AbstractList.add(AbstractList.java:108)
      *         at java.util.AbstractCollection.addAll(AbstractCollection.java:344)
-     *         at com.tal.brandy.ui.activity.video.BaseVideoActivity$11.onUserUpdate(BaseVideoActivity.java:593)
+     *         at com.brandy.ui.activity.video.BaseVideoActivity$11.onUserUpdate(BaseVideoActivity.java:593)
      *         at com.zego.zegoliveroom.ZegoLiveRoom$35.run(ZegoLiveRoom.java:3933)
      *
      */
@@ -376,7 +376,7 @@ public class Main_Question {
     /**
      *
      * app内安装apk报错 FileProvider 没有授权
-     *     java.lang.SecurityException: Permission Denial: reading android.support.v4.content.FileProvider uri content://com.tal.brandy.fileProvider/download/appv1.0.0.apk from pid=9663, uid=10018 requires the provider be exported, or grantUriPermission()
+     *     java.lang.SecurityException: Permission Denial: reading android.support.v4.content.FileProvider uri content://com.brandy.fileProvider/download/appv1.0.0.apk from pid=9663, uid=10018 requires the provider be exported, or grantUriPermission()
      *         at android.content.ContentProvider.enforceReadPermissionInner(ContentProvider.java:777)
      *         at android.content.ContentProvider$Transport.enforceReadPermission(ContentProvider.java:540)
      *         at android.content.ContentProvider$Transport.enforceFilePermission(ContentProvider.java:530)
@@ -384,7 +384,7 @@ public class Main_Question {
      *         at android.content.ContentProviderNative.onTransact(ContentProviderNative.java:302)
      *         at android.os.Binder.execTransact(Binder.java:708)
      * 2019-05-24 20:39:14.517 9663-15818/? W/InstallStaging: Error staging apk from content URI
-     *     java.lang.SecurityException: Permission Denial: reading android.support.v4.content.FileProvider uri content://com.tal.brandy.fileProvider/download/appv1.0.0.apk from pid=9663, uid=10018 requires the provider be exported, or grantUriPermission()
+     *     java.lang.SecurityException: Permission Denial: reading android.support.v4.content.FileProvider uri content://com.brandy.fileProvider/download/appv1.0.0.apk from pid=9663, uid=10018 requires the provider be exported, or grantUriPermission()
      *         at android.os.Parcel.readException(Parcel.java:2013)
      *         at android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:183)
      *         at android.database.DatabaseUtils.readExceptionWithFileNotFoundExceptionFromParcel(DatabaseUtils.java:146)
@@ -411,7 +411,7 @@ public class Main_Question {
      *
      * ====================
      *  W/InstallStaging: Error staging apk from content URI
-     *     java.io.FileNotFoundException: No content provider: content://com.tal.brandy.fileProvider/download/app1.0.3.apk
+     *     java.io.FileNotFoundException: No content provider: content://com.brandy.fileProvider/download/app1.0.3.apk
      *         at android.content.ContentResolver.openTypedAssetFileDescriptor(ContentResolver.java:1489)
      *         at android.content.ContentResolver.openAssetFileDescriptor(ContentResolver.java:1340)
      *         at android.content.ContentResolver.openInputStream(ContentResolver.java:1060)
@@ -563,7 +563,7 @@ public class Main_Question {
      * 	什么鬼。。。
      *
      * 	原来具体错误要点击左侧 toggle view来查看 ,切换到Messages View
-     * 	错误: ARouter::Compiler An exception is encountered, [The inject fields CAN NOT BE 'private'!!! please check field [correctNum] in class [com.tal.module_oral.ui.activity.share.ResultShareActivity]]
+     * 	错误: ARouter::Compiler An exception is encountered, [The inject fields CAN NOT BE 'private'!!! please check field [correctNum] in class [com.module_oral.ui.activity.share.ResultShareActivity]]
      *       at com.alibaba.android.arouter.compiler.processor.AutowiredProcessor.categories(AutowiredProcessor.java:266)
      *       at com.alibaba.android.arouter.compiler.processor.AutowiredProcessor.process(AutowiredProcessor.java:94)
      *       at com.sun.tools.javac.processing.JavacProcessingEnvironment.callProcessor(JavacProcessingEnvironment.java:794)

@@ -1,4 +1,3 @@
-package com.tal.brandy.utils;
 
 
 import android.app.ActivityManager;
@@ -20,7 +19,7 @@ import java.util.List;
  * androidManifest中配置
  *    <provider
  *             android:name="android.support.v4.content.FileProvider"
- *             android:authorities="com.tal.brandy.fileProvider"
+ *             android:authorities="com.brandy.fileProvider"
  *             android:exported="false"
  *             android:grantUriPermissions="true">
  *             <meta-data
