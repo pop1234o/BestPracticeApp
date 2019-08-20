@@ -73,6 +73,9 @@ public class LeetCode_70_ClimbingStairs_Easy {
         if (n == 2) {
             return 2;
         }
+        //这样理解，第一次走1步 + 第一次走2步的和，走到最后，只剩1 步和2 步的时候直接返回 结果
+        //比如n =2 如果用0判断，那么直接返回0就不对了。。。
+        //因为斐波那契是从第三个元素开始的，前面元素不符合规律，所以需要单独判断
 
         return climbStairs(n - 1) + climbStairs(n - 2);
     }
