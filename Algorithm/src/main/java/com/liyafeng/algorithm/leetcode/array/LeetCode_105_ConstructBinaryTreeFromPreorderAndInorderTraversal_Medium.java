@@ -25,7 +25,7 @@ public class LeetCode_105_ConstructBinaryTreeFromPreorderAndInorderTraversal_Med
      * 3
      * / \
      * 9  20
-     * /  \
+     * --/  \
      * 15   7
      * <p>
      * =========思路==============
@@ -47,6 +47,53 @@ public class LeetCode_105_ConstructBinaryTreeFromPreorderAndInorderTraversal_Med
 
     }
 
+
+    /**
+     * 前序遍历中第一个元素肯定是根元素，在中序遍历中找到这个元素，那么它的左边肯定就是他的左子树，右边就是右子树
+     * 如此递归，直到构造到叶子节点，他们的下个节点肯定为null了，所以就直接返回null，递归就结束了
+     *
+     * @param preorder
+     * @param inorder
+     * @return
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+
+        return build(0, 0, inorder.length - 1, preorder, inorder);
+    }
+
+    /**
+     * @param preStart 这组前序遍历开始的元素的index
+     * @param inStart
+     * @param inEnd
+     * @param preorder
+     * @param inorder
+     * @return
+     */
+    private TreeNode build(int preStart, int inStart, int inEnd, int[] preorder, int[] inorder) {
+
+        //递归退出条件
+        if (preStart > preorder.length - 1 || inStart > inEnd) {
+            return null;
+        }
+
+        int root = preorder[preStart];
+        int positionRootInOrder = -1;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (inorder[i] == root) {
+                positionRootInOrder = i;
+                break;
+            }
+        }
+
+        TreeNode treeNode = new TreeNode(root);
+        treeNode.left = build(preStart + 1, inStart, positionRootInOrder - 1, preorder, inorder);
+        treeNode.right = build(preStart - inStart + positionRootInOrder + 1, positionRootInOrder + 1, inEnd, preorder, inorder);
+
+        return treeNode;
+
+    }
+
+
     public class TreeNode {
         int val;
         TreeNode left;
@@ -55,10 +102,6 @@ public class LeetCode_105_ConstructBinaryTreeFromPreorderAndInorderTraversal_Med
         TreeNode(int x) {
             val = x;
         }
-    }
-
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return null;
     }
 
 
