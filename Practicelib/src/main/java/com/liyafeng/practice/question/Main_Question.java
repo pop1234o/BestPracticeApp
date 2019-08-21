@@ -688,4 +688,16 @@ public class Main_Question {
      *
      */
     void a34(){}
+
+
+    /**
+     * dialog设置 dismissListener 内存泄漏，因为设置了这个 ，在dismiss的时候回发送一个handler的msg
+     * 这个时候msg在handler中阻塞，然后Activity被finish了，就会内存泄漏。
+     * Thread → Message → Listener → Dialog → Activity
+     *
+     * 我们不用 dismissListener就好了
+     *
+     *
+     */
+    void a35(){}
 }
