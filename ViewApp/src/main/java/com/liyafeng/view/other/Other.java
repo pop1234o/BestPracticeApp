@@ -419,4 +419,17 @@ public class Other {
     }
 
 
+    /**
+     * android 调用打印机打印
+     *
+     * 系统提供api和界面来设置打印参数，和打印逻辑。。。我们一般只需要调用下面代码，将我们要打印的东西传入即可
+     * 但是有些手机要安装打印机对应的驱动（服务插件）比如惠普的叫hp打印服务插件，在各大应用市场有下载
+     * 有些手机则直接能连上打印机（应该是驱动手机自动就安装了）
+     *
+     *   PrintHelper photoPrinter = new PrintHelper(this);
+     *   photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+     *   photoPrinter.printBitmap("droids.jpg - test print", bitmap);
+     */
+    void a18(){}
+
 }
