@@ -989,6 +989,26 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
+     *  说说 CountDownLatch ,CyclicBarrier  ,Semaphore
+     * https://www.cnblogs.com/dolphin0520/p/3920397.html
+     *
+     */
+    public void a2_16_1(){
+        /*
+        * =======================
+        * Latch 门闩
+        *
+        * CountDownLatch(3)
+        * await() //调用await()方法的线程会被挂起，它会等待直到count值为0才继续执行
+        *
+        * latch.countDown(); //数值减一
+        *
+        *
+        *
+        * */
+    }
+
+    /**
      * synchronized 关键字的原理？
      * http://www.cnblogs.com/paddix/p/5367116.html
      */
