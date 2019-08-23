@@ -421,6 +421,7 @@ public class Other {
 
     /**
      * android 调用打印机打印
+     * https://blog.csdn.net/ssjj_programmer/article/details/53648321
      *
      * 系统提供api和界面来设置打印参数，和打印逻辑。。。我们一般只需要调用下面代码，将我们要打印的东西传入即可
      * 但是有些手机要安装打印机对应的驱动（服务插件）比如惠普的叫hp打印服务插件，在各大应用市场有下载
