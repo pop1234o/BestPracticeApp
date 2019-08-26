@@ -26,6 +26,9 @@
 
 * http://inloop.github.io/shadow4android/
   .9patch 阴影制作网站
+  
+* https://rules.sonarsource.com/
+  各种语言代码规范（静态代码检测规则讲解）
 
 ### 个人博客
 * http://blog.csdn.net/v_july_v

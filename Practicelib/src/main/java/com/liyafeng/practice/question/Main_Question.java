@@ -700,4 +700,28 @@ public class Main_Question {
      *
      */
     void a35(){}
+
+
+    /**
+     * 不要在finally块中使用return关键字
+     * try{
+     *             System.out.println("before return in try section.");
+     *             return x+y;
+     *         }finally{
+     *             System.out.println("before return in finally section.");
+     *             return x*y;
+     *         }
+     *  ————————————————
+     * 版权声明：本文为CSDN博主「陈字文」的原创文章，遵循CC 4.0 by-sa版权协议，转载请附上原文出处链接及本声明。
+     * 原文链接：https://blog.csdn.net/ziwen00/article/details/39318317
+     *
+     * 上面语句会返回x*y
+     * 因为 调用try代码块的return之前就会去执行finally里面的代码，这样finally的return就会结束当前的方法，
+     * 而不执行try中的return（如果有），从而返回一个错误的值
+     *
+     *
+     *
+     *
+     */
+    void a36(){}
 }
