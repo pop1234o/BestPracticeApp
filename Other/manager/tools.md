@@ -35,6 +35,10 @@ https://lanhuapp.com
 gitlab push 通知
 jenkins 打包通知
 
+### gitlab静态代码扫描工具 SonarQube
+https://zhuanlan.zhihu.com/p/79047213 （SonarQube 集成gitlab/jenkins）
+
+
 =========打包=======
 jenkins 自动打包
 测试可以自动选择分支，里面url都自动变，
