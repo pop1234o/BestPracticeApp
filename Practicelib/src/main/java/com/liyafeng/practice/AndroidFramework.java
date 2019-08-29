@@ -1152,7 +1152,7 @@ public class AndroidFramework {
 
     /**
      * looper架构?
-     * {@link android.os.Handler}
+     * @link android.os.Handler}
      */
     public void a8_1() {
         /*
@@ -1478,7 +1478,7 @@ public class AndroidFramework {
 
     /**
      * ThreadLocal作用？原理？
-     * {@link java.lang.ThreadLocal}
+     * @link java.lang.ThreadLocal}
      */
     public void a8_6() {
         /*
@@ -1771,7 +1771,7 @@ public class AndroidFramework {
 
 
     /**
-     * LruCache作用，原理？{@link android.util.LruCache}
+     * LruCache作用，原理？@link android.util.LruCache}
      * DiskLruCache作用，原理？
      */
     public void a8_19() {
@@ -1860,6 +1860,43 @@ public class AndroidFramework {
          * getDownloadCacheDirectory             /cache
          * getExternalStorageDirectory           /storage/emulated/0  （sd卡的根目录）
          * getRootDirectory                      /system
+         *
+         *
+         * ========== Public 对应目录 =============
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_ALARMS)
+         * /storage/sdcard0/Alarms
+         *
+         *
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM)
+         * /storage/sdcard0/DCIM
+         *
+         *
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)
+         * /storage/sdcard0/Download
+         *
+         *
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_MOVIES)
+         * /storage/sdcard0/Movies
+         *
+         *
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_MUSIC)
+         * /storage/sdcard0/Music
+         *
+         *
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_NOTIFICATIONS)
+         * /storage/sdcard0/Notifications
+         *
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)
+         * /storage/sdcard0/Pictures
+         *
+         *
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_PODCASTS)
+         * /storage/sdcard0/Podcasts
+         *
+         *
+         * Environment.getExternalStoragePublicDirectory(DIRECTORY_RINGTONES)
+         * /storage/sdcard0/Ringtones
+         *
          */
 
         File externalCacheDir = context.getExternalCacheDir();
@@ -2298,7 +2335,7 @@ public class AndroidFramework {
     /**
      * 说说 SurfaceView 和 TextureView?
      * 区别？
-     * {@link android.view.SurfaceView}
+     * @link android.view.SurfaceView}
      */
     public void a15() {
         /*
