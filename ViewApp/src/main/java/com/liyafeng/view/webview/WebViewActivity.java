@@ -75,6 +75,9 @@ public class WebViewActivity extends AppCompatActivity {
      * ==========
      * chrome://inspect/#devices
      *
+     * ==========webview相册选择==========
+     * https://www.jianshu.com/p/d31936511359 （Android WebView选择图片的问题）
+     *
      * @param savedInstanceState
      */
     @Override
