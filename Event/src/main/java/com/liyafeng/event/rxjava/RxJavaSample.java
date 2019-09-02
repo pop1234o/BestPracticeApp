@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.reactivestreams.Publisher;
 
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -22,12 +23,12 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by liyafeng on 2017/12/27.
+ * <p>
+ * =========什么事rxjava======================
  * a library for composing asynchronous and event-based programs by using observable sequences.
  * 一个组成异步和基于事件的程序 ，通过使用被观察者的队列
  * 实际上就是一个异步的处理库，而且异步处理完还能通知观察者 进行下一步处理
  * <p>
- * 我们可以手写 Thread然后使用Handler来实现相同的逻辑，但是rxjava它简洁，链式调用，
- * 可维护性高
  * <p>
  * 订阅者-发布者
  * 观察者-被观察者
@@ -41,9 +42,14 @@ import io.reactivex.schedulers.Schedulers;
  * <p>
  * <p>
  * <p>
- * ==============================================
- * 扔物线 朱凯写的rxjava详解
- * http://gank.io/post/560e15be2dca930e00da1083#toc_8
+ * ==============使用流程================================
+ * 创建一个被观察者（有各种创建操作符）
+ * 变换、过滤操作符
+ * 连接，合并操作
+ * 错误处理操作
+ * 最后的订阅操作
+ * <p>
+ * 数据流经过一系列处理被输出，极大方便了复杂的数据流操作
  */
 
 public class RxJavaSample {
@@ -54,12 +60,11 @@ public class RxJavaSample {
      * ==========Function============
      * io.reactivex.functions.Function<T, R>
      * 这个接口将一个值转化为另一个
-     *
+     * <p>
      * ==========Predicate=======
      * io.reactivex.functions.Predicate<T>
      * A functional interface (callback) that returns true or false for the given input value
      * 传入一个值，返回true或者false
-     *
      */
     public RxJavaSample() {
 
@@ -69,6 +74,10 @@ public class RxJavaSample {
 
         observable();
 
+    }
+
+    public static void main(String[] args) {
+        do6();
     }
 
     private void observable() {
@@ -260,4 +269,101 @@ public class RxJavaSample {
 //                    }
 //                });
     }
+
+
+    //region  过滤操作符
+
+    /**
+     * 过滤重复数据
+     */
+    static void do6() {
+        ArrayList<DistinctEntity> distinctEntities = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            DistinctEntity distinctEntity = new DistinctEntity(i, i + "");
+            distinctEntities.add(distinctEntity);
+        }
+        DistinctEntity distinctEntity = new DistinctEntity(2, 2 + "");
+        distinctEntities.add(distinctEntity);
+
+        DistinctEntity[] array = distinctEntities.toArray(new DistinctEntity[10]);
+        //java8 才支持 Method References
+
+        Disposable disposable = Observable.fromArray(array).distinct(new Function<DistinctEntity, Integer>() {
+            @Override
+            public Integer apply(DistinctEntity distinctEntity) throws Exception {
+                //返回key，所有key相等的会被过滤
+                return distinctEntity.getId();
+            }
+        }).subscribe(new Consumer<DistinctEntity>() {
+            @Override
+            public void accept(DistinctEntity distinctEntity) throws Exception {
+                System.out.println("输出" + distinctEntity.getName());
+            }
+        });
+
+    }
+
+    static class DistinctEntity {
+
+        public DistinctEntity(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int id = 0;
+        public String name = "";
+    }
+
+
+    //endregion
+
+
+    //region  订阅操作
+
+    /**
+     * Disposable.subscribe 参数  Consumer和 Observer区别
+     * ===========
+     * Observer有四个方法
+     * Consumer可以指定只处理其中的某几个方法
+     */
+    void do7() {
+        Disposable subscribe = Observable.just(1).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+
+            }
+        });
+        Observable.just(1).subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+
+    //endregion
 }

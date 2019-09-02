@@ -4,7 +4,7 @@ package com.liyafeng.event.rxjava;
  * Created by liyafeng on 2018/4/28.
  */
 
-public class Main {
+public class Main_Rxjava {
 
     /**
      * (官方文档 wiki)
@@ -76,6 +76,16 @@ public class Main {
      * ﻿https://github.com/ReactiveX/RxJava/wiki/Backpressure
      * ﻿背压是指在异步场景中，被观察者发送事件速度远快于观察者的处理速度的情况下，一种告诉上游的被观察者降低发送速度的策略。
      * 如果事件发送快，观察者来不及处理，那么只能将数据缓存，这样很浪费资源，所以我们用背压策略来限制事件的发送速度
+     *
+     *
+     * =============学习资料==========
+     * https://mcxiaoke.gitbooks.io/rxdocs/content/ （中文文档，里面有各种操作符用法）
+     * http://gank.io/post/560e15be2dca930e00da1083#toc_8 （扔物线 朱凯写的rxjava详解）
+     * https://www.jianshu.com/p/fb68dfeee66d （RxJava学习笔记）
+     * http://reactivex.io/documentation/observable.html （官方文档）
+     *
+     *
+     *
      *
      *
      * @param args
