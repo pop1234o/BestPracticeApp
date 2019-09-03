@@ -828,6 +828,20 @@ public class AndroidFramework {
      * Activity的四种启动模式对比? 回退栈有什么用？
      * https://developer.android.google.cn/guide/components/activities/tasks-and-back-stack.html
      * https://blog.csdn.net/u012203641/article/details/77408342
+     * ========Intent Flag 作用，区别===============
+     * https://wangkuiwu.github.io/2014/06/26/IntentFlag/ （Android 之Activity启动模式(二)之 Intent的Flag属性）
+     * 要区分是不是在一个  android:taskAffinity 中 ，他们的使用效果也是不同的
+     *
+     * FLAG_ACTIVITY_NEW_TASK
+     *
+     *
+     * 当相互跳转的两个Activity的android:taskAffinity不同时，添加FLAG_ACTIVITY_NEW_TASK确实产生了一些效果：第一次启动Activity时，
+     * 会新建一个task，并将Activity添加到该task中。这与singleTask产生的效果是一样的！但是，当企图再次从ActivityTest进入到SecondActivity时，
+     * 却什么也没有发生！
+     * 所以为了解决这个问题 ，我们 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+     *
+     *
+     *
      */
     public void a3_6() {
         /*
