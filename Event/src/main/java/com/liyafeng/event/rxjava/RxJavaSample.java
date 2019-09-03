@@ -435,10 +435,13 @@ public class RxJavaSample {
     //region  订阅操作
 
     /**
-     * Disposable.subscribe 参数  Consumer和 Observer区别
+     * Disposable.subscribe 参数  Consumer 和 Observer区别
      * ===========
      * Observer有四个方法
-     * Consumer可以指定只处理其中的某几个方法
+     * Consumer 可以指定只处理其中的某几个方法
+     *
+     * 有 Consumer参数的 subscribe 返回一个 Disposable对象
+     * 而 Observer 参数的 subscribe 无返回值 ， 而在 Observer 里的  onSubscribe方法返回 Disposable对象
      */
     void do7() {
         Disposable subscribe = Observable.just(1).subscribe(new Consumer<Integer>() {
@@ -468,6 +471,65 @@ public class RxJavaSample {
 
             }
         });
+    }
+
+    /**
+     * subscribeWith 和 subscribe 区别
+     *
+     * subscribeWith 可以 替代 subscribe 反之不行
+     *
+     * subscribeWith是返回了 observer对象，里面也调用了subscribe
+     *     subscribe(observer);
+     *     return observer;
+     *
+     */
+    void do7_1() {
+        Observable.just(1).subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+        Observer<Integer> observer = Observable.just(1).subscribeWith(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
+
     }
 
     //endregion
