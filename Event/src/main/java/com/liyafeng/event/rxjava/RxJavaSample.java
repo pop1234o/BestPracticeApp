@@ -12,9 +12,11 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -77,7 +79,7 @@ public class RxJavaSample {
     }
 
     public static void main(String[] args) {
-        do6();
+        do8();
     }
 
     private void observable() {
@@ -271,6 +273,110 @@ public class RxJavaSample {
     }
 
 
+    //region  合并操作符
+    // https://blog.csdn.net/jdsjlzx/article/details/52415615 ( RxJava 合并组合两个（或多个）Observable数据源)
+
+
+    /**
+     * 合并两个请求同时返回
+     * <p>
+     * 将两个请求合并为一个请求返回
+     * 但是如果有一个发生错误，则返回error
+     * <p>
+     * 如果你想任何一个成功都返回，那么可以用 onErrorResumeNext 或者 onErrorReturnItem
+     * http://cn.voidcc.com/question/p-vukjpiee-ho.html(RxJava：如何处理zip运算符的错误?)
+     * 一个返回 ObservableSource ，一个返回 T
+     */
+    static void do8() {
+        Observable<ResponseEntity1> just1 = Observable.just(new ResponseEntity1("1")).flatMap(new Function<ResponseEntity1, ObservableSource<ResponseEntity1>>() {
+            @Override
+            public ObservableSource<ResponseEntity1> apply(ResponseEntity1 responseEntity1) throws Exception {
+                if ("1".equals(responseEntity1.name1)) {
+                    throw new Exception("网络请求发生错误");
+                }
+                return Observable.just(responseEntity1);
+            }
+        }).onErrorReturnItem(new ResponseEntity1("3"));
+
+
+        Observable<ResponseEntity2> just2 = Observable.just(new ResponseEntity2("2"));
+        Observable.zip(just1, just2, new BiFunction<ResponseEntity1, ResponseEntity2, MergeEntity>() {
+            @Override
+            public MergeEntity apply(ResponseEntity1 responseEntity1, ResponseEntity2 responseEntity2) throws Exception {
+                MergeEntity mergeEntity = new MergeEntity();
+                mergeEntity.entity1 = responseEntity1;
+                mergeEntity.entity2 = responseEntity2;
+                return mergeEntity;
+            }
+        }).subscribe(new Observer<MergeEntity>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(MergeEntity mergeEntity) {
+                System.out.println("收到结果" + mergeEntity.toString());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("收到结果" + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    static class ResponseEntity1 {
+        public ResponseEntity1(String name1) {
+            this.name1 = name1;
+        }
+
+        public String name1;
+
+        @Override
+        public String toString() {
+            return "ResponseEntity1{" +
+                    "name1='" + name1 + '\'' +
+                    '}';
+        }
+    }
+
+    static class ResponseEntity2 {
+        public ResponseEntity2(String name2) {
+            this.name2 = name2;
+        }
+
+        public String name2;
+
+        @Override
+        public String toString() {
+            return "ResponseEntity2{" +
+                    "name2='" + name2 + '\'' +
+                    '}';
+        }
+    }
+
+    static class MergeEntity {
+        public ResponseEntity1 entity1;
+        public ResponseEntity2 entity2;
+
+        @Override
+        public String toString() {
+            return "MergeEntity{" +
+                    "entity1=" + entity1 +
+                    ", entity2=" + entity2 +
+                    '}';
+        }
+    }
+
+    //endregion
+
+
     //region  过滤操作符
 
     /**
@@ -364,6 +470,12 @@ public class RxJavaSample {
         });
     }
 
+    //endregion
+
+
+    //region 错误处理
+    //https://github.com/ReactiveX/RxJava/wiki/Error-Handling-Operators
 
     //endregion
+
 }
