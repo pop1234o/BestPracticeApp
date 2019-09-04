@@ -1,8 +1,10 @@
 package com.liyafeng.practice.util;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -14,10 +16,13 @@ import android.os.Process;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.widget.Adapter;
@@ -28,6 +33,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.security.InvalidKeyException;
@@ -781,7 +787,6 @@ public class Util {
      *
      * @param zipFileString ZIP的名称
      * @param outPathString 要解压缩路径
-     * @throws Exception
      */
     public static void unZipFolder(String zipFileString, String outPathString) throws Exception {
         ZipInputStream inZip = new ZipInputStream(new FileInputStream(zipFileString));
@@ -825,9 +830,44 @@ public class Util {
      */
     public void getZipSize(String zipFileString){
 
-        ZipFile zipFile = new ZipFile(zipFileString);
-        int zipCount= zipFile.size();
+        try {
+            ZipFile zipFile = new ZipFile(zipFileString);
+            int zipCount= zipFile.size();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+
+    /**
+     * 判断Activity是否存在
+     * @param context
+     * @param cls
+     * @return
+     */
+    public static boolean isExistMainActivity(Context context, Class<?> cls) {
+        try {
+            Intent intent = new Intent(context, cls);
+            ComponentName cmpName = intent.resolveActivity(context.getPackageManager());
+            boolean flag = false;
+            // 说明系统中存在这个activity
+            if (cmpName != null) {
+                ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                List<ActivityManager.RunningTaskInfo> taskInfoList = am.getRunningTasks(10);
+                for (ActivityManager.RunningTaskInfo taskInfo : taskInfoList) {
+                    // 说明它已经启动了
+                    if (taskInfo.baseActivity.equals(cmpName)) {
+                        flag = true;
+                        break;  //跳出循环，优化效率
+                    }
+                }
+            }
+            return flag;
+        } catch (Exception e) {
+            Log.e("error",e.getMessage());
+        }
+        return false;
     }
 
 
