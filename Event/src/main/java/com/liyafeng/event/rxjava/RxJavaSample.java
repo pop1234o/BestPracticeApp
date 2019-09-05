@@ -52,10 +52,21 @@ import io.reactivex.schedulers.Schedulers;
  * 最后的订阅操作
  * <p>
  * 数据流经过一系列处理被输出，极大方便了复杂的数据流操作
+ * <p>
+ * ===============
+ * <p>
+ * io.reactivex.Flowable: 0..N flows, supporting Reactive-Streams and backpressure  支持背压
+ * io.reactivex.Observable: 0..N flows, no backpressure,   不支持背压
+ * io.reactivex.Single: a flow of exactly 1 item or an error,   发射一个元素
+ * io.reactivex.Completable: a flow without items but only a completion or error signal,
+ * io.reactivex.Maybe: a flow with no items, exactly one item or an error.
  */
 
 public class RxJavaSample {
 
+    static class CommonResponse {
+
+    }
 
     /**
      * https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0 (2.0详细用法)
@@ -79,8 +90,11 @@ public class RxJavaSample {
     }
 
     public static void main(String[] args) {
-        do8();
+        do9();
     }
+
+    //region 创建操作
+
 
     private void observable() {
         ObservableJust.just("").map(new Function<String, Integer>() {
@@ -186,6 +200,9 @@ public class RxJavaSample {
         });
     }
 
+    /**
+     * Flowable
+     */
     private void do2() {
         Flowable.fromCallable(new Callable<String>() {//发布者
             @Override
@@ -234,44 +251,7 @@ public class RxJavaSample {
             }
         });
     }
-
-    void do5() {
-//        Observable.just("").flatMap(new Function<String, ObservableSource<?>>() {
-//            @Override
-//            public ObservableSource<String> apply(String s) throws Exception {
-//                return Observable.just("");
-//            }
-//        }).subscribeOn(Schedulers.newThread())
-//                .observeOn(Schedulers.io())
-//                .doOnNext(new Consumer<String>() {
-//                    @Override
-//                    public void accept(String s) throws Exception {
-//
-//                    }
-//                }).observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<String>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-    }
-
+    //endregion
 
     //region  合并操作符
     // https://blog.csdn.net/jdsjlzx/article/details/52415615 ( RxJava 合并组合两个（或多个）Observable数据源)
@@ -376,7 +356,6 @@ public class RxJavaSample {
 
     //endregion
 
-
     //region  过滤操作符
 
     /**
@@ -431,7 +410,6 @@ public class RxJavaSample {
 
     //endregion
 
-
     //region  订阅操作
 
     /**
@@ -439,7 +417,7 @@ public class RxJavaSample {
      * ===========
      * Observer有四个方法
      * Consumer 可以指定只处理其中的某几个方法
-     *
+     * <p>
      * 有 Consumer参数的 subscribe 返回一个 Disposable对象
      * 而 Observer 参数的 subscribe 无返回值 ， 而在 Observer 里的  onSubscribe方法返回 Disposable对象
      */
@@ -475,13 +453,12 @@ public class RxJavaSample {
 
     /**
      * subscribeWith 和 subscribe 区别
-     *
+     * <p>
      * subscribeWith 可以 替代 subscribe 反之不行
-     *
+     * <p>
      * subscribeWith是返回了 observer对象，里面也调用了subscribe
-     *     subscribe(observer);
-     *     return observer;
-     *
+     * subscribe(observer);
+     * return observer;
      */
     void do7_1() {
         Observable.just(1).subscribe(new Observer<Integer>() {
@@ -529,7 +506,6 @@ public class RxJavaSample {
         });
 
 
-
     }
 
     //endregion
@@ -537,6 +513,92 @@ public class RxJavaSample {
 
     //region 错误处理
     //https://github.com/ReactiveX/RxJava/wiki/Error-Handling-Operators
+
+
+    /**
+     * retry 和retryWhen
+     */
+    static void do9() {
+        Observer<CommonResponse> callback = new Observer<CommonResponse>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(CommonResponse commonResponse) {
+                System.out.println("=====onNext" + commonResponse);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("=====error" + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("=====onComplete");
+            }
+        };
+
+        //这里要在 flatMap 后 retry ，否则retry无效，操作符是顺序执行的
+//        Observable.just(new CommonResponse())
+//                .flatMap(new Function<CommonResponse, ObservableSource<CommonResponse>>() {
+//                    @Override
+//                    public ObservableSource<CommonResponse> apply(CommonResponse commonResponse) throws Exception {
+//                        if (2 - 1 == 1) {
+//                            System.out.println("retry=====");
+//                            throw new Exception("   xxxException");
+//                        }
+//                        return Observable.just(commonResponse);
+//                    }
+//                })
+//                .retry()
+//                .subscribe(callback);
+
+
+        //如果失败，那么重新从1开始发射数据源
+        Observable.fromArray(1, 2, 3, 4, 5)
+                .flatMap(new Function<Integer, ObservableSource<Integer>>() {
+                    @Override
+                    public ObservableSource<Integer> apply(Integer integer) throws Exception {
+                        System.out.println("retry=====" + integer);
+                        if (integer - 2 == 0) {
+                            throw new Exception("   xxxException");
+                        }
+                        return Observable.just(integer);
+                    }
+                })
+                .retry()
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        System.out.println("=====onNext" + integer);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("=====error" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("=====onComplete");
+                    }
+                });
+    }
+
+    /**
+     * rxjava实现刷新token逻辑
+     */
+    static void do9_1() {
+
+    }
 
     //endregion
 

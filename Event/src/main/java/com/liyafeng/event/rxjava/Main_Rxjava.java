@@ -94,13 +94,4 @@ public class Main_Rxjava {
 
     }
 
-    /**
-     * rxjava实现刷新token逻辑
-     *
-     *
-     *
-     *
-     *
-     */
-    void a1(){}
 }

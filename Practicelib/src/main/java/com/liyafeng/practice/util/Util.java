@@ -673,7 +673,7 @@ public class Util {
 
     /**
      * 判断是否在主进程，这样application的oncreate方法中判断可以只初始化一次
-     *
+     * 是否是主进程
      * @param context
      * @return
      */
