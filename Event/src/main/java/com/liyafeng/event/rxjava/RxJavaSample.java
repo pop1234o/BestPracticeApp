@@ -65,7 +65,7 @@ import io.reactivex.schedulers.Schedulers;
 public class RxJavaSample {
 
     static class CommonResponse {
-
+        public int error_code;
     }
 
     /**
@@ -558,46 +558,105 @@ public class RxJavaSample {
 
 
         //如果失败，那么重新从1开始发射数据源
-        Observable.fromArray(1, 2, 3, 4, 5)
-                .flatMap(new Function<Integer, ObservableSource<Integer>>() {
-                    @Override
-                    public ObservableSource<Integer> apply(Integer integer) throws Exception {
-                        System.out.println("retry=====" + integer);
-                        if (integer - 2 == 0) {
-                            throw new Exception("   xxxException");
-                        }
-                        return Observable.just(integer);
-                    }
-                })
-                .retry()
-                .subscribe(new Observer<Integer>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+//        Observable.fromArray(1, 2, 3, 4, 5)
+//                .flatMap(new Function<Integer, ObservableSource<Integer>>() {
+//                    @Override
+//                    public ObservableSource<Integer> apply(Integer integer) throws Exception {
+//                        System.out.println("retry=====" + integer);
+//                        if (integer - 2 == 0) {
+//                            throw new Exception("   xxxException");
+//                        }
+//                        return Observable.just(integer);
+//                    }
+//                })
+//                .retry()
+//                .subscribe(new Observer<Integer>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Integer integer) {
+//                        System.out.println("=====onNext" + integer);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        System.out.println("=====error" + e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        System.out.println("=====onComplete");
+//                    }
+//                });
 
-                    }
 
-                    @Override
-                    public void onNext(Integer integer) {
-                        System.out.println("=====onNext" + integer);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.println("=====error" + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        System.out.println("=====onComplete");
-                    }
-                });
     }
 
     /**
      * rxjava实现刷新token逻辑
+     * <p>
+     * https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Retry.html
      */
     static void do9_1() {
+        Observable.just(new CommonResponse())
+                .flatMap(new Function<CommonResponse, ObservableSource<CommonResponse>>() {
+                    @Override
+                    public ObservableSource<CommonResponse> apply(CommonResponse commonResponse) throws Exception {
+                        //如果过期，走error，走 retryWhen
+                        if (commonResponse.error_code == 401) {
+                            return Observable.error(new IllegalStateException());
+                        }
+                        return Observable.just(commonResponse);
+                    }
+                })
+                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+                        //这里接收到一个 error
+                        //如果这个 ObservableSource 发出一个 正常的item，那么会再次retry上面的Observable
+                        //如果发出一个 error ，那么直接走下面的 onError
+                        return throwableObservable
+                                .flatMap(new Function<Throwable, ObservableSource<?>>() {
+                                    @Override
+                                    public ObservableSource<?> apply(Throwable throwable) throws Exception {
+                                        //不是token过期的Exception ，直接走error
+                                        if (!(throwable instanceof IllegalStateException)) {
+                                            return Observable.error(throwable);
+                                        }
+                                        //如果正在请求，等待一秒再次请求接口
+//                                        return Observable.timer(1000, TimeUnit.MILLISECONDS);
 
+                                        //请求token的  Observable
+                                        return Observable.timer(1000, TimeUnit.MILLISECONDS);
+                                    }
+                                });
+
+
+                    }
+                }).subscribe(new Observer<CommonResponse>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(CommonResponse commonResponse) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     //endregion
