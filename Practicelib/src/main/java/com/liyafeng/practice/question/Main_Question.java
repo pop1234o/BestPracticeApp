@@ -702,4 +702,12 @@ public class Main_Question {
     void a35(){}
 
 
+    /**
+     * https://juejin.im/post/5847f1c4128fe1006c60f355 (时间校准解决方案)
+     *
+     *
+     */
+    void a36(){}
+
+
 }

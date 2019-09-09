@@ -593,6 +593,54 @@ public class RxJavaSample {
 //                });
 
 
+        //两个retryWhen
+        Observable.just(new CommonResponse())
+                .flatMap(new Function<CommonResponse, ObservableSource<CommonResponse>>() {
+                    @Override
+                    public ObservableSource<CommonResponse> apply(CommonResponse commonResponse) throws Exception {
+                        if (2 - 1 == 1) {
+                            System.out.println("retry=====");
+                            throw new IllegalAccessException("   xxxException");
+                        }
+                        return Observable.just(commonResponse);
+                    }
+                })
+                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+                        return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                            @Override
+                            public ObservableSource<?> apply(Throwable throwable) throws Exception {
+                                System.out.println("抛出异常" + throwable);
+                                //token 过期
+                                if (throwable instanceof IllegalArgumentException) {
+                                    //处理过期后返回，再次请求
+                                    return Observable.just(new CommonResponse());
+                                }
+                                return Observable.error(throwable);
+                            }
+                        });
+                    }
+                })
+                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+                        return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                            @Override
+                            public ObservableSource<?> apply(Throwable throwable) throws Exception {
+                                System.out.println("抛出异常" + throwable);
+                                //timestamp过期
+                                if (throwable instanceof IllegalAccessException) {
+                                    //处理过期后返回，再次请求
+                                    return Observable.just(new CommonResponse());
+                                }
+                                return Observable.error(throwable);
+                            }
+                        });
+                    }
+                })
+                .subscribe(callback);
+
     }
 
     /**
