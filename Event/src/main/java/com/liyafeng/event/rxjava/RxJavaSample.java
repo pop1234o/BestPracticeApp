@@ -517,6 +517,15 @@ public class RxJavaSample {
 
     /**
      * retry 和retryWhen
+     * https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Retry.html
+     * ==========区别=========
+     * retry可以是遇到 Observable（被观察者） 调用onError，就立即重试调用 Observable ，使之重新发送数据源
+     * 或者 有重试次数， 或者 一个 Predicate来判断是否重试
+     *
+     * 而 retryWhen 接收一个可以发送 Throwable 的被观察者 Observable<Throwable> throwableObservable
+     * 返回一个被观察者 ObservableSource<?> ，如果这个 ObservableSource 最终发射了 error，那么整体就走error
+     * 如果发射了一个正常的数据源，那么会重试 最初的 Observable
+     *
      */
     static void do9() {
         Observer<CommonResponse> callback = new Observer<CommonResponse>() {
@@ -558,39 +567,45 @@ public class RxJavaSample {
 
 
         //如果失败，那么重新从1开始发射数据源
-//        Observable.fromArray(1, 2, 3, 4, 5)
-//                .flatMap(new Function<Integer, ObservableSource<Integer>>() {
-//                    @Override
-//                    public ObservableSource<Integer> apply(Integer integer) throws Exception {
-//                        System.out.println("retry=====" + integer);
-//                        if (integer - 2 == 0) {
-//                            throw new Exception("   xxxException");
-//                        }
-//                        return Observable.just(integer);
-//                    }
-//                })
-//                .retry()
-//                .subscribe(new Observer<Integer>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Integer integer) {
-//                        System.out.println("=====onNext" + integer);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        System.out.println("=====error" + e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        System.out.println("=====onComplete");
-//                    }
-//                });
+        Observable.fromArray(1, 2, 3, 4, 5)
+                .flatMap(new Function<Integer, ObservableSource<Integer>>() {
+                    @Override
+                    public ObservableSource<Integer> apply(Integer integer) throws Exception {
+                        System.out.println("retry=====" + integer);
+                        if (integer - 2 == 0) {
+                            throw new Exception("   xxxException");
+                        }
+                        return Observable.just(integer);
+                    }
+                })
+                .retry(2, new Predicate<Throwable>() {
+                    @Override
+                    public boolean test(Throwable throwable) throws Exception {
+                        //如果返回true，retry应该再次订阅和镜像原始的Observable，如果返回false，retry会将最新的一个onError通知传递给它的观察者。
+                        return false;
+                    }
+                })
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        System.out.println("=====onNext" + integer);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("=====error" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("=====onComplete");
+                    }
+                });
 
 
         //两个retryWhen
