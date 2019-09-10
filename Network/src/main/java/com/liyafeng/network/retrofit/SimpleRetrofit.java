@@ -8,8 +8,8 @@ package com.liyafeng.network.retrofit;
  * 原理就是用反射读取接口中的方法，还有上面的注解
  * 然后拼凑成url，header，底层使用okhttp进行请求
  * 返回的时候可以自定义解析器，将response body解析成javabean
- *
- *
+ *  ------------
+ * retrofit中如果http非200 返回的throwable 都是一个对象，只能读取一次responseBody
  */
 
 public class SimpleRetrofit {

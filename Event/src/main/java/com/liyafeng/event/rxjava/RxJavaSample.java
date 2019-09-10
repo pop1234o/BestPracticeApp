@@ -65,6 +65,8 @@ import io.reactivex.schedulers.Schedulers;
  * 如果一系列数据发送，如果发送了一个error，那么后面的数据就不会被发送
  * ---------
  * rxjava数据流是根据操作符的先后顺序来的
+ * ----------
+ *
  *
  */
 
