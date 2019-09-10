@@ -2207,9 +2207,29 @@ public class AndroidFramework {
      * <p>
      * QQ空间15年写的热修复原理文章
      * https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=400118620&idx=1&sn=b4fdd5055731290eef12ad0d17f39d4a&scene=1&srcid=1106Imu9ZgwybID13e7y2nEi#wechat_redirect%20%20%20da
+     *
+     *
+     * https://www.jianshu.com/p/b9ed58405ded （安卓开发热修复技术原理及选型）
      * <p>
      * 各个热修复方案比较
      * https://www.jianshu.com/p/eec0ab6800a4
+     *
+     * http://www.tinkerpatch.com/Docs/intro （为什么使用 Tinker？各种热修复比较
+     *
+     * （Andfix开源版本	阿里Hotfix 1.X	阿里Hotfix最新版 (Sophix) 对比）
+     * https://help.aliyun.com/document_detail/93825.html?spm=a2c4g.11186623.6.581.492f140cHZJPT6 （Android SDK稳健接入参考）
+     *
+     * （阿里sophix 热修复方案比较）
+     * https://help.aliyun.com/document_detail/51416.html?spm=a2c4g.11186623.6.543.37cd741eXOsie5
+     *
+     * （ 安卓App热补丁动态修复技术介绍 -QQ空间团队）
+     * https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=400118620&idx=1&sn=b4fdd5055731290eef12ad0d17f39d4a
+     *
+     * （Android热更新方案Robust）
+     * https://tech.meituan.com/2016/09/14/android-robust.html
+     *
+     * （微信Android热补丁实践演进之路）
+     * https://github.com/WeMobileDev/article/blob/master/%E5%BE%AE%E4%BF%A1Android%E7%83%AD%E8%A1%A5%E4%B8%81%E5%AE%9E%E8%B7%B5%E6%BC%94%E8%BF%9B%E4%B9%8B%E8%B7%AF.md#rd
      */
     public void a13() {
         /**
