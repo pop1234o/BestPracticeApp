@@ -704,7 +704,10 @@ public class Main_Question {
 
     /**
      * https://juejin.im/post/5847f1c4128fe1006c60f355 (时间校准解决方案)
-     *
+     * 客户端在header 传timestamp给服务端，服务端校验时间不准，返回http code是200或者4xx都行
+     * 我们拿到body，获取到errorcode和timestamp(这个是服务端接口的返回时间) ,然后和本地时间做差
+     * 然后记录这个差值，在将当前时间加上差值时间去再次请求。
+     * 如果并发也没关系，顶多每次回来都更新时间差，而不用管其他接口，只管自己接口重新请求即可
      *
      */
     void a36(){}
