@@ -60,6 +60,12 @@ import io.reactivex.schedulers.Schedulers;
  * io.reactivex.Single: a flow of exactly 1 item or an error,   发射一个元素
  * io.reactivex.Completable: a flow without items but only a completion or error signal,
  * io.reactivex.Maybe: a flow with no items, exactly one item or an error.
+ *
+ * ========================
+ * 如果一系列数据发送，如果发送了一个error，那么后面的数据就不会被发送
+ * ---------
+ * rxjava数据流是根据操作符的先后顺序来的
+ *
  */
 
 public class RxJavaSample {
@@ -567,22 +573,36 @@ public class RxJavaSample {
 
 
         //如果失败，那么重新从1开始发射数据源
-        Observable.fromArray(1, 2, 3, 4, 5)
+        Observable.fromArray(2,3,4,5)
                 .flatMap(new Function<Integer, ObservableSource<Integer>>() {
                     @Override
                     public ObservableSource<Integer> apply(Integer integer) throws Exception {
-                        System.out.println("retry=====" + integer);
+                        System.out.println("apply=====" + integer);
                         if (integer - 2 == 0) {
                             throw new Exception("   xxxException");
                         }
                         return Observable.just(integer);
                     }
                 })
-                .retry(2, new Predicate<Throwable>() {
+                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+
+                        return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+                            @Override
+                            public ObservableSource<?> apply(Throwable throwable) throws Exception {
+                                System.out.println("retryWhen=====" + throwable);
+                                return Observable.error(throwable);
+                            }
+                        });
+                    }
+                })
+                .retry(1, new Predicate<Throwable>() {
                     @Override
                     public boolean test(Throwable throwable) throws Exception {
+                        System.out.println("retry=====" + throwable);
                         //如果返回true，retry应该再次订阅和镜像原始的Observable，如果返回false，retry会将最新的一个onError通知传递给它的观察者。
-                        return false;
+                        return true;
                     }
                 })
                 .subscribe(new Observer<Integer>() {
@@ -609,52 +629,52 @@ public class RxJavaSample {
 
 
         //两个retryWhen
-        Observable.just(new CommonResponse())
-                .flatMap(new Function<CommonResponse, ObservableSource<CommonResponse>>() {
-                    @Override
-                    public ObservableSource<CommonResponse> apply(CommonResponse commonResponse) throws Exception {
-                        if (2 - 1 == 1) {
-                            System.out.println("retry=====");
-                            throw new IllegalAccessException("   xxxException");
-                        }
-                        return Observable.just(commonResponse);
-                    }
-                })
-                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
-                    @Override
-                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
-                        return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
-                            @Override
-                            public ObservableSource<?> apply(Throwable throwable) throws Exception {
-                                System.out.println("抛出异常" + throwable);
-                                //token 过期
-                                if (throwable instanceof IllegalArgumentException) {
-                                    //处理过期后返回，再次请求
-                                    return Observable.just(new CommonResponse());
-                                }
-                                return Observable.error(throwable);
-                            }
-                        });
-                    }
-                })
-                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
-                    @Override
-                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
-                        return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
-                            @Override
-                            public ObservableSource<?> apply(Throwable throwable) throws Exception {
-                                System.out.println("抛出异常" + throwable);
-                                //timestamp过期
-                                if (throwable instanceof IllegalAccessException) {
-                                    //处理过期后返回，再次请求
-                                    return Observable.just(new CommonResponse());
-                                }
-                                return Observable.error(throwable);
-                            }
-                        });
-                    }
-                })
-                .subscribe(callback);
+//        Observable.just(new CommonResponse())
+//                .flatMap(new Function<CommonResponse, ObservableSource<CommonResponse>>() {
+//                    @Override
+//                    public ObservableSource<CommonResponse> apply(CommonResponse commonResponse) throws Exception {
+//                        if (2 - 1 == 1) {
+//                            System.out.println("retry=====");
+//                            throw new IllegalAccessException("   xxxException");
+//                        }
+//                        return Observable.just(commonResponse);
+//                    }
+//                })
+//                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+//                    @Override
+//                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+//                        return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+//                            @Override
+//                            public ObservableSource<?> apply(Throwable throwable) throws Exception {
+//                                System.out.println("抛出异常" + throwable);
+//                                //token 过期
+//                                if (throwable instanceof IllegalArgumentException) {
+//                                    //处理过期后返回，再次请求
+//                                    return Observable.just(new CommonResponse());
+//                                }
+//                                return Observable.error(throwable);
+//                            }
+//                        });
+//                    }
+//                })
+//                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+//                    @Override
+//                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+//                        return throwableObservable.flatMap(new Function<Throwable, ObservableSource<?>>() {
+//                            @Override
+//                            public ObservableSource<?> apply(Throwable throwable) throws Exception {
+//                                System.out.println("抛出异常" + throwable);
+//                                //timestamp过期
+//                                if (throwable instanceof IllegalAccessException) {
+//                                    //处理过期后返回，再次请求
+//                                    return Observable.just(new CommonResponse());
+//                                }
+//                                return Observable.error(throwable);
+//                            }
+//                        });
+//                    }
+//                })
+//                .subscribe(callback);
 
     }
 
