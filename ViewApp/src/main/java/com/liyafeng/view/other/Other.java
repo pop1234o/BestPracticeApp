@@ -433,4 +433,31 @@ public class Other {
      */
     void a18(){}
 
+
+    /**
+     * ViewStub 的使用
+     * https://developer.android.google.cn/reference/android/view/ViewStub
+     * A ViewStub is an invisible, zero-sized View that can be used to lazily inflate layout resources at runtime.
+     * 它不可见，不占内存空间的一个View，在运行时可以懒加载
+     * 当调用  visible, or  inflate() 的时候，布局被填充（创建）
+     * setVisibility(int) or inflate() 被调用才会在视图树中
+     *
+     *  <ViewStub android:id="@+id/stub"  ViewStub的id
+     *                android:inflatedId="@+id/subTree" 布局创建后的id
+     *                android:layout="@layout/mySubTree"
+     *                android:layout_width="120dip"  这个参数会应用在布局的最外层
+     *                android:layout_height="40dip" />
+     *
+     *  ViewStub stub = findViewById(R.id.stub);
+     *  View inflated = stub.inflate();
+     *
+     * 调用两次inflate()的话会导致异常。
+     * setVisibility 中其实也调用了  inflate
+     *
+     * =======原理=======
+     * 它继承自View，里面没任何内容，只有在 inflate后 getParent()，把布局创建后加入，把自己从 Parent中移除
+     *
+     */
+    void a19(){}
+
 }
