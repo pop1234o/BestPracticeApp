@@ -324,33 +324,20 @@ public class Main_Question {
      * 问题一、Android支持哪些cpu架构？
      *
      * 答案很容易搜索到：android目前支持7种架构
-     *
      * x86_64
-     *
      * x86
-     *
      * mips64
-     *
      * mips
-     *
      * armeabi-v7a
-     *
      * armeabi
-     *
      * arm64-v8a
-     *
      * 问题二、系统是怎么查找so库的呢？
-     *
      * 查找so库规则：
-     *
      *       运行的时候，系统会到Jnidirs目录里查找so库，会根据当前平台架构查找对应的目录。这里面有一个规则是这个问题的元凶。当你只提供了armeabi目录时，armeabi-v7a、arm64-v8a架构的程序都会去armeabi里寻找，而当你同时也提供了armeabi-v7a、armeabi-v8a目录，而里面又不存在对应的so库时，系统就不会再去armeabi里面寻找了，直接找不到报错。
-     *
      *       而签名包里面这七个目录都有，这个问题后面讨论。
      *
      * 验证猜想：
-     *
      *       将app-release.apk使用打包软件打开，删除其中的armeabi-v7a目录，发现联想手机可以正常运行了（去armeabi里面寻找了）。移除x86_64文件夹，模拟器可以正常运行（去x86里面寻找了）。
-     *
      *  问题三、签名包为什么七个目录全都有？
      *
      *       对应Jnidirs目录中的七个目录。打开签名包，发现这七个目录都有。奇怪的是我的项目里只有x86、armeabi和arm64-v8a三个类型的so库。
@@ -358,8 +345,103 @@ public class Main_Question {
      *
      * 查阅许多文档都说x86是兼容armeabi的so文件的，验证时必须保证x86文件夹为空，或者根本没有x86文件夹)
      *
+     *  ============配置===========
+     *  需要写到app下，不能写在模块的gradle配置中，否则会全部abi都引用
+     * ndk {
+     * abiFilters “armeabi-v7a”
+     * }
+     *
+     * =============abi兼容=============
+     * https://blog.csdn.net/YoungHong1992/article/details/90083194
+     * ABI目录（横向）和cpu（纵向）	armeabi	armeabi-v7a	arm64-v8a	mips	mips64	x86	x86_64
+     * ARMv5	                支持
+     * ARMv7	                支持	    支持
+     * ARMv8	                支持	    支持	        支持
+     * MIPS				        支持
+     * MIPS64				                                    支持	    支持
+     * x86	                    支持	    支持				                        支持
+     * x86_64	                支持					                            支持	支持
+     *
      */
     void a20(){}
+
+
+    /**
+     * ==============native crash问题===========
+     * https://cloud.tencent.com/developer/article/1192001 （ Android基础开发实践：如何分析Native Crash）
+     *
+     * Android的Zygote在Fork进程的时候，
+     * 都会在InitNonZygoteOrPostFork时调用 StartSignalCatcher 创建一个新的SignalCatcher线程，这个线程的作用就是用来捕获Linux信号。
+     * 这个线程也是通过pthread_create创建，运行起来之后，会一直等待信号的到来：
+     *
+     * StartSignalCatcher只处理两种类型的信号，一种是SIGQUIT，一种是SIGUSR1
+     * 除了SignalCatcher，Runtime在启动的时候会创建一个FaultManager
+     * FaultManager则会捕获更多真正意义上的信号(SIGABRT/SIGBUS/SIGFPE/SIGILL/SIGSEGV)
+     *
+     * Linux中对信号的定义在signum.h文件中
+     * https://users.unvanquished.net/~modi/code/include/x86_64-linux-gnu/bits/signum.h.html
+     *
+     * define SIGILL		4	/* Illegal instruction (ANSI).  *
+     * define SIGTRAP		5    /* Trace trap (POSIX).  *
+     * define SIGABRT		6    /* Abort (ANSI).  *
+     * define SIGIOT		6    /* IOT trap (4.2 BSD).  *
+     * define SIGBUS		7    /* BUS error (4.2 BSD).  *
+     * define SIGFPE		8    /* Floating-point exception (ANSI).  *
+     * define SIGKILL		9    /* Kill, unblockable (POSIX).  *
+     * define SIGUSR1		10    /* User-defined signal 1 (POSIX).  *
+     * define SIGSEGV		11    /* Segmentation violation (ANSI).  *
+     * define SIGUSR2		12    /* User-defined signal 2 (POSIX).  *
+     * define SIGPIPE		13    /* Broken pipe (POSIX).  *
+     * define SIGALRM		14    /* Alarm clock (POSIX).  *
+     * define SIGTERM		15    /* Termination (ANSI).  *
+     * define SIGSTKFLT	16    /* Stack fault.  *
+     * define SIGCLD
+     * SIGCHLD    /* Same as SIGCHLD (System V).  *
+     * define SIGCHLD		17    /* Child status has changed (POSIX).  *
+     * define SIGCONT		18    /* Continue (POSIX).  *
+     * define SIGSTOP		19    /* Stop, unblockable (POSIX).  *
+     * define SIGTSTP		20    /* Keyboard stop (POSIX).  *
+     * define SIGTTIN		21    /* Background read from tty (POSIX).  *
+     * define SIGTTOU		22    /* Background write to tty (POSIX).  *
+     * define SIGURG		23    /* Urgent condition on socket (4.2 BSD).  *
+     * define SIGXCPU		24    /* CPU limit exceeded (4.2 BSD).  *
+     * define SIGXFSZ		25    /* File size limit exceeded (4.2 BSD).  *
+     * define SIGVTALRM	26    /* Virtual alarm clock (4.2 BSD).  *
+     * define SIGPROF		27    /* Profiling alarm clock (4.2 BSD).  *
+     * define SIGWINCH	28    /* Window size change (4.3 BSD, Sun).  *
+     * define SIGPOLL
+     * SIGIO    /* Pollable event occurred (System V).  *
+     * define SIGIO		29    /* I/O now possible (4.2 BSD).  *
+     * define SIGPWR		30    /* Power failure restart (System V).  *
+     * define SIGSYS		31    /* Bad system call.  *
+     * define SIGUNUSED	31
+     *
+     * SIG是前缀 ，signal , 后面是名称
+     * 1. SIGBUS：总线出错，比如数据对齐；
+     * 2. SIGFPE：错误的运算操作，比如除零；
+     * 3. SIGILL：出现了非法指令；
+     * 4. SIGSEGV：访问了一个不合法内存地址，空指针或者内存越界导致的。
+     *
+     * ===========SIGSEGV 错误=============
+     * https://blog.csdn.net/liangfeng093/article/details/79401351 （ 集成ndk导致的SIGSEGV(SEGV_MAPERR)）
+     * https://stackmirror.com/questions/1000002 ( What is SEGV_MAPERR?)
+     *
+     * SEGV = segmentation violation（内存段异常）an error that results from an invalid memory access
+     * 有两种 SEGV
+     * SEGV_ACCERR : 内存段是只读的，但是你却写入
+     * SEGV_MAPERR : 内存指向一个空指针或者一个错误的地址
+     *
+     * 原因：配置ndk后，jinlibs 文件夹中还存在其它架构的.so库。手机会优先加载自身架构的.so库
+     * jinlibs和gradle中配置的要一致，最好只要 v7a 和 v8a ，如果只要v7a在有的oppo v8a手机上会有兼容性问题，就抛出这个错误
+     *
+     *
+     *
+     *
+     */
+    void a20_1(){
+
+
+    }
 
 
     /**
@@ -719,5 +801,7 @@ public class Main_Question {
      *
      */
     void a37(){}
+
+
 
 }
