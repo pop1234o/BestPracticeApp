@@ -712,5 +712,12 @@ public class Main_Question {
      */
     void a36(){}
 
+    /**
+     * Rxjava 请求的问题，一个请求已经dispose() ，如果再发生异常，比如IO异常等
+     * 那么Rxjava是不会捕获这个异常的，所以我们要设置一个全局捕获rxjava异常的方法
+     * RxJavaPlugins.setErrorHandler()
+     *
+     */
+    void a37(){}
 
 }
