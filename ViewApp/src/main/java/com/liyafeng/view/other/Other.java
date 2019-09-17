@@ -460,4 +460,24 @@ public class Other {
      */
     void a19(){}
 
+
+    /**
+     * 查看 cpu架构 / cpu abi
+     * adb shell
+     * cat /proc/cpuinfo
+     *
+     * Processor	: AArch64 Processor rev 4 (aarch64) 这个就是arm64-v8a
+     *
+     * processor	: 0
+     * BogoMIPS	: 38.40
+     * Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32
+     * CPU implementer	: 0x51
+     * CPU architecture: 8
+     * CPU variant	: 0xa
+     * CPU part	: 0x801
+     * CPU revision	: 4
+     *
+     */
+    void a20(){}
+
 }
