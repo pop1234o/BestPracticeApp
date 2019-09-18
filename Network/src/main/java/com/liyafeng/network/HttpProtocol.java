@@ -748,6 +748,11 @@ public class HttpProtocol {
  * <p>
  * HASH算法：MD5，SHA1，SHA256    （用于生成摘要）
  * 内容可能很多，对内容加密，还不如对 摘要进行加密，hash后的内容叫做摘要
+ *
+ * SHA1 :算法生成 http://search.maven.org/remotecontent?filepath=commons-codec/commons-codec/1.11/commons-codec-1.11.jar
+ * http://commons.apache.org/proper/commons-codec/
+ * String sha1 = DigestUtils.sha1Hex(bytes)
+ *
  * <p>
  * ================VPN===============================================
  * 中国的GFW可以通过证书黑名单来拦截请求
