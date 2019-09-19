@@ -276,7 +276,15 @@ public class Git_Main {
     /**
      * https://help.github.com/articles/removing-sensitive-data-from-a-repository/
      * https://blog.csdn.net/meteor1113/article/details/4407209
-     * git 永久删除
+     * https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2 (Git 工具 - 重写历史)
+     * git 永久删除文件和永久删除文件commit
+     *
+     * ==============git永久删除文件=========
+     * 比如某次commit中存在大文件，或者敏感文件
+     * $ git filter-branch --tree-filter 'rm -f passwords.txt' HEAD
+     *
+     * --tree-filter选项会在每次检出项目时先执行指定的命令然后重新提交结果
+     *
      */
     void fun3() {
     }
