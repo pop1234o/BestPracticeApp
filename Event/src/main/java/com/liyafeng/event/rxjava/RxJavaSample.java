@@ -421,13 +421,16 @@ public class RxJavaSample {
     //region  订阅操作
 
     /**
-     * Disposable.subscribe 参数  Consumer 和 Observer区别
-     * ===========
+     * Disposable.subscribe 参数
+     * =======Consumer 和 Observer 区别====
      * Observer有四个方法
      * Consumer 可以指定只处理其中的某几个方法
      * <p>
-     * 有 Consumer参数的 subscribe 返回一个 Disposable对象
+     * 有 Consumer 参数的 subscribe 返回一个 Disposable对象
      * 而 Observer 参数的 subscribe 无返回值 ， 而在 Observer 里的  onSubscribe方法返回 Disposable对象
+     *
+     * Consumer里面其实包了一层 LambdaObserver ，然后还是调用 Observer参数的那个方法
+     * LambdaObserver里面判断如果dispose了就不调用 onError onNext等回调了
      */
     void do7() {
         Disposable subscribe = Observable.just(1).subscribe(new Consumer<Integer>() {
