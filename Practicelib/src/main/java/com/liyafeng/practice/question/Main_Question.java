@@ -369,7 +369,12 @@ public class Main_Question {
     /**
      * ==============native crash问题===========
      * https://cloud.tencent.com/developer/article/1192001 （ Android基础开发实践：如何分析Native Crash）
-     * http://www.droidsec.cn/%E5%B8%B8%E8%A7%81android-native%E5%B4%A9%E6%BA%83%E5%8F%8A%E9%94%99%E8%AF%AF%E5%8E%9F%E5%9B%A0/ （常见android-native崩溃及错误原因）
+     *
+     * （常见android-native崩溃及错误原因）
+     * http://www.droidsec.cn/%E5%B8%B8%E8%A7%81android-native%E5%B4%A9%E6%BA%83%E5%8F%8A%E9%94%99%E8%AF%AF%E5%8E%9F%E5%9B%A0/
+     *
+     * https://www.jianshu.com/p/841c18c6e18d （一个关于Android支持64位CPU架构升级的“锅”）
+     *
      *
      * Android的Zygote在Fork进程的时候，
      * 都会在InitNonZygoteOrPostFork时调用 StartSignalCatcher 创建一个新的SignalCatcher线程，这个线程的作用就是用来捕获Linux信号。
@@ -481,6 +486,9 @@ public class Main_Question {
      * 但往往abort的位置是在系统库中，就不好定位了，需要多查看系统API的使用方法，检查是否使用不当。
      *
      *
+     * ==============发生错误后保存位置=======
+     * E//system/bin/tombstoned: Tombstone written to: /data/tombstones/tombstone_05
+     *
      *
      *
      *
@@ -496,7 +504,7 @@ public class Main_Question {
      * SEGV = segmentation violation（内存段异常）an error that results from an invalid memory access
      * 有两种 SEGV
      * SEGV_ACCERR : 内存段是只读的，但是你却写入
-     * SEGV_MAPERR : 内存指向一个空指针或者一个错误的地址
+     * SEGV_MAPERR : 内存指向一个空指针或者一个错误的地址，这时我们向这个地址写入数据，会发生错误
      *
      * 原因：配置ndk后，jinlibs 文件夹中还存在其它架构的.so库。手机会优先加载自身架构的.so库
      * jinlibs和gradle中配置的要一致，最好只要 v7a 和 v8a ，如果只要v7a在有的oppo v8a手机上会有兼容性问题，就抛出这个错误
