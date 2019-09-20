@@ -524,7 +524,8 @@ public class Main_Question {
      * 现象是打开webview就崩溃，而且在魅族手机上
      * 出现路径是在从1.2版本升级到1.3版本 后出现的，1.3版本新支持的arm64-v8a ，之前只支持 armeabi armeabi-v7a
      *
-     * 解决方法是
+     * 解决方法是 删除 [your_package]/data/app_webview/GPUCache 下的所有文件，要递归删除，一般耗时十几毫秒
+     * 这里存放GPU渲染的一些缓存？？
      *
      *
      *
@@ -893,6 +894,44 @@ public class Main_Question {
      *
      */
     void a37(){}
+
+
+    /**
+     * ======== java.util.concurrent.TimeoutException :xxx.finalize timed out after 10 seconds==========
+     * https://blog.csdn.net/a_Chaon/article/details/71908481 ( 从Daemons到finalize timed out after 10 seconds)
+     * https://yq.aliyun.com/articles/225755 （ 再谈Finalizer对象--大型App中内存与性能的隐性杀手）
+     *
+     * java.lang.Daemons  Daemons开始于Zygote进程创建子进程.
+     * 这个进程是负责GC回收的操作，它有四个线程
+     * ReferenceQueueDaemon，对象被GC时，负责将被回收的对象加入回收队列
+     * FinalizerDaemon : 对于重写了成员函数finalize的对象，它们被GC决定回收时，并没有马上被回收，而是被放入到一个队列中，等待FinalizerDaemon守护线程去调用它们的成员函数finalize，然后再被回收。
+     * FinalizerWatchdogDaemon : 调用对象的 finalize时超出一定时间，那么就会退出VM。
+     * HeapTaskDaemon : 堆裁剪守护线程。用来执行裁剪堆的操作，也就是用来将那些空闲的堆内存归还给系统
+     *
+     *
+     * 这个bug就来自于  FinalizerWatchdogDaemon
+     * 如果超过10秒调用
+     *  System.exit(2);
+     *  //0表示正常退出,0以上表示非正常退出.
+     *  private static final int RUNNING = 0;
+     *  private static final int HOOKS = 1;
+     *  private static final int FINALIZERS = 2;
+     *
+     *
+     * ==========java.util.concurrent.TimeoutException: android.view.ThreadedRenderer.finalize() timed out after 10 seconds =======
+     * 网上说api19 以后把webview硬件加速关了就行，但是我发生这个bug的页面根本没有webview
+     *
+     * http://androidxref.com/7.0.0_r1/xref/frameworks/base/core/java/android/view/ThreadedRenderer.java
+     * 他的finalize() 调用了native方法：  private static native void nDeleteProxy(long nativeProxy);
+     * 然后阻塞超过了10秒。。。
+     *
+     * 这个类的作用
+     * Hardware renderer that proxies the rendering to a render thread. Most calls
+     * are currently synchronous.  一个硬件加速的渲染线程。。
+     *
+     * 这个bug也不是必现的，所以解决方法就是尽量优化view布局把，让视图释放的更快些。。
+     */
+    void a38(){}
 
 
 
