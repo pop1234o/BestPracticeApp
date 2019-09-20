@@ -369,6 +369,7 @@ public class Main_Question {
     /**
      * ==============native crash问题===========
      * https://cloud.tencent.com/developer/article/1192001 （ Android基础开发实践：如何分析Native Crash）
+     * http://www.droidsec.cn/%E5%B8%B8%E8%A7%81android-native%E5%B4%A9%E6%BA%83%E5%8F%8A%E9%94%99%E8%AF%AF%E5%8E%9F%E5%9B%A0/ （常见android-native崩溃及错误原因）
      *
      * Android的Zygote在Fork进程的时候，
      * 都会在InitNonZygoteOrPostFork时调用 StartSignalCatcher 创建一个新的SignalCatcher线程，这个线程的作用就是用来捕获Linux信号。
@@ -421,6 +422,72 @@ public class Main_Question {
      * 2. SIGFPE：错误的运算操作，比如除零；
      * 3. SIGILL：出现了非法指令；
      * 4. SIGSEGV：访问了一个不合法内存地址，空指针或者内存越界导致的。
+     *
+     *
+     * 错误信号：11是信号量sigNum，SIGSEGV是信号的名字，SEGV_MAPERR是SIGSEGV下的一种类型。
+     * 寄存器快照：进程收到错误信号时保存下来的寄存器快照，其中PC寄存器存储的就是下个要运行的指令（出错的位置）。
+     * 调用栈：#00是栈顶，#02是栈底，#02调用#01调用#00方法，#00的方法时libspirit.so中的Spirit类下的testCrash方法，出错的地方是testCrash方法内汇编偏移17（不是行号哦！）
+     *
+     * 比如bugly上的日志
+     * #00 pc 0001aa2c /system/lib/libc.so (abort+63) [armeabi-v7a]
+     * #00 pc 000000000001e158 /system/lib64/libc.so (abort+104) [arm64-v8a]
+     * #01 pc 000000000044e750 /system/lib64/libart.so (art::Runtime::Abort(char const*)+552) [arm64-v8a]
+     * #02 pc 00000000005445a8 /system/lib64/libart.so (android::base::LogMessage::~LogMessage()+996) [arm64-v8a]
+     *
+     *
+     * ===============什么是错误信号=========
+     * Android本质就是一个Linux，信号跟Linux信号是同一个东西，信号本身是用于进程间通信的没有正确错误之分，但官方给一些信号赋予了特定的含义及特定处理动作，
+     * 通常我们说的错误信号有5个（Bugly全部都能上报），系统默认处理就是dump出堆栈，并退出进程：
+     *
+     * 1、硬件发生异常，即硬件(通常是CPU)检测到一个错误条件并通知Linux内核，内核处理该异常，给相应的进程发送信号。
+     * 硬件异常的例子包括执行一条异常的机器语言指令，诸如，被0除，或者引用了无法访问的内存区域。大部分信号如果没有被进程处理，
+     * 默认的操作就是杀死进程。在本文中，SIGSEGV(段错误)，SIGBUS(内存访问错误)，SIGFPE(算数异常)属于这种信号
+     *
+     * 2、进程调用的库发现错误，给自己发送中止信号，默认情况下，该信号会终止进程。在本文中，SIGABRT(中止进程)属于这种信号。
+     *
+     * 3、用户（手贱）或第三方App（恶意）通过kill-信号 pid的方式给错误进程发送，这时signal中的si_code会小于0。
+     *
+     * 比如：空指针，野指针，数组越界 都会发送内存段错误的信号 SIGSEGV
+     *
+     * int* p = 0; //空指针
+     * *p = 1; //写空指针指向的内存，产生SIGSEGV信号，造成Crash
+     *
+     * int* p; //野指针，未初始化，其指向的地址通常是随机的
+     * *p = 1; //写野指针指向的内存，有可能不会马上Crash，而是破坏了别处的内存
+     *
+     * int arr[10];
+     * arr[10] = 1; //数组越界，有可能不会马上Crash，而是破坏了别处的内存
+     *
+     *
+     * 缓冲区溢出
+     * char szBuffer[10];
+     * //由于函数栈是从高地址往低地址创建，而sprintf是从低地址往高地址打印字符，
+     * //如果超出了缓冲区的大小，函数的栈帧会被破坏，在函数返回时会跳转到未知的地址上，
+     * //基本上都会造成访问异常，从而产生SIGABRT或SIGSEGV，造成Crash
+     * sprintf(szBuffer, "Stack Buffer Overrun!111111111111111"  "111111111111111111111");
+     * 通过往程序的缓冲区写超出其长度的内容，造成缓冲区的溢出，从而破坏函数调用的堆栈，修改函数调用的返回地址。如果不是黑客故意攻击，
+     * 那么最终函数调用很可能会跳转到无法读写的内存区域，产生段错误信号SIGSEGV或SIGABRT，造成程序崩溃，并生成core文件。
+     *
+     *
+     * 主动抛出异常
+     * if ((*env)->ExceptionOccurred(env) != 0) {
+     *          //动态库在内部运行出现错误时，大都会主动abort，终止运行
+     *          abort(); //给当前进程发送信号SIGABRT
+     * }
+     *
+     * 解决方法
+     * 查看堆栈找出abort的原因
+     * 如果是程序主动abort的，通过堆栈加源码还是很好定位的，
+     * 但往往abort的位置是在系统库中，就不好定位了，需要多查看系统API的使用方法，检查是否使用不当。
+     *
+     *
+     *
+     *
+     *
+     * ============SIGFPE===================
+     * int a = 1;
+     * int b = a / 0; //整数除以0，产生 SIGFPE 信号，导致Crash
+     *
      *
      * ===========SIGSEGV 错误=============
      * https://blog.csdn.net/liangfeng093/article/details/79401351 （ 集成ndk导致的SIGSEGV(SEGV_MAPERR)）
