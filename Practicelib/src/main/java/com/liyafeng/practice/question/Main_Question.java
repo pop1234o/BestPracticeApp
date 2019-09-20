@@ -510,6 +510,23 @@ public class Main_Question {
      * jinlibs和gradle中配置的要一致，最好只要 v7a 和 v8a ，如果只要v7a在有的oppo v8a手机上会有兼容性问题，就抛出这个错误
      *
      *
+     * ==============webview闪退问题===========
+     * https://www.jianshu.com/p/841c18c6e18d （一个关于Android支持64位CPU架构升级的“锅”）
+     * https://blog.csdn.net/tomatomas/article/details/78624427 （WebView闪退）
+     *
+     * signal: 11 (SIGSEGV), code: 1 (SEGV_MAPERR) fault addr: 0xa08c45e000 发生在
+     *
+     * #00 pc 0000000000a20384 /vendor/lib64/libllvm-glnext.so [arm64-v8a]
+     * #05 pc 00000000000c4404 /vendor/lib64/egl/libGLESv2_adreno.so (EsxContext::GlProgramBinary(unsigned int, unsigned int, void const*, int)+360) [arm64-v8a]
+     * #07 pc 00000000023fe4b4 /system/app/webview/webview.apk
+     * #26 pc 0000000000077980 /system/lib64/libc.so (__pthread_start(void*)+36) [arm64-v8a]
+     *
+     * 现象是打开webview就崩溃，而且在魅族手机上
+     * 出现路径是在从1.2版本升级到1.3版本 后出现的，1.3版本新支持的arm64-v8a ，之前只支持 armeabi armeabi-v7a
+     *
+     * 解决方法是
+     *
+     *
      *
      *
      */
