@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
+public class Main_preformance {
 
     /**
      * 1,千万不要在循环中使用+操作字符串，会产生大量String对象，要用StringBuilder
@@ -14,6 +14,8 @@ public class MainActivity extends Activity {
      * 4.尽量避免轮询（自旋），可以用观察者模式来解决
      * <p>
      * <p>
+     *
+     *     https://www.jianshu.com/p/31b1a4aef550( Android App性能评测分析－cpu占用篇)
      * =================monkey 压测=============
      * https://developer.android.google.cn/studio/test/monkey.html
      * <p>
@@ -34,6 +36,10 @@ public class MainActivity extends Activity {
      * ========================anr=================
      * <p>
      * http://duanqz.github.io/2015-10-12-ANR-Analysis
+     *
+     *
+     * =================查看cpu占用=========
+     * adb shell top -d 1 | grep com.tal.monkey
      *
      * @param savedInstanceState
      */
