@@ -15,7 +15,9 @@ public class Main_preformance {
      * <p>
      * <p>
      *
-     *     https://www.jianshu.com/p/31b1a4aef550( Android App性能评测分析－cpu占用篇)
+     * https://www.jianshu.com/p/31b1a4aef550( Android App性能评测分析－cpu占用篇)
+     * https://developer.android.google.cn/studio/profile/cpu-profiler?hl=zh-cn (使用 CPU Profiler 检查 CPU 活动)
+     *
      * =================monkey 压测=============
      * https://developer.android.google.cn/studio/test/monkey.html
      * <p>
