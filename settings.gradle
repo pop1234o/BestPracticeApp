@@ -1,2 +1,2 @@
-include ':Algorithm', ':Practicelib', ':Architecture', ':ViewApp',':Event'
+include ':Algorithm', ':Practicelib', ':Architecture', ':ViewApp',':Event',':JNI'
 //':ViewApp', ':Event', ':Video', ':BuildTool', ':Network', ':Practicelib', ':Orm', ':Algorithm', ':Performance', ':Concurrent', ':Architecture', ':DependencyInjection', ':ImageLoader', ':HotFix', ':hotfixcustomgradleplugin', ':JNI'
