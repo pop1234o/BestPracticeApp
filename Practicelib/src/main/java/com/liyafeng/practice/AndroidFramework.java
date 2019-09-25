@@ -2053,6 +2053,12 @@ public class AndroidFramework {
      * 周期运动	@android:anim/cycle_interpolator	CycleInterpolator
      * 减速	@android:anim/decelerate_interpolator	DecelerateInterpolator
      * 匀速	@android:anim/linear_interpolator
+     *
+     *
+     * android.support.v4.view.animation 中有一些新的
+     * LinearOutSlowInInterpolator
+     *
+     * com.android.support:interpolator:28.0.0
      * ---------------------
      * 作者：Carson_Ho
      * 来源：CSDN
