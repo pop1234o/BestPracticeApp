@@ -483,6 +483,8 @@ public class Other {
 
     /**
      * ===========自定义阴影控件，shadowlayout======
+     * http://www.excel-jiqiao.com/subject/lavikftx.html( 自定义控件绘制(Paint之阴影发光效果))
+     *
      * 阴影的定义
      * 形状：先假设光源从控件的正上方照射下来，那么阴影的形状肯定和控件一致
      *
@@ -497,9 +499,117 @@ public class Other {
      *
      * 阴影颜色：
      *
+     * 我们实现的关键是
+     * Paint.setShadowLayer(shadowRadius, dx, dy, shadowColor)
+     * 。。。。
+     *
+     * 注意：
+     * 在硬件加速开启的情况下， setShadowLayer() 只支持文字的绘制，文字之外的绘制必须关闭硬件加速才能正常绘制阴影。
+     * 如果 shadowColor 是半透明的，阴影的透明度就使用 shadowColor 自己的透明度；而如果 shadowColor 是不透明的，阴影的透明度就使用 paint 的透明度
+     *
      *
      *
      */
     void a21(){}
+
+
+    /**
+     * ============自定义属性===============
+     * https://www.jianshu.com/p/8844de6addb3 ( Android:自定义view之自定义属性)
+     *
+     * (新建)在res/values/attrs.xml
+     *
+     * 声明属性，一般名称都是类名 ，
+     *     <declare-styleable name="MShadowLayout">
+     *         <attr name="sl_cornerRadius" format="dimension" />
+     *         <attr name="sl_shadowRadius" format="dimension" />
+     *         <attr name="sl_dx" format="dimension" />
+     *         <attr name="sl_dy" format="dimension" />
+     *         <attr name="sl_shadowColor" format="color" />
+     *     </declare-styleable>
+     *
+     * format 有
+     *
+     * (1). reference：参考某一资源ID
+     * 属性使用：
+     * <ImageView android:background = "@drawable/图片ID"/>
+     *
+     * (2). color：颜色值
+     * 属性定义：
+     * <attr name = "textColor" format = "color" />
+     * 属性使用：
+     * <TextView android:textColor = "#00FF00" />
+     * (3). boolean：布尔值
+     * 属性定义：
+     * <attr name = "focusable" format = "boolean" />
+     * 属性使用：
+     * <Button android:focusable = "true"/>
+     * (4). dimension：尺寸值**
+     * 属性定义：
+     * <attr name = "layout_width" format = "dimension" />
+     * 属性使用：
+     * <Button android:layout_width = "42dip"/>
+     * (5). float：浮点值
+     * 属性定义：
+     * <attr name = "fromAlpha" format = "float" />
+     * 属性使用：
+     * <alpha android:fromAlpha = "1.0"/>
+     * (6). integer：整型值**
+     * 属性定义：
+     * <attr name = "framesCount" format="integer" />
+     * 属性使用：
+     * `<animated-rotate android:framesCount = "12"/
+     * (7). string：字符串
+     * 属性定义：
+     * <attr name = "text" format = "string" />
+     * 属性使用：
+     * <TextView android:text = "我是文本"/>
+     * (8). fraction：百分数**
+     * 属性定义：
+     * <attr name = "pivotX" format = "fraction" />
+     * 属性使用：
+     * <rotate android:pivotX = "200%"/>
+     *
+     * (9). enum：枚举值
+     * 属性定义：
+     * <declare-styleable name="名称">
+     *         <attr name="orientation">
+     *                     <enum name="horizontal" value="0" />
+     *                    <enum name="vertical" value="1" />
+     *        </attr>
+     * </declare-styleable>
+     * 属性使用：
+     * <LinearLayout android:orientation = "vertical"></LinearLayout>
+     * 注意：枚举类型的属性在使用的过程中只能同时使用其中一个，不能 android:orientation = “horizontal｜vertical"
+     *
+     * (10). flag：位或运算
+     * 属性定义：
+     * <declare-styleable name="名称">
+     *       <attr name="gravity">
+     *                 <flag name="top" value="0x30" />
+     *                 <flag name="bottom" value="0x50" />
+     *                 <flag name="left" value="0x03" />
+     *                 <flag name="right" value="0x05" />
+     *                 <flag name="center_vertical" value="0x10" />
+     *       </attr>
+     * </declare-styleable>
+     * 属性使用：
+     * <TextView android:gravity="bottom|left"/>
+     * 注意：位运算类型的属性在使用的过程中可以使用多个值
+     *
+     * (11). 混合类型：属性定义时可以指定多种类型值
+     * 属性定义：
+     * <declare-styleable name = "名称">
+     *           <attr name = "background" format = "reference|color" />
+     * </declare-styleable>
+     * 属性使用：
+     * <ImageViewandroid:background = "@drawable/图片ID" />
+     * 或者：
+     * <ImageViewandroid:background = "#00FF00" />
+     *   通过上面的学习我们已经知道怎么定义各种类型的属性，以及怎么使用它们，但是我们写好布局文件之后，要在控件中使用这些属性还需要将它解析出来。
+     *
+     *
+     */
+    void a22(){}
 
 }
