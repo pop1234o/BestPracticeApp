@@ -13,6 +13,19 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 
+/**
+ *
+ *    <declare-styleable name="MShadowLayout">
+ *         <attr name="sl_cornerRadius" format="dimension" />
+ *         <attr name="sl_shadowRadius" format="dimension" />
+ *         <attr name="sl_dx" format="dimension" />
+ *         <attr name="sl_dy" format="dimension" />
+ *         <attr name="sl_shadowColor" format="color" />
+ *     </declare-styleable>
+ *
+ *     res/values/attrs/xml下
+ * @author pop
+ */
 public class MShadowLayout extends FrameLayout {
 
     private int mShadowColor;
