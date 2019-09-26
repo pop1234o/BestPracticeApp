@@ -45,6 +45,19 @@ public class Main {
      * 也就是一个list，如果重新指向其他list，那么刷新无效
      *
      *
+     * ================item展开收起动画============
+     * https://blog.csdn.net/xiaowang900716/article/details/47037019 （使用RecyclerView实现列表展开动画）
+     *
+     *  try {
+     *             rvPractice.getItemAnimator().setChangeDuration(300);
+     *             rvPractice.getItemAnimator().setMoveDuration(300);
+     *         } catch (Exception e) {
+     *             e.printStackTrace();
+     *         }
+     *
+     * 设置这个代码，然后改变 VISIBLE GONE ，然后    adapter.notifyItemChanged(position);
+     * 就可以实现了！！！
+     *
      * @param args
      */
     public static void main(String[] args) {
