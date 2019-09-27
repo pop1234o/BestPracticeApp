@@ -4,7 +4,7 @@ package com.liyafeng.view.listview.recycleview;
  * Created by liyafeng on 2018/1/8.
  */
 
-public class Main {
+public class Main_Recycler {
 
     /**
      * 填充的item如果要用xml中的参数，就指定parent，但是不attachToRoot
@@ -57,6 +57,11 @@ public class Main {
      *
      * 设置这个代码，然后改变 VISIBLE GONE ，然后    adapter.notifyItemChanged(position);
      * 就可以实现了！！！
+     *
+     * ================滑动 定位到item 某个item在顶部=======
+     * https://blog.csdn.net/shanshan_1117/article/details/78780137 （RecyclerView滑动到指定位置,并指定位置在顶部）
+     *
+     *
      *
      * @param args
      */
