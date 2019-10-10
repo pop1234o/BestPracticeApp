@@ -612,4 +612,21 @@ public class Other {
      */
     void a22(){}
 
+
+    /**
+     *  layoutBottom.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+     *
+     *             @Override
+     *             public void onGlobalLayout() {
+     *
+     *                 layoutBottom.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+     *                 int[] outLocation = new int[2];
+     *                 layoutBottom.getLocationOnScreen(outLocation);
+     *                 //获取view在屏幕中的坐标
+     *
+     *             }
+     *         });
+     */
+    void a23(){}
+
 }
