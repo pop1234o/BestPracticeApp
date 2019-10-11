@@ -25,6 +25,16 @@ public class Gradle {
 
     }
 
+    /**
+     * ===========什么是maven仓库===========
+     * https://www.runoob.com/maven/maven-repositories.html
+     *
+     * http://jcenter.bintray.com/
+     * jitpack.io
+     *
+     *
+     */
+    void a0(){}
 
 
     /**
@@ -101,4 +111,6 @@ public class Gradle {
      *
      */
     void a6(){}
+
+
 }

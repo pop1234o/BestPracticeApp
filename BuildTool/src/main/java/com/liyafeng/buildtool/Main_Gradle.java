@@ -396,4 +396,28 @@ public class MainActivity extends Activity {
      * }
      */
     void a5(){}
+
+
+    /**
+     *
+     * gradle 指定的maven仓库
+     * 我们通过implmentments 依赖的仓库，会自动下载aar所需要的依赖库
+     * 原理是通过 仓库中的 . pom文件来指定的
+     * <dependencies>
+     * <dependency>
+     * <groupId>com.alibaba</groupId>
+     * <artifactId>fastjson</artifactId>
+     * <version>1.2.60</version>
+     * <scope>compile</scope>
+     * </dependency>
+     * </dependencies>
+     *
+     * 常见的 maven 仓库
+     * http://jcenter.bintray.com/
+     *
+     *
+     */
+    void a6(){
+
+    }
 }
