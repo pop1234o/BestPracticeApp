@@ -934,5 +934,11 @@ public class Main_Question {
     void a38(){}
 
 
+    /**
+     * 今天工程添加一个依赖，添加了maven{url 'xxx'}
+     * 然后工程中添加依赖，aar包死活下载不下来，最后还得用比较法解决问题，
+     * demo能下载，而我的不能下载，找差别，发现 allProject中没添加仓库地址。。
+     */
+    void a39(){}
 
 }

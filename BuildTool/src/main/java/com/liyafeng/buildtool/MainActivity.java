@@ -354,4 +354,46 @@ public class MainActivity extends Activity {
      * 版权声明：本文为博主原创文章，转载请附上博文链接！
      */
     void a4(){}
+
+
+    /**
+     * //这里设置构建工具的依赖和下载依赖的仓库
+     * buildscript {
+     *     apply from: 'versions.gradle'
+     *
+     *     repositories {
+     *
+     *
+     *         google()
+     *         jcenter() {
+     *             url "http://jcenter.bintray.com/"
+     *
+     *         }
+     *         mavenCentral()
+     *         maven { url "https://jitpack.io" }
+     *
+     *     }
+     *     dependencies {
+     *         classpath deps.android_gradle_plugin
+     *         classpath deps.buggly_mapping_uploader
+     *     }
+     * }
+     *
+     * //这里是项目中的依赖
+     * allprojects {
+     *
+     *     repositories {
+     *         google()
+     *         jcenter() {
+     *             url "http://jcenter.bintray.com/"
+     *         }
+     *         mavenCentral()
+     *         maven { url "https://jitpack.io" }
+     *         maven {
+     *             url "http://maven.aliyun.com/nexus/content/repositories/releases"
+     *         }
+     *     }
+     * }
+     */
+    void a5(){}
 }
