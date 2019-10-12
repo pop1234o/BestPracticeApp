@@ -84,6 +84,9 @@ public class Gradle {
      * maven仓库 是存jar/aar包的地方，构建工具(Ant、Gradle、maven)可以从这里下载jar包
      * jcenter和mavenCentral都是一种maven仓库
      *
+     * 构建和依赖管理工具：Ant Gradle Maven
+     * 构建工具下载jar/aar包的地方(maven仓库): jcenter ，mavenCentral
+     *
      */
     void a0(){}
 
