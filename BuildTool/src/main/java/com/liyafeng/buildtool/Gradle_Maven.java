@@ -26,12 +26,63 @@ public class Gradle {
     }
 
     /**
-     * ===========什么是maven仓库===========
+     * ===========什么是maven===========
+     * https://maven.apache.org/
+     * https://maven.apache.org/what-is-maven.html （什么是maven）
+     * Apache Maven is a software project management and comprehension tool.
+     * Based on the concept of a project object model (POM),
+     * Maven can manage a project's build, reporting and documentation from a central piece of information.
+     * maven是一个软件，是java写的，它用来构建，发布，工程 从maven仓库
+     * Apache Maven是一个项目管理和理解工具，它基于项目对象模型(POM)的概念，它可以管理项目的构建、报告和文档
+     *
+     * 一个项目生命周期(Project Lifecycle)，一个依赖管理系统(Dependency Management System)，
+     * 能帮你构建工程，管理jar包，编译代码，还能帮你自动运行单元测试，打包，生成报表，甚至能帮你部署项目，生成Web站点
+     *
+     * ================maven能做什么================
+     * 1.项目自动化编译部署：
+     * 2.项目jar包的依赖管理： 自动下载项目需要的jar，还可以自动上传项目构建好的jar
+     * 3.企业开发分包分模块部署：
+     *
+     * ======================maven仓库===============
      * https://www.runoob.com/maven/maven-repositories.html
      *
-     * http://jcenter.bintray.com/
-     * jitpack.io
+     * 支持maven工具下载jar包的网站，叫maven仓库，他们目录中有 .pom文件，所以支持maven工具下载
      *
+     * 本地的仓库地址 ~/.m2/repository   下载的依赖库都在这， ~代表用户目录
+     * 默认的远程库 ()https://repo1.maven.org/maven2/
+     * 阿里云镜像的maven仓库  http://maven.aliyun.com/nexus/content/groups/public/
+     *
+     *
+     * （maven仓库列表）https://mvnrepository.com/repos
+     *
+     *  maven工具可以从下面的网站上下载jar
+     *
+     * http://jcenter.bintray.com/
+     * http://central.maven.org/maven2/
+     * jitpack.io
+     * ==================mavenCenter仓库===============
+     * maven中央仓库（http://repo1.maven.org/maven2/）是由Sonatype公司提供的服务，它是Apache Maven、SBT和其他构建系统的默认仓库，
+     * 并能很容易被Apache Ant/Ivy、Gradle和其他工具所使用。
+     * 开源组织例如Apache软件基金会、Eclipse基金会、JBoss和很多个人开源项目都将构件发布到中央仓库。
+     * maven中央仓库已经将内容浏览功能禁掉了，可在http://search.maven.org/查询构件。
+     *
+     *
+     * ================jcenter(仓库)是什么 =============
+     * https://www.geekhub.cn/a/1295.html（JCenter是什么？）
+     * 他是一个maven仓库
+     * 它是由 JFrog 公司提供的 Bintray 中的 Java 仓库。它是当前世界上最大的 Java 和 Android 开源软件构件仓库。
+     * 所有内容都通过内容分发网络（CDN）使用加密https连接获取。JCenter是Goovy Grape内的默认仓库，Gradle内建支持（jcenter()仓库），
+     * 非常易于在（可能除了Maven之外的）其他构建工具内进行配置。
+     * 与 Maven Central 相比，JCenter 的速度更快，包含的库更多，UI界面更友好，更容易使用，
+     * 同时 Bintray 还支持将 JCenter 上传到 Maven Central 的功能。
+     *
+     *
+     *
+     *
+     * ===========总结=========
+     * maven是一个工具，可以构建和发布项目，和管理项目依赖的依赖库
+     * maven仓库 是存jar/aar包的地方，构建工具(Ant、Gradle、maven)可以从这里下载jar包
+     * jcenter和mavenCentral都是一种maven仓库
      *
      */
     void a0(){}
