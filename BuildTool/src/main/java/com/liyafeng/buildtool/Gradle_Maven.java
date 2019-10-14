@@ -52,6 +52,11 @@ public class Gradle {
      * 默认的远程库 ()https://repo1.maven.org/maven2/
      * 阿里云镜像的maven仓库  http://maven.aliyun.com/nexus/content/groups/public/
      *
+     * 阿里云有很多国外仓库的镜像 https://maven.aliyun.com/mvn/view
+     * jcenter (https://maven.aliyun.com/repository/jcenter)
+     * maven central (https://maven.aliyun.com/repository/central)
+     *
+     *
      *
      * （maven仓库列表）https://mvnrepository.com/repos
      *
