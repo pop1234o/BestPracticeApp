@@ -7,6 +7,7 @@ import org.reactivestreams.Publisher;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -60,14 +61,12 @@ import io.reactivex.schedulers.Schedulers;
  * io.reactivex.Single: a flow of exactly 1 item or an error,   发射一个元素
  * io.reactivex.Completable: a flow without items but only a completion or error signal,
  * io.reactivex.Maybe: a flow with no items, exactly one item or an error.
- *
+ * <p>
  * ========================
  * 如果一系列数据发送，如果发送了一个error，那么后面的数据就不会被发送
  * ---------
  * rxjava数据流是根据操作符的先后顺序来的
  * ----------
- *
- *
  */
 
 public class RxJavaSample {
@@ -98,7 +97,7 @@ public class RxJavaSample {
     }
 
     public static void main(String[] args) {
-        do9();
+        do9_2();
     }
 
     //region 线程切换
@@ -107,21 +106,20 @@ public class RxJavaSample {
      * rxjava线程切换
      * =========subscribeOn 和 observeOn 的区别=====
      * https://segmentfault.com/a/1190000004856071（ subscribeOn 和 observeOn 的区别）
-     *
+     * <p>
      * subscribeOn的调用切换之前的线程。
      * observeOn的调用切换之后的线程。
      * observeOn之后，不可再调用subscribeOn 切换线程
-     *
+     * <p>
      * 只有第一subscribeOn() 起作用（所以多个 subscribeOn() 毛意义）
      * 这个 subscribeOn() 控制从流程开始的第一个操作，直到遇到第一个 observeOn()
-     *
+     * <p>
      * observeOn() 可以使用多次，每个 observeOn() 将导致一次线程切换()，这次切换开始于这次 observeOn() 的下一个操作
-     *
+     * <p>
      * 不论是 subscribeOn() 还是 observeOn()，后面"操作"线程将不再改变，不会自动切换到其他线程
      * 直到受到下一个 observeOn() 的干预
-     *
      */
-    static void d10(){
+    static void d10() {
 
 
     }
@@ -225,6 +223,9 @@ public class RxJavaSample {
         });
     }
 
+    /**
+     * timer
+     */
     private void do3() {
         Flowable<Long> timer = Flowable.timer(3000, TimeUnit.MILLISECONDS);
         timer.subscribe(new Consumer<Long>() {
@@ -233,6 +234,9 @@ public class RxJavaSample {
                 Log.i("test", "打印" + aLong);
             }
         });
+
+        //发送一个0L的数据在指定时间后
+        Observable.timer(1, TimeUnit.SECONDS);
     }
 
     /**
@@ -286,6 +290,8 @@ public class RxJavaSample {
             }
         });
     }
+
+
     //endregion
 
     //region  合并操作符
@@ -455,7 +461,7 @@ public class RxJavaSample {
      * <p>
      * 有 Consumer 参数的 subscribe 返回一个 Disposable对象
      * 而 Observer 参数的 subscribe 无返回值 ， 而在 Observer 里的  onSubscribe方法返回 Disposable对象
-     *
+     * <p>
      * Consumer里面其实包了一层 LambdaObserver ，然后还是调用 Observer参数的那个方法
      * LambdaObserver里面判断如果dispose了就不调用 onError onNext等回调了
      */
@@ -559,11 +565,10 @@ public class RxJavaSample {
      * ==========区别=========
      * retry可以是遇到 Observable（被观察者） 调用onError，就立即重试调用 Observable ，使之重新发送数据源
      * 或者 有重试次数， 或者 一个 Predicate来判断是否重试
-     *
+     * <p>
      * 而 retryWhen 接收一个可以发送 Throwable 的被观察者 Observable<Throwable> throwableObservable
      * 返回一个被观察者 ObservableSource<?> ，如果这个 ObservableSource 最终发射了 error，那么整体就走error
      * 如果发射了一个正常的数据源，那么会重试 最初的 Observable
-     *
      */
     static void do9() {
         Observer<CommonResponse> callback = new Observer<CommonResponse>() {
@@ -605,7 +610,7 @@ public class RxJavaSample {
 
 
         //如果失败，那么重新从1开始发射数据源
-        Observable.fromArray(2,3,4,5)
+        Observable.fromArray(2, 3, 4, 5)
                 .flatMap(new Function<Integer, ObservableSource<Integer>>() {
                     @Override
                     public ObservableSource<Integer> apply(Integer integer) throws Exception {
@@ -770,6 +775,179 @@ public class RxJavaSample {
             @Override
             public void onComplete() {
 
+            }
+        });
+    }
+
+
+    static void do9_2() {
+        /*
+         * 打印结果
+         * apply=====
+         * subscribing
+         * delay retry by 1 second(s)
+         * subscribing
+         * delay retry by 2 second(s)
+         * subscribing
+         * delay retry by 3 second(s)
+         * subscribing
+         *
+         *
+         * 很明显 retryWhen 中只走了一次，也就是后面 Throwable源 转化为 Timer源，然后到重新订阅Observable.timer(1, TimeUnit.SECONDS)
+         * 然后抛出异常，然后又是之前的 Observable<Throwable> 源再次发出一另一个 Throwable对象
+         * 所以 Observable<Throwable> 这个数据源能连续发出不同 的 Throwable对象（因为你 throw new RuntimeException();）
+         *
+         *
+         *
+         * */
+//        Observable.timer(1, TimeUnit.SECONDS)
+//                .doOnSubscribe(s -> System.out.println("subscribing"))
+//                .map(v -> {
+//                    throw new RuntimeException();
+//                })
+//                .retryWhen(errors -> {
+//                    AtomicInteger counter = new AtomicInteger();
+//                    return errors
+//                            .takeWhile(e -> counter.getAndIncrement() != 3)
+//                            .flatMap(e -> {
+//                                System.out.println("delay retry by " + counter.get() + " second(s)");
+//                                //这里只是发出一个数据，然后调用完成
+//                                return Observable.timer(counter.get(), TimeUnit.SECONDS);
+//                            });
+//                })
+//                .blockingSubscribe(System.out::println, System.out::println);
+//
+
+
+//        int i = 0;
+//        if(i==0){
+//            return;
+//        }
+
+
+
+        Observable.just("请求结果")
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        System.out.println("=====doOnSubscribe" + disposable);
+                    }
+                })
+                .map(v -> {
+                    throw new RuntimeException();
+                })
+                .retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+                        System.out.println("apply=====");
+                        AtomicInteger counter = new AtomicInteger();
+                        return throwableObservable
+                                .takeWhile(e -> counter.getAndIncrement() != 3)
+                                .flatMap(e -> {
+                                    System.out.println("delay retry by " + counter.get() + " second(s)" + e.hashCode());
+                                    //模拟刷新token，这里用timer模拟不行，就得用这个
+                                    return Observable
+                                            .just("新的token")
+                                            .doOnNext(new Consumer<String>() {
+                                                @Override
+                                                public void accept(String aLong) throws Exception {
+                                                    System.out.println("doOnNext " + aLong);
+
+                                                    //模拟 刷新接口失败
+                                                    throw new RuntimeException("刷新接口失败");
+                                                }
+                                            }).doOnError(new Consumer<Throwable>() {
+                                                @Override
+                                                public void accept(Throwable throwable) throws Exception {
+                                                    System.out.println("doOnError " + throwable.getMessage());
+                                                }
+                                            });
+                                });
+                    }
+                })
+                .subscribe(new Observer<Object>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.println("=====onSubscribe" + d);
+                    }
+
+                    @Override
+                    public void onNext(Object integer) {
+                        System.out.println("=====onNext" + integer);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("=====error" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("=====onComplete");
+                    }
+                });
+    }
+
+    //endregion
+
+
+    //region 条件和布尔操作
+
+    /**
+     * ============takeWhile================
+     * <p>
+     * TakeWhile发射原始Observable，直到你指定的某个条件不成立的那一刻，它停止发射原始Observable，并终止自己的Observable
+     *
+     *
+     */
+    static void do10() {
+
+        /*
+         *
+         * =====onSubscribe0
+         * =====flatMap原始数据源0
+         * =====onNext1
+         * =====flatMap原始数据源1
+         * =====onNext2
+         * =====flatMap原始数据源2
+         * =====onNext3
+         * =====onComplete
+         *
+         * 最后调用onComplete，这个最后直接走最外层的onComplete 了，根本没走
+         * */
+        AtomicInteger counter = new AtomicInteger();
+        Observable.just("原始数据源0", "原始数据源1", "原始数据源2", "原始数据源3", "原始数据源4")
+                .takeWhile(new Predicate<String>() {
+                    @Override
+                    public boolean test(String s) throws Exception {
+                        return counter.getAndIncrement() != 3;
+                    }
+                })
+                .flatMap(new Function<String, ObservableSource<Integer>>() {
+                    @Override
+                    public ObservableSource<Integer> apply(String s) throws Exception {
+                        System.out.println("=====flatMap" + s);
+                        return Observable.just(counter.get());
+                    }
+                }).subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                System.out.println("=====onSubscribe" + d);
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                System.out.println("=====onNext" + integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("=====error" + e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("=====onComplete");
             }
         });
     }
