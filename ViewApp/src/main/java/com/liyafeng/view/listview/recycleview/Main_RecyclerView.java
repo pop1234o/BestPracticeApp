@@ -4,7 +4,7 @@ package com.liyafeng.view.listview.recycleview;
  * Created by liyafeng on 2018/1/8.
  */
 
-public class Main_Recycler {
+public class Main_RecyclerView {
 
     /**
      * 填充的item如果要用xml中的参数，就指定parent，但是不attachToRoot
@@ -62,6 +62,10 @@ public class Main_Recycler {
      * https://blog.csdn.net/shanshan_1117/article/details/78780137 （RecyclerView滑动到指定位置,并指定位置在顶部）
      *
      *
+     * ===================最后一个item展开动画后自动展示完全=========
+     * layoutManager.scrollToPositionWithOffset(lastItemPosition, 0);
+     * 这个不用post，执行 notifyItemChanged 后就执行这个就行
+     * 因为notifyItemChanged后item就已经是新的高度了，所以我们执行这个就滑动到最后了？？？
      *
      * @param args
      */
