@@ -420,4 +420,18 @@ public class MainActivity extends Activity {
     void a6(){
 
     }
+
+
+    /**
+     * ==============混淆=============
+     * https://www.jianshu.com/p/9dacabd351e3 （Android混淆快速配置之@Keep）
+     * @Keep
+     * 在使用@Keep注解之前我们需要先导入
+     * compile 'com.android.support:support-annotations:25.1.1'类库
+     *
+     * @Keep 只是保持类名，里面的变量还是被混淆
+     *
+     *
+     */
+    void a7(){}
 }
