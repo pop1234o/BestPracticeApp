@@ -18,6 +18,11 @@ public class Tools {
      * <p>
      * 说说zipalign?
      * https://www.jianshu.com/p/10bc0c632eda
+     *
+     * https://blog.csdn.net/jiangwei0910410003/article/details/50628894
+     * (Android逆向之旅---解析编译之后的Resource.arsc文件格式)
+     *
+     *
      */
     void a1(Context context) {
         context.getResources().getDrawable(R.drawable.build_simplified);
@@ -33,6 +38,13 @@ public class Tools {
          * 最后用zipalign ，将apk包中的内容对齐，这有利于资源的查找速度
          * 比如我们apk安装时home应用会读取其中的app名称和图标，读取应用的
          * 权限等，如果对齐有利于查找（就像代码格式化后有利于阅读一样）
+         *
+         *
+         * ===============R文件有什么作用 R.java==========
+         * R文件在 项目/build/generate/source/r/[build_type]/[包名]/R.java
+         *
+         * 默认有attr、drawable、layout、string等四个静态内部类
+         * 他是资源的字典
          *
          * */
     }
@@ -140,6 +152,13 @@ public class Tools {
          *  而不是他人伪造的apk
          *
          * 这里我们只能看到资源文件，而代码在dex中看不到，必须要反编译
+         *
+         * apktool反编译后再values下有个public.xml
+         *  type：类型名
+         *  name：资源名
+         *  id：资源的id
+         *  类型的话有这么几种：
+         *  drawable，menu，layout，string，attr，color，style等
          *
          *
          * ===================反编译查看内容=============================
