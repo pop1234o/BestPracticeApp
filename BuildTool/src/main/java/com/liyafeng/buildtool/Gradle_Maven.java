@@ -124,6 +124,34 @@ public class Gradle {
      * }
      * compile(name: 'app-debug', ext: 'aar')
      *
+     * -----------------
+     *  引入aar包
+     *  我们需要在build.gradle(module下的) 中最外层加入
+     *
+     *  repositories {
+     *      flatDir {
+     *          dirs 'libs'
+     *      }
+     *  }
+     *  表示repositories 库的目录是 平行目录下的libs文件夹
+     *
+     *  然后在
+     *  dependencies {
+     *      implementation fileTree(dir: 'libs', include: ['*.jar']) //这个是代表引入lib中的jar包
+     *      implementation(name: 'testlibrary-release', ext: 'aar')
+     *   }
+     * ===============查看arr内容======
+     * 其实想要查看AAR文件里面的内容很简单，只需要将文件名的后缀由".aar" 改为".zip", 然后再解压zip文件即可。
+     * 或者用jd-gui也可以查看aar包
+     * 内容：
+     * aidl
+     * assets  assets/fonts
+     * jni
+     * libs
+     * res  (layout,values)
+     * AndroidManifest.xml
+     * R.txt
+     * classes.jar
      *
      *
      */
