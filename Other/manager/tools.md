@@ -42,7 +42,10 @@ https://zhuanlan.zhihu.com/p/79047213 （SonarQube 集成gitlab/jenkins）
 =========打包=======
 jenkins 自动打包
 测试可以自动选择分支，里面url都自动变，
-根据buildtype 打包
+而且代码中不控制是release还是debug，这样合并代码就不用担心里面的变量忘记改
+要什么包直接根据buildtype打包即可
+
+根据 buildtype 打包
 debug - 联调环境  和后端联调的环境
 beta - 测试环境  给测试人员测试的环境  
 prepare - 预上线环境/仿真环境  和线上用的一个库，模仿线上环境
