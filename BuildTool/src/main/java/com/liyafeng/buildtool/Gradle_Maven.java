@@ -178,6 +178,11 @@ public class Gradle {
      * Mac:  /Users/(用户名)/
      * Windows: C:\Users\(用户名)\
      *
+     * ============api implement 下载的内容============
+     * 里面有
+     * [项目名]-[version].pom 代表这个项目所需的依赖库
+     * [项目名]-[version]-sources.jar源码
+     * [项目名]-[version].aar classes.jar 资源文件  AndroidManifest.xml等
      *
      */
     void a5(){}
