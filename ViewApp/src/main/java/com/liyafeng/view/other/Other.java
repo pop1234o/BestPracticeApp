@@ -629,4 +629,18 @@ public class Other {
      */
     void a23(){}
 
+
+    /**
+     * Sublime Text 技巧
+     * ctag 定位代码
+     *
+     * ctrl+p 查找文件
+     *
+     * 右键+reveal in sidebar 查找当前文件在目录中的位置
+     *
+     *
+     *
+     */
+    void a24(){}
+
 }
