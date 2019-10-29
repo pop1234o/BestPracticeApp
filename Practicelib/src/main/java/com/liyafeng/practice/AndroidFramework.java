@@ -703,9 +703,17 @@ public class AndroidFramework {
          * 每个手机的这个配置在/system/build.prop 文件中
          * dalvik.vm.heapsize=36m
          *   dalvik.vm.heapstartsize=8m    ----起始分配内存
-         *   dalvik.vm.heapgrowthlimit=192m ---- 一般情况app申请的最大内存 dalvik.vm.heapsize=512m   ---- 设置largeheap时，App可用的最大内存dalvik.vm.heaptargetutilization=0.75  ---- GC相关
+         *   dalvik.vm.heapgrowthlimit=192m ---- 一般情况app申请的最大内存 dalvik.vm.heapsize=512m   ---- 设置 largeheap 时，App可用的最大内存dalvik.vm.heaptargetutilization=0.75  ---- GC相关
          *   dalvik.vm.heapminfree=512k
          *   dalvik.vm.heapmaxfree=8m     ----- GC机制相关
+         *
+         *
+         * ----------https://zhuanlan.zhihu.com/p/27269803 (Android为每个应用分配多少内存)
+         *
+         * ActivityManager.getMemoryClass() 对应  dalvik.vm.heapgrowthlimit  没有设置largeheap的最大内存
+         * ActivityManager.getLargeMemoryClass() 对应 dalvik.vm.heapsize 设置largeheap的最大内存
+         *
+         *
          * ======================有什么解决方法可以避免OOM？=============
          * 预防，我们提前对app做性能测试，观察app内存变化情况，做出优化
          * 加载大图可能导致oom，所以要缩放
