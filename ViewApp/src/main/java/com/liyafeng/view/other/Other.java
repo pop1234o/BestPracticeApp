@@ -630,7 +630,7 @@ public class Other {
      *
      *  private void initAttributes(Context context, AttributeSet attrs) {
      *          这里就是定义的名称ShadowLayout
-     *         TypedArray attr = getTypedArray(context, attrs, R.styleable.ShadowLayout);
+     *         TypedArray attr  = context.obtainStyledAttributes(attributeSet, R.styleable.ShadowLayout, 0, 0)
      *         if (attr == null) {
      *             return;
      *         }
