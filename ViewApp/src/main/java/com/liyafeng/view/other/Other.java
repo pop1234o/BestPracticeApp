@@ -9,11 +9,31 @@ import android.os.SystemClock;
 
 import com.liyafeng.view.webview.WebViewActivity;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Other {
 
 
     public static void main(String[] args) {
+//        int max = Math.max(1920, 3080);
+//        double log = Math.log(((double) max) / ((double) 1280));
+//        double floor = Math.floor(log / Math.log(2.0d));
+//        int pow = (int) Math.pow(2.0d, floor);
+//        System.out.println("======"+pow);
 
+
+        String str="{2|3}+{1|2}=6";
+//        String str="3+2=6";
+        String str2 = "\\{.+?\\|.+?\\}";
+        Matcher matcher = Pattern.compile(str2).matcher(str);
+        int i = 0;
+        while (matcher.find()) {
+
+            String substring = str.substring(i, matcher.end());
+            System.out.println("==="+substring);
+            i = matcher.end();
+        }
     }
 
 
@@ -520,7 +540,7 @@ public class Other {
      * (新建)在res/values/attrs.xml
      *
      * 声明属性，一般名称都是类名 ，
-     *     <declare-styleable name="MShadowLayout">
+     *     <declare-styleable name="ShadowLayout">
      *         <attr name="sl_cornerRadius" format="dimension" />
      *         <attr name="sl_shadowRadius" format="dimension" />
      *         <attr name="sl_dx" format="dimension" />
@@ -603,11 +623,29 @@ public class Other {
      *           <attr name = "background" format = "reference|color" />
      * </declare-styleable>
      * 属性使用：
-     * <ImageViewandroid:background = "@drawable/图片ID" />
+     * <ImageView android:background = "@drawable/图片ID" />
      * 或者：
-     * <ImageViewandroid:background = "#00FF00" />
+     * <ImageView android:background = "#00FF00" />
      *   通过上面的学习我们已经知道怎么定义各种类型的属性，以及怎么使用它们，但是我们写好布局文件之后，要在控件中使用这些属性还需要将它解析出来。
      *
+     *  private void initAttributes(Context context, AttributeSet attrs) {
+     *          这里就是定义的名称ShadowLayout
+     *         TypedArray attr = getTypedArray(context, attrs, R.styleable.ShadowLayout);
+     *         if (attr == null) {
+     *             return;
+     *         }
+     *
+     *         try {
+     *         开始解析
+     *             mCornerRadius = attr.getDimension(R.styleable.ShadowLayout_sl_cornerRadius, getResources().getDimension(R.dimen.default_corner_radius));
+     *             mShadowRadius = attr.getDimension(R.styleable.ShadowLayout_sl_shadowRadius, getResources().getDimension(R.dimen.default_shadow_radius));
+     *             mDx = attr.getDimension(R.styleable.ShadowLayout_sl_dx, 0);
+     *             mDy = attr.getDimension(R.styleable.ShadowLayout_sl_dy, 0);
+     *             mShadowColor = attr.getColor(R.styleable.ShadowLayout_sl_shadowColor, getResources().getColor(R.color.default_shadow_color));
+     *         } finally {
+     *             attr.recycle();
+     *         }
+     *     }
      *
      */
     void a22(){}
