@@ -22,6 +22,8 @@ public class Tools {
      * https://blog.csdn.net/jiangwei0910410003/article/details/50628894
      * (Android逆向之旅---解析编译之后的Resource.arsc文件格式)
      *
+     * ===========加固流程======
+     * https://www.jianshu.com/p/4ff48b761ff6 （Android应用加固原理）
      *
      */
     void a1(Context context) {

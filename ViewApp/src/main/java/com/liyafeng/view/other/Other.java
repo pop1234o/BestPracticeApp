@@ -16,24 +16,28 @@ public class Other {
 
 
     public static void main(String[] args) {
-//        int max = Math.max(1920, 3080);
-//        double log = Math.log(((double) max) / ((double) 1280));
-//        double floor = Math.floor(log / Math.log(2.0d));
-//        int pow = (int) Math.pow(2.0d, floor);
-//        System.out.println("======"+pow);
+
+        //如果宽高大于1280
+        int max = Math.max(1920, 3080);
+        double log = Math.log(((double) max) / ((double) 1280));
+        double floor = Math.floor(log / Math.log(2.0d));
+        int inSampleSize = (int) Math.pow(2.0d, floor);
 
 
-        String str="{2|3}+{1|2}=6";
-//        String str="3+2=6";
-        String str2 = "\\{.+?\\|.+?\\}";
-        Matcher matcher = Pattern.compile(str2).matcher(str);
-        int i = 0;
-        while (matcher.find()) {
+        System.out.println("======"+inSampleSize);
 
-            String substring = str.substring(i, matcher.end());
-            System.out.println("==="+substring);
-            i = matcher.end();
-        }
+
+//        String str="{2|3}+{1|2}=6";
+////        String str="3+2=6";
+//        String str2 = "\\{.+?\\|.+?\\}";
+//        Matcher matcher = Pattern.compile(str2).matcher(str);
+//        int i = 0;
+//        while (matcher.find()) {
+//
+//            String substring = str.substring(i, matcher.end());
+//            System.out.println("==="+substring);
+//            i = matcher.end();
+//        }
     }
 
 
@@ -680,5 +684,21 @@ public class Other {
      *
      */
     void a24(){}
+
+
+    /**
+     * https://blog.csdn.net/ozuijiaoweiyang/article/details/51735644(读书笔记——Android特色开发，使用传感器)
+     *
+     * Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); 加速度传感器
+     * 加速度传感器输出的信息同样也是存放在 SensorEvent 的 values 数组中的,只不过此时的 values 数组中会有三个值,
+     * 分别代表手机在 X 轴、 Y 轴和 Z 轴（0,1,2）方向上的加速度信息。
+     *
+     * ！！！由于地心引力的存在,你的手机无论在世界上任何角落都会有一个重力加速度,这个加速度的值大约是 9.8m/s 2 。
+     * 当手机平放的时候,这个加速度是作用在 Z 轴上的,当手机竖立起来的时候,这个加速度是作用在 Y 轴上的,当手机横立起来的时候,
+     * 这个加速度是作用在 X 轴上的。
+     *
+     *
+     */
+    void a25(){}
 
 }
