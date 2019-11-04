@@ -701,4 +701,26 @@ public class Other {
      */
     void a25(){}
 
+
+    /**
+     * ======如何计算一张图片在内存中的大小？ /计算bitmap内存大小 /优化图片加载=========
+     * https://www.cnblogs.com/dasusu/p/9789389.html （Android中一张图片占据的内存大小如何计算？）
+     *
+     * size = （加载到内存中图片的宽*加载到内存中图片的高）*每个像素所占空间
+     * 8bit = 1byte
+     * 一般加载到内存中的图片是 ARGB_8888  所以就是32位， 就是每个像素占用4个字节
+     *
+     * 从非drawable-xxxdpi加载的图片宽高在内存中都不会改变
+     * 如果你将图片放入drawable-xxxdpi 会根据当前手机的dpi进行缩放
+     *
+     * 比如  LDPI    MDPI	HDPI	XHDPI	    XXHDPI	    XXXHDPI
+     * 	    120	    160	    240	    320	        480	        640
+     *
+     * 如果放在XHDPI下的图片是100*100  那么在MDPI下加载到内存中图片的宽高就是 50*50
+     * 因为 MDPI的dpi是 160  XXHDPI是320，差两倍
+     *
+     *
+     */
+    void a26(){}
+
 }
