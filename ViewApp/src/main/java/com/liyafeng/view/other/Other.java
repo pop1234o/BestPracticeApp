@@ -723,4 +723,28 @@ public class Other {
      */
     void a26(){}
 
+
+    /**
+     * 防止双击逻辑
+     *     @Override
+     *     public void onClick(View v) {
+     *         long currentTime = System.currentTimeMillis();
+     *         //这里是防止把时间调整到未来
+     *         if (currentTime - lastClickTime < 0) {
+     *             lastClickTime = 0;
+     *         }
+     *
+     *         if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
+     *             lastClickTime = currentTime;
+     *             onNoDoubleClick(v);
+     *         }
+     *
+     *     }
+     *
+     * 这里是
+     *
+     *
+     */
+    void a27(){}
+
 }
