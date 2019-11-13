@@ -245,12 +245,38 @@ public class AndroidFramework {
 
     /**
      * Activity-Window-View三者的差别?
+     * --------------
+     * 为什么 Dialog 不能用Application的Context
+     * Dialog 显示流程？
+     * WindowManagerService
      */
     public void a1_6() {
         /*
          * Activity中持有Window对象，他的实现类是PhoneWindow
          * PhoneWindow中持有DecorView,DecorView是FrameLayout的子类
          * 是真正显示视图的
+         *
+         *  ========为什么Dialog不能用Application的Context===========
+         *  https://www.jianshu.com/p/628ac6b68c15(为什么Dialog不能用Application的Context)
+         *
+         * 如果调用会报错
+         * Caused by: android.view.WindowManager$BadTokenException: Unable to add window -- token null is not for an application
+         *                 at android.view.ViewRootImpl.setView(ViewRootImpl.java:685)
+         *                 at android.view.WindowManagerGlobal.addView(WindowManagerGlobal.java:342)
+         *                 at android.view.WindowManagerImpl.addView(WindowManagerImpl.java:93)
+         *                 at android.app.Dialog.show(Dialog.java:316)
+         *
+         * Activity中的PhoneWindow中的 DecorView ，
+         * 通过WindowMnagerImpl的addView方法添加到WMS中去的，
+         * 由WMS负责管理和绘制（真正的绘制在SurfaceFlinger服务中）。
+         *
+         * DecorView是一个 LinearLayout 从上到下是状态栏，actionBar，和 FrameLayout(android.R.id.content)
+         *
+         * 跟Activity对应的窗口一样，Dialog有一个PhoneWindow的实例。Dialog 的类型是TYPE_APPLICATION，属于应用窗口类型。
+         * Dialog初化始时是通过Context.getSystemServer 来获取 WindowManager，
+         * 而如果用Application或者Service的Context去获取这个WindowManager服务的话，会得到一个WindowManagerImpl的实例，这个实例里token也是空的。之后在Dialog的show方法中将Dialog的View(PhoneWindow.getDecorView())添加到WindowManager时会给token设置默认值还是null。
+         *
+         *
          */
     }
 
@@ -839,17 +865,14 @@ public class AndroidFramework {
      * ========Intent Flag 作用，区别===============
      * https://wangkuiwu.github.io/2014/06/26/IntentFlag/ （Android 之Activity启动模式(二)之 Intent的Flag属性）
      * 要区分是不是在一个  android:taskAffinity 中 ，他们的使用效果也是不同的
-     *
+     * <p>
      * FLAG_ACTIVITY_NEW_TASK
-     *
-     *
+     * <p>
+     * <p>
      * 当相互跳转的两个Activity的android:taskAffinity不同时，添加FLAG_ACTIVITY_NEW_TASK确实产生了一些效果：第一次启动Activity时，
      * 会新建一个task，并将Activity添加到该task中。这与singleTask产生的效果是一样的！但是，当企图再次从ActivityTest进入到SecondActivity时，
      * 却什么也没有发生！
      * 所以为了解决这个问题 ，我们 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-     *
-     *
-     *
      */
     public void a3_6() {
         /*
@@ -1174,6 +1197,7 @@ public class AndroidFramework {
 
     /**
      * looper架构?
+     *
      * @link android.os.Handler}
      */
     public void a8_1() {
@@ -1500,6 +1524,7 @@ public class AndroidFramework {
 
     /**
      * ThreadLocal作用？原理？
+     *
      * @link java.lang.ThreadLocal}
      */
     public void a8_6() {
@@ -2061,11 +2086,11 @@ public class AndroidFramework {
      * 周期运动	@android:anim/cycle_interpolator	CycleInterpolator
      * 减速	@android:anim/decelerate_interpolator	DecelerateInterpolator
      * 匀速	@android:anim/linear_interpolator
-     *
-     *
+     * <p>
+     * <p>
      * android.support.v4.view.animation 中有一些新的
      * LinearOutSlowInInterpolator
-     *
+     * <p>
      * com.android.support:interpolator:28.0.0
      * ---------------------
      * 作者：Carson_Ho
@@ -2221,27 +2246,27 @@ public class AndroidFramework {
      * <p>
      * QQ空间15年写的热修复原理文章
      * https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=400118620&idx=1&sn=b4fdd5055731290eef12ad0d17f39d4a&scene=1&srcid=1106Imu9ZgwybID13e7y2nEi#wechat_redirect%20%20%20da
-     *
-     *
+     * <p>
+     * <p>
      * https://www.jianshu.com/p/b9ed58405ded （安卓开发热修复技术原理及选型）
      * <p>
      * 各个热修复方案比较
      * https://www.jianshu.com/p/eec0ab6800a4
-     *
+     * <p>
      * http://www.tinkerpatch.com/Docs/intro （为什么使用 Tinker？各种热修复比较
-     *
+     * <p>
      * （Andfix开源版本	阿里Hotfix 1.X	阿里Hotfix最新版 (Sophix) 对比）
      * https://help.aliyun.com/document_detail/93825.html?spm=a2c4g.11186623.6.581.492f140cHZJPT6 （Android SDK稳健接入参考）
-     *
+     * <p>
      * （阿里sophix 热修复方案比较）
      * https://help.aliyun.com/document_detail/51416.html?spm=a2c4g.11186623.6.543.37cd741eXOsie5
-     *
+     * <p>
      * （ 安卓App热补丁动态修复技术介绍 -QQ空间团队）
      * https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=400118620&idx=1&sn=b4fdd5055731290eef12ad0d17f39d4a
-     *
+     * <p>
      * （Android热更新方案Robust）
      * https://tech.meituan.com/2016/09/14/android-robust.html
-     *
+     * <p>
      * （微信Android热补丁实践演进之路）
      * https://github.com/WeMobileDev/article/blob/master/%E5%BE%AE%E4%BF%A1Android%E7%83%AD%E8%A1%A5%E4%B8%81%E5%AE%9E%E8%B7%B5%E6%BC%94%E8%BF%9B%E4%B9%8B%E8%B7%AF.md#rd
      */
@@ -2383,6 +2408,7 @@ public class AndroidFramework {
     /**
      * 说说 SurfaceView 和 TextureView?
      * 区别？
+     *
      * @link android.view.SurfaceView}
      */
     public void a15() {
