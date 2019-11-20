@@ -65,6 +65,20 @@ public class GFW {
      * https://ssr.tools/
      * https://ssr.tools/164 (什么是ssr)
      * ShadowSocksR则是原版ShadowSocks（SS）的一个衍生版，相比原版而言，主要增加了混淆参数功能
+     * 源码地址 https://github.com/shadowsocksrr
+     *
+     * mac本来有两个版本，一个ShadowsocksX  ShadowsocksX-NG
+     * 加入混淆功能后，就叫ShadowsocksX-R ShadowsocksX-NG-R
+     * 源码地址 https://github.com/qinyuhang/ShadowsocksX-NG-R/tree/master
+     * 下载地址 https://github.com/qinyuhang/ShadowsocksX-NG-R/releases
+     *
+     * Android源码
+     * https://github.com/shadowsocksrr/shadowsocksr-android/
+     *
+     * windows
+     * 下载地址 https://github.com/shadowsocksrr/shadowsocksr-csharp/releases/download/4.9.0/ShadowsocksR-win-4.9.0.zip
+     * 源码 https://github.com/shadowsocksrr/shadowsocksr-csharp
+     *
      *
      *
      *
