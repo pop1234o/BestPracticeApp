@@ -1,8 +1,10 @@
 package com.liyafeng.practice.util;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -14,10 +16,13 @@ import android.os.Process;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.widget.Adapter;
@@ -28,6 +33,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.security.InvalidKeyException;
@@ -39,6 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import javax.crypto.BadPaddingException;
@@ -84,18 +91,42 @@ public class Util {
     }
 
 
+
     /**
-     * 底部栏高度
-     *
-     * @param context
-     * @return
+     * 获得NavigationBar的高度
      */
-    public static int getNavigationBarHeight(Context context) {
-        Resources resources = context.getResources();
+    public static int getNavigationBarHeight(Activity activity) {
+        int result = 0;
+        Resources resources = activity.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        return height;
+        if (resourceId > 0 && checkHasNavigationBar(activity)) {
+            result = resources.getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
+
+    public static boolean checkHasNavigationBar(Activity activity) {
+        WindowManager windowManager = activity.getWindowManager();
+        Display d = windowManager.getDefaultDisplay();
+
+        DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            d.getRealMetrics(realDisplayMetrics);
+        }
+
+        int realHeight = realDisplayMetrics.heightPixels;
+        int realWidth = realDisplayMetrics.widthPixels;
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        d.getMetrics(displayMetrics);
+
+        int displayHeight = displayMetrics.heightPixels;
+        int displayWidth = displayMetrics.widthPixels;
+
+        return (realWidth - displayWidth) > 0 || (realHeight - displayHeight) > 0;
+    }
+
+
 
     public static int px2dp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
@@ -589,7 +620,7 @@ public class Util {
             // 创建AES秘钥
             SecretKeySpec key = new SecretKeySpec(builder.toString().getBytes(), "AES");
 
-
+            //获得加密器
             Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
             // 初始化加密器
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -600,7 +631,7 @@ public class Util {
                 builder_content.append('\0');
             }
 
-
+            //明文进行加密
             byte[] result = cipher.doFinal(builder_content.toString().getBytes());
             byte[] encode = Base64.encode(result, DEFAULT);
             return new String(encode);
@@ -642,7 +673,7 @@ public class Util {
 
     /**
      * 判断是否在主进程，这样application的oncreate方法中判断可以只初始化一次
-     *
+     * 是否是主进程
      * @param context
      * @return
      */
@@ -724,6 +755,7 @@ public class Util {
         // Thanks http://www.pocketmagic.net/?p=1662!
         // Try not to use DISPLAY, HOST or ID - these items could change.
         // If there are collisions, there will be overlapping data
+        //Build.CPU_ABI 这个不靠谱，代表App支持的abi，有可能会变，所以要把这个去掉
         String m_szDevIDShort = "35" + (Build.BOARD.length() % 10) + (Build.BRAND.length() % 10) + (Build.CPU_ABI.length() % 10) + (Build.DEVICE.length() % 10) + (Build.MANUFACTURER.length() % 10) + (Build.MODEL.length() % 10) + (Build.PRODUCT.length() % 10);
 
         // Thanks to @Roman SL!
@@ -755,7 +787,6 @@ public class Util {
      *
      * @param zipFileString ZIP的名称
      * @param outPathString 要解压缩路径
-     * @throws Exception
      */
     public static void unZipFolder(String zipFileString, String outPathString) throws Exception {
         ZipInputStream inZip = new ZipInputStream(new FileInputStream(zipFileString));
@@ -792,6 +823,52 @@ public class Util {
         inZip.close();
     }
 
+
+    /**
+     * 获取zip的文件个数（包含文件夹）
+     * @param zipFileString
+     */
+    public void getZipSize(String zipFileString){
+
+        try {
+            ZipFile zipFile = new ZipFile(zipFileString);
+            int zipCount= zipFile.size();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * 判断Activity是否存在
+     * @param context
+     * @param cls
+     * @return
+     */
+    public static boolean isExistMainActivity(Context context, Class<?> cls) {
+        try {
+            Intent intent = new Intent(context, cls);
+            ComponentName cmpName = intent.resolveActivity(context.getPackageManager());
+            boolean flag = false;
+            // 说明系统中存在这个activity
+            if (cmpName != null) {
+                ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                List<ActivityManager.RunningTaskInfo> taskInfoList = am.getRunningTasks(10);
+                for (ActivityManager.RunningTaskInfo taskInfo : taskInfoList) {
+                    // 说明它已经启动了
+                    if (taskInfo.baseActivity.equals(cmpName)) {
+                        flag = true;
+                        break;  //跳出循环，优化效率
+                    }
+                }
+            }
+            return flag;
+        } catch (Exception e) {
+            Log.e("error",e.getMessage());
+        }
+        return false;
+    }
 
 
 

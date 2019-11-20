@@ -153,7 +153,11 @@ public class Camera1_TextureActivity extends AppCompatActivity {
             List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
 //            Camera.Size size = supportedPreviewSizes.get(33);
 
-            //如果textureview的大小比这个大那么就会拉伸
+            //如果textureview的大小比这个比例 大 那么就会拉伸,或者压缩
+            //如果比例一样，会模糊，或者缩小
+            //首先摄像头获取到的图片是固定大小，那么设置previewsize比例 得看这个比例和摄像头获取的比例大小，
+            //所以会进行剪裁，
+            //剪裁之后的图片会显示到textureview上，显示的时候根据控件的大小会进行拉伸。
             parameters.setPreviewSize(640, 480);
             int pixel_format = ImageFormat.NV21;
             parameters.setPreviewFormat(pixel_format);

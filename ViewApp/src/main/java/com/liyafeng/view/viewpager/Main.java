@@ -12,12 +12,15 @@ public class Main {
      * 然后给viewpager设置边距
      * android:layout_marginLeft="20dp"
      * android:layout_marginRight="20dp"
+     * 然后代码里设置
+     * mViewPager.setPageMargin(page之间的距离)
+     *
      * 这时我们一页就能显示三个item了
      * 接着我们设置
      * banner_circle.offscreenPageLimit = 3  //一次加载三个
      * banner_circle.pageMargin =80   item之间的距离
      *
-     * viewpager不显示
+     * ==============viewpager不显示================
      * 注意在Adapter中记得container.addView，否则显示不出来
      * 而且必须用addView，不能有inflate(R.layout.xxx,container)，否则显示不出来
      *

@@ -3,6 +3,21 @@ package com.liyafeng.view.other.git;
 public class Git_Main {
 
     /**
+     * gitlab有namespace的概念，
+     * 你登录你的账户在 company的命名空间下创建一个项目，然后再fork到你的命名空间下，当然你要有权限
+     *
+     * =========git work flow========
+     * workspace -> index -> local repository -> remote repository
+     *
+     *
+     * =======git add =======
+     * 三者的区别
+     * git add -A stages all changes
+     * git add . stages new files and modifications, without deletions
+     * git add -u stages modifications and deletions, without new files
+     *
+     *
+     * ====================
      * github新建个Repository，然后本地git init 一个仓库
      * 本地添加远程 git remote add origin git@github.com:pop1234o/Algorithm.git
      * git pull orgin
@@ -109,6 +124,11 @@ public class Git_Main {
      * 这样远程就会创建一个分支，并且与本地分支关联，以后修改代码就直接
      * git push就能自动推送到 origin/分支名 中了。
      * <p>
+     *
+     * 重命名本地分支
+     * git branch -m devel develop
+     *
+     *
      * ====================
      * 在git reomote add origin 地址.git 后，添加了远程仓库
      * 然后需要git fetch 远程仓库名，一下才能获取到远程仓库的信息
@@ -130,19 +150,29 @@ public class Git_Main {
      * git tag v1.0 打标签
      *
      * git tag 查看标签列表
+     * git tag --list
      * <p>
      * git show <tagname>查看标签信息
      * <p>
-     * git tag -d v0.1 删除
      * <p>
      * git push origin v1.0 推送标签到远程
      * git push origin --tags 推送所有标签
+     *
+     * 获取远程tag
+     * git fetch origin tag <tagname>
      * <p>
      * <p>
      * 【删除远程标签】
-     * git tag -d v0.9
+     * git tag -d v0.9 删除本地标签
      * git push origin :refs/tags/v0.9
      * <p>
+     * 查看tag代码（但是不能编辑）
+     * git checkout tag_name
+     *
+     * 如果要在 tag 代码的基础上做修改，你需要一个分支：
+     * git checkout -b branch_name tag_name
+     *
+     *
      * =========================删除远程仓库============
      * git remote rm origin   （只是删除这个名字，并没有真的将远程仓库删除）
      *
@@ -192,17 +222,7 @@ public class Git_Main {
      * <p>
      * <p>
      * <p>
-     * ===================版本回退==============
-     * git log查看commit的sha1值，就是commit的id
-     * 然后git reset --hard [commitid]
-     * 就回退到那个版本了
-     * <p>
-     * --hard
-     * Resets the index and working tree. Any changes to tracked files
-     * in the working tree since <commit> are discarded.
-     * <p>
-     * git reflog 查看未来版本的commit
-     * 然后同样的命令来前进
+     *
      */
     void a1() {
     }
@@ -256,7 +276,15 @@ public class Git_Main {
     /**
      * https://help.github.com/articles/removing-sensitive-data-from-a-repository/
      * https://blog.csdn.net/meteor1113/article/details/4407209
-     * git 永久删除
+     * https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2 (Git 工具 - 重写历史)
+     * git 永久删除文件和永久删除文件commit
+     *
+     * ==============git永久删除文件=========
+     * 比如某次commit中存在大文件，或者敏感文件
+     * $ git filter-branch --tree-filter 'rm -f passwords.txt' HEAD
+     *
+     * --tree-filter选项会在每次检出项目时先执行指定的命令然后重新提交结果
+     *
      */
     void fun3() {
     }
@@ -285,6 +313,18 @@ public class Git_Main {
      * git reset --hard <commit_id>   workspace 、index、Head都会重置，
      * //这样我们的commit流中就没有那个commit了，但是我们git数据库中还有
      * //git reflog 查看每一次命令，找到那个commitid，reset到那即可
+     *  ===================版本回退==============
+     *  git log查看commit的sha1值，就是commit的id
+     *  然后git reset --hard [commitid]
+     *  就回退到那个版本了
+     *  <p>
+     *  --hard
+     *  Resets the index and working tree. Any changes to tracked files
+     *  in the working tree since <commit> are discarded.
+     *  <p>
+     *  git reflog 查看未来版本的commit
+     *   然后同样的命令来前进
+     *
      */
     void fun4() {
     }
@@ -318,6 +358,10 @@ public class Git_Main {
      * 然后我们git commit -m"update"，
      * 然后git push 即可
      *
+     * ----------
+     * 我们可以删除.idea下所有文件，但是项目一下就没了，我们需要重新打开ide即可
+     * ----------
+     *
      * 工作区-add->index-commit->local repository -push -> remote repository
      *
      * remote repository =pull=> 工作区
@@ -328,6 +372,7 @@ public class Git_Main {
     void fun6(){
 
     }
+
 
 
     /**
@@ -343,4 +388,11 @@ public class Git_Main {
      *
      */
     void fun7(){}
+
+
+    /**
+     * 解决冲突
+     * 当你拉下代码有冲突的时候，我们解决完冲突，git add filename 就可以标记为已解决了
+     */
+    void fun8(){}
 }

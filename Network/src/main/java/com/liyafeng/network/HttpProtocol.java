@@ -70,6 +70,9 @@ package com.liyafeng.network;
  * trace 请求服务器回送收到的请求信息，主要用于测试或诊断
  * connect 保留将来使用
  * ------------------请求头---------------
+ * https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Connection （请求头讲解）
+ * <p>
+ * <p>
  * Host: www.example.com（没有端口号默认是80）
  * User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)     客户端信息
  * Cache-Control:no-cache;no-store;max-age=60;max-stale=60;min-fresh=60;only-if-cached   缓存控制
@@ -117,7 +120,7 @@ package com.liyafeng.network;
  * 203 Non-Authoritative Information 文档已经正常地返回，但一些应答头可能不正确，因为使用的是文档的拷贝（HTTP 1.1新）。
  * 204 No Content 没有新文档，浏览器应该继续显示原来的文档。如果用户定期地刷新页面，而Servlet可以确定用户文档足够新，这个状态代码是很有用的。
  * 205 Reset Content 没有新的内容，但浏览器应该重置它所显示的内容。用来强制浏览器清除表单输入内容（HTTP 1.1新）。
- * 206 Partial Content 客户发送了一个带有Range头的GET请求，服务器完成了它（HTTP 1.1新）。
+ * 206 Partial(局部的) Content 客户发送了一个带有Range头的GET请求，服务器完成了它（HTTP 1.1新）。
  * 300 Multiple Choices 客户请求的文档可以在多个位置找到，这些位置已经在返回的文档内列出。如果服务器要提出优先选择，则应该在Location应答头指明。
  * 301 Moved Permanently 客户请求的文档在其他地方，新的URL在Location头中给出，浏览器应该自动地访问新的URL。
  * 302 Found 类似于301，但新的URL应该被视为临时性的替代，而不是永久性的。注意，在HTTP1.0中对应的状态信息是“Moved Temporatily”。
@@ -249,29 +252,356 @@ package com.liyafeng.network;
  * 服务端获取到request的content-type后，就知道以什么方式来解析request body中的内容了
  * 这个操作都是约定好的，是很多语言框架中所支持的
  * <p>
- * 同样支持的还有  multipart/form-data
- * 用来上传文件
- * 他的request body是一块一块的
+ * ===========Content-Type的 mime类型=====================
+ * 媒体格式 Content-Type
  * <p>
- * 他的request body 的约定格式是：
- * boundary=---xxxxxxxxxxxxxx
- * [换行]
- * ---xxxxxxxxxxxxx
- * content-description:from-data;name="key"
+ * text/html ： HTML格式
+ * text/plain ：纯文本格式
+ * text/xml ：  XML格式
+ * image/gif ：gif图片格式
+ * image/jpeg ：jpg图片格式
+ * image/png：png图片格式
  * <p>
- * value
- * ---xxxxxxxxxxxxx
- * content-description:from-data;name="file";filename="xxx.png"
- * content-type:image/png
+ * application/xhtml+xml ：XHTML格式
+ * application/xml     ： XML数据格式
+ * application/atom+xml  ：Atom XML聚合格式
+ * application/json    ： JSON数据格式
+ * application/pdf       ：pdf格式
+ * application/msword  ： Word文档格式
+ * application/octet-stream ： 二进制流数据（如常见的文件下载）
+ * application/x-www-form-urlencoded ： <form encType=””>中默认的encType，form表单数据被编码为key/value格式发送到服务器（表单默认的提交数据的格式）
  * <p>
- * [png的内容]
  * <p>
- * ---xxxxxxxxxxxxx--
+ * multipart/form-data ： 需要在表单中进行文件上传时，就需要使用该格式
  */
 
 public class HttpProtocol {
 
 
+    /**
+     * http 文件上传（注意文件上传）
+     * <p>
+     * http格式：
+     * <p>
+     * POST http://test2.aibrandy.com/api-manager/upload/uploadFile http/1.1
+     * Content-Type: multipart/form-data; boundary=be5b4fe6-a570-49e4-9380-4515cdf87483
+     * Content-Length: 564772
+     * 【换行】
+     * --be5b4fe6-a570-49e4-9380-4515cdf87483
+     * Content-Disposition: form-data; name="file"; filename="melo.log"  //这个name其实就是key，如果是文件上传就加个filename
+     * Content-Type: multipart/form-data
+     * Content-Length: 564561 [这个可以不要]
+     * 【换行】
+     * 【文件内容】
+     * --be5b4fe6-a570-49e4-9380-4515cdf87483
+     * Content-Disposition: form-data; name="key"
+     * 【换行】
+     * value
+     * --be5b4fe6-a570-49e4-9380-4515cdf87483--
+     * <p>
+     * <p>
+     * <p>
+     * <p>
+     * ======================
+     */
+    void a1() {
+    }
+
+
+    /**
+     * =========post请求格式==============
+     * POST http://test2.aibrandy.com/api-manager/upload/uploadFile http/1.1
+     * Content-Type:application/x-www-form-urlencoded
+     * Content-Length: 21
+     * [这里需要有个换行]
+     * key=value&testKey=testValue
+     * <p>
+     * <p>
+     * 我们看到这种格式就不好是文件上传了
+     */
+    void a2() {
+    }
+
+
+    /**
+     * http connection 请求头
+     * 在http1.1中，client和server都是默认对方支持长链接的， 如果client使用http1.1协议，
+     * 但又不希望使用长链接，则需要在header中指明connection的值为close；如果server方也不想支持长链接，
+     * 则在response中也需要明确说明connection的值为close.
+     * 不论request还是response的header中包含了值为close的connection，都表明当前正在使用的tcp链接在请求处理完毕后会被断掉。
+     * 以后client再进行新的请求时就必须创建新的tcp链接了
+     * 。 HTTP Connection的 close设置允许客户端或服务器中任何一方关闭底层的连接双方都会要求在处理请求后关闭它们的TCP连接。
+     */
+    void a3() {
+    }
+
+
+    /**
+     * ===========AES加密 高级加密标准(AES,Advanced Encryption Standard) ==============
+     * https://zhuanlan.zhihu.com/p/45155135
+     * <p>
+     * <p>
+     * <p>
+     * 为最常见的对称加密算法(微信小程序加密传输就是用这个加密算法的)。对称加密算法也就是加密和解密用相同的密钥，具体的加密流程如下图：
+     * <p>
+     * 明文+秘钥=》加密函数=》密文 ---网络传输 --- =》密文+秘钥=》解密函数 =》明文
+     * <p>
+     * 是美国联邦政府采用的一种区块加密标准。这个标准用来替代原先的DES
+     * <p>
+     * 算法    秘钥长度  分数长度    加密轮数
+     * AES-128	4	    4	        10   性能最高，因为加密轮数最少
+     * AES-192	6	    4	        12
+     * AES-256	8	    4	        14   安全最高
+     * <p>
+     * 128代表秘钥的长度是128位，8位1个字节，所以长度就是4个字节
+     * <p>
+     * <p>
+     * AES的分组加密特性。
+     * AES算法在对明文加密的时候，并不是把整个明文一股脑加密成一整段密文，而是把明文拆分成一个个独立的明文块，每一个明文块长度128bit。
+     * 这些明文块经过AES加密器的复杂处理，生成一个个独立的密文块，这些密文块拼接在一起，就是最终的AES加密结果。
+     * <p>
+     * <p>
+     * 总明文分成一个个128位（16字节）的明文
+     * 【128位的明文】...【128位的明文】
+     * =》秘钥+加密器
+     * 【128位的密文】...【128位的密文】
+     * <p>
+     * 但是这里涉及到一个问题：
+     * 假如一段明文长度是192bit，如果按每128bit一个明文块来拆分的话，第二个明文块只有64bit，
+     * 不足128bit。这时候怎么办呢？就需要对明文块进行填充（Padding）。
+     * <p>
+     * NoPadding： 不做任何填充，但是要求明文必须是16字节的整数倍。
+     * <p>
+     * PKCS5Padding（默认）： 如果明文块少于16个字节（128bit），在明文块末尾补足相应数量的字符，且每个字节的值等于缺少的字符数。
+     * 比如明文：{1,2,3,4,5,a,b,c,d,e},缺少6个字节，则补全为{1,2,3,4,5,a,b,c,d,e,6,6,6,6,6,6}
+     * <p>
+     * ISO10126Padding： 如果明文块少于16个字节（128bit），在明文块末尾补足相应数量的字节，最后一个字符值等于缺少的字符数，其他字符填充随机数。
+     * 比如明文：{1,2,3,4,5,a,b,c,d,e},缺少6个字节，则可能补全为{1,2,3,4,5,a,b,c,d,e,5,c,3,G,$,6}
+     * <p>
+     * PKCS7Padding : PKCS5Padding 是他的子集，用
+     * <p>
+     * -------PKCS7Padding 与 PKCS5Padding区别---------------
+     * https://crypto.stackexchange.com/questions/9043/what-is-the-difference-between-pkcs5-padding-and-pkcs7-padding
+     * https://stackmirror.com/questions/29232705
+     * <p>
+     * PKCS#5 padding is defined for 8-byte block sizes,
+     * PKCS#7 padding would work for any block size from 1 to 255 bytes.
+     * <p>
+     * -------------
+     * java中用 PKCS7Padding
+     * PKCS5 padding is not valid for AES, but Java still provides it which means
+     * that Java is lying and is actually using PKCS7 padding in which case PKCS5Padding and PKCS7Padding
+     * are the same for all intends and purposes
+     * <p>
+     * PKCS5对于AES算法无效，但java仍然使用它，说明java在说谎，实际上java用的是PKCS7填充方式
+     * <p>
+     * <p>
+     * 用什么填充加密的，就得用什么填充解密，因为这样程序才能知道哪些是填充要去掉
+     * -------------------
+     * .模式  明文变为密文的处理方式
+     * AES的工作模式，体现在把明文块加密成密文块的处理过程中。AES加密算法提供了五种不同的工作模式：
+     * ECB、CBC、CTR、CFB、OFB
+     * 模式之间的主题思想是近似的，在处理细节上有一些差别。我们这一期只介绍各个模式的基本定义。
+     * ECB模式（默认）：
+     * 电码本模式 Electronic Codebook Book
+     * CBC模式：
+     * 密码分组链接模式 Cipher Block Chaining
+     * CTR模式：
+     * 计算器模式 Counter
+     * CFB模式：
+     * 密码反馈模式 Cipher FeedBack
+     * OFB模式：
+     * 输出反馈模式 Output FeedBack
+     * <p>
+     * ---------------------
+     * AES/CBC/PKCS7Padding
+     * 加密算法 /模式/填充方式
+     * <p>
+     * <p>
+     * 在这里我们重新梳理一下：
+     * 1.把明文按照128bit拆分成若干个明文块。
+     * 2.按照选择的填充方式来填充最后一个明文块。
+     * 3.每一个明文块利用AES加密器和密钥，加密成密文块。
+     * 4.拼接所有的密文块，成为最终的密文结果。
+     * <p>
+     * --------------------
+     * CBC模式（Cipher Block Chaining）引入了一个新的概念
+     * 初始向量IV（Initialization Vector）。
+     * IV是做什么用的呢？它的作用和MD5的“加盐”有些类似，目的是防止同样的明文块始终加密成同样的密文块。
+     * CBC模式在每一个明文块加密前会让明文块和一个值先做异或操作。IV作为初始化变量，参与第一个明文块的异或，后续的每一个明文块和它前一个明文块所加密出的密文块相异或。
+     * 这样以来，相同的明文块加密出的密文块显然是不一样的。
+     * CBC模式的好处是什么呢？
+     * 安全性更高
+     * 坏处也很明显：
+     * 1.无法并行计算，性能上不如ECB
+     * 2.引入初始化向量IV，增加复杂度。
+     *
+     * ---------- CBC 和 ECB ---------
+     * ECB模式（Electronic Codebook Book）是最简单的工作模式，在该模式下，每一个明文块的加密都是完全独立，互不干涉的。
+     * 这样的好处是什么呢？
+     * 1.简单
+     * 2.有利于并行计算
+     * 缺点同样也很明显：
+     * 相同的明文块经过加密会变成相同的密文块，因此安全性较差。
+     *
+     * CBC模式（Cipher Block Chaining）引入了一个新的概念：初始向量IV（Initialization Vector）。
+     * IV是做什么用的呢？它的作用和MD5的“加盐”有些类似，目的是防止同样的明文块始终加密成同样的密文块。
+     * （比如明文块有相同的，那么通过ECB加密出来的密文块都是相同的，而CBC会和前一个密文快异或，所以不会相同）
+     *
+     * CBC模式在每一个明文块加密前会让明文块和一个值先做异或操作。IV作为初始化变量，参与第一个明文块的异或，后续的每一个明文块和它前一个明文块所加密出的密文块相异或。
+     * 这样以来，相同的明文块加密出的密文块显然是不一样的。
+     * CBC模式的好处是什么呢？
+     * 安全性更高
+     * 坏处也很明显：
+     * 1.无法并行计算，性能上不如ECB
+     * 2.引入初始化向量IV，增加复杂度。
+     *
+     *
+     *
+     *
+     */
+    void a4() {
+    }
+
+
+    public static String encrypt(String plainText) {
+        try {
+
+            StringBuilder builder = new StringBuilder("12345678123456781234567812345678");
+
+
+            // 创建AES秘钥
+            SecretKeySpec key = new SecretKeySpec(builder.toString().getBytes(), "AES");
+
+            //获得加密器
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+            IvParameterSpec ivParameterSpec = new IvParameterSpec("1234567812345678".getBytes());
+            // 初始化加密器
+            cipher.init(Cipher.ENCRYPT_MODE, key, ivParameterSpec);
+
+            //明文进行加密
+            byte[] result = cipher.doFinal(plainText.getBytes());
+            byte[] encode = Base64.encode(result, Base64.DEFAULT);
+            return new String(encode);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+
+        return plainText;
+    }
+
+    /**
+     * 解密
+     *
+     * @param content
+     * @return
+     */
+    public static String decrypt(String content) {
+        try {
+            StringBuilder builder = new StringBuilder("12345678123456781234567812345678");
+
+
+            // 创建AES秘钥
+            SecretKeySpec key = new SecretKeySpec(builder.toString().getBytes(), "AES");
+
+            Cipher cipherDecrypt = Cipher.getInstance("AES/CBC/PKCS5Padding");
+
+            IvParameterSpec ivParameterSpec = new IvParameterSpec("1234567812345678".getBytes());
+
+            cipherDecrypt.init(Cipher.DECRYPT_MODE, key, ivParameterSpec);
+
+            byte[] doFinal = cipherDecrypt.doFinal(Base64.decode(content, Base64.DEFAULT));
+            return new String(doFinal);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
+
+
+    /**
+     * ============http缓存优化 Etag ======
+     *   ETAG在HTTP协议中的定义是资源实体的标记（entity tag），强标识一个资源。是缓存过期的一种代替方案（IF-MODIFIED-SINCE,IF-UNMODIFIED-SINCE）。服务器端资源一旦改变，ETAG值需要跟着改变。但是协议没有规定ETAG的计算方法，可以任意实现。一般对应静态资源（静态URL或文件）采用MD5摘要方式较好。
+     * ETAG与IF-MATCH,IF-NONE-MATCH配合实现缓存方案，代替IF-MODIFIED-SINCE,IF-UNMODIFIED-SINCE（另外）
+     *
+     * 资源（Resource）：URL唯一标识的资源，一个URL对应一个资源。
+     * ===================实现原理==================
+     *
+     * 服务器端创建资源，生成ETAG，每次修改也更新ETAG。
+     * 客户端首次访问资源，服务器返回资源实体内容和在头区中返回ETAG值，客户端保存实体内容和ETAG值。
+     * 客户端再次访问资源的时候，在头域（header）中加入“If-match:etag值”指令。
+     * 服务器接受到请求后，检查资源的ETAG值是否与请求的If-match指定的etag值相同（强匹配），如果匹配则响应304 Not Modified，
+     * 表示资源未改变，客户端可以直接使用前面请求中保存的资源，如果不匹配才返回资源实体（entity,也就是body体）.
+     *
+     * 或者：客户端再次访问资源的时候，在header中加入“If-None-Match:etag值”，如果服务器的ETAG值匹配客户端请求
+     * 的etag值则返回412，表示条件冲突，不匹配则返回实体内容。
+     * 客户端继续使用缓存的资源。
+     * ================实际使用==================
+     * If-Match:匹配则返回实体内容，否则响应304，不返回实体内容。
+     * If-None-Match:不匹配则返回实体内容，否则响应412错误。
+     *
+     * =========ETag比Last-Modified和 Expires 的优势
+     *
+     * Last-Modified和Expires都是时间作为判断资源是否改变的标志存在一些隐患。
+     *
+     * 在秒级以内多次修改，Last-Modified和Expires无法表示出来，因为Last-Modified和Expires最小粒度为秒级。
+     * 对资源多次修改，但是最后又修改回最初的内容，实际上内容并没有改变。
+     * ETag值是根据实际内容变更才更新，所以可以更准确的标志资源。
+     *
+     * ==============实际应用
+     *
+     * 云存储中最为文件的tag，标记文件是否改变。一般使用MD5判断文件是否改变，也可以直接使用MD5值作为ETAG值。
+     * =============问题：
+     * 对大文件，修改一小部分内容后，更新ETAG，从新计算MD5，效率太低,解决方案啊~？
+     *
+     * ================
+     * https://imweb.io/topic/5795dcb6fb312541492eda8c (HTTP缓存控制小结)
+     *
+     * 如果服务器发现ETag匹配不上，那么直接以常规GET 200回包形式将新的资源（当然也包括了新的ETag）发给客户端；
+     * 如果ETag是一致的，则直接返回304知会客户端直接使用本地缓存即可。
+     * 那么客户端是如何把标记在资源上的 ETag 传回给服务器的呢？请求报文中有两个首部字段可以带上 ETag 值：
+     *
+     * ⑴ If-None-Match: ETag-value
+     * 示例为 If-None-Match: "5d8c72a5edda8d6a:3239" 告诉服务端如果 ETag 没匹配上需要重发资源数据，
+     * 否则直接回送304 和响应报头即可。 当前各浏览器均是使用的该请求首部来向服务器传递保存的 ETag 值。
+     *
+     * ⑵ If-Match: ETag-value
+     * 告诉服务器如果没有匹配到ETag，或者收到了“*”值而当前并没有该资源实体，则应当返回412(Precondition Failed) 状态码给客户端。
+     * 否则服务器直接忽略该字段。
+     * 需要注意的是，如果资源是走分布式服务器（比如CDN）存储的情况，需要这些服务器上计算ETag唯一值的算法保持一致，
+     * 才不会导致明明同一个文件，在服务器A和服务器B上生成的ETag却不一样。
+     *
+     */
+    void a5(){}
+
+
+    /**
+     * =======Last-Modified 来使用缓存数据==========
+     * 第一次请求 返回响应中带有Last-Modified  ，把响应缓存，然后Last-Modified 的value（时间）也缓存
+     * 示例： Thu, 08 Aug 2019 02:41:14 GMT
+     * 下次请求的时候 带上这个时间 If-Modified-Since: Last-Modified-value
+     * 如果响应没有改变，返回304，改变了返回200
+     *
+     *
+     */
+    void a6(){}
 }
 
 /**
@@ -365,9 +695,9 @@ public class HttpProtocol {
  * ======================https连接、请求/响应过程===============
  * https://blog.csdn.net/think_program/article/details/60780843
  * 首先进行tls握手
- *
+ * <p>
  * ( 注意！！！tcp的三次握手不变，Tcp连接成功后进行tls层的握手，成功后才能进行http的Request、Response)
- *
+ * <p>
  * 1.浏览器将自己支持的一套加密规则发送给网站。
  * 2.网站从中选出一组加密算法与HASH算法，并将自己的身份信息以证书的形式发回给浏览器。
  * 证书里面包含了网站地址，加密公钥，以及证书的颁发机构等信息。
@@ -394,10 +724,22 @@ public class HttpProtocol {
  * 而数字证书的作用是验证服务端发来的公钥是可靠的
  * <p>
  * <p>
- * =====================为什么内容用对称加密=================
+ * =====================为什么内容用对称加密  =================
  * 因为非对称加密是很消耗性能，所以我们用对称加密，但是让服务端知道随机密码的过程也不安全
  * 所以这个可以用非对称加密
- *
+ * <p>
+ * ==============对称加密和非对称加密的区别===========
+ * 对称加密算法
+ * 加密和解密用到的密钥是相同的，这种加密方式加密速度非常快，适合经常发送数据的场合。缺点是密钥的传输比较麻烦。
+ * 因为秘钥传输中有可能被泄漏
+ * <p>
+ * 非对称加密算法
+ * 加密和解密用的密钥是不同的，这种加密方式是用数学上的难解问题构造的，通常加密解密的速度比较慢，适合偶尔发送数据的场合。
+ * 优点是密钥传输方便。常见的非对称加密算法为RSA、ECC和EIGamal。
+ * <p>
+ * 实际中，一般是通过RSA加密AES的密钥，传输到接收方，接收方解密得到AES密钥，然后发送方和接收方用AES密钥来通信。
+ * 这样保证了秘钥的安全性，也保证了加密速度
+ * <p>
  * =================HTTPS一般使用的加密算法和HASH算法===============
  * <p>
  * 非对称加密算法：RSA，DSA/DSS
@@ -406,6 +748,11 @@ public class HttpProtocol {
  * <p>
  * HASH算法：MD5，SHA1，SHA256    （用于生成摘要）
  * 内容可能很多，对内容加密，还不如对 摘要进行加密，hash后的内容叫做摘要
+ *
+ * SHA1 :算法生成 http://search.maven.org/remotecontent?filepath=commons-codec/commons-codec/1.11/commons-codec-1.11.jar
+ * http://commons.apache.org/proper/commons-codec/
+ * String sha1 = DigestUtils.sha1Hex(bytes)
+ *
  * <p>
  * ================VPN===============================================
  * 中国的GFW可以通过证书黑名单来拦截请求

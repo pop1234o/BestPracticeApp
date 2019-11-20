@@ -623,4 +623,30 @@ public class Flow {
     void recyc() {
 
     }
+
+
+    /**
+     * Provider不能设置 exported = true
+     *    Caused by: java.lang.SecurityException: Provider must not be exported
+     *         at android.support.v4.content.FileProvider.attachInfo(FileProvider.java:386)
+     *         at android.app.ActivityThread.installProvider(ActivityThread.java:6572)
+     *         at android.app.ActivityThread.installContentProviders(ActivityThread.java:6104) 
+     *         at com.stub.StubApp.interface8(Native Method) 
+     *         at com.stub.StubApp.attachBaseContext(SourceFile:249) 
+     *         at android.app.Application.attach(Application.java:204) 
+     *         at android.app.Instrumentation.newApplication(Instrumentation.java:1109) 
+     *         at android.app.Instrumentation.newApplication(Instrumentation.java:1093) 
+     *         at android.app.LoadedApk.makeApplication(LoadedApk.java:991) 
+     *         at android.app.ActivityThread.handleBindApplication(ActivityThread.java:5998) 
+     *         at android.app.ActivityThread.-wrap1(Unknown Source:0) 
+     *         at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1810) 
+     *         at android.os.Handler.dispatchMessage(Handler.java:106) 
+     *         at android.os.Looper.loop(Looper.java:192) 
+     *         at android.app.ActivityThread.main(ActivityThread.java:6831) 
+     *         at java.lang.reflect.Method.invoke(Native Method) 
+     *         at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:438) 
+     *         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:825) 
+     *
+     */
+    void provider(){}
 }

@@ -26,6 +26,9 @@
 
 * http://inloop.github.io/shadow4android/
   .9patch 阴影制作网站
+  
+* https://rules.sonarsource.com/
+  各种语言代码规范（静态代码检测规则讲解）
 
 ### 个人博客
 * http://blog.csdn.net/v_july_v
@@ -37,7 +40,7 @@
   Android源码分析的博客，中国Android源码分析鼻祖
 
 * http://www.ruanyifeng.com/blog/archives.html
-  阮一峰，博士，2008 年 6 月毕业于上海财经大学世界经济专业
+  阮一峰，70后，经济学博士，2008 年 6 月毕业于上海财经大学世界经济专业
   擅长前端技术，JS教程，计算机基础教程，很有价值
 
 * http://maoao530.github.io/
@@ -73,6 +76,15 @@
   李茂，全栈开发，苏州人
   里面讲解了科学上网的方法
   
+* http://renyugang.io/aboutme
+  任玉刚，生于1990年11月16日，Android开发，硕士毕业于中国科学技术大学，先后在腾讯、创新工场和百度从事Android开发，参与百度手机卫士的开发工作。
+  目前（2019）在滴滴做技术管理。北京海淀买房，开奥迪a4l。
+
+* https://github.com/stormzhang  
+  张奇，全国二流本科，专业主要就是数学专业，11年3月来上海参加IT培训，11年7月在SunNet做测试，工资4000
+  11年底开始接触Android，12年5月中入职薄荷做Android开发，之后一直在薄荷，后面15年开始写公众号，接广告挣钱
+  后面开通付费知识星球，收入百万
+  18年在上海买房买车(保时捷卡宴)，19年初正式辞去工作，成为一名自由职业者。
   
 
 ### 团队博客
@@ -90,3 +102,7 @@
 * http://www.channingbreeze.com/index.html
   李欣，14年硕士毕业，北航电子信息工程专业
   自学编程进入阿里测试团队，里面个人成长的经历，晋升经历很宝贵
+  
+  
+### 后台接口管理
+* https://www.eolinker.com/#/

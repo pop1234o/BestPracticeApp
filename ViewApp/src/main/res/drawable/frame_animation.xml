@@ -1,20 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="true">
-   <!-- // 设置是否只播放一次，默认为false-->
+    <!-- // 设置是否只播放一次，默认为false-->
 
     <!--// item = 动画图片资源；duration = 设置一帧持续时间(ms)-->
     <!--<item-->
-<!--android:drawable="@drawable/a0"-->
-<!--android:duration="100" /><item-->
-<!--android:drawable="@drawable/a1"-->
-<!--android:duration="100" /><item-->
-<!--android:drawable="@drawable/a2"-->
-<!--android:duration="100" /><item-->
-<!--android:drawable="@drawable/a3"-->
-<!--android:duration="100" /><item-->
-<!--android:drawable="@drawable/a4"-->
-<!--android:duration="100" />-->
+    <!--android:drawable="@drawable/a0"-->
+    <!--android:duration="100" /><item-->
+    <!--android:drawable="@drawable/a1"-->
+    <!--android:duration="100" /><item-->
+    <!--android:drawable="@drawable/a2"-->
+    <!--android:duration="100" /><item-->
+    <!--android:drawable="@drawable/a3"-->
+    <!--android:duration="100" /><item-->
+    <!--android:drawable="@drawable/a4"-->
+    <!--android:duration="100" />-->
 
 
     <!--
@@ -41,4 +40,4 @@
         return animationDrawable;
     }
     -->
-    </animation-list>
+</animation-list>

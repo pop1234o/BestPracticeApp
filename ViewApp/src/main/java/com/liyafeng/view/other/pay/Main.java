@@ -16,7 +16,11 @@ public class Main {
      * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417751808&token=&lang=zh_CN
      * 微信文档
      *
+     * 微信支付时序图
+     * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_3
      *
+     * 微信支付参数注释
+     * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2
      *
      *
      * @param args

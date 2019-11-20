@@ -110,7 +110,7 @@ public class Java {
 
     /**
      * 说说Object类中都有哪些方法？
-     * {@link java.lang.Object}
+     * @link java.lang.Object
      */
     public void a1_1_1() {
         /*
@@ -170,7 +170,7 @@ public class Java {
     }
 
     /**
-     * {@link java.io.Serializable} 和{@link android.os.Parcelable} 的区别
+     * @link java.io.Serializable 和@link android.os.Parcelable 的区别
      * https://www.cnblogs.com/trinea/archive/2012/11/09/2763213.html
      */
     public void a1_4() {
@@ -989,6 +989,26 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
+     *  说说 CountDownLatch ,CyclicBarrier  ,Semaphore
+     * https://www.cnblogs.com/dolphin0520/p/3920397.html
+     *
+     */
+    public void a2_16_1(){
+        /*
+        * =======================
+        * Latch 门闩
+        *
+        * CountDownLatch(3)
+        * await() //调用await()方法的线程会被挂起，它会等待直到count值为0才继续执行
+        *
+        * latch.countDown(); //数值减一
+        *
+        *
+        *
+        * */
+    }
+
+    /**
      * synchronized 关键字的原理？
      * http://www.cnblogs.com/paddix/p/5367116.html
      */
@@ -1088,8 +1108,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * 常用java集合框架简介
-     * {@link java.util.Collection}
-     * {@link java.util.Map}
+     * @link java.util.Collection}
+     * @link java.util.Map}
      * ----------------------
      * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
      */
@@ -1265,7 +1285,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
-     * LinkedHashMap作用？原理？{@link java.util.LinkedHashMap}
+     * LinkedHashMap作用？原理？@link java.util.LinkedHashMap}
      * http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html
      */
     public void a3_9() {
@@ -1308,7 +1328,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     /**
      * TreeMap作用？
-     * {@link java.util.TreeMap}
+     * @link java.util.TreeMap}
      */
     public void a3_11() {
         /*
@@ -1379,8 +1399,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * Iterator 和 Enumeration区别?
      * 说说ArrayList的Iterator是如何实现的？
      * 说说HashMap遍历如何实现？
-     * {@link java.util.ArrayList}
-     * {@link java.util.HashMap}
+     * @link java.util.ArrayList}
+     * @link java.util.HashMap}
      */
     public void a3_5() {
         /*
@@ -1986,7 +2006,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
-     * lambda表达式
+     * lambda表达式 lambda是java8c出来的，其实就是简化函数定义，函数也可以作为参数传递
      * http://www.runoob.com/java/java8-lambda-expressions.html
      * http://www.importnew.com/16436.html (很详细的例子)
      */
@@ -2024,6 +2044,9 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
     }
 
+    /**
+     * lambda表达式
+     */
     private void filter(ArrayList<String> list, Predicate<String> condition) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -2128,6 +2151,53 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
 //        new BufferedOutputStream().flush();
     }
+
+    //endregion
+
+
+
+    //region Java 代码规范
+    /**
+     * https://rules.sonarsource.com/java （代码规范讲解网站）
+     *
+     * 不要在finally块中使用return关键字
+     * try{
+     *             System.out.println("before return in try section.");
+     *             return x+y;
+     *         }finally{
+     *             System.out.println("before return in finally section.");
+     *             return x*y;
+     *         }
+     *  ————————————————
+     * 版权声明：本文为CSDN博主「陈字文」的原创文章，遵循CC 4.0 by-sa版权协议，转载请附上原文出处链接及本声明。
+     * 原文链接：https://blog.csdn.net/ziwen00/article/details/39318317
+     *
+     * 上面语句会返回x*y
+     * 因为 调用try代码块的return之前就会去执行finally里面的代码，这样finally的return就会结束当前的方法，
+     * 而不执行try中的return（如果有），从而返回一个错误的值
+     *
+     *
+     *=========Double-checked locking should not be used========================
+     * https://my.oschina.net/andylucc/blog/668919 （可以不要再使用Double-Checked Locking了
+     * https://rules.sonarsource.com/java/tag/multi-threading/RSPEC-2168 （Double-checked locking should not be used）
+     * 因为编译优化 导致的，对象已经被创建，但是里面的成员对象没有被初始化，这个时候第二个线程使用了对象的成员变量，因为没有初始化完成，所以报错
+     *
+     * 我们可以用静态内部类来实现 懒加载
+     *
+     * ================重写equals方法后重写hashCode方法的必要性 ==========
+     * https://zhuanlan.zhihu.com/p/30321358 ( 重写equals方法后重写hashCode方法的必要性 )
+     * https://rules.sonarsource.com/java/type/Bug/RSPEC-1206?search=equal ( "equals(Object obj)" and "hashCode()" should be overridden in pairs)
+     * Object的 equals 是比较内存地址 ==   ，hashCode 是返回内存地址的hash值
+     *
+     * 因为要服从以下规则：
+     * 1.如果两个对象  equals 比较相同，那么他们的 hashcode也应该相同，如果不同则不同
+     * 2.不相等的对象产生不相等的hash值能提高哈希表的性能 （比如HashMap）
+     *
+     *
+     *
+     *
+     */
+    void a36(){}
 
     //endregion
 }

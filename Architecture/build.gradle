@@ -1,8 +1,8 @@
+apply from: 'versions.gradle' //使用同一版本管理
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "27.0.2"
+    compileSdkVersion 28
 
 
     defaultConfig {
@@ -26,24 +26,40 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    implementation "com.android.support:appcompat-v7:26.1.0"
-    // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:1.0.0"
-    annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+//    testImplementation 'junit:junit:4.12'
+//    implementation "com.android.support:appcompat-v7:28.0.0"
+//    // ViewModel and LiveData
+//    implementation "android.arch.lifecycle:extensions:1.0.0"
+//    annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
+//
+//    // Room
+//    implementation "android.arch.persistence.room:runtime:1.0.0"
+//    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+//
+//    // Paging
+//    implementation "android.arch.paging:runtime:1.0.0-alpha4-1"
+//
+//    // Test helpers for LiveData
+//    testImplementation "android.arch.core:core-testing:1.0.0"
+//
+//    // Test helpers for Room
+//    testImplementation "android.arch.persistence.room:testing:1.0.0"
 
-    // Room
-    implementation "android.arch.persistence.room:runtime:1.0.0"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    // Support libraries
+    implementation deps.support.app_compat
+    implementation deps.support.v4
+    implementation deps.support.design
+    implementation deps.support.cardview
+    implementation deps.support.constraint
 
-    // Paging
-    implementation "android.arch.paging:runtime:1.0.0-alpha4-1"
+    // Architecture components -lifecycle
+    implementation deps.lifecycle.runtime
+    implementation deps.lifecycle.extensions
+    annotationProcessor deps.lifecycle.compiler
 
-    // Test helpers for LiveData
-    testImplementation "android.arch.core:core-testing:1.0.0"
-
-    // Test helpers for Room
-    testImplementation "android.arch.persistence.room:testing:1.0.0"
+    //  Architecture components - room
+    implementation deps.room.runtime
+    annotationProcessor deps.room.compiler
 }

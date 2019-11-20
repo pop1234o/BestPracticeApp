@@ -2,6 +2,7 @@
 一个Android最佳实践的集合，非常适合拿来学习，欢迎fork和star。
 【持续更新。。。】有问题或者建议可以提issue
 
+
 ### 自定义View列表 (Module: ViewApp)
 * DragView(一个随手指滑动的View)
 * SimpleSlidingMenu(一个简单的滑动侧边栏，支持三种模式，支持自定义)
@@ -46,6 +47,7 @@ vi编辑器的使用
 
 ### ORM框架  (Module: Orm)
 * GreenDao框架
+* Room框架（TODO）
 
 ### 依赖注入框架（Module: DependencyInjection）
 * 依赖注入介绍
@@ -76,8 +78,10 @@ vi编辑器的使用
 * AIDL的使用
 
 ### Android应用架构/组件化 (Module: Architecture)
-* MVC、MVP、MVVM
-* 最新官方的 Android-Architecture-Component 架构
+* MVC、MVP、MVVM 架构讲解
+* ~~最新官方的 Android-Architecture-Component 架构~~（过时，已成为Jetpack一部分）
+* 官方Android Jetpack 套件介绍
+* AndroidX介绍
 * 阿里组件化框架Arouter的介绍（TODO）
 
 ### Kotlin (Module: Kotlin)（这个已经移动到我的github的另一个仓库）
@@ -105,7 +109,7 @@ vi编辑器的使用
 * 设计模式6大原则介绍、23种设计模式
 * 堆，栈，树，队列，散列表等数据结构的介绍
 * 《剑指Offer》算法题介绍和解题
-* LeetCode 算法题解题
+* LeetCode、LintCode 算法题解题
 * 各大厂算法题讲解
 
 ### 区块链
@@ -115,5 +119,8 @@ vi编辑器的使用
 ### 其他 （Other）
 * 一些优秀的Android书籍和技术博客推荐！
 * 一些基本的学习技巧
+
+
+>这个Project包含多个Module，因为构建所有Module时间太长，所以在settings.gradle可以配置指定的Module名称，来加快构建速度
 
 by popli 

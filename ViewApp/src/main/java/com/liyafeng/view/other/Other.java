@@ -9,11 +9,35 @@ import android.os.SystemClock;
 
 import com.liyafeng.view.webview.WebViewActivity;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Other {
 
 
     public static void main(String[] args) {
 
+        //如果宽高大于1280
+        int max = Math.max(1920, 3080);
+        double log = Math.log(((double) max) / ((double) 1280));
+        double floor = Math.floor(log / Math.log(2.0d));
+        int inSampleSize = (int) Math.pow(2.0d, floor);
+
+
+        System.out.println("======"+inSampleSize);
+
+
+//        String str="{2|3}+{1|2}=6";
+////        String str="3+2=6";
+//        String str2 = "\\{.+?\\|.+?\\}";
+//        Matcher matcher = Pattern.compile(str2).matcher(str);
+//        int i = 0;
+//        while (matcher.find()) {
+//
+//            String substring = str.substring(i, matcher.end());
+//            System.out.println("==="+substring);
+//            i = matcher.end();
+//        }
     }
 
 
@@ -325,14 +349,14 @@ public class Other {
      * STREAM_RING 铃声音量
      * STREAM_MUSIC 媒体音量
      * STREAM_ALARM 闹钟音量
-     *
+     * <p>
      * pad
      * STREAM_NOTIFICATION 通知音量
      * STREAM_MUSIC 媒体音量
      * STREAM_ALARM 闹钟音量
      * 如果页面有通话类型的音频流 那么也有 STREAM_VOICE_CALL
-     *
-     *
+     * <p>
+     * <p>
      * /** Used to identify the volume of audio streams for phone calls *
      * <p>
      * public static final int STREAM_VOICE_CALL = AudioSystem.STREAM_VOICE_CALL;
@@ -355,5 +379,390 @@ public class Other {
     void a14() {
     }
 
+    /**
+     * https://segmentfault.com/a/1190000002590577
+     * <application
+     * android:allowBackup="true">
+     * </application>
+     * 这个属性默认为true，允许通过adb backup 备份数据（不root的情况下）
+     * adb restore 来恢复数据，比如我们登录了一个app，备份了数据
+     * 在另一个手机上恢复数据，这样就直接是登录状态了
+     */
+    void a15() {
+    }
+
+
+    /**
+     * ==========语义化版本 Semantic Versioning ==============
+     * https://semver.org/
+     * 这个是版本号管理的一套规范
+     * <p>
+     * 版本格式：主版本号.次版本号.修订号，版本号递增规则如下：
+     * <p>
+     * 主版本号：当你做了不兼容的 API 修改，
+     * 次版本号：当你做了向下兼容的功能性新增，
+     * 修订号：当你做了向下兼容的问题修正。
+     * 先行版本号及版本编译元数据可以加到“主版本号.次版本号.修订号”的后面，作为延伸。
+     * <p>
+     * -----------------
+     * 第一版开发阶段
+     * 0.1.0 作为你的初始化开发版本，并在后续的每次发行时递增次版本号
+     * 第一个稳定版本
+     * 1.0.0
+     * <p>
+     * ------------
+     * The androidx packages 就严格使用此规则进行版本号管理
+     * https://developer.android.com/jetpack/androidx
+     */
+    void a16() {
+    }
+
+
+    /**
+     * 　　ScaleType的值分别代表的意义： ImageView是Android中的基础图片显示控件，该控件有个重要的属性是ScaleType，该属性用以表示显示图片的方式，共有8种取值
+     * <p>
+     * 　　ScaleType.CENTER：：图片大小为原始大小，如果图片大小大于ImageView控件，则截取图片中间部分，若小于，则直接将图片居中显示。
+     * <p>
+     * 　　ScaleType.CENTER_CROP：将图片等比例缩放，让图像的短边与ImageView的边长度相同，即不能留有空白，缩放后截取中间部分进行显示。
+     * <p>
+     * 　　ScaleType.CENTER_INSIDE：将图片大小大于ImageView的图片进行等比例缩小，直到整幅图能够居中显示在ImageView中，小于ImageView的图片不变，直接居中显示。
+     * <p>
+     *     区别 这个小于imageview的图片不放大，下面那个放大
+     *
+     * 　　ScaleType.FIT_CENTER：ImageView的默认状态，大图等比例缩小，使整幅图能够居中显示在ImageView中，小图等比例放大，同样要整体居中显示在ImageView中。
+     * <p>
+     * 　　ScaleType.FIT_END：缩放方式同FIT_CENTER，只是将图片显示在右方或下方，而不是居中。
+     * <p>
+     * 　　ScaleType.FIT_START：缩放方式同FIT_CENTER，只是将图片显示在左方或上方，而不是居中。
+     * <p>
+     * 　　ScaleType.FIT_XY：将图片非等比例缩放到大小与ImageView相同。
+     * <p>
+     * 　　ScaleType.MATRIX：是根据一个3x3的矩阵对其中图片进行缩放
+     */
+    void a17() {
+    }
+
+
+    /**
+     * android 调用打印机打印
+     * https://blog.csdn.net/ssjj_programmer/article/details/53648321
+     *
+     * 系统提供api和界面来设置打印参数，和打印逻辑。。。我们一般只需要调用下面代码，将我们要打印的东西传入即可
+     * 但是有些手机要安装打印机对应的驱动（服务插件）比如惠普的叫hp打印服务插件，在各大应用市场有下载
+     * 有些手机则直接能连上打印机（应该是驱动手机自动就安装了）
+     *
+     *   PrintHelper photoPrinter = new PrintHelper(this);
+     *   photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+     *   photoPrinter.printBitmap("droids.jpg - test print", bitmap);
+     */
+    void a18(){}
+
+
+    /**
+     * ViewStub 的使用
+     * https://developer.android.google.cn/reference/android/view/ViewStub
+     * A ViewStub is an invisible, zero-sized View that can be used to lazily inflate layout resources at runtime.
+     * 它不可见，不占内存空间的一个View，在运行时可以懒加载
+     * 当调用  visible, or  inflate() 的时候，布局被填充（创建）
+     * setVisibility(int) or inflate() 被调用才会在视图树中
+     *
+     *  <ViewStub android:id="@+id/stub"  ViewStub的id
+     *                android:inflatedId="@+id/subTree" 布局创建后的id
+     *                android:layout="@layout/mySubTree"
+     *                android:layout_width="120dip"  这个参数会应用在布局的最外层
+     *                android:layout_height="40dip" />
+     *
+     *  ViewStub stub = findViewById(R.id.stub);
+     *  View inflated = stub.inflate();
+     *
+     * 调用两次inflate()的话会导致异常。
+     * setVisibility 中其实也调用了  inflate
+     *
+     * =======原理=======
+     * 它继承自View，里面没任何内容，只有在 inflate后 getParent()，把布局创建后加入，把自己从 Parent中移除
+     *
+     */
+    void a19(){}
+
+
+    /**
+     * 查看 cpu架构 / cpu abi
+     * adb shell
+     * cat /proc/cpuinfo
+     *
+     * Processor	: AArch64 Processor rev 4 (aarch64) 这个就是arm64-v8a
+     *
+     * processor	: 0
+     * BogoMIPS	: 38.40
+     * Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32
+     * CPU implementer	: 0x51
+     * CPU architecture: 8
+     * CPU variant	: 0xa
+     * CPU part	: 0x801
+     * CPU revision	: 4
+     *
+     */
+    void a20(){}
+
+
+    /**
+     * ===========自定义阴影控件，shadowlayout======
+     * http://www.excel-jiqiao.com/subject/lavikftx.html( 自定义控件绘制(Paint之阴影发光效果))
+     *
+     * 阴影的定义
+     * 形状：先假设光源从控件的正上方照射下来，那么阴影的形状肯定和控件一致
+     *
+     * 面积：而且比阴影范围要大（假设光源是近似一个点）
+     *      光源越近，阴影面积越大，当无限远的时候，近似于平行光，阴影面积约等于控件面积
+     *      （一般不定义阴影面积，而定义模糊度来确定边框范围，但注意，这是两个概念）
+     *
+     * 阴影模糊度：当时散光灯照射的时候，因为光源从正上方的各个角度照射，阴影重叠会导致边缘模糊
+     *          光越散阴影越模糊
+     *
+     * 阴影位移：当光源从正上方平移的时候，阴影反方向平移。
+     *
+     * 阴影颜色：
+     *
+     * 我们实现的关键是
+     * Paint.setShadowLayer(shadowRadius, dx, dy, shadowColor)
+     * 。。。。
+     *
+     * 注意：
+     * 在硬件加速开启的情况下， setShadowLayer() 只支持文字的绘制，文字之外的绘制必须关闭硬件加速才能正常绘制阴影。
+     * 如果 shadowColor 是半透明的，阴影的透明度就使用 shadowColor 自己的透明度；而如果 shadowColor 是不透明的，阴影的透明度就使用 paint 的透明度
+     *
+     *
+     *
+     */
+    void a21(){}
+
+
+    /**
+     * ============自定义属性===============
+     * https://www.jianshu.com/p/8844de6addb3 ( Android:自定义view之自定义属性)
+     *
+     * (新建)在res/values/attrs.xml
+     *
+     * 声明属性，一般名称都是类名 ，
+     *     <declare-styleable name="ShadowLayout">
+     *         <attr name="sl_cornerRadius" format="dimension" />
+     *         <attr name="sl_shadowRadius" format="dimension" />
+     *         <attr name="sl_dx" format="dimension" />
+     *         <attr name="sl_dy" format="dimension" />
+     *         <attr name="sl_shadowColor" format="color" />
+     *     </declare-styleable>
+     *
+     * format 有
+     *
+     * (1). reference：参考某一资源ID
+     * 属性使用：
+     * <ImageView android:background = "@drawable/图片ID"/>
+     *
+     * (2). color：颜色值
+     * 属性定义：
+     * <attr name = "textColor" format = "color" />
+     * 属性使用：
+     * <TextView android:textColor = "#00FF00" />
+     * (3). boolean：布尔值
+     * 属性定义：
+     * <attr name = "focusable" format = "boolean" />
+     * 属性使用：
+     * <Button android:focusable = "true"/>
+     * (4). dimension：尺寸值**
+     * 属性定义：
+     * <attr name = "layout_width" format = "dimension" />
+     * 属性使用：
+     * <Button android:layout_width = "42dip"/>
+     * (5). float：浮点值
+     * 属性定义：
+     * <attr name = "fromAlpha" format = "float" />
+     * 属性使用：
+     * <alpha android:fromAlpha = "1.0"/>
+     * (6). integer：整型值**
+     * 属性定义：
+     * <attr name = "framesCount" format="integer" />
+     * 属性使用：
+     * `<animated-rotate android:framesCount = "12"/
+     * (7). string：字符串
+     * 属性定义：
+     * <attr name = "text" format = "string" />
+     * 属性使用：
+     * <TextView android:text = "我是文本"/>
+     * (8). fraction：百分数**
+     * 属性定义：
+     * <attr name = "pivotX" format = "fraction" />
+     * 属性使用：
+     * <rotate android:pivotX = "200%"/>
+     *
+     * (9). enum：枚举值
+     * 属性定义：
+     * <declare-styleable name="名称">
+     *         <attr name="orientation">
+     *                     <enum name="horizontal" value="0" />
+     *                    <enum name="vertical" value="1" />
+     *        </attr>
+     * </declare-styleable>
+     * 属性使用：
+     * <LinearLayout android:orientation = "vertical"></LinearLayout>
+     * 注意：枚举类型的属性在使用的过程中只能同时使用其中一个，不能 android:orientation = “horizontal｜vertical"
+     *
+     * (10). flag：位或运算
+     * 属性定义：
+     * <declare-styleable name="名称">
+     *       <attr name="gravity">
+     *                 <flag name="top" value="0x30" />
+     *                 <flag name="bottom" value="0x50" />
+     *                 <flag name="left" value="0x03" />
+     *                 <flag name="right" value="0x05" />
+     *                 <flag name="center_vertical" value="0x10" />
+     *       </attr>
+     * </declare-styleable>
+     * 属性使用：
+     * <TextView android:gravity="bottom|left"/>
+     * 注意：位运算类型的属性在使用的过程中可以使用多个值
+     *
+     * (11). 混合类型：属性定义时可以指定多种类型值
+     * 属性定义：
+     * <declare-styleable name = "名称">
+     *           <attr name = "background" format = "reference|color" />
+     * </declare-styleable>
+     * 属性使用：
+     * <ImageView android:background = "@drawable/图片ID" />
+     * 或者：
+     * <ImageView android:background = "#00FF00" />
+     *   通过上面的学习我们已经知道怎么定义各种类型的属性，以及怎么使用它们，但是我们写好布局文件之后，要在控件中使用这些属性还需要将它解析出来。
+     *
+     *  private void initAttributes(Context context, AttributeSet attrs) {
+     *          这里就是定义的名称ShadowLayout
+     *         TypedArray attr  = context.obtainStyledAttributes(attributeSet, R.styleable.ShadowLayout, 0, 0)
+     *         if (attr == null) {
+     *             return;
+     *         }
+     *
+     *         try {
+     *         开始解析
+     *             mCornerRadius = attr.getDimension(R.styleable.ShadowLayout_sl_cornerRadius, getResources().getDimension(R.dimen.default_corner_radius));
+     *             mShadowRadius = attr.getDimension(R.styleable.ShadowLayout_sl_shadowRadius, getResources().getDimension(R.dimen.default_shadow_radius));
+     *             mDx = attr.getDimension(R.styleable.ShadowLayout_sl_dx, 0);
+     *             mDy = attr.getDimension(R.styleable.ShadowLayout_sl_dy, 0);
+     *             mShadowColor = attr.getColor(R.styleable.ShadowLayout_sl_shadowColor, getResources().getColor(R.color.default_shadow_color));
+     *         } finally {
+     *             attr.recycle();
+     *         }
+     *     }
+     *
+     */
+    void a22(){}
+
+
+    /**
+     *  layoutBottom.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+     *
+     *             @Override
+     *             public void onGlobalLayout() {
+     *
+     *                 layoutBottom.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+     *                 int[] outLocation = new int[2];
+     *                 layoutBottom.getLocationOnScreen(outLocation);
+     *                 //获取view在屏幕中的坐标
+     *
+     *             }
+     *         });
+     */
+    void a23(){}
+
+
+    /**
+     * Sublime Text 技巧
+     * ctag 定位代码
+     *
+     * ctrl+p 查找文件
+     *
+     * 右键+reveal in sidebar 查找当前文件在目录中的位置
+     *
+     *
+     *
+     */
+    void a24(){}
+
+
+    /**
+     * https://blog.csdn.net/ozuijiaoweiyang/article/details/51735644(读书笔记——Android特色开发，使用传感器)
+     *
+     * Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); 加速度传感器
+     * 加速度传感器输出的信息同样也是存放在 SensorEvent 的 values 数组中的,只不过此时的 values 数组中会有三个值,
+     * 分别代表手机在 X 轴、 Y 轴和 Z 轴（0,1,2）方向上的加速度信息。
+     *
+     * ！！！由于地心引力的存在,你的手机无论在世界上任何角落都会有一个重力加速度,这个加速度的值大约是 9.8m/s 2 。
+     * 当手机平放的时候,这个加速度是作用在 Z 轴上的,当手机竖立起来的时候,这个加速度是作用在 Y 轴上的,当手机横立起来的时候,
+     * 这个加速度是作用在 X 轴上的。
+     *
+     *
+     */
+    void a25(){}
+
+
+    /**
+     * ======如何计算一张图片在内存中的大小？ /计算bitmap内存大小 /优化图片加载=========
+     * https://www.cnblogs.com/dasusu/p/9789389.html （Android中一张图片占据的内存大小如何计算？）
+     *
+     * size = （加载到内存中图片的宽*加载到内存中图片的高）*每个像素所占空间
+     * 8bit = 1byte
+     * 一般加载到内存中的图片是 ARGB_8888  所以就是32位， 就是每个像素占用4个字节
+     *
+     * 从非drawable-xxxdpi加载的图片宽高在内存中都不会改变
+     * 如果你将图片放入drawable-xxxdpi 会根据当前手机的dpi进行缩放
+     *
+     * 比如  LDPI    MDPI	HDPI	XHDPI	    XXHDPI	    XXXHDPI
+     * 	    120	    160	    240	    320	        480	        640
+     *
+     * 如果放在XHDPI下的图片是100*100  那么在MDPI下加载到内存中图片的宽高就是 50*50
+     * 因为 MDPI的dpi是 160  XXHDPI是320，差两倍
+     *
+     *
+     */
+    void a26(){}
+
+
+    /**
+     * 防止双击逻辑
+     *     @Override
+     *     public void onClick(View v) {
+     *         long currentTime = System.currentTimeMillis();
+     *         //这里是防止把时间调整到未来
+     *         if (currentTime - lastClickTime < 0) {
+     *             lastClickTime = 0;
+     *         }
+     *
+     *         if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
+     *             lastClickTime = currentTime;
+     *             onNoDoubleClick(v);
+     *         }
+     *
+     *     }
+     *
+     * 这里是
+     *
+     *
+     */
+    void a27(){}
+
+
+    /**
+     * apk Signature的生成方法
+     * 最简单的打一个带正式签名的包，然后网上下载一个Gen_Signature_Android.apk ,同时安装到手机上，然后运行得到签名
+     * https://open.weixin.qq.com/zh_CN/htmledition/res/dev/download/sdk/Gen_Signature_Android.apk
+     *
+     *
+     * 或者用apktool来获取
+     *
+     * keytool -exportcert -alias [alias] -keypass [alias password] -keystore [keystore file path] -storepass [keystore password] | md5sum
+     * keytool -exportcert -alias openapi -keypass 654321 -keystore ./test.keystore -storepass 123456 | md5sum
+     *
+     * 如何你没有 md5sum 这个工具，可以先输出到文件中，网上找个md5的生成网站即可
+     * keytool -exportcert -alias openapi -keypass 654321 -keystore ./test.keystore -storepass 123456 > out.txt
+     *
+     */
+    void a28(){}
 
 }

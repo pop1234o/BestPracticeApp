@@ -33,12 +33,32 @@ public class N_Search_BinarySearch {
         }
     }
 
+    /**
+     * 示例
+     * 1,2,3,4
+     * 0 1 2 3
+     *
+     * 1,2,3
+     *
+     *
+     * 1,2
+     * 0 1
+     *
+     * 1
+     *
+     * 除以2指针是在左侧的那个（如果是偶数个元素）
+     *
+     * @param array
+     * @param n
+     * @return
+     */
     private static int binarySearch(int[] array, int n) {
         //两个指针指向开始和结尾
         int start = 0;
         int end = array.length - 1;
 
         //最终start指针会指向插入的那个位置
+        //如果是等于那么就这一个元素的可能性了
         while (start <= end) {//求出中位和n比较，小于end指针指向mid前一个，大于指向mid后一个
             int mid = (end + start) >>> 1;//无符号右移1位，相当于除2
             if (n < array[mid]) {
