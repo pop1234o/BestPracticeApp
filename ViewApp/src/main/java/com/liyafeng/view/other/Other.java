@@ -747,4 +747,22 @@ public class Other {
      */
     void a27(){}
 
+
+    /**
+     * apk Signature的生成方法
+     * 最简单的打一个带正式签名的包，然后网上下载一个Gen_Signature_Android.apk ,同时安装到手机上，然后运行得到签名
+     * https://open.weixin.qq.com/zh_CN/htmledition/res/dev/download/sdk/Gen_Signature_Android.apk
+     *
+     *
+     * 或者用apktool来获取
+     *
+     * keytool -exportcert -alias [alias] -keypass [alias password] -keystore [keystore file path] -storepass [keystore password] | md5sum
+     * keytool -exportcert -alias openapi -keypass 654321 -keystore ./test.keystore -storepass 123456 | md5sum
+     *
+     * 如何你没有 md5sum 这个工具，可以先输出到文件中，网上找个md5的生成网站即可
+     * keytool -exportcert -alias openapi -keypass 654321 -keystore ./test.keystore -storepass 123456 > out.txt
+     *
+     */
+    void a28(){}
+
 }
