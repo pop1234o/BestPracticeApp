@@ -21,3 +21,33 @@ p+
 |:--:|:--:| :--:| :--:| :--:| 
 | | |
 
+
+
+
+
+2019-11-20
+环境准备完成
+
+2019-11-21
+找第三方视频选择库和视频压缩库
+视频图片选择用b站的 https://github.com/Bilibili/boxing
+视频压缩有这个 https://github.com/tangpeng/VideoCompressor
+但是只能压缩到一半大小，这个是MediaCodec方案，说是比较快
+Android 视频压缩常见3种方案：(1)FFmpeg,(2)mp4praser,(3)MediaCodec. 本demo是用android 自带的MediaCodec 框架
+可以在看看，有没有更快的，而且压缩到大小可以选择，而且给用户推荐一个合适的压缩大小
+最好能滑动，而且给用户一个直观的结果图参照
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

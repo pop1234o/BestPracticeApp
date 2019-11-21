@@ -51,10 +51,23 @@ public class Gradle {
      * 本地的仓库地址 ~/.m2/repository   下载的依赖库都在这， ~代表用户目录
      * 默认的远程库 ()https://repo1.maven.org/maven2/
      * 阿里云镜像的maven仓库  http://maven.aliyun.com/nexus/content/groups/public/
+     * google的仓库 as3.0之前
+     *  maven {
+     *             url "https://maven.google.com"
+     *  }
+     *  之后
+     *  allprojects {
+     *     repositories {
+     *         google()  // add google() before jcenter()
+     *         jcenter()
+     *     }
+     * }
+     *
      *
      * 阿里云有很多国外仓库的镜像 https://maven.aliyun.com/mvn/view
      * jcenter (https://maven.aliyun.com/repository/jcenter)
      * maven central (https://maven.aliyun.com/repository/central)
+     * Google的 （ https://maven.aliyun.com/repository/google ）
      *
      *
      *
