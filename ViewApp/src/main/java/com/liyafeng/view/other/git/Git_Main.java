@@ -109,6 +109,9 @@ public class Git_Main {
      * <p>
      * git branch -vv查看当前本地分支关联的远程分支
      * <p>
+     * ---------push所有分支-------
+     * git push [originName] --all
+     *
      * =================
      * 取消当前分支和远程分支的关联
      * git branch --unset-upstream master
