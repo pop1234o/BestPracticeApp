@@ -25,6 +25,10 @@ public class PermissionActivity extends AppCompatActivity {
      * targetApi在 23及以上的时候需要申请动态权限
      * 而且所有时候权限必须在xml中声名，否则动态申请也不授予权限
      *
+     * 或者用第三方的库
+     * https://github.com/tbruyelle/RxPermissions
+     * https://github.com/lypeer/FcPermissions
+     *
      * @param savedInstanceState
      */
     @Override
