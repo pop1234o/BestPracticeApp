@@ -36,7 +36,7 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  * container format 容器格式 封装格式 是定义编码后的视频和音频 如果存放的格式
  * <p>
  * <p>
- * Video coding format(视频编码格式)
+ * ==============Video coding format(视频编码格式)=============
  * <p>
  * <p>
  * 1.H.262 or MPEG-2 Part 2 = MPEG-2 Part 2 = H.262
