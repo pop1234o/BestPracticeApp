@@ -13,10 +13,34 @@ public class ComputerBasic {
 
     /**
      * 讲一下常见编码方式？
+     * unicode 和 utf-8的区别?
      * http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html
      * https://www.zhihu.com/question/23374078/answer/24385963
      */
     public void a1(Context context) {
+
+        /**
+         *  unicode 和 utf-8的区别
+         *  https://www.zhihu.com/question/23374078
+         *  <p>
+         *  unicode是字符集，utf-8是unicode的编码规则
+         *  unicode是两个字节表示 0000 0000 0000 0000 65536种可能
+         *  后来加上Planes（平面）的概念，每个平面就0000-ffff  现在定义了17个平面
+         *  U+0000 默认代表plane 0 ，U+2ffff 代表平面2， 一直到U+10ffff 代表平面16 ，所以又110w个code points(码点) 编码指向
+         *  <p>
+         *  utf-8是一种编码规则 需要n个字节 开始的n个字节写1，后面跟0， 后面每个8位开头是10，这样剩下的位就写原来的 二进制
+         *
+         *
+         * */
+
+        /**
+         *  ASCII 有128个字符，0-127  = 00-7F = 0000 0000 - 0111 1111
+         *  8位带符号
+         *  一个byte 8位 可以用-128-127 的整数来表示 ，可以用
+         *  80 7f 7e
+         *  <p>
+         *  所以一个字节可以用2个16进制数来表示，如果是ascii码，则可以转化为对应的字符
+         * */
         /*
          * 8位一个字节(byte)，那么8位可以表示2^8=256种可能
          * 4位能表示一个16进制数字，所以一个字节能用两个16进制数字表示
@@ -74,34 +98,35 @@ public class ComputerBasic {
         context.getResources().getDrawable(R.drawable.unicode);
         context.getResources().getDrawable(R.drawable.unicode_chinese_range);
     }
-    
+
     /**
-     * utf-8编码中的中文占几个字节 ? 
-     * */
-    public void a1_1(){
+     * utf-8编码中的中文占几个字节 ?
+     */
+    public void a1_1() {
         /*
-        * 三个字节，因为unicode中2w多个汉字的编码范围在4e00-95a5之间
-        * 所以根据utf-8的编码规则，这个是要转化为三个字节的（24位）
-        */
+         * 三个字节，因为unicode中2w多个汉字的编码范围在4e00-95a5之间
+         * 所以根据utf-8的编码规则，这个是要转化为三个字节的（24位）
+         */
     }
     //endregion
 
     //region 计算机网络
+
     /**
      * 什么是APN?
      * -----------------------
      * 通用的APN有哪些？有什么区别
      * -----------------------
      * 什么是WAP?
-     * */
-    public void a2_1(){
+     */
+    public void a2_1() {
         /*
-        * Access Point Name
-        * https://baike.baidu.com/item/APN
-        * 可以访问的外部网络有很多种，比如Internet，WAP网站，企业内部网络
-        * 所以我们可以设置接入点的配置，（就是路由ip不一样？）
-        *
-        */
+         * Access Point Name
+         * https://baike.baidu.com/item/APN
+         * 可以访问的外部网络有很多种，比如Internet，WAP网站，企业内部网络
+         * 所以我们可以设置接入点的配置，（就是路由ip不一样？）
+         *
+         */
     }
     //endregion
 }
