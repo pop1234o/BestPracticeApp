@@ -4,7 +4,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-public class EditText_Main {
+public class Main_View {
 
     /**
      * /**
@@ -84,4 +84,40 @@ public class EditText_Main {
 //            }
 //        });
     }
+
+
+    /**
+     * 简单实现ImageView宽度填满屏幕，高度自适应的两种方式
+     *
+     * 两种方式
+     * 1.重写View的onMeasure方法参考这里easion_zms的专栏
+     *
+     * 核心代码
+     *
+     * protectedvoidonMeasure(intwidthMeasureSpec,intheightMeasureSpec){
+     *
+     * Drawable d = getDrawable();if(d!=null){// ceil not round - avoid thin vertical gaps along the left/right edgesintwidth = MeasureSpec.getSize(widthMeasureSpec);//高度根据使得图片的宽度充满屏幕计算而得intheight = (int) Math.ceil((float) width * (float) d.getIntrinsicHeight() / (float) d.getIntrinsicWidth());
+     *
+     * setMeasuredDimension(width, height);
+     *
+     * }else{super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+     *
+     * }
+     *
+     * 2.设置ImageView的属性：
+     *
+     * //宽度填满屏幕
+     *
+     * android:layout_width=”match_parent”
+     * android:scaleType=”fitXY”
+     * android:layout_height=”wrap_content”
+     * //保持比例，一定要设置
+     * android:adjustViewBounds=”true”
+     *
+     * 作者：WiiHuu
+     * 链接：https://www.jianshu.com/p/c9424615e99d
+     * 来源：简书
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     */
+    void a1(){}
 }
