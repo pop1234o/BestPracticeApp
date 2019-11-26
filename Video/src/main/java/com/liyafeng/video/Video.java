@@ -6,6 +6,9 @@ public class Video {
     /**
      * 视频入门指南
      * https://zhuanlan.zhihu.com/p/28518637 （七牛音视频架构师）
+     * https://blog.csdn.net/leixiaohua1020 （雷霄骅(leixiaohua1020)的专栏）
+     *
+     *
      * ===================3gp================
      * 3GP是一种多媒体单元格式，由Third Generation Partnership Project（3GPP）定义，主要用于3G手机上。
      * 3GP是 MPEG-4 第12部分，又被称为MPEG-4/JPEG2000基本媒体文件格式
@@ -167,6 +170,18 @@ public class Video {
      */
     void f2() {
     }
+
+
+    /**
+     * ==============音频采集===============
+     * PCM Pulse-code modulation 脉冲编码调制  （调制=调整，转化）模拟信号-》数字信号 叫调制
+     * PCM是一种调制规则，并不是编码（压缩）规则
+     * pcm是音频 由模拟信号转换为数字信号的规则
+     *
+     *
+     *
+     */
+    void f2_1(){}
 
 
     /**
@@ -364,7 +379,84 @@ public class Video {
     void f5(){}
 
 
+    /**
+     * ===============音频编码=================
+     * 音频编码规则
+     * ACC Advanced Audio Coding 97年由杜比实验室、AT&T、Sony、Nokia 共同研发
+     * 基于MPEG-2  所以又叫 MPEG-2 ACC
+     * 后来2000年MPEG-4标准出现后，经过改良 成为 MPEG-4 ACC
+     * <p>
+     * MP1 MPEG-1 Audio Layer I 是mp2的简化，它不用很复杂的压缩算法(计算快)，但是压缩率比较低，现在几乎都不支持这个格式 .mp1
+     * MP2 MPEG-1 Audio Layer II .mp2 这个压缩规则多用于广播
+     * MP3 MPEG-1 or MPEG-2 Audio Layer III 这个用于网络音乐（压缩率高）
+     * <p>
+     * 注意不要混淆MPEG-1 和MP3的关系，MPEG-1是一组规则，而MP3是MPEG-1中音频压缩规则的一种
+     * <p>
+     * WMV 99年微软提出的音频编码格式
+     *
+     * ACC /MPEG-1 Layer 3 /杜比数字（Dolby Digital），或称AC-3----音频编码规则
+     *
+     *
+     */
+    void f4_1(){}
+
+    /**
+     * ===============封装格式==================
+     * 将已经编码压缩好的视频轨和音频轨按照一定的格式放到一个文件中
+     * 目前主要的视频容器有如下：MPG、VOB、MP4、3GP、ASF、RMVB、WMV、MOV、Divx、MKV、FLV、TS/PS等
+     *
+     *  MPEG制定的Container Format(（视频的） 封装格式/（放置视频的）容器格式)
+     *  有.mp4 .mpg .mpeg
+     *  <p>
+     *  当然还有其他组织/公司制定的container format
+     *  比如苹果的 .mov 微软的.avi  realnetworks 的.rmvb adobe的.flv
+     *  <p>
+     *  container format 容器格式 封装格式 是定义编码后的视频和音频 如何存放的格式
+     *
+     *
+     * .mp4 .rmvb .avi .mkv  .flv（flash video）--都是不同组织定义的封装视频的规则
+     * .mp3 .acc .ogg  --封装音频规则
+     *
+     *
+     *
+     */
     void f6(){}
+
+
+    /**
+     * ============mp4封装格式===================
+     * MP4目前被广泛用于封装h.264视频和AAC音频，是高清视频的代表
+     *
+     *
+     *
+     * MP4(MPEG-4 Part 14)是一种常见的多媒体容器格式，它是在“ISO/IEC 14496-14”标准文件中定义的，属于MPEG-4的一部分，
+     * 是“ISO/IEC 14496-12(MPEG-4 Part 12 ISO base media file format)”标准中所定义的媒体格式的一种实现（在H.264标准文档约14章位置），
+     * 后者定义了一种通用的媒体文件结构标准。MP4是一种描述较为全面的容器格式，被认为可以在其中嵌入任何形式的数据，
+     * 各种编码的视频、音频等都不在话下，不过我们常见的大部分的MP4文件存放的AVC(H.264)或MPEG-4(Part 2)编码的视频和AAC编码的音频。
+     * MP4格式的官方文件后缀名是“.mp4”，还有其他的以mp4为基础进行的扩展或者是阉割版的格式，如：M4V, 3GP, F4V等
+     * ————————————————
+     * 版权声明：本文为CSDN博主「码农突围」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+     * 原文链接：https://blog.csdn.net/hejjunlin/article/details/73162841
+     *
+     * mp4是由一个个“box”组成的，大box中存放小box，一级嵌套一级来存放媒体信息。box的基本结构如下：
+     *
+     *
+     *
+     *
+     */
+    void f7(){}
+
+
+    /**
+     * ===================ffmepg====================
+     *
+     * https://blog.csdn.net/leixiaohua1020/article/details/15811977 ([总结]FFMPEG视音频编解码零基础学习方法)
+     *
+     *
+     *
+     *
+     */
+    void f8(){}
 
 
 }

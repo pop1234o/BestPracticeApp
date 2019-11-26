@@ -18,26 +18,7 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  * <p>
  * Exoplayer谷歌出品的播放器，用java写的
  * <p>
-
- * <p>
-
- * <p>
- * MPEG制定的Container Format(（视频的） 封装格式/（放置视频的）容器格式)
- * 有.mp4 .mpg .mpeg
- * <p>
- * 当然还有其他组织/公司制定的container format
- * 比如苹果的 .mov 微软的.avi  realnetworks 的.rmvb adobe的.flv
- * <p>
- * container format 容器格式 封装格式 是定义编码后的视频和音频 如果存放的格式
- * <p>
- * <p>
- * <p>
- * =================音频==================
- * PCM Pulse-code modulation 脉冲编码调制  （调制=调整，转化）模拟信号-》数字信号 叫调制
- * PCM是一种调制规则，并不是编码（压缩）规则
- * <p>
- * -------------------------
- * pcm是音频 由模拟信号转换为数字信号的规则
+ *
  * <p>
  * 视频是一张张图片的连续播放
  * yuv/rgb 是视频模拟信号转化为数字信号的规则
@@ -45,37 +26,15 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  * rgb red green blue  代表三原色
  * <p>
  * yuv 是常用的视频调制模式 ，因为节省空间
- * <p>
- * ------------------------
- * <p>
- * 音频编码规则
- * ACC Advanced Audio Coding 97年由杜比实验室、AT&T、Sony、Nokia 共同研发
- * 基于MPEG-2  所以又叫 MPEG-2 ACC
- * 后来2000年MPEG-4标准出现后，经过改良 成为 MPEG-4 ACC
- * <p>
- * MP1 MPEG-1 Audio Layer I 是mp2的简化，它不用很复杂的压缩算法(计算快)，但是压缩率比较低，现在几乎都不支持这个格式 .mp1
- * MP2 MPEG-1 Audio Layer II .mp2 这个压缩规则多用于广播
- * MP3 MPEG-1 or MPEG-2 Audio Layer III 这个用于网络音乐（压缩率高）
- * <p>
- * 注意不要混淆MPEG-1 和MP3的关系，MPEG-1是一组规则，而MP3是MPEG-1中音频压缩规则的一种
- * <p>
- * WMV 99年微软提出的音频编码格式
- * ========================
- *
- * <p>
- * ==================
-
- * <p>
  * ======================
  * RGB /YUV 是视频的模拟信号-》数字信号（调制）的规则
  * PCM 是音频调制的规则
  * <p>
  * H.26x/MPEG-4 part10 ----视频编码规则
  * ACC /MPEG-1 Layer 3 /杜比数字（Dolby Digital），或称AC-3----音频编码规则
- * <p>
- * 封装格式
- * .mp4 .rmvb .avi .mkv  .flv（flash video）--都是不同组织定义的封装视频的规则
- * .mp3 .acc .ogg  --封装音频规则
+ *
+ *
+ *
  * --------------------------
  * Flash Video（简称FLV），是一种网络视频格式，用作流媒体格式，它的出现有效地解决了视频文件导入Flash后，使导出的SWF文件体积庞大，不能在网络上有效使用等缺点。
  * ----------------------------------
@@ -160,19 +119,6 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  */
 
 
-/**
- * ==============直播====================
- */
-
-
-/**================容器格式 =======================
- *
- * ==============mp4============
- *  所以一个MP4 的开始4个字节（开始的32位 或者开始的2*4个16进制数）是表示大小，后面是ftyp 表示一个box
- *  所以数据就是这样存储起来的
- *
- *
- * */
 
 /**
  *  =============播放器====================
