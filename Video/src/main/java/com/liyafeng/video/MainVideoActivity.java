@@ -18,16 +18,11 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  * <p>
  * Exoplayer谷歌出品的播放器，用java写的
  * <p>
- * ITU 国际电信联盟  International Telecommunication Union
- * VCEG video coding expert group 是ITU下的子组织（工作组）
+
  * <p>
- * ISO international organization for standardization  (国际标准化组织)
- * IEC 国际电工委员会
+
  * <p>
- * MPEG moving picture expert group 移动图像专家组，是iso/IEC下的一个工作组
- * 几百名成员组成，专门负责 音频视频 编码标准制定的工作
- * <p>
- * 他们制定的Container Format(（视频的） 封装格式/（放置视频的）容器格式)
+ * MPEG制定的Container Format(（视频的） 封装格式/（放置视频的）容器格式)
  * 有.mp4 .mpg .mpeg
  * <p>
  * 当然还有其他组织/公司制定的container format
@@ -36,16 +31,6 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  * container format 容器格式 封装格式 是定义编码后的视频和音频 如果存放的格式
  * <p>
  * <p>
- * ==============Video coding format(视频编码格式)=============
- * <p>
- * <p>
- * 1.H.262 or MPEG-2 Part 2 = MPEG-2 Part 2 = H.262
- * <p>
- * 2.MPEG-4 Part 2 = 兼容H.263
- * <p>
- * 3.AVC Advanced Video Coding  = H.264 or MPEG-4 Part 10 = MPEG-4 AVC (这是MPEG组织和ITU-T组织联合定义的)
- * <p>
- * 4.High Efficiency Video Coding (HEVC) = H.265 and MPEG-H Part 2 = H.265 =  MPEG-H Part 2
  * <p>
  * =================音频==================
  * PCM Pulse-code modulation 脉冲编码调制  （调制=调整，转化）模拟信号-》数字信号 叫调制
@@ -76,30 +61,10 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  * <p>
  * WMV 99年微软提出的音频编码格式
  * ========================
- * MPEG 是组织，他们制定了
- * · MPEG-1  （这个组织在1990年制定的第一个视频 和音频 压缩（编码）标准） 用于CD 、VCD
- * <p>
- * · MPEG-2 也叫"ISO/IEC 13818-2"   94年制定的第二个版本，用于DVD
- * <p>
- * · MPEG-3 本来是用于为HDTV（High Definition Television 高清电视）制定的压缩标准，
- * 但后来发现MPEG-2就足以满足需求，所以就合并到MPEG-2中了，其实没有MPEG-3的叫法
- * <p>
- * · MPEG-4 99年制定，用于网络流媒体
- * · MPEG-7 ？？？
- * · MPEG-21 正在开发？
- * · MPEG-H ？？
- * <p>
- * 每个MPEG-xxx都由很多部分（part）组成，每个部分定义了不同的规则
- * 比如MP3压缩规则是在MPEG-1 Layer 3 中定义的
- * 当然后来有改进 MPEG-1 or MPEG-2 Audio Layer III 是一种音频编码 ，有损压缩
+ *
  * <p>
  * ==================
- * ITU-T 是ITU下的一个部门，他下的一个叫VCEG的工作组制定了音频视频编码标准
- * H.261
- * H.262 就是MPEG-2 的视频部分
- * H.263
- * H.264 其实就是 MPEG-4 part 10 ,AVC 这个VCEG和MPEG一起制定的，只不过他们的叫法不一样，就像圣西罗和煤阿茶
- * H.265 就是MPEG-H 的第二部分 ，他们内容一样，叫法不一样
+
  * <p>
  * ======================
  * RGB /YUV 是视频的模拟信号-》数字信号（调制）的规则
@@ -187,11 +152,6 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  * 读取数据（网络或者本地硬盘） -》因为音频可以看做一条轨道，视频也是，所以将他们合到一个容器中就是复用（线路）
  * 解复用就是将容器拆分成 音轨，视频轨道 -》解码  ——》输出
  * <p>
- * <p>
- * ===============
- * color format
- * yuv444/420 (亮度 饱和度 。。)
- * rgb
  * <p>
  * ============
  * 小端序-》反向；大端序-》正向排列 Endianness

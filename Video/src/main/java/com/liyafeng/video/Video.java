@@ -235,5 +235,99 @@ public class Video {
     void f3() {}
 
 
+    /**
+     * ===============视频编码============
+     * yuv格式的视频还是很大，而且冗余信息很多，比如上一帧和这一帧只有一个像素点颜色不同，
+     * 那么这一帧就不需要存其他像素点的信息了。
+     * 所以要制定一套视频压缩（编码）标准是很有必要的。
+     *
+     * 提到视频编码标准，先介绍几个制定标准的组织
+     * -----------ITU（国际电信联盟）-------------
+     *  * ITU 国际电信联盟  International Telecommunication Union
+     *  * VCEG video coding expert group 是ITU下的子组织（工作组）
+     *
+     *1865年5月17日，为了顺利实现国际电报通信，法、德、俄、意、奥等20个欧洲国家的代表在巴黎签订了《国际电报公约》，国际电报联盟（International Telegraph Union ，ITU）也宣告成立。
+     * 随着电话与无线电的应用与发展，ITU的职权不断扩大。
+     *
+     * 1906年，德、英、法、美、日等27个国家的代表在柏林签订了《国际无线电报公约》。
+     * 1932年，70多个国家的代表在西班牙马德里召开会议，将《国际电报公约》与《国际无线电报公约》合并， 制定《国际电信公约》，并决定自1934年1月1日起正式改称为“国际电信联盟” ，也就是现在的ITU。
+     * ITU是联合国下属的一个专门机构，其总部在瑞士的日内瓦。
+     *
+     * ITU下属有三个部门，分别是ITU-R（前身是国际无线电咨询委员会CCIR）、ITU-T（前身是国际电报电话咨询委员会CCITT）、ITU-D
+     * ITU-R 无线电通信部门
+     * ITU-T 电信标准化部门
+     * ITU-D 电信发展部门
+     *
+     *
+     * ------------MPEG Moving Picture Expert Group（动态图像专家组）-------------
+     *
+     *
+     * 除了ITU之外，另外两个和视频编码关系密切的组织，是ISO/IEC
+     * ISO大家都知道，就是推出ISO9001质量认证的那个“国际标准化组织”。IEC，是“国际电工委员会”。
+     *
+     * 1988年，ISO和IEC联合成立了一个专家组，负责开发电视图像数据和声音数据的编码、解码和它们的同步等标准。
+     * 这个专家组，就是大名鼎鼎的MPEG，Moving Picture Expert Group（动态图像专家组）。
+     *
+     *   ISO international organization for standardization  (国际标准化组织)
+     *   IEC 国际电工委员会
+     *   MPEG moving picture expert group 移动图像专家组，是iso/IEC下的一个工作组
+     *   几百名成员组成，专门负责 音频视频 编码标准制定的工作
+     *
+     * -------------Video coding format(视频编码格式) /编码标准----------
+     *
+     * 三十多年以来，世界上主流的视频编码标准，基本上都是它们提出来的。
+     * ITU提出了H.261、H.262、H.263、H.263+、H.263++，这些统称为H.26X系列，主要应用于实时视频通信领域，如会议电视、可视电话等
+     *
+     * ISO/IEC提出了MPEG1、MPEG2、MPEG4、MPEG7、MPEG21，统称为MPEG系列
+     *
+     * ITU和ISO/IEC一开始是各自捣鼓，后来，两边成立了一个联合小组，名叫JVT（Joint Video Team，视频联合工作组）
+     *
+     * JVT致力于新一代视频编码标准的制定，后来推出了包括H.264在内的一系列标准。
+     *
+     * 时间线见 video_encode_timeline.jpg
+     *
+     *
+     *
+     * 1.H.262 or MPEG-2 Part 2 = MPEG-2 Part 2 = H.262
+     * <p>
+     * 2.MPEG-4 Part 2 = 兼容H.263
+     * <p>
+     * 3.AVC Advanced Video Coding  = H.264 or MPEG-4 Part 10 = MPEG-4 AVC =H.264 AVC (这是MPEG组织和ITU-T组织联合定义的)
+     * <p>
+     * 4.High Efficiency Video Coding (HEVC) = H.265 and MPEG-H Part 2 = H.265 =  MPEG-H Part 2
+     *
+     *
+     *  MPEG组织，他们制定了
+     * · MPEG-1  （这个组织在1990年制定的第一个视频 和音频 压缩（编码）标准） 用于CD 、VCD
+     * <p>
+     * · MPEG-2 也叫"ISO/IEC 13818-2"   94年制定的第二个版本，用于DVD
+     * <p>
+     * · MPEG-3 本来是用于为HDTV（High Definition Television 高清电视）制定的压缩标准，
+     * 但后来发现MPEG-2就足以满足需求，所以就合并到MPEG-2中了，其实没有MPEG-3的叫法
+     * <p>
+     * · MPEG-4 99年制定，用于网络流媒体
+     * · MPEG-7 ？？？
+     * · MPEG-21 正在开发？
+     * · MPEG-H ？？
+     * <p>
+     * 每个MPEG-xxx都由很多部分（part）组成，每个部分定义了不同的规则
+     * 比如MP3压缩规则是在MPEG-1 Layer 3 中定义的
+     * 当然后来有改进 MPEG-1 or MPEG-2 Audio Layer III 是一种音频编码 ，有损压缩
+     *
+     *
+     * ITU-T 是ITU下的一个部门，他下的一个叫VCEG的工作组制定了音频视频编码标准
+     *  H.261
+     *  H.262 就是MPEG-2 的视频部分
+     *  H.263
+     *  H.264 其实就是 MPEG-4 part 10 ,AVC 这个VCEG和MPEG一起制定的，只不过他们的叫法不一样，就像圣西罗和煤阿茶
+     *  H.265 就是MPEG-H 的第二部分 ，他们内容一样，叫法不一样
+     *
+     *
+     *
+     *
+     */
+    void f4(){}
+
+
 
 }
