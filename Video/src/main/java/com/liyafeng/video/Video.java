@@ -42,6 +42,7 @@ public class Video {
 
     /**
      * https://m.huxiu.com/article/263561.html （从.JPG到.AVI：视频编码最强入门科普）
+     * https://www.jianshu.com/p/1379ed99783e ( 视频相关的理论知识与基础概念)
      * <p>
      * <p>
      * ============基础知识============
@@ -458,5 +459,40 @@ public class Video {
      */
     void f8(){}
 
+
+    /**
+     * ================android 播放器=============
+     * https://www.jianshu.com/p/5345ab4cf979 （ijkplayer 源码分析（上））
+     *
+     * AndroidMediaPlayer：即安卓系统自带的播放器 MediaPlayer，基于 MediaCodec、AudioTrack 等安卓系统 API.
+     * IjkExoMediaPlayer：即谷歌新推出的 ExoPlayer，同样是基于 MediaCodec、AudioTrack 等安卓系统 API，但相比 MediaPlayer 具有支持 DASH、高级 HLS、自定义扩展等优点。
+     * IjkMediaPlayer：基于 FFmpeg 的 ffplay，集成了 MediaCodec 硬解码器、Opengl 渲染方式等。
+     *
+     *
+     *
+     *
+     */
+    void f9(){}
+
+
+    /**
+     * ================Android中音视频播放==============
+     * 视频可以用 MediaCodec 进行硬解码
+     * 解码后用Android框架内置的OpenGL es框架进行播放？？
+     * Android用SurfaceView来渲染视频帧。
+     *
+     * https://www.jianshu.com/p/13320a8549db（用openGL ES+MediaPlayer 渲染播放视频+滤镜效果）
+     *
+     *
+     * 音频用AudioTrack这个类可以直接播放pcm数据
+     *
+     *
+     * https://blog.csdn.net/moruihong/article/details/7739086 （ Android MediaPlayer的核心原理）
+     * MediaPlayer在底层是基于OpenCore(PacketVideo)的库实现的
+     * OpenCorePlayer的实现libopencoreplayer.so
+     *
+     *
+     */
+    void a10(){}
 
 }
