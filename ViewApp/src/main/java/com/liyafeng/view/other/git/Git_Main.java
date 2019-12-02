@@ -398,4 +398,24 @@ public class Git_Main {
      * 当你拉下代码有冲突的时候，我们解决完冲突，git add filename 就可以标记为已解决了
      */
     void fun8(){}
+
+
+    /**
+     * =======git暂存操作==========
+     * 当你当前修改代码到一半的时候，你不能commit，或者你写了一些临时的测试代码，
+     * 这个时候你要git pull ,代码，你必须保证工作区clean才能pull
+     * 所以这个时候我们需要暂存操作
+     *
+     * git stash 暂存当前改动
+     * git stash pop 使用上一次暂存，并将这个暂存删除，使用该命令后，如果有冲突，终端会显示，如果有冲突需要先解决冲突
+     * git stash apply 使用上一次缓存，但是不删除
+     *
+     * git stash list 查看所有暂存
+     * git stash clear 清空所有缓存
+     * git stash drop [-q|--quiet] [<stash>] 删除某一个暂存，在中括号里面放置需要删除的暂存ID
+     *
+     *
+     *
+     */
+    void fun9(){}
 }
