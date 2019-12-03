@@ -325,8 +325,12 @@ public class Git_Main {
      *  Resets the index and working tree. Any changes to tracked files
      *  in the working tree since <commit> are discarded.
      *  <p>
+     * 这样HEAD就指向这个commit
+     *
+     *
      *  git reflog 查看未来版本的commit
      *   然后同样的命令来前进
+     *
      *
      */
     void fun4() {

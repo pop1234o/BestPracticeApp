@@ -118,6 +118,25 @@ public class Main_View {
      * 链接：https://www.jianshu.com/p/c9424615e99d
      * 来源：简书
      * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     *
+     * ================Imageview清空背景=======
+     * ivImage.setImageResource(0);
+     *
+     *
+     * ==============滑动imageivew========
+     *
+     * <ScrollView
+     *         android:layout_width="match_parent"
+     *         android:layout_height="match_parent">
+     *
+     *         <ImageView
+     *             android:layout_width="match_parent"
+     *             android:layout_height="wrap_content"
+     *             android:adjustViewBounds="true"
+     *             android:scaleType="fitXY" />
+     *
+     *     </ScrollView>
      */
     void a1(){}
 }
