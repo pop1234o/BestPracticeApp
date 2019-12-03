@@ -402,6 +402,8 @@ public class Git_Main {
 
     /**
      * =======git暂存操作==========
+     * https://www.jianshu.com/p/afeeaea8c0c8 stash暂存
+     *
      * 当你当前修改代码到一半的时候，你不能commit，或者你写了一些临时的测试代码，
      * 这个时候你要git pull ,代码，你必须保证工作区clean才能pull
      * 所以这个时候我们需要暂存操作
@@ -414,6 +416,9 @@ public class Git_Main {
      * git stash clear 清空所有缓存
      * git stash drop [-q|--quiet] [<stash>] 删除某一个暂存，在中括号里面放置需要删除的暂存ID
      *
+     *
+     * ===========git stash pop/apply冲突==========
+     * 找到冲突文件，解决冲突，执行git add . 即可
      *
      *
      */
