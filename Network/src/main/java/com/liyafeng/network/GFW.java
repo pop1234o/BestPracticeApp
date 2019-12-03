@@ -81,6 +81,34 @@ public class GFW {
      *
      *
      *
+     * ===========ssr参数=============
+     * https://coderschool.cn/2498.html （ss、ssr链接解析，查看对应密码、端口、协议）
+     *
+     * {
+     *     "server": "a-xjp-1.xxx.vip",   主机名
+     *     "local_address": "127.0.0.1",
+     *     "local_port": 1080,
+     *     "timeout": 300,
+     *     "workers": 1,
+     *     "server_port": 47635,            主机端口
+     *     "password": "",                  密码
+     *     "method": "chacha20",            加密方法
+     *     "obfs": "tls1.2_ticket_auth",  混淆规则
+     *     "obfs_param": "",                混淆参数
+     *     "protocol": "auth_aes128_md5",  协议
+     *     "protocol_param": ""             协议参数
+     * }
+     *
+     * 二维码方式
+     *
+     * ssr://server:port:protocol:method:obfs:password_base64/?params_base64
+     *
+     * obfs:混淆规则
+     *
+     * 如果字符串中有包含 – 和 _ 的字符，要先分别替换为 + 和 / , 然后再通过 base64_decode 解码就行了
+     *
+     * a-xjp-1.xxx.vip:47635:auth_aes128_md5:chacha20:tls1.2_ticket_auth:password_base64/?obfsparam=&protoparam=&remarks=VjHmlrDliqDlnaEx&group=6L-F5o23572R57uc
+     *
      *
      *
      * @param args
@@ -195,4 +223,6 @@ public class GFW {
      * 可以理解为早期的托管服务的集成。
      */
     void a4(){}
+
+
 }

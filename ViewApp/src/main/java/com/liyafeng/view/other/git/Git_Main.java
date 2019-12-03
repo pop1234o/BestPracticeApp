@@ -420,6 +420,9 @@ public class Git_Main {
      * ===========git stash pop/apply冲突==========
      * 找到冲突文件，解决冲突，执行git add . 即可
      *
+     * 如果要丢弃，可以git reset HEAD
+     * git checkout .
+     *
      *
      */
     void fun9(){}
