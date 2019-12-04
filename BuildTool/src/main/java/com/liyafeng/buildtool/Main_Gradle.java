@@ -208,7 +208,7 @@ import android.os.Bundle;
  * }
  * }
  */
-public class MainActivity extends Activity {
+public class Main_Gradle extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

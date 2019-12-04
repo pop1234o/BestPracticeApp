@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
         applicationId "com.liyafeng.video"
@@ -22,10 +22,10 @@ android {
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:25.4.0'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.google.android.exoplayer:exoplayer:r2.0.2'
-    compile 'com.googlecode.mp4parser:isoparser:1.1.21'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+//    compile 'com.google.android.exoplayer:exoplayer:r2.0.2'
+//    compile 'com.googlecode.mp4parser:isoparser:1.1.21'
 
 }

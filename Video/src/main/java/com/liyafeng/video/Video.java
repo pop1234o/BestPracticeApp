@@ -470,6 +470,35 @@ public class Video {
      *
      *
      *
+     * ==============ijkplayer播放流程========
+     *
+     * ijkplayer播放主要流程
+     *
+     * 根据链接的schema找到对应的URLProtocol。
+     * 如Http的链接，对应libavformat/http.c
+     * 而http的请求后续会转换成Tcp的协议，对应libavformat/tcp.c
+     * 进行DNS解析ip地址，并且解析完后进行缓存，以便下次复用
+     * 从链路中读取数据到Buffer
+     * 有可能从tcp链路，也有可能从磁盘链路
+     * TCP链路则会需要等待三次握手的时间
+     * 读取Buffer进行文件类型的probe
+     * 探测文件格式，判断是mp4，flv等等
+     * 读取Buffer的头部信息进行解析
+     * 解析文件头部，判断是否为该格式文件，如果失败则返回错误
+     * 解析audio，video，subtitle流
+     * 根据文件信息找到多媒体流
+     * 优先使用H264的视频流
+     * 根据流信息找到解码器
+     * 开启各个线程开始对各个流进行解码成packet
+     * 同步到read_thread线程后，装入pakcetQueue中
+     * 在video_refresh_thread线程中，读取packetQueue中的包，进行时钟同步
+     * 开始绘制视频，播放音频内容
+     *
+     * ==============秒开优化==========
+     * https://cloud.tencent.com/developer/article/1357997 （IjkPlayer起播速度优化）
+     * https://www.jianshu.com/p/843c86a9e9ad （IjkPlayer播放器秒开优化以及常用Option设置）
+     *
+     *
      *
      */
     void f9(){}
