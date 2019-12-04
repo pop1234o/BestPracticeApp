@@ -1,33 +1,33 @@
 apply plugin: 'com.android.application'
 
-android.applicationVariants.all { variant ->
-    //遍历构建变体
-    //https://bugly.qq.com/docs/utility-tools/plugin-gradle-bugly/
-    def buglyAppId = null;
-    def buglyAppKey = null;
-    if (variant.buildType.name.equals("release")) { // 线上渠道
-        buglyAppId = project.bugglyAppId
-        buglyAppKey = project.bugglyAppKey
-    } else { // 测试
-        buglyAppId = project.bugglyDebugAppId
-        buglyAppKey = project.bugglyDebugAppKey
-    }
-
-    println variant.flavorName //打印 flavorName
-
-    if (buglyAppId != null) {
-        variant.ext.buglyAppId = buglyAppId
-    }
-    if (buglyAppKey != null) {
-        variant.ext.buglyAppKey = buglyAppKey
-    }
-}
+//android.applicationVariants.all { variant ->
+//    //遍历构建变体
+//    //https://bugly.qq.com/docs/utility-tools/plugin-gradle-bugly/
+//    def buglyAppId = null;
+//    def buglyAppKey = null;
+//    if (variant.buildType.name.equals("release")) { // 线上渠道
+//        buglyAppId = project.bugglyAppId
+//        buglyAppKey = project.bugglyAppKey
+//    } else { // 测试
+//        buglyAppId = project.bugglyDebugAppId
+//        buglyAppKey = project.bugglyDebugAppKey
+//    }
+//
+//    println variant.flavorName //打印 flavorName
+//
+//    if (buglyAppId != null) {
+//        variant.ext.buglyAppId = buglyAppId
+//    }
+//    if (buglyAppKey != null) {
+//        variant.ext.buglyAppKey = buglyAppKey
+//    }
+//}
 
 
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion "25.0.2"
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
         applicationId "com.liyafeng.buildtool"
@@ -185,12 +185,12 @@ android {
 
 dependencies {
 
-    myname1Compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    myname1Implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
 }
