@@ -1225,6 +1225,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * 如何减少hash碰撞？（java用的什么算法来减少hash碰撞？）
      * 如何处理hash碰撞？
      * hashmap比较key相等的依据是什么？
+     * SparseArray 和 ArrayMap 区别
      */
     public void a3_1() {
         /*

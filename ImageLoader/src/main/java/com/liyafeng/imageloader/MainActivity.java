@@ -168,6 +168,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
+     *
+     * ================Glide===============
+     * https://bumptech.github.io/glide/doc/download-setup.html (官方文档)
+     * https://github.com/bumptech/glide
+     *
      * 这个和Picasso差不多，是谷歌员工根据Picasso改造而来，专门用于RecyclerView这样的滑动列表图片的加载
      * =======================Glide和Picasso的区别======================
      * 1.Glide 默认的 Bitmap 格式是 RGB_565 格式，而 Picasso 默认的是 ARGB_8888 格式，这个内存开销要小一半。
@@ -177,6 +182,20 @@ public class MainActivity extends AppCompatActivity {
      * 缺点：Glide如果要配置占位图等比较麻烦，如果要简单就要配置注解分析器，生成GlideApp代码
      * <p>
      * <p>
+     * ==================glide预加载（preload）================
+     * https://www.jianshu.com/p/4f457a124d67 （Android图片加载框架——Glide（Glide v4））
+     * preload()方法有两个方法重载，一个不带参数，表示将会加载图片的原始尺寸，另一个可以通过参数指定加载图片的宽和高
+     * Glide.with(this)
+     *      .load("https://www.baidu.com/img/bd_logo1.png")
+     *      .preload();
+     *
+     * ----------------submit方法------------------
+     *
+     * 这里就以submit()方法来举例。当调用了submit()方法后会立即返回一个FutureTarget对象，
+     * 然后Glide会在后台开始下载图片文件。接下来我们调用FutureTarget的get()方法就可以去获取下载好的图片文件了，
+     * 如果此时图片还没有下载完，那么get()方法就会阻塞住，一直等到图片下载完成才会有值返回，所以get()方法必须在子线程中执行。
+     *
+     *
      * ==============================glide源码分析========================
      * https://juejin.im/entry/586766331b69e60063d889ea（文章写得很好）
      * Glide借鉴了Picasso的思路，解耦更彻底，但是构成的逻辑更复杂

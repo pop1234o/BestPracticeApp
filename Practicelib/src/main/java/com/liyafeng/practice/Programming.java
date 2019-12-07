@@ -44,6 +44,11 @@ public class Programming {
         *
         *
         * ===============Android AOP框架============
+        * https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
+        * 一个基于AspectJ并在此基础上扩展出来可应用于Android开发平台的AOP框架，可作用于java源码，class文件及jar包，同时支持kotlin的应用。
+        *
+        * https://github.com/JakeWharton/hugo
+        * Annotation-triggered method call logging for your debug builds.
         *
         *
         *
@@ -52,11 +57,15 @@ public class Programming {
         * https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
         * https://www.jianshu.com/p/e152b34b785b （Android中使用AspectJ）
         * https://zhuanlan.zhihu.com/p/24876611 （看AspectJ在Android中的强势插入）
+        * https://cloud.tencent.com/developer/article/1400317 (利用AOP对点击事件作防抖处理)
         *
         * A Android gradle plugin that effects AspectJ on Android project and can hook methods in Kotlin, aar and jar file.
         * 一个基于AspectJ并在此基础上扩展出来可应用于Android开发平台的AOP框架，可作用于java源码，class文件及jar包，同时支持kotlin的应用。
         *
         * --------------gradle_plugin_android_aspectjx 使用方法---------
+        * 用的AspectJ语法
+        * 有before ，after ，around注解，表示能注入方法的位置
+        *
         *
         *
         * --------------AspectJ实现原理----------------
