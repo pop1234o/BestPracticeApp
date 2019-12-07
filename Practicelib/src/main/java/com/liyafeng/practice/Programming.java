@@ -23,6 +23,9 @@ public class Programming {
 
     /**
      * 2.什么是AOP（aspect-oriented programming）
+     *
+     *
+     *
      */
     void a2() {
 
@@ -38,6 +41,29 @@ public class Programming {
         * 微观上说
         * 通过java代理，对指定的方法进行拦截
         * 从而实现对不同业务逻辑的切入
+        *
+        *
+        * ===============Android AOP框架============
+        *
+        *
+        *
+        *
+        * ============gradle_plugin_android_aspectjx==========
+        * https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
+        * https://www.jianshu.com/p/e152b34b785b （Android中使用AspectJ）
+        * https://zhuanlan.zhihu.com/p/24876611 （看AspectJ在Android中的强势插入）
+        *
+        * A Android gradle plugin that effects AspectJ on Android project and can hook methods in Kotlin, aar and jar file.
+        * 一个基于AspectJ并在此基础上扩展出来可应用于Android开发平台的AOP框架，可作用于java源码，class文件及jar包，同时支持kotlin的应用。
+        *
+        * --------------gradle_plugin_android_aspectjx 使用方法---------
+        *
+        *
+        * --------------AspectJ实现原理----------------
+        * AspectJ的原理实际上是在编译的时候（遍历class文件），根据一定的规则解析，然后插入一些代码，通过aspectjx生成的代码，会在Build目录下：
+        * transforms/AspectTransform/debug/jars/1/1f/aspects.jar
+        *
+        *
         *
         * */
     }

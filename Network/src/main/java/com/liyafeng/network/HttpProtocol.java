@@ -463,7 +463,7 @@ public class HttpProtocol {
     void a4() {
     }
 
-
+/*
     public static String encrypt(String plainText) {
         try {
 
@@ -499,7 +499,7 @@ public class HttpProtocol {
         }
 
         return plainText;
-    }
+    }*/
 
     /**
      * 解密
@@ -507,7 +507,7 @@ public class HttpProtocol {
      * @param content
      * @return
      */
-    public static String decrypt(String content) {
+   /* public static String decrypt(String content) {
         try {
             StringBuilder builder = new StringBuilder("12345678123456781234567812345678");
 
@@ -533,7 +533,7 @@ public class HttpProtocol {
             e.printStackTrace();
         }
         return content;
-    }
+    }*/
 
 
     /**
