@@ -772,6 +772,14 @@ public class Other {
      * 为什么会这样呢？参考网上的回答：https://stackoverflow.com/questions/9226691/change-package-manager-application-info-meta-data-in-android/9227097
      * 原因就是说，通过getPackageManager().getApplicationInfo返回的applicationInfo始终是一个数据副本。
      * 如果动态设置的话，也只是改变了副本的值，并没有改变原数据。因此再次获取，又是个原数据的副本，仍然是旧值。
+     *
+     * 我们如果要覆盖
+     *   <meta-data
+     *             tools:replace="android:value"
+     *             android:name="cn.robotpen.views.module.GlideConfiguration"
+     *             android:value="xxx" />
+     *
+     * 如果动态添加可以用gradle脚本
      */
     void a29(){}
 
