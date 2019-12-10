@@ -17,7 +17,7 @@ public class Main {
      * mac
      * /Users/xxx/Library/Preferences/AndroidStudio2.x/options/jdk.table.xml
      * windows
-     * 在 c://user/xxx/ AndroidStudio2.x/options/jdk.table.xml
+     * 在 c://user/xxx/AndroidStudio2.x/options/jdk.table.xml
      *
      *
      *

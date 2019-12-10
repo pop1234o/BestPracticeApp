@@ -8,6 +8,8 @@ public class Git_Main {
      *
      * =========git work flow========
      * workspace -> index -> local repository -> remote repository
+     *  工作区 缓存区 本地仓库 远程仓库
+     *
      *
      *
      * =======git add =======
@@ -16,8 +18,11 @@ public class Git_Main {
      * git add . stages new files and modifications, without deletions
      * git add -u stages modifications and deletions, without new files
      *
+     * stages:暂存
+     * (use "git reset HEAD <file>..." to unstage
      *
-     * ====================
+     *
+     * ==========git常用操作==========
      * github新建个Repository，然后本地git init 一个仓库
      * 本地添加远程 git remote add origin git@github.com:pop1234o/Algorithm.git
      * git pull orgin
@@ -339,6 +344,9 @@ public class Git_Main {
     /**
      * =======显示一行的commit============
      * git log --pretty=oneline
+     *
+     * 显示分叉结构
+     * git log --graph --pretty=oneline --abbrev-commit
      */
     void fun5() {
     }
@@ -430,4 +438,92 @@ public class Git_Main {
      *
      */
     void fun9(){}
+
+
+    /**
+     * ==========git diff========
+     * git diff
+     * 工作区和暂存区的区别，如果执行 git add -a 那么所有变动都提交到暂存区了，这个时候diff就没有区别了
+     *
+     * git diff HEAD
+     * 工作区和本地仓库之间的区别
+     *
+     * git diff --cached
+     * 暂存区和本地仓库之间的区别，也就是你git add 后的暂存区和本地仓库之间的区别
+     *
+     *
+     * (use "git reset HEAD <file>..." to unstage)
+     * 取消暂存，这个文件是已经通过 git add <file> 加入到暂存区了，取消暂存就是取消暂存区的改动
+     *
+     *
+     * use "git checkout -- <file>..." to discard changes in working directory)
+     * 丢弃工作区的变动
+     *
+     *
+     *
+     *
+     */
+    void fun10(){}
+
+
+    /**
+     *
+     * ============git rebase============
+     * https://www.jianshu.com/p/f7ed3dd0d2d8 (https://www.jianshu.com/p/f7ed3dd0d2d8)
+     * 作用：让Git的提交历史是一条干净的直线
+     * “变基”,将一条分支的"基于版本"改变
+     *
+     * git pull --rebase
+     *
+     * 或者直接
+     * git rebase
+     *
+     * -----------什么情况不能使用rebase-------
+     * 在同事合并了你的代码以后，并且增加了提交就不能使用git rebase了，这时他已经在你的提交节点上产生了新的提交节点，
+     * 如果此时你在本地使用git rebase你们两者的提交历史将会不一致，再次合并时又会产生一个全新的合并记录，
+     * 这样git rebase就失去了意义。（一般多人开发时基本不用git rebase这个命令，因为你大多数情况下是不知道同事是否已经提交过代码的）
+     *
+     * ------------git为什么会产生分叉？----------
+     * https://www.cnblogs.com/Sinte-Beuve/p/9195018.html （Git push 时如何避免出现 "Merge branch 'master' of ..."）
+     *
+     * 简单说就是基于同一个提交版本做出不同的改动，会产生分叉
+     *
+     * A-B-C(master)
+     *    \
+     *     D(origin/master)
+     * 我当前拉取的远端版本为 B，修改代码后commit，产生C
+     * 同时另一个同事基于B，同样进行commit D ,然后push到远程分支
+     * 我这个时候push会报错
+     * ! [rejected]        master -> master (fetch first)
+     * error: failed to push some refs to 'git@github.com:xxx/xxx.git'
+     * hint: Updates were rejected because the remote contains work that you do
+     * hint: not have locally. This is usually caused by another repository pushing
+     * hint: to the same ref. You may want to first integrate the remote changes
+     * hint: (e.g., 'git pull ...') before pushing again.
+     * 大概意思就是远程仓库有一些你本地没有的提交，你需要先git pull 来整合一下
+     *
+     * 此时我们查看 log 就会发现除了我们自己提交的那条日志之外，会多出一条 "Merge branch 'master' of ..."
+     * 在进行 pull 操作的同时，其实就是 fetch+merge 的一个过程
+     *
+     * 如果远程仓库超前于本地分支，并且本地分支没有任何 commit 的，那么直接pull不会产生额外的log
+     *
+     *
+     * # fast-forword
+     * A-B-D(origin/master)
+     *      \
+     *       C'(master)
+     *
+     * # merge
+     * A-B-C-E(master)
+     *    \ /
+     *     D(origin/master)
+     *
+     *
+     *
+     *
+     */
+    void fun11(){}
+
+
+
 }
