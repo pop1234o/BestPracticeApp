@@ -28,7 +28,7 @@ public class ThirdLib {
      * ===============日志库=================
      *
      * --------------mars-------------
-     * https://github.com/Tencent/mars#mars_cn
+     * https://github.com/Tencent/mars#mars_cn (xlog使用指南)
      * https://zhuanlan.zhihu.com/p/23879436 (微信mars 的高性能日志模块 xlog)
      * https://github.com/Tencent/mars/wiki/Mars-Android-%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97 ( Mars Android 接入指南)
      *
