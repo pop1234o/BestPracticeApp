@@ -195,6 +195,18 @@ public class MainActivity extends AppCompatActivity {
      * 然后Glide会在后台开始下载图片文件。接下来我们调用FutureTarget的get()方法就可以去获取下载好的图片文件了，
      * 如果此时图片还没有下载完，那么get()方法就会阻塞住，一直等到图片下载完成才会有值返回，所以get()方法必须在子线程中执行。
      *
+     * ===========Glide缓存策略===========
+     * https://bumptech.github.io/glide/doc/caching.html
+     * https://bumptech.github.io/glide/doc/debugging.html#unexpected-cache-misses
+     *
+     *  Glide checks multiple layers of caches before starting a new request for an image:
+     *
+     * Active resources - Is this image displayed in another View right now?
+     * Memory cache - Was this image recently loaded and still in memory?
+     * Resource - Has this image been decoded, transformed, and written to the disk cache before?
+     * Data - Was the data this image was obtained from written to the disk cache before?
+     *
+     *
      *
      * ==============================glide源码分析========================
      * https://juejin.im/entry/586766331b69e60063d889ea（文章写得很好）
