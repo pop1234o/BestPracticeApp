@@ -16,13 +16,18 @@ public class ThirdLib {
      *
      * DigestUtils.sha1Hex(bytes);
      *
-     * =============
-     * (Great Tit)
+     * ==========测试辅助工具===
+     * -----------------(Great Tit)--------------
      * https://github.com/Tencent/GT
      *
      * GT（随身调）是APP的随身调试平台，它是直接运行在手机上的“集成调试环境”(IDTE, Integrated Debug Environment)。
      * 利用GT，仅凭一部手机，无需连接电脑，即可对APP进行快速的性能测试(CPU、内存、流量、电量、帧率/流畅度等等)、
      * 开发日志的查看、Crash日志查看、网络数据包的抓取、APP内部参数的调试、真机代码耗时统计等。
+     *
+     *
+     * ----------------DoraemonKit---------
+     * https://github.com/didi/DoraemonKit
+     * 滴滴出品
      *
      *
      * ===============日志库=================
