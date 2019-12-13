@@ -499,6 +499,13 @@ public class Video {
      * https://www.jianshu.com/p/843c86a9e9ad （IjkPlayer播放器秒开优化以及常用Option设置）
      *
      *
+     * ==============ijkplayer切换后台黑屏问题===========
+     * https://cloud.tencent.com/developer/article/1192700 （IJKPlayer问题集锦之不定时更新）
+     * 暂停的时候，退到后台再回到前台，画面黑了？
+     *
+     * 1、这时候个人处理方式是，可以在暂停的时候，通过TextureView.getBitmap(point.x, point.y);获取到暂停的画面
+     *  ，用ImageView显示它，在onSurfaceTextureUpdated的时候隐藏ImageView，来实现画面的衔接。
+     * 2、暂停时绘制静态画面多TextureView的Surface上，详细参考GSYVideoPlayer。
      *
      */
     void f9(){}
