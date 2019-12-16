@@ -2010,6 +2010,18 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * lambda表达式 lambda是java8c出来的，其实就是简化函数定义，函数也可以作为参数传递
      * http://www.runoob.com/java/java8-lambda-expressions.html
      * http://www.importnew.com/16436.html (很详细的例子)
+     *
+     * ===============java 方法引用 Method references==========
+     * http://zh.lucida.me/blog/java-8-lambdas-insideout-language-features/ （深入理解Java 8 Lambda（语言篇——lambda，方法引用，目标类型和默认方法））
+     *
+     * 静态方法引用：ClassName::methodName
+     * 实例上的实例方法引用：instanceReference::methodName
+     * 超类上的实例方法引用：super::methodName
+     * 类型上的实例方法引用：ClassName::methodName
+     * 构造方法引用：Class::new
+     * 数组构造方法引用：TypeName[]::new
+     *
+     *
      */
     public void a9_2() {
         /*
