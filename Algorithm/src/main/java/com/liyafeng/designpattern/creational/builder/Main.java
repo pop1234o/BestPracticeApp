@@ -25,6 +25,10 @@ public class Main {
      * 用这种模式，可以高效配置，链式配置
      * 快速复制对象
      *
+     * =============
+     * OkHttpClient 就是持有 Builder内部类，Builder.build()
+     * 就是new OkHttpClient(this) 通过构造方法吧builder传进去了
+     * OkHttpClient 和 Builder成员变量是一样的
      *
      *
      *
