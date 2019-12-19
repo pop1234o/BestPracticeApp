@@ -224,6 +224,15 @@ public class RxJavaSample {
                 //这里只接受onNext中的事件，onComplete后的事件不会接收到
             }
         });
+
+
+        //创建List发射器
+        Observable.fromIterable(new ArrayList<String>()).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+
+            }
+        });
     }
 
     /**
@@ -975,9 +984,7 @@ public class RxJavaSample {
         list.add(new AbstractMap.SimpleEntry("F", 3));
 
 
-        AbstractMap.SimpleEntry<String, Integer>[] simpleEntries = new AbstractMap.SimpleEntry[list.size()];
-        list.toArray(simpleEntries);
-        Observable.fromArray(simpleEntries)
+        Observable.fromIterable(list)
                 .groupBy(new Function<AbstractMap.SimpleEntry<String, Integer>, Integer>() {
                     @Override
                     public Integer apply(AbstractMap.SimpleEntry<String, Integer> simpleEntry) throws Exception {
