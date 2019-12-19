@@ -94,4 +94,26 @@ public class Main_Rxjava {
 
     }
 
+
+    /**
+     * ==========主要操作符==========
+     * Creating 创建操作 - Create/Defer/From/Just/Start/Repeat/Range
+     * Transforming 变换操作 - Buffer/Window/Map/FlatMap/GroupBy/Scan
+     * Filtering 过滤操作 - Debounce/Distinct/Filter/Sample/Skip/Take
+     * Combining 结合操作 - And/StartWith/Join/Merge/Switch/Zip
+     * Error Handling 错误处理 - Catch/Retry
+     * Utility 辅助操作 - Delay/Do/ObserveOn/SubscribeOn/Subscribe
+     * Conditional 条件和布尔操作 - All/Amb/Contains/SkipUntil/TakeUntil
+     * Mathematical 算术和聚合操作 - Average/Concat/Count/Max/Min/Sum/Reduce
+     * Async 异步操作 - Start/ToAsync/StartFuture/FromAction/FromCallable/RunAsync
+     * Connect 连接操作 - Connect/Publish/RefCount/Replay
+     * Convert 转换操作 - ToFuture/ToList/ToIterable/ToMap/toMultiMap
+     * Blocking 阻塞操作 - ForEach/First/Last/MostRecent/Next/Single/Latest
+     * String 字符串操作 - ByLine/Decode/Encode/From/Join/Split/StringConcat
+     *
+     *
+     *
+     */
+    void a1(){}
+
 }

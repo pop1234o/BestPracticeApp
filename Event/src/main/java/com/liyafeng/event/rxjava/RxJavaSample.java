@@ -4,7 +4,9 @@ import android.util.Log;
 
 import org.reactivestreams.Publisher;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,6 +24,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.internal.operators.observable.ObservableJust;
+import io.reactivex.observables.GroupedObservable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -97,7 +100,7 @@ public class RxJavaSample {
     }
 
     public static void main(String[] args) {
-        do9_2();
+        do11();
     }
 
     //region 线程切换
@@ -825,7 +828,6 @@ public class RxJavaSample {
 //        }
 
 
-
         Observable.just("请求结果")
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -897,8 +899,6 @@ public class RxJavaSample {
      * ============takeWhile================
      * <p>
      * TakeWhile发射原始Observable，直到你指定的某个条件不成立的那一刻，它停止发射原始Observable，并终止自己的Observable
-     *
-     *
      */
     static void do10() {
 
@@ -950,6 +950,101 @@ public class RxJavaSample {
                 System.out.println("=====onComplete");
             }
         });
+    }
+
+    //endregion
+
+    /**
+     * 分组（发射） groupby操作符
+     * <p>
+     * 实际应用，比如有个list，我们要给item根据level分组，
+     * 而且要知道每个item相对于本组的index，和本组的totalSize
+     */
+    //region 变换操作
+    static void do11() {
+
+
+        ArrayList<AbstractMap.SimpleEntry<String, Integer>> list = new ArrayList<>();
+        list.add(new AbstractMap.SimpleEntry("A", 1));
+        list.add(new AbstractMap.SimpleEntry("B", 2));
+        list.add(new AbstractMap.SimpleEntry("C", 3));
+        list.add(new AbstractMap.SimpleEntry("D", 1));
+        list.add(new AbstractMap.SimpleEntry("E", 2));
+        list.add(new AbstractMap.SimpleEntry("F", 3));
+
+
+        AbstractMap.SimpleEntry<String, Integer>[] simpleEntries = new AbstractMap.SimpleEntry[list.size()];
+        list.toArray(simpleEntries);
+        Observable.fromArray(simpleEntries)
+                .groupBy(new Function<AbstractMap.SimpleEntry<String, Integer>, Integer>() {
+                    @Override
+                    public Integer apply(AbstractMap.SimpleEntry<String, Integer> simpleEntry) throws Exception {
+                        return simpleEntry.getValue();
+                    }
+                }).subscribe(new Observer<GroupedObservable<Integer, AbstractMap.SimpleEntry<String, Integer>>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(GroupedObservable<Integer, AbstractMap.SimpleEntry<String, Integer>> groupedObservable) {
+
+                //这里总共会走三次，1，2，3 ，上面发射一个新的种类，那么这里就会新来一个，只会来一次
+                //后面如果有重复的元素，那么直接就发射到之前创建过的groupedObservable中了
+                System.out.println("out=======" + groupedObservable.getKey());
+
+                groupedObservable.subscribe(new Observer<AbstractMap.SimpleEntry<String, Integer>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(AbstractMap.SimpleEntry<String, Integer> entry) {
+                        System.out.println("in========" + entry.getValue());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("onComplete========" + groupedObservable.getKey());
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("onComplete========");
+            }
+        });
+
+
+        /*
+         * 运行结果
+         * out=======1
+         * in========1
+         * out=======2
+         * in========2
+         * out=======3
+         * in========3
+         * in========1
+         * in========2
+         * in========3
+         * onComplete========1
+         * onComplete========2
+         * onComplete========3
+         * onComplete========
+         * */
     }
 
     //endregion
