@@ -959,6 +959,8 @@ public class RxJavaSample {
      * <p>
      * 实际应用，比如有个list，我们要给item根据level分组，
      * 而且要知道每个item相对于本组的index，和本组的totalSize
+     * groupedObservable的Observer创建数组，onNext 赋值index
+     * onComplete遍历赋值totalSize
      */
     //region 变换操作
     static void do11() {
