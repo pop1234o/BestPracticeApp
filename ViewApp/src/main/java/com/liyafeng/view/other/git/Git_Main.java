@@ -76,7 +76,7 @@ public class Git_Main {
      * <p>
      * 按q退出
      * <p>
-     * git show [commit_hash] 查看某次commit的所有改变
+     * git show [commit_hash] 查看某次commit的所有改变 前六位即可
      * -----------------------
      * git 初始化，我们提交代码要设置 用户名 和 邮箱
      * <p>

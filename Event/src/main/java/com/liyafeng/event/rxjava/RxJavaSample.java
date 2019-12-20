@@ -130,8 +130,24 @@ public class RxJavaSample {
     //endregion
 
     //region 创建操作
+    // https://github.com/ReactiveX/RxJava/wiki/Creating-Observables (各种创建操作符示例)
 
 
+    /**
+     * https://github.com/ReactiveX/RxJava/wiki/Creating-Observables (各种创建操作符示例)
+     * create
+     * defer
+     * empty
+     * error
+     * from
+     * generate
+     * interval
+     * just
+     * never
+     * range
+     * timer
+     *
+     */
     private void observable() {
         ObservableJust.just("").map(new Function<String, Integer>() {
             @Override
@@ -147,7 +163,6 @@ public class RxJavaSample {
                     }
                 });
 
-//        ObservableZip.zip()
 
 
         //==========================================
