@@ -19,6 +19,9 @@ public class Main_C_CPP {
      * 来源：知乎
      * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
      *
+     * ===============编译/构建=============
+     * 代码变成可执行文件，叫做编译（compile）；先编译这个，还是先编译那个（即编译的安排），叫做构建（build）。
+     *
      * @param args
      */
     public static void main(String[] args) {

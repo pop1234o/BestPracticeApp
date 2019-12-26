@@ -56,6 +56,11 @@ public class Linux_Command {
      * 内容输出
      *
      *
+     * ============man ============
+     * man [命令名称]
+     * 用来解释这个命令有什么用
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
