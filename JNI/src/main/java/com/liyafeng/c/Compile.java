@@ -3,18 +3,7 @@ package com.liyafeng.c;
 public class Compile {
 
 
-    /**
-     *  ======================MinGW==========================
-     *  https://mingw-w64.org/doku.php/download 下载
-     *  https://sourceforge.net/projects/mingw-w64/
-     *  <p>
-     *  在windows中要编译c语音，需要特定编译器
-     *  mingw Minimalist GNU for Windows
-     *   <p>
-     *
-     *
-     * @param args
-     */
+
     public static void main(String[] args) {
 
     }
@@ -182,28 +171,51 @@ public class Compile {
      * cc3r3i2U.o(.eh_frame+0x12): undefined reference to `__gxx_personality_v0’......
      *
      */
-    public void fun1() {
+    public void fun_gcc() {
     }
 
 
     /**
-     *   =====================LLVM=========================
-     *   C++写成的编译器 底层虚拟机（Low Level Virtual Machine）
      *
-     *  现今LLVM已单纯成为一个品牌，适用于LLVM下的所有项目，包含LLVM中介码（LLVM IR）、LLVM调试工具、LLVM C++标准库等。
+     * ======================MinGW(Minimalist GNU for Windows)==========================
+     * http://www.mingw.org/(官网)
+     * https://mingw-w64.org/doku.php/download 下载
+     * https://sourceforge.net/projects/mingw-w64/
      *
-     *  LLVM项目的发展起源于2000年伊利诺伊大学厄巴纳-香槟分校维克拉姆·艾夫（Vikram Adve）
-     *  与克里斯·拉特纳（Chris Lattner）的研究，他们想要为所有静态及动态语言创造出动态的编译技术。
-     *  LLVM是以BSD许可来发展的开源软件。
-     *  2005年，苹果计算机雇用了克里斯·拉特纳及他的团队为苹果计算机开发应用程序系统[3]，
-     *  LLVM为现今Mac OS X及iOS开发工具的一部分。
+     * is a minimalist development environment for native Microsoft Windows applications
+     * 将GNU的开发工具，移植到Windows
+     *
+     * 在windows中要编译c语音，需要特定编译环境
+     * mingw Minimalist GNU for Windows
+     *
+     * MinGW includes:
+     *
+     * A port of the GNU Compiler Collection (GCC), including C, C++, ADA and Fortran compilers;
+     * GNU Binutils for Windows (assembler, linker, archive manager)
+     * A command-line installer, with optional GUI front-end, (mingw-get) for MinGW and MSYS deployment on MS-Windows
+     * A GUI first-time setup tool (mingw-get-setup), to get you up and running with mingw-get.
      *
      *
+     * c:\MinGW\bin\mingw32-make.exe
+     * 吧c:\MinGW\bin加入环境变量就可以运行mingw32-make了
      *
-     *  =======================Clang===============
+     *
+     * =================Cygwin====================
+     * https://www.cygwin.com/ （官网）
+     *
+     * 1.a large collection of GNU and Open Source tools which provide functionality similar to a Linux distribution on Windows
+     * 2.a DLL (cygwin1.dll) which provides substantial POSIX API functionality
+     *
+     * 提供Linux中gnu和一些开源工具，使他们可以运行在windows上
+     * 比如make工具，gcc工具
+     *
+     * ==============区别=======
+     * MinGW占用内存、硬盘空间都比较少，能够链接到任意软件，但它对POSIX规范的实现没有Cygwin库完备
      *
      */
-    void fun2(){}
+    void fun_MinGW(){}
+
+
 
 
     /**
@@ -211,21 +223,53 @@ public class Compile {
      * https://www.gnu.org/software/make/ （官方文档）
      * https://www.gnu.org/software/make/manual/make.html （官方文档）
      * https://zhuanlan.zhihu.com/p/72616078 （浅谈 GNU Make 构建项目实践）
+     * https://seisman.github.io/how-to-write-makefile/invoke.html (make 的运行)
+     * https://wangchujiang.com/linux-command/c/make.html (make用法)
      * Make是最常用的构建工具，诞生于1977年，主要用于C语言的项目。
-     *
-     * make依赖gcc
      *
      *
      * 工程大了，源文件就多了
      * 如此多的源文件，如果每次都要键入gcc命令进行编译的话，那对程序员 来说简直就是一场灾难。
      * 而make工具则可自动完成编译工作，并且可以只对程序员在上次编译后修改过的部分进行编译
      *
-     * ==========用法============
-     * https://wangchujiang.com/linux-command/c/make.html (make用法)
+     * 其实make不只是用来构建c项目，构建其他项目也可以
+     * 它只是一个有特定功能的软件，他会解析makefile这个文件，然后执行特定的逻辑
      *
+     * target … : prerequisites(先决条件) …
+     * 【tab】 recipe（配方）
      *
+     * target：程序生成文件的名字
+     * prerequisites：是一个文件名，这个文件用来生成target
+     * recipe ： 是make程序执行的命令，可以有多个，用来配合prerequisites文件来生成target，是生成target的命令
      *
+     * 当target不存在，或者prerequisites有更新，那么make工具就会执行recipe命令来重新生成target
+     * 这样就保证不用把没有改变的c文件再重新编译一次了。
      *
+     * 示例：
+     * main.exe: main.o
+     *     gcc -o main.exe main.o
+     *
+     * main.o: main.c
+     *     gcc -c -o main.o main.c
+     *
+     * main.exe没有回去找main.o，main.o也没有找下面的规则，找到第二条是生成main.o
+     * 然后找main.c，存在，然后执行下面的命令，生成main.o，然后执行第一个命令，生成main.exe
+     *
+     * 这个文件名字命名为makefile 保存
+     * 然后在当前目录下执行 make ，GNU make找寻默认的Makefile的规则是在当前目录下依次找三个文件——“GNUmakefile” 、“makefile”和“Makefile”
+     * 也可以命名为其他名称
+     * make -f [filename]
+     * 即可执行，执行完毕后生成 main.exe 和main.o
+     *
+     *'make其实是依赖gcc来构建（先编译哪个后编译哪个）c工程的。
+     * 他本质就是一个makefile解析器，实现了依赖关系的查找逻辑，和文件的时间戳比较逻辑，来判断下次这个文件是不是要重新编译
+     *
+     * 有了make我们就可以不用自己一行行的执行gcc了！而且还加入时间戳比较，自动编译有改动的文件，真是提升了不少效率！
+     *
+     * ===========window下使用make======
+     *
+     * Windows 上运行 make 命令或 makefile 文件，必须有 GNU 编译环境，
+     * 因此在 Windows 上获取它的唯一方法是安装类似 GNUWin32 提供的 Windows 版本
      *
      */
     void fun_make(){}
@@ -233,16 +277,16 @@ public class Compile {
 
 
     /**
-     * ==========Android studio中支持cmake和 lldb =======
-     * 打开 设置，里面搜索 Android Sdk ，里面有sdk tools ，勾选 cmake和lldb即可
-     * 下载的文件在sdk目录下，[sdkdir]/camke/版本/   [sdkdir]/lldb/版本
-     * <p>
-     * <p>
-     * <p>
-     * <p>
+
      * =================cmake========================
+     * https://www.hahack.com/codes/cmake/ （什么是 CMake）
      * CMake is an open-source, cross-platform family of tools designed to build, test and package software.
      * 开源，跨平台的构建，测试，打包工具
+     *
+     * 我们看cmake官网提供 windows,macOS 和Linux的安装包
+     * 我们用的make不是跨平台的，可能每个平台文件的规则不同，所以我们要写一遍c代码，可能就要写三个平台的makefile文件
+     *
+     * 总之cmake就是让你配置一次，就能在各个平台上都能编译c工程
      *
      *
      * ===================教材===========
@@ -285,8 +329,68 @@ public class Compile {
      * --------------使用命令行进行cmake编译---------------
      * https://blog.csdn.net/minghuang2017/article/details/78938852
      *
+     * ==========Android studio中支持cmake和 lldb =======
+     * 打开 设置，里面搜索 Android Sdk ，里面有sdk tools ，勾选 cmake和lldb即可
+     * 下载的文件在sdk目录下，[sdkdir]/camke/版本/   [sdkdir]/lldb/版本
+     * <p>
+     * <p>
+     * <p>
+     * <p>
      *
      *
      */
     void fun_cmake(){}
+
+
+    /**
+     * ==============ndk-build===========
+     * https://developer.android.com/ndk/guides/ndk-build?hl=zh-CN (官方文档)
+     * Android的c、c++代码编译工具（编译成.so文件）
+     *
+     * ndk-build 脚本使用 NDK 的基于 Make 的编译系统构建项目。
+     * 运行 ndk-build 脚本相当于运行以下命令
+     *
+     * $GNUMAKE -f <ndk>/build/core/build-local.mk
+     *
+     *
+     *
+     * 实际上ndk-build就是对make做了个封装
+     *
+     *
+     *
+     * =================Android studio中的cmake==========
+     * 您可借助 Android Studio 2.2 及更高版本，使用 NDK 和 CMake 将 C 及 C++ 代码编译到原生库中
+     * 之后，Android Studio 会使用 IDE 的集成构建系统 Gradle 将您的库封装到 APK。
+     *
+     *
+     *
+     *
+     * ===================Android中添加c c++代码========
+     * https://developer.android.com/studio/projects/add-native-code.html?hl=zh-CN （向您的项目添加 C 和 C++ 代码）
+     *
+     *
+     *
+     *
+     */
+    void fun_ndk_build(){}
+
+
+    /**
+     *   =====================LLVM=========================
+     *   C++写成的编译器 底层虚拟机（Low Level Virtual Machine）
+     *
+     *  现今LLVM已单纯成为一个品牌，适用于LLVM下的所有项目，包含LLVM中介码（LLVM IR）、LLVM调试工具、LLVM C++标准库等。
+     *
+     *  LLVM项目的发展起源于2000年伊利诺伊大学厄巴纳-香槟分校维克拉姆·艾夫（Vikram Adve）
+     *  与克里斯·拉特纳（Chris Lattner）的研究，他们想要为所有静态及动态语言创造出动态的编译技术。
+     *  LLVM是以BSD许可来发展的开源软件。
+     *  2005年，苹果计算机雇用了克里斯·拉特纳及他的团队为苹果计算机开发应用程序系统[3]，
+     *  LLVM为现今Mac OS X及iOS开发工具的一部分。
+     *
+     *
+     *
+     *  =======================Clang===============
+     *
+     */
+    void fun2(){}
 }
