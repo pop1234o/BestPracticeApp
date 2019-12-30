@@ -122,4 +122,20 @@ public class Main_jni {
     public static void main(String[] args) {
 
     }
+
+
+    /**
+     * C语言的写法
+     * JNIEXPORT jstring JNICALL
+     * Java_com_liyafeng_cproject_MainActivity_intFromJNI(
+     *         JNIEnv *env,
+     *         jobject pthis) {
+     *     jstring jstr;
+     *     char cstr[]="你好吗?";
+     *     jstr=(*env)->NewStringUTF(env,cstr);
+     *     return jstr;
+     * //    return env->NewStringUTF(hello.c_str())
+     * }
+     */
+    void a1(){}
 }

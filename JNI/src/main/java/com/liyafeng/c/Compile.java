@@ -338,6 +338,78 @@ public class Compile {
      * <p>
      *
      *
+     *   =================Android studio中的cmake==========
+     *  您可借助 Android Studio 2.2 及更高版本，使用 NDK 和 CMake 将 C 及 C++ 代码编译到原生库中
+     *  之后，Android Studio 会使用 IDE 的集成构建系统 Gradle 将您的库封装到 APK。
+     *
+     * https://developer.android.com/studio/projects/configure-cmake?hl=zh-CN (配置 CMake)
+     *
+     *
+     *
+     * ===============ndk中的预置库============
+     * 在sdk目录的ndk-bundle目录下，platforms/android-xx/arch-arm/usr/lib/中
+     * 有
+     * libandroiid.so
+     * libc.so
+     * libdl.so
+     * libEGL.so
+     * libGLESv2.so
+     * libjnigraphics.so
+     * liblog.so
+     * libm.so
+     * libOpenSLES.so
+     * libstdc++.so
+     * libz.so
+     * 上面这些总共有10m大小
+     *
+     * 这些在编译的时候为你提供动态链接库，你可以引用其中的方法，然后让你编译通过
+     * 当apk安装到手机上时，当要用到这些库的时候，Android系统已经内置了这些库，系统回到默认的目录下查找
+     *
+     *
+     *  # Specifies a library name, specifies whether the library is STATIC or
+     *     # SHARED, and provides relative paths to the source code. You can
+     *     # define multiple libraries by adding multiple add_library() commands,
+     *     # and CMake builds them for you. When you build your app, Gradle
+     *     # automatically packages shared libraries with your APK.
+     *     指定的你要编译的源文件和生成库的名字
+     *     add_library( # Specifies the name of the library.
+     *                  native-lib
+     *
+     *                  # Sets the library as a shared library.
+     *                  SHARED
+     *
+     *                  # Provides a relative path to your source file(s).
+     *                  src/main/cpp/native-lib.cpp )
+     *
+     * ============使用zlib==========
+     * # Searches for a specified prebuilt library and stores the path as a
+     * # variable. Because CMake includes system libraries in the search path by
+     * # default, you only need to specify the name of the public NDK library
+     * # you want to add. CMake verifies that the library exists before
+     * # completing its build.
+     * 找到这个库，第一个参数是设置别名，第二个参数是库的名字（不包含前面的lib）
+     * find_library( # Sets the name of the path variable.
+     *         z-lib
+     *
+     *         # Specifies the name of the NDK library that
+     *         # you want CMake to locate.
+     *         z)
+     *
+     *
+     * # Specifies libraries CMake should link to your target library. You
+     * # can link multiple libraries, such as libraries you define in this
+     * # build script, prebuilt third-party libraries, or system libraries.
+     *
+     * 链接上面定义的链接库到你的库中
+     * target_link_libraries( # Specifies the target library.
+     *         native-lib
+     *
+     *         # Links the target library to the log library
+     *         # included in the NDK.
+     *         ${log-lib} ${z-lib})
+     *
+     *
+     *
      */
     void fun_cmake(){}
 
@@ -356,11 +428,8 @@ public class Compile {
      *
      * 实际上ndk-build就是对make做了个封装
      *
-     *
-     *
-     * =================Android studio中的cmake==========
-     * 您可借助 Android Studio 2.2 及更高版本，使用 NDK 和 CMake 将 C 及 C++ 代码编译到原生库中
-     * 之后，Android Studio 会使用 IDE 的集成构建系统 Gradle 将您的库封装到 APK。
+     * Android.mk 文件位于项目 jni/ 目录的子目录中，用于向编译系统描述源文件和共享库。
+     * Application.mk 指定 ndk-build 的项目范围设置。默认情况下，它位于应用项目目录中的 jni/Application.mk 下
      *
      *
      *
