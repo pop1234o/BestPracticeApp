@@ -409,6 +409,55 @@ public class Compile {
      *         ${log-lib} ${z-lib})
      *
      *
+     * ===========现有项目中加入c代码=========
+     * 把c代码放到main/cpp下，CMakeList也放进去
+     * 记得改变里面native代码中的包名和类名
+     *
+     * 然后在项目build.gradle中加入
+     *
+     *  defaultConfig {
+     *         externalNativeBuild {
+     *             cmake {
+     *                 cppFlags ""
+     *                 abiFilters 'armeabi-v7a', 'arm64-v8a'
+     *             }
+     *         }
+     *     }
+     * externalNativeBuild {
+     *         cmake {
+     *             path "src/main/cpp/CMakeLists.txt"
+     *             version "3.10.2"
+     *         }
+     *     }
+     *   可以好像可以不指定版本？
+     *
+     * https://stackmirror.com/questions/41218241 （Unable to find CMake in Android Studio）
+     * Check in your build.gradle file for your App's module
+     *
+     * externalNativeBuild {
+     *     cmake {
+     *         path "CMakeLists.txt"
+     *     }
+     * }
+     * Remove the cmake section
+     * Re-synchronise the project: go to menu Build -> Refersh Lined C++ Projects
+     * Right-click on the module, such as the app module, select "Link C++ Project with Gradle" from the menu.
+     * You should see a dialog similar to the one shown in below figure.
+     * Enter image description here
+     * Click OK.
+     *
+     * 重新关联项目以后 这样.externalNativeBuild就能自动生成了
+     *
+     *
+     * ------------------------
+     * CMake Error: CMake was unable to find a build program corresponding to "Ninja".
+     * CMAKE_MAKE_PROGRAM is not set. You probably need to select a different build tool
+     *
+     * 如果报上面那个错，那么是你gradle版本太低了
+     * 将自己工程的Gradle升级为 3.3.2+，注意wrapper中对应的版本号
+     *
+     *
+     *
      *
      */
     void fun_cmake(){}
