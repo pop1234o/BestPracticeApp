@@ -410,6 +410,7 @@ public class Compile {
      *
      *
      * ===========现有项目中加入c代码=========
+     * https://developer.android.google.cn/studio/projects/add-native-code?hl=zh-CN （向您的项目添加 C 和 C++ 代码）
      * 把c代码放到main/cpp下，CMakeList也放进去
      * 记得改变里面native代码中的包名和类名
      *
@@ -448,15 +449,33 @@ public class Compile {
      *
      * 重新关联项目以后 这样.externalNativeBuild就能自动生成了
      *
+     * 或者
+     * 将 CMake 的安装路径添加到 PATH 环境变量，或将其添加到项目的 local.properties 文件中
+     * # If you set this property, Gradle no longer uses PATH to find CMake.
+     *     cmake.dir="path-to-cmake"
+     * 否则可能会报找不到cmake的错误（这个时候.externalNativeBuild还没生成）
      *
-     * ------------------------
+     *
+     * ---------------- unable to find a build program corresponding to "Ninja"--------
      * CMake Error: CMake was unable to find a build program corresponding to "Ninja".
      * CMAKE_MAKE_PROGRAM is not set. You probably need to select a different build tool
      *
      * 如果报上面那个错，那么是你gradle版本太低了
      * 将自己工程的Gradle升级为 3.3.2+，注意wrapper中对应的版本号
      *
+     * 或者
+     * 如果您尚未在工作站上安装 Ninja 编译系统，请访问 Ninja 官方网站，然后下载并安装适用于您的操作系统的最新版本的 Ninja。此外，请务必将 Ninja 的安装路径也添加到 PATH 环境变量
+     * ================多个相同的so库冲突=============
+     * https://blog.csdn.net/wapchief/article/details/84974219 （Android Gradle依赖管理、去除重复依赖、忽略）
+     * 有两个第三方包里都有so，你可以剔除一个
      *
+     * Error:Execution failed for task ‘:app:transformNativeLibsWithMergeJniLibsForDebug’.
+     *
+     *
+     * app的build.gradle中加入，代表只打包第一个so
+     * packagingOptions {
+     *             pickFirst 'lib/armeabi-v7a/libgnustl_shared.so'
+     * }
      *
      *
      */
