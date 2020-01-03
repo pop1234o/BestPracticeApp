@@ -12,7 +12,7 @@ Just get started. When you have something to show people, then you can talk abou
 *.教学，卖课，广告。
  费时间，不好做。但是你还是擅长讲课
 
-*.知识付费（付费圈子,入驻各大平台，比如公众号，头条等）
+*.自媒体-知识付费（付费圈子,入驻各大平台，比如公众号，头条等广告收益）
  如果只是Android技术受众太小，而且大牛也不认可你
  
 *.卖产品，做中间商（比如视频整理到u盘上，卖u盘）
@@ -27,7 +27,7 @@ Just get started. When you have something to show people, then you can talk abou
 
 *.加入创业公司拿股票
 
-*.黑产（钓鱼网站充会员,盗号转手，薅羊毛）
+*.黑产（钓鱼网站充会员,盗号转手，薅羊毛，刷单）
 
 
 
@@ -224,3 +224,25 @@ https://xiaozhuanlan.com/topic/2651837094
 教人技术
 
 教人如何面试，类似牛客网
+
+
+
+
+
+===============薅羊毛==============
+你是怎样利用互联网赚到自己的第一桶金的？ - 知乎
+https://www.zhihu.com/question/28278308/answer/48318726
+顺丰推广下载一个10元，街边扫码送加多宝，净赚7元。
+
+
+
+
+
+
+
+
+
+
+
+
+
