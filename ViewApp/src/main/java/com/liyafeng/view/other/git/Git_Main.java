@@ -525,5 +525,15 @@ public class Git_Main {
     void fun11(){}
 
 
+    /**
+     * ==========gerrit-vs-gitlab==========
+     * https://about.gitlab.com/devops-tools/gerrit-vs-gitlab.html (Gerrit vs. GitLab)
+     * https://blog.csdn.net/bjstyle/article/details/79107086 (GitLab 与 Gerrit对比)
+     *
+     * Gerrit is a free, web-based team code collaboration(合作) tool
+     *
+     *
+     */
+    void fun12(){}
 
 }
