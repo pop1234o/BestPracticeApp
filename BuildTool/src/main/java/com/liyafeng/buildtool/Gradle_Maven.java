@@ -69,8 +69,13 @@ public class Gradle_Maven {
      * maven central (https://maven.aliyun.com/repository/central)
      * Google的 （ https://maven.aliyun.com/repository/google ）
      *
+     * ---------Failed to resolve common open file gradle.build---------
+     * https://stackmirror.com/questions/50786296
+     * 主要是顺序不对  add google() before jcenter()
+     * 好像是缓存问题。。
      *
      *
+     * -------------------
      * （maven仓库列表）https://mvnrepository.com/repos
      *
      *  maven工具可以从下面的网站上下载jar
