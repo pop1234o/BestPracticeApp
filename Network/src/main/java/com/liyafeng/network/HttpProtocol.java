@@ -760,7 +760,13 @@ public class HttpProtocol {
      * https://blog.csdn.net/wzx19840423/article/details/47811545（服务器如何允许和禁止CNAME访问）
      * 如果是cloudxns.wuzx.xyz配置CNAME到www.cloudxns.net
      * 服务器可以根据http请求中的Host字段配置CNAME访问策略
-     * 例如www.baidu.com就做了CNAME访问策略：baidu.xx.xx可以CNAME到www.baidu.com正常访问，sex.xx.xx不能CNAME到www.baidu.com正常访问
+     * 例如www.baidu.com就做了CNAME访问策略：baidu.xx.xx可以CNAME到www.baidu.com正常访问(现在好像也不行了)，sex.xx.xx不能CNAME到www.baidu.com正常访问
+     *
+     * 如果做了保护，访问会报403，比如你的申请的域名 cname到 www.baidu.com  ，主机名是baidu
+     * 访问baidu.xxx.com，会报403 ，如果ping是能ping通的
+     *
+     * 如果没有配置解析规则，比如访问aaa.xxx.com会报一个 unknown host
+     *
      *
      * ===============域名访问没有备案==========
      * 是服务器运营商搞得鬼
