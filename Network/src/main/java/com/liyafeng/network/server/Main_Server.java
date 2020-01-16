@@ -172,38 +172,16 @@ public class Main_Server {
     void mangodb(){}
 
 
-    /**
-     * https://cloud.tencent.com/developer/news/338619 (Java中主流的Web服务器有哪些？这5种必用)
-     * 开发Java Web应用所采用的服务器主要是与JSP/Servlet兼容的Web服务器，
-     * 比较常用的有Tomcat、Resin、JBoss、WebSphere 和 WebLogic等
-     *
-     * ================选型=============
-     * https://www.zhihu.com/question/21694651 （Java 做的大型网站用什么服务器软件？Tomcat、Weblogic 还是其它服务器？）
-     * 我们公司(Alibaba)用的 JBoss 和 Jetty。感觉网站应用处理高并发瓶颈往往不在应用服务器吧，机器撑不住加机器就好了，
-     * 撑不住的更可能是后面的数据库之类的。为了处理网站应用的高并发有很多办法，
-     * 比如静态化，这样请求在 Apache/Nginx 一层就被挡掉了；
-     * 比如分库分表，把流量分到多台数据库服务器上去。
-     *
-     * 或者微服务
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     */
-    void server(){}
 
 
     /**
-     * ======网页服务器 / web服务器===========
+     * ======网页服务器 / web服务器 / HTTP Server ===========
      * https://zhuanlan.zhihu.com/p/22544725 （什么是 Web 服务器（server））
      * 浏览器发出http请求 ，服务器的操作系统上得有一个进程来监听这个端口，
      * 随时接受http请求，找到网页文件（html、js、css image 等）然后返回结果（放在http响应体中）
      *
      * 主流的网页服务器
-     * Apache	            Apache	48.5%
+     * Apache（Apache HTTP Server）Apache	48.5%
      * nginx	            NGINX, Inc.	35.4%
      * IIS	                 Microsoft	10.8%
      * LiteSpeed Web Server	LiteSpeed Technologies	2.9%
@@ -235,14 +213,59 @@ public class Main_Server {
      * 这种服务器简单地根据访问路径，返回对应的文件
      * 比如用户访问 http:// 123.123.123.123:8080/a/b/c/d.html，那么这种服务器就会在网站根目录找到 a/b/c/d.html 文件，原样返回给用户。
      *
+     *
+     * --------动态生成页面-----------
+     * Apache HTTP Server和Nginx本身不支持生成动态页面，
+     * 但它们可以通过其他模块来支持（例如通过Shell、PHP、Python脚本程序来动态生成内容）。
+     *
+     * ---------过程--------
+     * 一般是 HTTP Server 接收到http请求，然后依照配置，转发到 php或者Python监听的端口，
+     * php程序处理完后返回响应，给HTTP Server，然后返回给客户端
+     *
+     *
+     * =========== Application Server ==============
      * 动态的：
      *  http:// http://weibo.com/home 每次内容都不一样，是动态返回的
+     *
+     * 比如tomcat等
+     * 或者更准确的来说，是一个「Servlet/JSP」应用的容器（Ruby/Python 等其他语言开发的应用也无法直接运行在 Tomcat 上）。
+     *
+     *
+     *
+     * =================nginx和tomcat区别=========
+     * https://www.zhihu.com/question/32212996 （tomcat 与 nginx，apache的区别是什么？）
      *
      *
      *
      */
-    void web_server(){}
+    void server(){}
 
+
+
+    /**
+     *
+     *
+     * https://cloud.tencent.com/developer/news/338619 (Java中主流的Web服务器有哪些？这5种必用)
+     * 开发Java Web应用所采用的服务器主要是与JSP/Servlet兼容的Web服务器，
+     * 比较常用的有Tomcat、Resin、JBoss、WebSphere 和 WebLogic等
+     *
+     * ================选型=============
+     * https://www.zhihu.com/question/21694651 （Java 做的大型网站用什么服务器软件？Tomcat、Weblogic 还是其它服务器？）
+     * 我们公司(Alibaba)用的 JBoss 和 Jetty。感觉网站应用处理高并发瓶颈往往不在应用服务器吧，机器撑不住加机器就好了，
+     * 撑不住的更可能是后面的数据库之类的。为了处理网站应用的高并发有很多办法，
+     * 比如静态化，这样请求在 Apache/Nginx 一层就被挡掉了；
+     * 比如分库分表，把流量分到多台数据库服务器上去。
+     *
+     * 或者微服务
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+    void java_server(){}
 
 
 }
