@@ -10,6 +10,9 @@ public class Git_Main {
      * workspace -> index -> local repository -> remote repository
      *  工作区 缓存区 本地仓库 远程仓库
      *
+     * ========init=========
+     * 在当前目录 git init
+     * 在当前目录生成一个 .git 目录
      *
      *
      * =======git add =======
