@@ -168,16 +168,80 @@ public class Main_Server {
      *
      *
      *
+     */
+    void mangodb(){}
+
+
+    /**
+     * https://cloud.tencent.com/developer/news/338619 (Java中主流的Web服务器有哪些？这5种必用)
+     * 开发Java Web应用所采用的服务器主要是与JSP/Servlet兼容的Web服务器，
+     * 比较常用的有Tomcat、Resin、JBoss、WebSphere 和 WebLogic等
+     *
+     * ================选型=============
+     * https://www.zhihu.com/question/21694651 （Java 做的大型网站用什么服务器软件？Tomcat、Weblogic 还是其它服务器？）
+     * 我们公司(Alibaba)用的 JBoss 和 Jetty。感觉网站应用处理高并发瓶颈往往不在应用服务器吧，机器撑不住加机器就好了，
+     * 撑不住的更可能是后面的数据库之类的。为了处理网站应用的高并发有很多办法，
+     * 比如静态化，这样请求在 Apache/Nginx 一层就被挡掉了；
+     * 比如分库分表，把流量分到多台数据库服务器上去。
+     *
+     * 或者微服务
+     *
+     *
      *
      *
      *
      *
      *
      */
-    void mangodb(){}
+    void server(){}
 
 
-
+    /**
+     * ======网页服务器 / web服务器===========
+     * https://zhuanlan.zhihu.com/p/22544725 （什么是 Web 服务器（server））
+     * 浏览器发出http请求 ，服务器的操作系统上得有一个进程来监听这个端口，
+     * 随时接受http请求，找到网页文件（html、js、css image 等）然后返回结果（放在http响应体中）
+     *
+     * 主流的网页服务器
+     * Apache	            Apache	48.5%
+     * nginx	            NGINX, Inc.	35.4%
+     * IIS	                 Microsoft	10.8%
+     * LiteSpeed Web Server	LiteSpeed Technologies	2.9%
+     * GWS	                Google	1.1%
+     *
+     * 一般来说， Web Server 对外提供的是 HTTP 服务（也可以是其他服务），这就是为什么我们的网址都以「http://」开头。
+     *
+     * 下面是有 Node.js 写的一个最简单的 HTTP server
+     * // 文件名 index.js
+     * // 使用 node index.js 可运行本程序
+     *
+     * var http = require('http')
+     *
+     * var server = http.createServer( function (request, response){
+     *     response.end('这是页面内容，你请求的路径是：' + request.url)
+     * })
+     *
+     * server.listen(8080, function(){
+     *     console.log("正在监听 %s 端口", 8080);
+     * });
+     *
+     *
+     * 只要监听8080端口，根据请求返回相应的数据，就是一个web（http）服务
+     *
+     *
+     *
+     * 提供 HTTP 服务的 server 分为两类。
+     * 静态的：
+     * 这种服务器简单地根据访问路径，返回对应的文件
+     * 比如用户访问 http:// 123.123.123.123:8080/a/b/c/d.html，那么这种服务器就会在网站根目录找到 a/b/c/d.html 文件，原样返回给用户。
+     *
+     * 动态的：
+     *  http:// http://weibo.com/home 每次内容都不一样，是动态返回的
+     *
+     *
+     *
+     */
+    void web_server(){}
 
 
 
