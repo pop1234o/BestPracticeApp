@@ -33,7 +33,40 @@ public class Main_Ecs {
     void create_your_web(){}
 
 
-
+    /**
+     * ===========ecs选型==========
+     * https://yq.aliyun.com/articles/699202 （阿里云服务器配置选择方法和经验（CPU+内存+宽带））
+     * https://blog.csdn.net/qq_37187976/article/details/81011659 （服务器配置选择？）
+     *
+     * CPU和内存（包括CPU型号、主频等）
+     *
+     *
+     * 1 vCPU 1 GiB
+     *
+     * 规格族 共享基本型 xn4
+     * 规格 ecs.xn4.small
+     *
+     * cpu型号 Intel Xeon E5-2682v4 / Intel Xeon(Skylake) Platinum 8163
+     *
+     *
+     *
+     * ==========内网ip=================
+     * tcp/ip协议中，专门保留了三个IP地址区域作为私有地址，其地址范围如下：
+     *
+     * 10.0.0.0/8：10.0.0.0～10.255.255.255
+     * 172.16.0.0/12：172.16.0.0～172.31.255.255
+     * 192.168.0.0/16：192.168.0.0～192.168.255.255
+     *
+     *
+     * =========推荐配置==============
+     * 入门型	1 vCPU 1 GiB 内存（ecs.xn4.small）	40 GiB高效云盘	1 Mbps	访问量较小的个人网站初级阶段
+     * 基础型	1 vCPU 2 GiB内存（ecs.n4.small）	40 GiB高效云盘	2 Mbps	流量适中的网站、简单开发环境、代码存储库等
+     * 通用型	2 vCPU 4 GiB内存（ecs.n4.large）	40 GiB高效云盘	2 Mbps	满足90%云计算初级用户的需求，适用于企业运营活动、并行计算应用、普通数据处理
+     * 进阶型	4 vCPU 16 GiB内存（ecs.sn2ne.xlarge）	40 GiB高效云盘	5 Mbps	中大规模访问量的网站、分布式分析及计算场景和Web应用程序
+     *
+     *
+     */
+    void select_ecs(){}
 
 
     /**
@@ -129,8 +162,72 @@ public class Main_Ecs {
      * /srv：存放服务启动后需要提取的数据（不用服务器就是空）
      *
      *
+     * =======================
+     * 我们的tomcat服务器一般就放在 /usr/local 中
+     *
+     * ===========查看磁盘空间==========
+     * 使用df -h命令来查看磁盘信息
+     *
+     * df [选项]... [FILE]...
+     * 文件-h, --human-readable 使用人类可读的格式(预设值是不加这个选项的...)
+     *
+     * Filesystem      Size  Used Avail Use% Mounted on
+     * /dev/vda1        40G  4.3G   33G  12% /
+     * devtmpfs        487M     0  487M   0% /dev
+     * tmpfs           497M     0  497M   0% /dev/shm
+     * tmpfs           497M  428K  496M   1% /run
+     * tmpfs           497M     0  497M   0% /sys/fs/cgroup
+     * tmpfs           100M     0  100M   0% /run/user/0
+     *
+     * 文件系统的名称
+     *
+     * df --total -h 给出汇总
+     *
+     *
+     * du -sh  查看当前目录占用的磁盘大小
+     * disk usage
+     *
+     * ------------查看磁盘分区---------
+     * fdisk -l
+     *  Device Boot      Start         End      Blocks   Id  System
+     * /dev/vda1   *        2048    83884031    41940992   83  Linux
+     *
+     *
+     * sd是scsi口硬盘 hd是IDE口硬盘，vd是虚拟硬盘
+     * 第一块硬盘在后面加a，比如 vda ,第二块vdb
+     *
+     * fdisk /dev/vda
+     * 用此命令来分区，分完区以后，/dev/vda就会变成/dev/vda1，/dev/vdb2之类的，多了数字，表示第N个分区
+     *
+     * 格式化
+     * mkfs.ext3 /dev/vda1
+     * 此命令将刚才的分区格式化成EXT3格式
+     *
+     *
+     * 挂载
+     * mount /dev/vda1 /opt
+     * 这个命令将/dev/vda1挂载到/opt目录下
+     *
+     *
+     * df -h
+     * 查看挂载情况
+     *
+     *
+     *
      */
     void linux_directory(){}
+
+
+    /**
+     * 后台登录
+     *
+     * xxx/jpress-web-newest/admin
+     * 其实你根据jpress-web-newest的项目目录也能看出来
+     *
+     */
+    void jpress(){}
+
+
 
 
 }
