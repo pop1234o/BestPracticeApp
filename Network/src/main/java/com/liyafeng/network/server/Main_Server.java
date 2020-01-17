@@ -235,6 +235,36 @@ public class Main_Server {
      * =================nginx和tomcat区别=========
      * https://www.zhihu.com/question/32212996 （tomcat 与 nginx，apache的区别是什么？）
      *
+     * nginx 和 Apache http server 都是http server（http 服务，监听80端口，返回资源）
+     * 单独的nginx只能返回静态的资源，内容不能动态生成
+     * 而tomcat也能当做http server 但是它能返回动态的内容。
+     * Java Servlet技术以及衍生的Java Server Pages技术可以让Java程序
+     * 也具有处理HTTP请求并且返回内容（由程序动态控制）的能力，
+     * Tomcat正是支持运行Servlet/JSP应用程序的容器（Container）:
+     *
+     * Tomcat运行在JVM之上，它和HTTP服务器一样，绑定IP地址并监听TCP端口，同时还包含以下指责：
+     * 管理Servlet程序的生命周期
+     * 将URL映射到指定的Servlet进行处理
+     * 与Servlet程序合作处理HTTP请求
+     *
+     *
+     * 虽然Tomcat也可以认为是HTTP服务器，但通常它仍然会和Nginx配合在一起使用
+     *
+     * 动静态资源分离，
+     *
+     *
+     *
+     * ===============反向代理和正向代理==========
+     * 反向代理就是 客户端请求到达代理服务器，代理服务器把请求分发给要处理请求的真正的服务器，处理后再交给代理服务器返回响应
+     * 为什么叫反向，因为正向代理是 ，比如手机上设置一个电脑的ip:port作为程序（比如抓包工具），让它去代替客户端请求数据
+     * 这个叫正向代理。
+     * 见 reverse_proxy.jpg
+     *
+     * 代理：代替处理
+     * 总结就是
+     * 给服务端代替处理（请求/响应） 叫反向代理
+     * 给客户端代替处理（请求/响应）叫正向代理
+     *
      *
      *
      */
@@ -257,6 +287,7 @@ public class Main_Server {
      * 比如分库分表，把流量分到多台数据库服务器上去。
      *
      * 或者微服务
+     *
      *
      *
      *
