@@ -39,6 +39,10 @@ public class Main_Tomcat {
 
 
     /**
+     * =============tomcat配置===============
+     * https://tomcat.apache.org/tomcat-8.0-doc/config(官方配置文档)
+     * https://www.cnblogs.com/kismetv/p/7228274.html （详解Tomcat 配置文件server.xml）
+     *
      * tomcat结构见，tomcat_arch.jpg
      * 通过Connector，将请求分发给Engine，找到对应的host，一个host下可以有多个context（应用）
      *
