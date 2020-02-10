@@ -61,8 +61,12 @@ public class Git_Main {
      * <p>
      * 关联的远程的仓库一般是一个origin和一个upstream
      * <p>
-     * 删除本地分支
+     * =========删除本地分支==========
      * git branch -d 分支名
+     * 如果报错 error: The branch 'xxx' is not fully merged.
+     * If you are sure you want to delete it, run 'git branch -D xxx'.
+     *
+     * =============================
      * <p>
      * 拉取远程分支到本地 创建的一个新分支，并切换到这个分支
      * git checkout -b  本地新分支名  remote仓库名/远程分支名
