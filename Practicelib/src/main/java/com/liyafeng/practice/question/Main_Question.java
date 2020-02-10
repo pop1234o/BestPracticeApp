@@ -941,4 +941,28 @@ public class Main_Question {
      */
     void a39(){}
 
+
+    /**
+     * Program type already present: com.alibaba.android.arouter.routes.ARouter$$Group$$correction$1
+     *
+     * 编译的时候报错，Arouter的group只能有一个，这个错说明，你项目中有多个重复的group
+     * 最后看了一眼是 依赖了project 又依赖了那个project的aar。。。失误
+     *
+     *
+     **/
+    void a40(){}
+
+    /**
+     * Couldn't desugar invokedynamic for xxx
+     * 报错在一个lambda表达式中 post(()->{})
+     * 意思应该是不能拖语法糖
+     * Android studio 3.0以上内置支持java8了 （17年10月）
+     *
+     * https://developer.android.google.cn/studio/write/java8-support.html （使用 Java 8 语言功能）
+     * http://www.guodongkeji.com/newsshow-24-2484-1.html （AndroidStudio3 支持 Java8 了，就问你敢用吗）
+     *
+     * 后来解决方法还是换成 new runnable了，但是别的lambda表达式没事，不知道为啥。。。
+     *
+     **/
+    void a41(){}
 }
