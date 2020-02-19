@@ -454,12 +454,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void uploadFile(String filePath){
+
+    }
 
     public interface RequestService1 {
 
         @GET("user/{name}/repo?age=18")
         Call<ResponseBody> getUser(@Path("name") String username, @Query("password") String password);
 
+
+
+        @Multipart
+        @POST("upload/uploadFile")
+        Observable<HttpResult<UpLoadFileEntity>> upLoad(@Part MultipartBody.Part body);
 
     }
 

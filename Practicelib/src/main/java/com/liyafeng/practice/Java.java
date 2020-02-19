@@ -5,8 +5,6 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
@@ -29,6 +27,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -679,6 +678,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
 
     /**
+     * 如何创建线程池
      * 线程池的原理？
      */
     public void a2_3() {
@@ -689,7 +689,10 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 线程就会中断
          * 线程池好处就是不用频繁创建线程了，最大可创建500w个线程，2^29-1;
          * 剩下两位是状态；
+         *
+         * Executors 创建 ThreadPoolExecutor
          */
+        Executors.newCachedThreadPool();
     }
 
 

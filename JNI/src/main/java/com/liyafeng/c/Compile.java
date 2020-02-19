@@ -379,7 +379,8 @@ public class Compile {
      *                  SHARED
      *
      *                  # Provides a relative path to your source file(s).
-     *                  src/main/cpp/native-lib.cpp )
+     *                  src/main/cpp/native-lib.cpp src/main/cpp/native-lib1.cpp)
+     *                  多个文件用空格分隔，只编译入口文件即可
      *
      * ============使用zlib==========
      * # Searches for a specified prebuilt library and stores the path as a
@@ -476,6 +477,17 @@ public class Compile {
      * packagingOptions {
      *             pickFirst 'lib/armeabi-v7a/libgnustl_shared.so'
      * }
+     *
+     *
+     * ============so包体积优化=============
+     * build会产生缓存，在build/intermediates/camke/debug/obj/armable-v7a/下
+     * 先要删除，或者clean project
+     *
+     * 然后cmakelist.txt中加入
+     *
+     * #set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s")
+     * #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
+     *
      *
      *
      *
