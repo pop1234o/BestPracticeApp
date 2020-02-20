@@ -137,6 +137,13 @@ public class Tools {
     }
 
     /**
+     * 查看证书sha256指纹
+     *
+     * keytool -list -v -keystore xxx.jks
+     */
+    public void a2_1(){}
+
+    /**
      * apk反编译的流程？
      * x.509是什么？
      */
