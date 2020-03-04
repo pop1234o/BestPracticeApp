@@ -15,12 +15,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.liyafeng.view.R;
 
@@ -278,8 +275,29 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    @Deprecated //好像不行了
-    public static class FullDiolog extends Dialog {
+    /**
+     * ============全屏的dialog=====
+     * 如果只继承 android.app.Dialog  ，setContentView后，宽度两边有留边，高度变成warp_content了
+     *
+     * -----1
+     *  getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+     *  如果设置了上面这个，那么window就会撑大，但是还是有边框
+     *
+     * ----2
+     *     <style name="style_full">
+     *         <item name="android:windowIsFloating">true</item>
+     *     </style>
+     *    设置了这个style我们设置的layout就能全屏展示了
+     *
+     * ---3 这个时候背景是白的。。
+     *   getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+     *   去除白色，可以给我们自己的布局背景加个mask
+     *
+     *
+     *
+     *
+     */
+    public static class FullDiolog extends android.app.Dialog {
 
         public FullDiolog(@NonNull Context context) {
             super(context, R.style.style_full);//这里不指定主题，就用默认的主题
@@ -289,6 +307,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             //这个最外层布局不会变成warp_content,还是原来的布局（如果没有设置windowIsFloating）
             setContentView(R.layout.dialog_full);//这里不能用 LayoutInflater ，否则最外层参数无效会变成wrap_content
 
+            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
             //这个居然变成match_content了
 //            setContentView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_full,null));
