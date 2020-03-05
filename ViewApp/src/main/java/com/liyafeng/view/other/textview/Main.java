@@ -32,6 +32,24 @@ public class Main {
      * android:letterSpacing="0.6"  0开始
      *
      *
+     * ==========textview设置点击事件======
+     *
+     *   ClickableSpan clickableSpan = new ClickableSpan() {
+     *             @Override
+     *             public void updateDrawState(@NonNull TextPaint ds) {
+     *                 super.updateDrawState(ds);
+     *                 ds.setColor(getContext().getColor(R.color.color));
+     *                 ds.setUnderlineText(false);
+     *             }
+     *
+     *             @Override
+     *             public void onClick(@NonNull View widget) {
+     *             }
+     *         };
+     *
+     * spannableString.setSpan(clickableSpan, indexOf, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+     * tvPrivacyContent.setMovementMethod(LinkMovementMethod.getInstance());
+     *
      *
      * @param args
      */

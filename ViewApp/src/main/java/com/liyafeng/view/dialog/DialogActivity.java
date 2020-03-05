@@ -283,9 +283,9 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
      *  getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
      *  如果设置了上面这个，那么window就会撑大，但是还是有边框
      *
-     * ----2
+     * ----2 这样还是有边框，因为会用默认的style，默认style就是有边框的，所以要指定自己的
      *     <style name="style_full">
-     *         <item name="android:windowIsFloating">true</item>
+     *
      *     </style>
      *    设置了这个style我们设置的layout就能全屏展示了
      *
@@ -293,6 +293,17 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
      *   getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
      *   去除白色，可以给我们自己的布局背景加个mask
      *
+     * ---4 这个时候其实背景默认是半透明的黑 （如果你加了 floating）
+     * 如果你设置
+     *  <item name="android:windowIsFloating">true</item>
+     *  那么就会有系统的黑色蒙层，还有动画淡入淡出的效果
+     *
+     *  如果要设置透明背景
+     *
+     *  你可以试试
+     *  <!--        <item name="android:windowBackground">@color/transparent</item>-->
+     * <!--        <item name="android:windowIsTranslucent">true</item>-->
+     * <!--        <item name="android:windowAnimationStyle">@style/Animation_Translucent</item>-->
      *
      *
      *
