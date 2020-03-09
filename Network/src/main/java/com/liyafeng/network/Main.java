@@ -32,4 +32,16 @@ public class Main {
      */
     void a1() {
     }
+
+
+    /**
+     * ========android app 抓包===============
+     * https://www.charlesproxy.com/ 官网
+     * 真尼玛，下载速度慢的不行，还要收费。破解版也得费时间。。醉了
+     * 一个要30美元醉了
+     *
+     *
+     *
+     */
+    void a2(){}
 }

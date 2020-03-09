@@ -169,8 +169,14 @@ public class Tools {
          *  类型的话有这么几种：
          *  drawable，menu，layout，string，attr，color，style等
          *
+         * =============反编译流程================
+         * 如果加固请先反加固
+         * 然后用 apktool 来解压出apk的内容
+         * 里面java代码是dex ，用dex2jar转换
+         * 然后jar 用 jd-gui 或者 jdx（可以反混淆） 来反编译，获得java文件，看到代码
+         * 如果是只要一些资源文件或者so文件，那么就第一步就可以看到了
          *
-         * ===================反编译查看内容=============================
+         * ===================apktool =============================
          * apktool 下载 https://ibotpeaches.github.io/Apktool/install/
          *   反编译出的资源，能查看出Manifest的内容，还有string ,value，layout中的文本
          *   正常解压出来查看是乱码!!!
@@ -181,6 +187,15 @@ public class Tools {
          * apktool使用方法
          * https://ibotpeaches.github.io/Apktool/documentation/
          *
+         * ------也可以使用 Android Studio 自带的apk分析来查看包内容
+         *
+         * ------补充
+         * apk和zip包没有区别，你可以用mac 的unzip命令直接解压apk
+         * 也能看到里面的内容，但是AndroidManifest.xml你是看不到内容的，xml布局文件你也看不到内容
+         * 你只能看到一些图片资源，和so文件等。要看到xml里面内容还得用apktool这个工具
+         *
+         *
+         * ===========dex2jar
          * dex2jar 下载 https://sourceforge.net/projects/dex2jar/files/
          *    d2j-dex2jar.bat filename.dex 转化为jar包
          *
