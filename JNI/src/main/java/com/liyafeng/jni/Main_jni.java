@@ -138,4 +138,22 @@ public class Main_jni {
      * }
      */
     void a1(){}
+
+
+    /**
+     * ============android依赖so文件
+     * 1.
+     * 在src/main中新建jniLibs文件夹 ，把.so复制进去即可
+     * 比如 jniLibs/armabi/xx.so 这样gradle自动依赖，约定好的文件名
+     *
+     * 2.在app/中新建libs文件夹，把.so复制进去
+     * gradle中添加
+     * sourceSets {
+     *     main {
+     *         jniLibs.srcDirs = ['libs']
+     *     }
+     * }
+     *
+     */
+    void a2(){}
 }
