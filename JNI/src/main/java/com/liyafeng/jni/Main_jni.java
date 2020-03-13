@@ -116,6 +116,15 @@ public class Main_jni {
      * ----------------------------
      *
      *
+     * ==============64位=========
+     * x86设备能够很好的运行ARM类型函数库，但并不保证100%不发生crash，特别是对旧设备。
+     * 64位设备（arm64-v8a, x86_64, mips64）能够运行32位的函数库，但是以32位模式运行，
+     * 在64位平台上运行32位版本的ART和Android组件，将丢失专为64位优化过的性能（ART，webview，media等等）。
+     *
+     * 作者：仁昌居士
+     * 链接：https://www.jianshu.com/p/cb15ba69fa89
+     * 来源：简书
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
      *
      * @param args
      */
@@ -144,7 +153,7 @@ public class Main_jni {
      * ============android依赖so文件
      * 1.
      * 在src/main中新建jniLibs文件夹 ，把.so复制进去即可
-     * 比如 jniLibs/armabi/xx.so 这样gradle自动依赖，约定好的文件名
+     * 比如 jniLibs/armeabi/xx.so 这样gradle自动依赖，约定好的文件名
      *
      * 2.在app/中新建libs文件夹，把.so复制进去
      * gradle中添加

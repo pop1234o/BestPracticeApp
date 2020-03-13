@@ -26,12 +26,21 @@ public class AudioPlayPCM {
      *
      * ============AudioTrack 两种模式================
      * MODE_STREAM 数据多次写入AudioTrack缓冲区
-     * MODE_STATIC 一次写入，适合时长较短的音频。
+     * MODE_STATIC 一次写入内存，适合时长较短的音频。
      * 如果采用STATIC模式，须先调用write写数据，然后再调用play
      * =======================AudioTrack底层=====================
+     * (具体架构见res/drawable/audio_android.jpg)
      * 每一个音频流对应着一个AudioTrack类的一个实例，每个AudioTrack会在创建时注册到 AudioFlinger中，
      * 由AudioFlinger把所有的AudioTrack进行混合（Mixer），然后输送到AudioHardware中进行播放，
      * 目前Android同时最多可以创建32个音频流，也就是说，Mixer最多会同时处理32个AudioTrack的数据流。
+     *
+     * https://blog.csdn.net/zyuanyun/article/details/60890534（Android 音频系统：从 AudioTrack 到 AudioFlinger）
+     *
+     * ======AudioTrack.getMinBufferSize
+     * 根据采样率 声道数 采样位数 来决定缓冲区的最小大小，如果过小，导致生产跟不上消费的速度
+     * 造成音频卡顿
+     *
+     *
      * ======================AudioTrack和mediaPlayer对比=========================
      * 其中最大的区别是MediaPlayer可以播放多种格式的声音文件，例如MP3，AAC，WAV，OGG，MIDI等。
      * MediaPlayer会在framework层创建对应的音频解码器。而AudioTrack只能播放已经解码的PCM流，

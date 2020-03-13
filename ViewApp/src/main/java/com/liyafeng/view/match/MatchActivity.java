@@ -6,11 +6,8 @@ import android.content.ComponentCallbacks;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.widget.Toast;
 
 import com.liyafeng.view.R;
-
-import java.lang.ref.WeakReference;
 
 public class MatchActivity extends Activity {
 
@@ -19,12 +16,70 @@ public class MatchActivity extends Activity {
      * dp        ：就是dip
      * px        ： 像素
      * dpi       ：dots per inch ， 直接来说就是一英寸多少个像素点。常见取值 120，160，240。我一般称作像素密度，简称密度
+     * ppi:   ，这个在手机屏幕中指的也是像素密度，但是这个是物理上的概念，它是客观存在的不会改变.
      * density ： 直接翻译的话貌似叫 密度。常见取值 1.5 ， 1.0 。和标准dpi的比例（160px/inc）
      * 分辨率   ： 横纵2个方向的像素点的数量，常见取值 480X800 ，320X480
      * 屏幕尺寸： 屏幕对角线的长度。1英寸=2.54cm
      * 电脑电视同理。屏幕比例的问题。因为只确定了对角线长，2边长度还不一定。所以有了4：3、16：9这种，这样就可以算出屏幕边长了。
      * <p>
      * <p>
+     * ==========dpi和ppi区别==================
+     * dots per inch  pixels per inch （对角线的像素个数/对角线的长度inch） 越高像素点越多，越清晰
+     * ppi是物理概念，客观上不会改变
+     * dpi 是软件参考了物理像素密度(ppi)后，人为指定的一个值
+     * 这样dpi有利于适配
+     * ============世界上第一款Android手机========
+     * 是08年推出的第一款手机 HTC DreamG1
+     * 320×480 3.2英寸 180ppi，Android 1.5  2008年5月上市
+     *
+     * =========Android原生的dp适配方案===========
+     * 如果直接用px，那么相同px 在不同分辨率率手机上 表现不一样
+     * 比如都是320px，在320*480手机上是沾满宽度，但是480*800上就不一样
+     *
+     * 所以要找个可转换为px的单位dp，转换规则不能用ppi，因为相同分辨率ppi有可能不一样
+     * 所以Android推出了dpi，这个是手机厂商开发时设置的值，app加载的时候通过
+     * SystemProperties.getInt("ro.sf.lcd_density", DENSITY_DEFAULT) 来获取到的
+     *
+     *
+     * 320×480作为基准值，他是160dpi ,所以他的缩放因子(density)是1
+     * 因为第一款Android手机就是160dpi，所以在这个手机上1dp = 1px
+     * 320dp就能沾满宽
+     * 在480*800的手机上，dpi是240 ，density = 240/160 = 1.5
+     * 1dp = 1.5px
+     * 320也能沾满宽
+     * （屏幕分辨率放大的比例和 dpi放大的比例是一样的）
+     *
+     * 后来由于有高分辨率手机出现，但是新技术导致每每英寸能放下更多的像素点（他们放大比例不同）
+     * （手机分辨率高了，但是尺寸也增加了，导致360dp才能占满屏幕）
+     * 所以出现了资源文件夹的限定符，xhdpi开始就是360dp为基准，以前的是320基准
+     * 用 720*1280设计的图，转换成dp，写到xhdpi中， xhdpi一下的dp要乘以 2/3
+     * 他们的表现才能一致。
+     *
+     *
+     * * Android的适配尺寸从 DisplayMetrics类中看
+     *
+     * ===========为什么不用直接ppi========
+     * 比如 都是720*1280的分辨率，但是由于屏幕尺寸不同，导致ppi也不同
+     * 所以Android就推出了dpi，一样的分辨率设置一样的dpi，这样dp就能转换为px显示了
+     * 这样在不同手机屏幕尺寸（相同分辨率）上dp的表现就一样了。
+     *
+     * ===========Android为什么用160dpi作为基准=========
+     * 为什么 px=dp*（dpi/160）？ - 知乎用户的回答 - 知乎
+     * https://www.zhihu.com/question/20697111/answer/22722671
+     *
+     *
+     *
+     * =========为什么dp会出现适配问题？===============
+     * 通过dp加上自适应布局和weight比例布局可以基本解决不同手机上适配的问题，这基本是最原始的Android适配方案。
+     *
+     * 不是所有的1080P的手机dpi都是480dpi（这是Android标准的）
+     * 有的比如Google 的Pixel2（1920*1080）的dpi是420（没有按照标准来设置系统dpi）
+     *
+     * 所以为了解决这个，一个是用match_parent或者linearlayout的weight来解决，一个就是通过屏幕宽度百分比动态计算
+     * 或者使用(Smallest-width)适配方案 比如上面谷歌的手机宽度是 411.428  sw400dp
+     * 系统会向下寻找,
+     * 当应用为多个资源目录提供不同的 smallestWidth 限定符值时，系统会使用最接近（但未超出）设备 smallestWidth 的值。
+     *
      * <p>
      * =================屏幕适配========================
      * <p>
@@ -99,7 +154,8 @@ public class MatchActivity extends Activity {
      * DPI数值	    120	    160	    240	    320	        480	        640
      * 对应比例	    3	    4	    6	    8	        12	        16
      * 1DP=？PX	    0.75	1	    1.5	    2	        3	        4
-     * sw(Smallest-width)   320dp   320dp   360dp       360dp       360dp
+     * sw           320dp   320dp   320dp   360dp       360dp       360dp
+     * (Smallest-width)屏幕矩形短边的宽度
      * <p>
      * context.getResources().getDisplayMetrics().density
      * 在160dpi的屏幕上，density = 1  dpi的缩放因子  320dpi就是 density = 2
@@ -141,6 +197,7 @@ public class MatchActivity extends Activity {
      * =========layout适配===========================
      * res文件下资源文件夹的命名规则
      * * https://developer.android.google.cn/guide/topics/resources/providing-resources.html
+     * (表格上面的的限定符优先级高)
      * <p>
      * res/layout-sw480dp的意思，sw的意思是smallest width最小宽度，
      * 设备的 smallestWidth 是屏幕可用高度和宽度的最小尺寸（您也可以将其视为屏幕的“最小可能宽度”）
@@ -427,5 +484,31 @@ public class MatchActivity extends Activity {
 
         }
     }
+
+
+    /**
+     * ============主流适配方案===========
+     * dp + weight + 百分比动态代码计算像素 + 相对布局 + 滚动设计 +match_parent +ConstraintLayout
+     * 优点：方便，原生支持，能适配主流机器
+     * 缺点：对于个别机型还得特殊处理
+     *
+     * 加上value-hdpi适配
+     *
+     * ----------
+     * 宽高限定符适配
+     * values-768*1024
+     * 这样给特殊的像素特殊的dp
+     *
+     * -------
+     * smallestWidth 限定符适配方案
+     * 写各个sw360dp是标准的  sw320dp是小屏
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+    void a1(){}
 
 }
