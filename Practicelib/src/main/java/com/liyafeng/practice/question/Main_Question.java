@@ -986,4 +986,15 @@ public class Main_Question {
      *
      */
     void a42(){}
+
+
+    /**
+     * 子布局被剪裁问题
+     *
+     * 设置 clipChildren=false 无效。。。
+     * 结果发现android:clipToPadding="false"也要加上
+     * 父布局和祖父布局加上就行
+     *
+     */
+    void a43(){}
 }
