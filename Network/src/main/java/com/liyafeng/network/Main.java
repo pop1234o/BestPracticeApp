@@ -43,6 +43,7 @@ public class Main {
      *
      * =========Android 抓包配置==========
      * https://www.jianshu.com/p/59e9ef771ff2 （Android 7.0 以上 Charles 和 Fiddler 无法抓取 HTTPS 包的解决方式）
+     * https://developer.android.google.cn/training/articles/security-config （官方文档）
      *
      * --------每个版本的默认配置
      * Android 6.0（API 23）及更低版本应用的默认网络安全性配置如下：
