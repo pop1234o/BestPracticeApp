@@ -1,9 +1,5 @@
 package com.liyafeng.view.other;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
-
 public class Main_View {
 
     /**
@@ -137,6 +133,22 @@ public class Main_View {
      *             android:scaleType="fitXY" />
      *
      *     </ScrollView>
+     *
+     * =============圆角的imageview=============
+     *
+     *
+     * RoundedCorners roundedCorners = new RoundedCorners(radius);
+     *             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
+     *             Glide.with(context).load(bitmap).apply(options).into(imageView);
+     *
+     * ----上面这个是给整个bitmap圆角
+     * 这个是先CenterCrop 再圆角
+     *  RequestOptions transforms = new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(radius));
+     *             Glide.with(context).load(bitmap).apply(transforms).into(imageView);
+     *
+     *
+     *
+     *
      */
     void a1(){}
 }
