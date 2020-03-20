@@ -61,10 +61,16 @@ public class Git_Main {
      * <p>
      * 关联的远程的仓库一般是一个origin和一个upstream
      * <p>
-     * =========删除本地分支==========
-     * git branch -d 分支名
+     * =========删除分支==========
+     * git branch -d 分支名 删除本地分支
      * 如果报错 error: The branch 'xxx' is not fully merged.
      * If you are sure you want to delete it, run 'git branch -D xxx'.
+     * git push -d [仓库名] [分支名] 删除远程分支
+     *
+     * 删除远程分支报错：
+     * error: By default, deleting the current branch is denied, because the next
+     * remote: 'git clone' won't result in any file checked out, causing confusion.
+     * 是因为你删除的分支是远程的默认分支，你需要改变一下默认分支
      *
      * =============================
      * <p>
@@ -175,6 +181,7 @@ public class Git_Main {
      *
      * 获取远程tag
      * git fetch origin tag <tagname>
+     * git fetch origin (获取远程所有tag)
      * <p>
      * <p>
      * 【删除远程标签】
