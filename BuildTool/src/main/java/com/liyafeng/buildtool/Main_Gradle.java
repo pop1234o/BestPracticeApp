@@ -434,4 +434,35 @@ public class Main_Gradle extends Activity {
      *
      */
     void a7(){}
+
+
+    /**
+     * 2020-04-07 gradle技术分享
+     * 闭包 groovy
+     * android 工程各个 gradle文件的执行顺序
+     * setting.gradle(读取工程结构) -> build.gradle -> 子模块的 build.gradle ->各种task
+     *
+     * -----监听gradlew 生命周期 来做一些操作
+     * 1.
+     * （通过System.getEnv）
+     * 配置构建apk的输出目录
+     * 2.配置统一的version
+     * 3.
+     *
+     * ---------各种task 自定义task
+     * 参考tinker task
+     *
+     *
+     * -------自定义 plugin
+     * 用groovy编写，
+     *
+     * ------组件化配置
+     * 各个项目可以aar包依赖，
+     * 如果没有aar引用，可以动态include 引用 进来
+     * ----多渠道打包
+     * 美团-瓦利
+     *
+     *
+     */
+    void a8(){}
 }
