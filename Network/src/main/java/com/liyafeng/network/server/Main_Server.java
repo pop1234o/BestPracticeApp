@@ -2,6 +2,14 @@ package com.liyafeng.network.server;
 
 public class Main_Server {
 
+    /**
+     * =========服务端架构演变=====
+     * https://segmentfault.com/a/1190000018626163 （服务端高并发分布式架构演进之路）-好文推荐
+     *
+     *
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
     }
@@ -412,5 +420,8 @@ public class Main_Server {
      *
      */
     void snapshot(){}
+
+
+
 
 }
