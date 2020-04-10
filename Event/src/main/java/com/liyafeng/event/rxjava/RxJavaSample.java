@@ -6,7 +6,6 @@ import org.reactivestreams.Publisher;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -139,7 +138,7 @@ public class RxJavaSample {
      * defer
      * empty
      * error
-     * from
+     * from  fromIterable - 遍历collection
      * generate
      * interval
      * just

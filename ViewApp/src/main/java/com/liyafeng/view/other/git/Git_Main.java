@@ -438,10 +438,15 @@ public class Git_Main {
      * git stash pop 使用上一次暂存，并将这个暂存删除，使用该命令后，如果有冲突，终端会显示，如果有冲突需要先解决冲突
      * git stash apply 使用上一次缓存，但是不删除
      *
+     * git stash pop 1 使用指定缓存队列中的缓存
+     *
      * git stash list 查看所有暂存
      * git stash clear 清空所有缓存
      * git stash drop [-q|--quiet] [<stash>] 删除某一个暂存，在中括号里面放置需要删除的暂存ID
      *
+     * ----查看stash内容
+     * git stash show 默认是0
+     * git stash show 0
      *
      * ===========git stash pop/apply冲突==========
      * 找到冲突文件，解决冲突，执行git add . 即可
