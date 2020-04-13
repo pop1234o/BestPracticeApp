@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Picture;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -93,5 +96,50 @@ public class ShareUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public static Bitmap getWebViewBitmap(WebView webView, float scale) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return captureWebViewLollipop(webView, scale);
+            } else {
+                return captureWebViewKitKat(webView);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 对WebView进行截屏，虽然使用过期方法，但在当前Android版本中测试可行
+     *
+     * @param webView
+     * @return
+     */
+    private static Bitmap captureWebViewKitKat(WebView webView) {
+        Picture picture = webView.capturePicture();
+        int width = picture.getWidth();
+        int height = picture.getHeight();
+        if (width > 0 && height > 0) {
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            Canvas canvas = new Canvas(bitmap);
+            picture.draw(canvas);
+            return bitmap;
+        }
+        return null;
+    }
+
+    private static Bitmap captureWebViewLollipop(WebView webView, float scale) {
+        if (scale <= 0) {
+            scale = 1;
+        }
+        int width = webView.getWidth();
+        int height = (int) (webView.getContentHeight() * scale + 0.5);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        webView.draw(canvas);
+        return bitmap;
     }
 }
