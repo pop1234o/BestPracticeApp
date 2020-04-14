@@ -99,6 +99,12 @@ public class ShareUtil {
     }
 
 
+    /**
+     * webview截屏分享  https://blog.csdn.net/u014538198/article/details/84988819 （）
+     * @param webView
+     * @param scale
+     * @return
+     */
     public static Bitmap getWebViewBitmap(WebView webView, float scale) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
