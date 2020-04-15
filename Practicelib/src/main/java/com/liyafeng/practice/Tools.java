@@ -220,6 +220,18 @@ public class Tools {
          * 然后我们就可以安装了，但是要把之前安装的程序删除，因为我们的签名文件不一样
          * 否则会提示更新冲突，和之前的签名文件不一致，导致安装失败
          *
+         *
+         * jarsigner -verbose -keystore [您的私钥存放路径] -signedjar [签名后文件存放路径] [未签名的文件路径] [您的证书名称]
+         *
+         *  =========apksigner============
+         * https://developer.android.google.cn/studio/command-line/apksigner
+         *
+         * apksigner sign --ks release.jks app.apk
+         *
+         * apksigner在Android sdk，build-tools下
+         *
+         *
+         *
          * ====================x.509是什么？======================
          * 是一种证书的格式，规定了公钥name:value的一些格式
          *
