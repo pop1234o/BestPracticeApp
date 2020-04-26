@@ -494,10 +494,23 @@ public class Git_Main {
      *
      * git pull --rebase
      *
+     * git pull origin dev --rebase
      * 或者直接
      * git rebase
      *
+     * A-B-C-E(master)  这个E就是 merge branch master of http:xxx into master
+     *    \ /
+     *     D(origin/master)
+     * C是你基于B开发的，D是同事基于B开发的，而且提交到了origin远程仓库
+     * 你这个时候push是被拒绝的，你pull会产生额外的一个合并记录，污染正常的记录
+     * 这个时候 git pull origin master --rebase
+     * 你的提交（本地未提交到远程的所有commit ）就会被至于顶层，这叫变基(rebase) 你以前是base(基于) B的
+     * 现在变成 基于远程提交的D了 （如果有冲突需要解决）
+     *
+     * A-B-D-C 你开发的C就变基了
+     *
      * -----------什么情况不能使用rebase-------
+     * ???好像不对。。
      * 在同事合并了你的代码以后，并且增加了提交就不能使用git rebase了，这时他已经在你的提交节点上产生了新的提交节点，
      * 如果此时你在本地使用git rebase你们两者的提交历史将会不一致，再次合并时又会产生一个全新的合并记录，
      * 这样git rebase就失去了意义。（一般多人开发时基本不用git rebase这个命令，因为你大多数情况下是不知道同事是否已经提交过代码的）
