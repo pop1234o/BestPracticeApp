@@ -9,9 +9,6 @@ import android.os.SystemClock;
 
 import com.liyafeng.view.webview.WebViewActivity;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Other {
 
 
@@ -193,6 +190,12 @@ public class Other {
      * <p>
      * 问题的根源在于manifest中有 testOnly=true 属性，而点击run按钮生成的apk都是true,即使你设置的false
      * <p>
+     *
+     * 解决方案 直接在项目的根目录下找到gradle.properties文件，添加一下这行代码
+     * android.injected.testOnly=false
+     *
+     * https://www.jianshu.com/p/a6bfe9c127a5 （解决在真机上装debug包的时候，提示\outputs\apk\debug\app-debug.apk: Failur[INSTALL_FAILED_TEST_ONLY: installPack...）
+     *
      * =========adb shell pm=======
      * https://blog.csdn.net/mmk1992/article/details/56482610
      * —pm（Package Manager），这个命令主要用于获取和安装在 Android 设备上的应用信息
