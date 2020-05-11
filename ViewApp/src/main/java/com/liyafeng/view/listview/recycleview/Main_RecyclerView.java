@@ -67,6 +67,10 @@ public class Main_RecyclerView {
      * 这个不用post，执行 notifyItemChanged 后就执行这个就行
      * 因为notifyItemChanged后item就已经是新的高度了，所以我们执行这个就滑动到最后了？？？
      *
+     * ===================禁用item复用功能=====
+     * https://blog.csdn.net/adojayfan/article/details/87934157 RecyclerView解决数据混乱，禁止复用
+     * recyclerView.getRecycledViewPool().setMaxRecycledViews(viewType,0);
+     *
      * @param args
      */
     public static void main(String[] args) {
