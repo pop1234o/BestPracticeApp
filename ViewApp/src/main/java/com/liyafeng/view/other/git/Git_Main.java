@@ -509,6 +509,16 @@ public class Git_Main {
      *
      * A-B-D-C 你开发的C就变基了
      *
+     * -------rebase遇到冲突--------
+     * 流程是把服务端的commit放到底部，把你未提交的commit一个一个加到顶部
+     * 如果遇到某个commit有冲突，那么rebase会停止，
+     * 然后你解决冲突，git add . 标记已解决  然后执行  git rebase --continue 即可继续
+     * 修改的冲突会合并到你的那次提交中
+     *
+     * When you have resolved this problem, run "git rebase --continue".
+     * If you prefer to skip this patch, run "git rebase --skip" instead.
+     * To check out the original branch and stop rebasing, run "git rebase --abort".
+     *
      * -----------什么情况不能使用rebase-------
      * ???好像不对。。
      * 在同事合并了你的代码以后，并且增加了提交就不能使用git rebase了，这时他已经在你的提交节点上产生了新的提交节点，

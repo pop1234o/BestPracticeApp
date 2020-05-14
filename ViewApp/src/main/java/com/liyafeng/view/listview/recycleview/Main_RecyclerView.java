@@ -71,6 +71,14 @@ public class Main_RecyclerView {
      * https://blog.csdn.net/adojayfan/article/details/87934157 RecyclerView解决数据混乱，禁止复用
      * recyclerView.getRecycledViewPool().setMaxRecycledViews(viewType,0);
      *
+     *
+     * ============notifyItemChanged变化原理=========
+     * notifyItemChanged（position）
+     * 实际上就是把原来那个位置的view销毁了（放到复用池里），再去池子里找个新的view来bind
+     * 如果没有新view则调用 onCreateHolder来创建，
+     *
+     * 我就说动画变换怎么弄得，实际上就是一个view做隐藏动画，新的view做展示动画
+     *
      * @param args
      */
     public static void main(String[] args) {
