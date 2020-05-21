@@ -95,6 +95,21 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
      *  fl.addView(myView, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
      *
      *
+     * ================设置dialog 遮罩 window的透明度===
+     *  Window window = dialog.getWindow();
+     *  if (window != null) {
+     *      window.setDimAmount(0.5f);
+     *  }
+     *
+     * =========BottomSheetDialog======
+     *           //去掉黑色
+     * //            int screenHeight = DeviceUtil.getScreenH(AppUtils.getContext());
+     * //            int statusBarHeight = DeviceUtil.getStatusBarHeight(AppUtils.getContext());
+     * //            int dialogHeight = screenHeight - statusBarHeight;
+     * //            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
+     *
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
