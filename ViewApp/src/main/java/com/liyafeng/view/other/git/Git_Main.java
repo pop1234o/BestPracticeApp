@@ -187,6 +187,8 @@ public class Git_Main {
      * 【删除远程标签】
      * git tag -d v0.9 删除本地标
      * git push origin :refs/tags/v0.9
+     * 或者
+     * git push -d origin tagname
      * <p>
      * 查看tag代码（但是不能编辑）
      * git checkout tag_name
