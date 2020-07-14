@@ -997,4 +997,59 @@ public class Main_Question {
      *
      */
     void a43(){}
+
+
+    /**
+     * 今天在Android 6.0到8.0上请求报错。。醉了
+     * java.lang.IllegalArgumentException: Unable to create converter for XXXEntity
+     * java.lang.SecurityException: Can not make a java.lang.reflect.Method constructor accessible
+     *
+     * 开始还以为 entity是kotlin写的原因。。。后来换成java的也不行
+     * 后来发现是  XXXEntity里有个View字段，View 里面有Method类型的属性，所以就抛出异常了
+     * 详细见
+     *
+     * 11:09:58.71  15854  WARN  System.err  1  Caused by: java.lang.SecurityException: Can not make a java.lang.reflect.Method constructor accessible
+     * 11:09:58.71  15854  WARN  System.err  1  at java.lang.reflect.AccessibleObject.setAccessible0(AccessibleObject.java:131)
+     * 11:09:58.71  15854  WARN  System.err  1  at java.lang.reflect.AccessibleObject.setAccessible(AccessibleObject.java:115)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.reflect.PreJava9ReflectionAccessor.makeAccessible(PreJava9ReflectionAccessor.java:31)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.ConstructorConstructor.newDefaultConstructor(ConstructorConstructor.java:103)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.ConstructorConstructor.get(ConstructorConstructor.java:85)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:101)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:117)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:166)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ArrayTypeAdapter$1.create(ArrayTypeAdapter.java:48)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:117)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:166)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:117)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:166)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:117)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:166)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:117)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:166)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.CollectionTypeAdapterFactory.create(CollectionTypeAdapterFactory.java:53)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:117)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:166)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:102)
+     * 11:09:58.71  15854  WARN  System.err  1  at com.google.gson.Gson.getAdapter(Gson.java:458)
+     * 11:09:58.71  15854  WARN  System.err  1  at retrofit2.converter.gson.GsonConverterFactory.responseBodyConverter(GsonConverterFactory.java:64)
+     * 11:09:58.71  15854  WARN  System.err  1  at retrofit2.Retrofit.nextResponseBodyConverter(Retrofit.java:330)
+     * 11:09:58.71  15854  WARN  System.err  1  at retrofit2.Retrofit.responseBodyConverter(Retrofit.java:313)
+     * 11:09:58.71  15854  WARN  System.err  1  at retrofit2.HttpServiceMethod.createResponseConverter(HttpServiceMethod.java:113)
+     * 11:09:58.71  15854  WARN  System.err  1  ... 29 more
+     *
+     */
+    void a44(){}
 }
