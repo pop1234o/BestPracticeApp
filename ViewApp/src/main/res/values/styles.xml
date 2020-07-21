@@ -118,4 +118,30 @@
         <!--<item name="android:windowExitAnimation">@anim/activity_bottom_out</item>-->
         <!--<item name="android:activityOpenExitAnimation">@anim/activity_alpha_out</item>-->
     </style>
+
+
+<!--    <style name="shareBottomDialog" parent="@android:style/Theme.Dialog">-->
+
+<!--        &lt;!&ndash; 背景透明 &ndash;&gt;-->
+<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--        &lt;!&ndash; 浮于Activity之上 &ndash;&gt;-->
+<!--        <item name="android:windowIsFloating">true</item>-->
+<!--        &lt;!&ndash; 边框 &ndash;&gt;-->
+<!--        <item name="android:windowFrame">@null</item>-->
+<!--        &lt;!&ndash; Dialog以外的区域模糊效果 &ndash;&gt;-->
+<!--        <item name="android:backgroundDimEnabled">true</item>-->
+<!--        &lt;!&ndash; 无标题 &ndash;&gt;-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        &lt;!&ndash; 半透明 &ndash;&gt;-->
+<!--        <item name="android:windowIsTranslucent">true</item>-->
+<!--        &lt;!&ndash; Dialog进入及退出动画 &ndash;&gt;-->
+<!--        <item name="android:windowAnimationStyle">@style/share_anim_bottomDialog</item>-->
+<!--    </style>-->
+
+<!--    <style name="share_anim_bottomDialog" >-->
+<!--        <item name="android:windowEnterAnimation">@anim/anim_bottom_in</item>-->
+<!--        <item name="android:windowExitAnimation">@anim/anim_bottom_out</item>-->
+<!--    </style>-->
+
 </resources>
