@@ -465,4 +465,41 @@ public class Main_Gradle extends Activity {
      *
      */
     void a8(){}
+
+
+    /**
+     * https://source.android.google.cn/security/apksigning?hl=zh-cn （应用签名）
+     * ========v1 v2 v3签名=============
+     * v1是对jar签名，但是不对元数据进行签名，例如 ZIP 元数据
+     * v2+ 方案会将 APK 文件视为 Blob，并对整个文件进行签名检查。对 APK 进行的任何修改（包括对 ZIP 元数据进行的修改）
+     * 都会使 APK 签名作废。这种形式的 APK 验证不仅速度要快得多，而且能够发现更多种未经授权的修改
+     *
+     * 7.0以下Android系统的手机只验证v1 (源码中只有v1验证)
+     * 7.0以上先验证 apk 中是否有 v2的签名信息在 apk的签名中，如果有就验证，没有就说明apk没有用v2签名，所以Android系统就只验证
+     * v1签名
+     *
+     * 在 Android P 中，v2 方案已更新为 v3 方案，以便在签名分块中包含其他信息，但在其他方面保持相同的工作方式
+     *
+     *
+     *
+     * =========360加固后用walle打包==============
+     * https://jiagu.360.cn/#/global/download 下载mac 版，如果10.15以下版本打不开就复制一下里面的app覆盖外面的
+     *
+     * studio 打包出来的 是签名包
+     * 然后加固（把dex加密后重新打包成 加固包）
+     * 因为改动的apk，然后需要重新签名
+     * 签名后用walle 来重新写入 （写入到 APK Signing Block）
+     *
+     *  failed to install xx.apk: Failure [INSTALL_PARSE_FAILED_NO_CERTIFICATES:
+     *  Failed to collect certificates from /data/app/vmdl417198627.tmp/base.apk using APK Signature Scheme v2:
+     *  Size of APK Signing Block is not a multiple of 4096: 4140]
+     *
+     * 意思是加固后重新签名，然后写入渠道信息，就废了。。。
+     *
+     *
+     *
+     *
+     *
+     */
+    void a9(){}
 }
