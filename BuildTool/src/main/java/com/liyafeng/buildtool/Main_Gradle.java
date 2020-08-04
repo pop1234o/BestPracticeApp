@@ -470,16 +470,55 @@ public class Main_Gradle extends Activity {
     /**
      * https://source.android.google.cn/security/apksigning?hl=zh-cn （应用签名）
      * ========v1 v2 v3签名=============
+     * V1(Jar Signature)  V2(Full APK Signature)
+     *
      * v1是对jar签名，但是不对元数据进行签名，例如 ZIP 元数据
      * v2+ 方案会将 APK 文件视为 Blob，并对整个文件进行签名检查。对 APK 进行的任何修改（包括对 ZIP 元数据进行的修改）
      * 都会使 APK 签名作废。这种形式的 APK 验证不仅速度要快得多，而且能够发现更多种未经授权的修改
      *
      * 7.0以下Android系统的手机只验证v1 (源码中只有v1验证)
-     * 7.0以上先验证 apk 中是否有 v2的签名信息在 apk的签名中，如果有就验证，没有就说明apk没有用v2签名，所以Android系统就只验证
+     * 7.0以上先验证 apk 中是否有 v2的签名信息在 apk的签名中，如果有就验证，没有就说明apk没有用v2签名，所以Android系统就只会验证
      * v1签名
+     * （所以v1是必选的，因为在搭载7.0以下手机的Android系统只会验证v1签名， 7.0以上才会优先验证v2）
      *
      * 在 Android P 中，v2 方案已更新为 v3 方案，以便在签名分块中包含其他信息，但在其他方面保持相同的工作方式
      *
+     * ===============apksigner 和 jarsigner=========
+     *  https://blog.csdn.net/qq_32115439/article/details/55520012  Android-APK签名工具-jarsigner和apksigner
+     * jarsigner 是JDK提供的针对jar包签名的通用工具, 是对每个class文件(内容)进行hash计算，然后存入到MATA_INF中
+     * JDK/bin/jarsigner.exe
+     *
+     * V1签名: 来自JDK(jarsigner), 对zip压缩包的每个文件进行验证, 签名后还能对压缩包修改(移动/重新压缩文件)
+     * 对V1签名的apk/jar解压,在META-INF存放签名文件(MANIFEST.MF, CERT.SF, CERT.RSA),
+     * 其中MANIFEST.MF文件保存所有文件的SHA1指纹(除了META-INF文件), 由此可知: V1签名是对压缩包中单个文件签名验证
+     *
+     * V2签名:
+     * 来自Google(apksigner), 对zip压缩包的整个文件验证, 签名后不能修改压缩包(包括zipalign),
+     * 对V2签名的apk解压,没有发现签名文件,重新压缩后V2签名就失效, 由此可知: V2签名是对整个APK签名验证
+     * （V2签名实际上就是将构建后的内容(dex,res 等)压缩成 apk （就是zip压缩包），然后对zip内容进行签名）
+     *
+     * apksigner是Google官方提供的针对Android apk签名及验证的专用工具,
+     * 位于Android SDK/build-tools/SDK版本/apksigner.bat
+     *
+     *
+     *
+     *
+     * 注意: apksigner 工具默认同时使用V1和V2签名,以兼容Android 7.0以下版本
+     *
+     *
+     * =========== zipalign =====
+     * 对齐使用的是android-sdk/tools目录下的 zipalign 工具，
+     * 主要工作是将apk包中所有的资源文件起始偏移为4字节的整数倍，这样通过内存映射访问apk时的速度会更快(比如home访问应用图标)
+     *
+     * zipalign是在应用签名之后(如果v2签名后就不能用zipalign了，因为这样改动了zip包内容导致签名会验证失败)
+     *
+     * 位于Android SDK/build-tools/SDK版本/zipalign
+     * zipalign 是对zip包对齐的工具,使APK包内未压缩的数据有序排列对齐,从而减少APP运行时内存消耗
+     * zipalign -v 4 in.apk out.apk   //4字节对齐优化
+     * zipalign -c -v 4 in.apk        //检查APK是否对齐
+     *
+     * zipalign可以在V1签名后执行
+     * 但zipalign不能在V2签名后执行,只能在V2签名之前执行！！！
      *
      *
      * =========360加固后用walle打包==============
