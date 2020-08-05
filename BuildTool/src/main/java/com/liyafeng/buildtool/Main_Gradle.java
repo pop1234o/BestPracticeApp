@@ -483,6 +483,9 @@ public class Main_Gradle extends Activity {
      *
      * 在 Android P 中，v2 方案已更新为 v3 方案，以便在签名分块中包含其他信息，但在其他方面保持相同的工作方式
      *
+     * build-tools 24.x.x 以上（7.0以上） apksigner 版本的会自动用v1 v2签名
+     * 如果 Android p 以上的 build-tools 会默认进行 v1 v2 v3签名 （如果用命令行）
+     *
      * ===============apksigner 和 jarsigner=========
      *  https://blog.csdn.net/qq_32115439/article/details/55520012  Android-APK签名工具-jarsigner和apksigner
      * jarsigner 是JDK提供的针对jar包签名的通用工具, 是对每个class文件(内容)进行hash计算，然后存入到MATA_INF中
@@ -504,6 +507,47 @@ public class Main_Gradle extends Activity {
      *
      *
      * 注意: apksigner 工具默认同时使用V1和V2签名,以兼容Android 7.0以下版本
+     * ==============apksigner===========
+     * 进入Android SDK/build-tools/SDK版本, 输入命令 (默认会进行v1 v2签名（低于7.0版本的sdk-tool 24.x.x 只会v1签名）)
+     *      apksigner sign --ks 密钥库名(xx/xx.jks) --ks-key-alias 密钥别名 xxx.apk
+     *
+     *
+     * 若密钥库中有多个密钥对,则必须指定密钥别名
+     *     apksigner sign --ks 密钥库名 --ks-key-alias 密钥别名 xxx.apk
+     *
+     *
+     * 禁用V2签名
+     *     apksigner sign --v2-signing-enabled false --ks 密钥库名 xxx.apk
+     *
+     * 参数:
+     *         --ks-key-alias       密钥别名,若密钥库有一个密钥对,则可省略,反之必选
+     *         --v1-signing-enabled 是否开启V1签名,默认开启
+     *         --v2-signing-enabled 是否开启V2签名,默认开启
+     *
+     * ============签名验证=========
+     * 方法一(keytool,只支持V1签名校验)
+     *     进入JDK/bin, 输入命令
+     *     keytool -printcert -jarfile MyApp.apk (显示签名证书信息)
+     *
+     *     参数:
+     *         -printcert           打印证书内容
+     *         -jarfile <filename>  已签名的jar文件 或apk文件
+     *
+     * 2.方法二(apksigner,支持V1和V2签名校验)
+     *     进入Android SDK/build-tools/SDK版本, 输入命令
+     *     apksigner verify -v --print-certs xxx.apk
+     *
+     *     参数:
+     *         -v, --verbose 显示详情(显示是否使用V1和V2签名)
+     *         --print-certs 显示签名证书信息
+     *
+     *     例如:
+     *         apksigner verify -v MyApp.apk
+     *
+     *         Verifies
+     *         Verified using v1 scheme (JAR signing): true
+     *         Verified using v2 scheme (APK Signature Scheme v2): true
+     *         Number of signers: 1
      *
      *
      * =========== zipalign =====
@@ -535,8 +579,27 @@ public class Main_Gradle extends Activity {
      *
      * 意思是加固后重新签名，然后写入渠道信息，就废了。。。
      *
+     * 解决方式
+     * Oreo	8.1.0	API 级别 27
      *
+     * 复现步骤
+     * release apk （Android studio 带签名的）
+     * 360 加固 （不要用自动签名，此时加固完是未签名的包）
+     * 28.0.2 apksigner
+     * walle 写入渠道
+     * 也是安装不了，
      *
+     * 后来把 apksigner 回退到 27.0.3 就可以了
+     * 因为 build-tools 28.x.x 版本是Android p 加入了v3签名，签名机制变了
+     * 应该是360加固，和walle 写入渠道没有对应上
+     * （或者用新版本1.1.7的tag的walle，解决了4096这个问题，但是没有编译好的包。。）
+     *
+     * apksigner --version 查看版本
+     * 20
+     *
+     * =============360加固 跳过签名校验======
+     * https://bbs.360.cn/thread-15842607-1-1.html （防二次打包问题，是否要勾选跳过签名检验）
+     * 您好，您这个是加固助手，加固的时候不用勾选'跳过签名校验'。若您使用官网加固，请勾选;跳过签名校验'。
      *
      *
      */
