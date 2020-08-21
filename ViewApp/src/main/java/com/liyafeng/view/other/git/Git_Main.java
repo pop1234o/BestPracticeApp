@@ -580,4 +580,18 @@ public class Git_Main {
      */
     void fun12(){}
 
+    /**
+     * ============回滚代码=============
+     * git log --oneline -n5 // oneline一行展示，commitid缩写，  -n5显示最近5次
+     *
+     * git revert HEAD  //删除最后一次远程提交，会生成一个新的commit，内容和上一次正好是相反的，添加的删除，删除的添加
+     * git revert [commitID] //回退到某一次提交
+     * git push origin master
+     *
+     * git reset --hard HEAD^   //回滚到上一次提交，没有提交记录   ^回到上一次次提交
+     * git push origin master -f  //这样远端的提交记录也没有了
+     *
+     */
+    void fun13(){}
+
 }
