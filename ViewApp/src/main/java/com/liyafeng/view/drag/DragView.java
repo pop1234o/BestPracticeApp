@@ -70,6 +70,42 @@ public class DragView extends View {
         setTranslationY(getTranslationY()+dy);
     }
 
+    /**
+     * 判断是拦截垂直滑动，不拦截水平滑动
+     * https://www.jianshu.com/p/15e12fde7d1d  Android-解决事件冲突和处理滑动事件
+     *
+     * ，第一次 onInterceptTouchEvent ACTION_DOWN 拦截  return super.onInterceptTouchEvent(ev); true
+     * 然后 onTouchEvent ACTION_MOVE
+     *
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    startX = (int) ev.getX();
+                    startY = (int) ev.getY();
+                    Log.i("test","ACTION_DOWN "+startY);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+
+                    int dX = (int) (ev.getX() - startX);
+                    int dY = (int) (ev.getY() - startY);
+                    Log.i("test","ACTION_MOVE "+startY);
+                    if (Math.abs(dX) > Math.abs(dY)) {//左右滑动 不拦截事件
+                        return false;
+                    } else {//上下滑动 拦截
+                        return true;
+                    }
+                case MotionEvent.ACTION_UP:
+                    break;
+            }
+        return super.onInterceptTouchEvent(ev);
+    }
+
+
 //    private void move(float dx, float dy) {
 //        int x = (int) -dx;
 //        int y = (int) -dy;
