@@ -45,6 +45,16 @@ public class Main {
      * 解决方法就是在oncreate中将所有fragment都隐藏一次，而且要用tag来判断
      *
      *
+     * ================FragmentPagerAdapter 和FragmentStatePagerAdapter区别 =============
+     * https://www.jianshu.com/p/9687209cfd5f
+     *
+     * 而FragmentStatePagerAdapter 是用一个 ArrayList<Fragment>来存储所有的Fragment，从这里也可以看出这两者的区别，
+     * FragmentPagerAdapter 适用于固定少量的Fragment。而FragmentStatePagerAdapter 较多Fragment的场景。
+     *
+     * 作者：johnnycmj
+     * 链接：https://www.jianshu.com/p/9687209cfd5f
+     * 来源：简书
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
      *
      */
     public static void main(String[] args) {
