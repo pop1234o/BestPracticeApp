@@ -56,6 +56,9 @@ public class Main {
      * 来源：简书
      * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
      *
+     * ==================Fragment中嵌套Fragment 页面回收 后 恢复白屏问题=============
+     * 子Fragment需要用 Fragment中 getChildFragmentManager()  来管理
+     *
      */
     public static void main(String[] args) {
     }
