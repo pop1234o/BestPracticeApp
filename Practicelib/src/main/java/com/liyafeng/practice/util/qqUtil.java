@@ -703,4 +703,22 @@ public class qqUtil {
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
+
+	/**
+	 * 用应用宝打开链接，如果重定向到应用宝链接，那么会自动打开应用宝app内的对应页面下载
+	 * @param context
+	 * @param url
+	 */
+	public static void goToMarketQQ(Context context, String url) {
+		try {
+			Uri uri = Uri.parse(url);
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			goToMarket.setClassName("com.tencent.android.qqdownloader", "com.tencent.pangu.link.LinkProxyActivity");
+			context.startActivity(goToMarket);
+		} catch (ActivityNotFoundException e) {
+			Uri uri = Uri.parse(url);
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			context.startActivity(goToMarket);
+		}
+	}
 }
