@@ -158,6 +158,17 @@ public class Gradle_Maven {
      *      implementation fileTree(dir: 'libs', include: ['*.jar']) //这个是代表引入lib中的jar包
      *      implementation(name: 'testlibrary-release', ext: 'aar')
      *   }
+     * -----------子模块引入aar包---------------
+     * https://blog.csdn.net/zxc418983651/article/details/83030344  android子module中引入aar包
+     * 子模块引入，依赖这个子模块的其他模块也需要引入，否则会报找不到aar包的编译报错
+     * 解决方案： 在依赖这个子模块的其他模块的build.gradle下，和android{}并列加入下面代码
+     * repositories {
+     *         flatDir {
+     *             dirs 'libs','../xx_module/libs' //这个目录是相对于当前build.gradle的目录
+     *         }
+     * }
+     * 这样其他模块就能依赖到这个aar包了
+     *
      * ===============查看arr内容======
      * 其实想要查看AAR文件里面的内容很简单，只需要将文件名的后缀由".aar" 改为".zip", 然后再解压zip文件即可。
      * 或者用jd-gui也可以查看aar包
