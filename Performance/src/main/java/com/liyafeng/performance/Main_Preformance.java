@@ -102,4 +102,17 @@ public class Main_preformance {
      * tool:replace="android:label,android:icon"
      *
      * */
+
+
+    /**
+    * 瘦身前  21.6M
+     * 1.删除无用资源后  20.9M
+     * 2.删除中文外的其他系统语言资源后     20.2M
+     * 3.图片格式用webp代替png  19M
+     * 4.压缩音频和gif图片  18.5M
+     * 5.覆盖第三库里的大图（本地放一套文件名一样的图片会覆盖掉arr中的图片）18.3M
+     * 6.优化asset里的动画图片  17.9M
+     *
+    * */
+    void fun1(){}
 }

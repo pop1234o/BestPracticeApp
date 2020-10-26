@@ -553,8 +553,10 @@ public class Main_Gradle extends Activity {
      * =========== zipalign =====
      * 对齐使用的是android-sdk/tools目录下的 zipalign 工具，
      * 主要工作是将apk包中所有的资源文件起始偏移为4字节的整数倍，这样通过内存映射访问apk时的速度会更快(比如home访问应用图标)
+     * 减少运行时所占用的内存
      *
      * zipalign是在应用签名之后(如果v2签名后就不能用zipalign了，因为这样改动了zip包内容导致签名会验证失败)
+     * v2签名必须在签名前执行zipalign
      *
      * 位于Android SDK/build-tools/SDK版本/zipalign
      * zipalign 是对zip包对齐的工具,使APK包内未压缩的数据有序排列对齐,从而减少APP运行时内存消耗
@@ -563,6 +565,17 @@ public class Main_Gradle extends Activity {
      *
      * zipalign可以在V1签名后执行
      * 但zipalign不能在V2签名后执行,只能在V2签名之前执行！！！
+     *
+     * ----原理
+     * zipalign优化的最根本目的是帮助操作系统更高效率的根据请求索引资源
+     * ，将resource-handling code统一将Data structure alignment（数 据结构对齐标准:DSA）限定为4-byte boundaries。
+     * 如果第一次接触有关Data structure alignment的内容，强烈建议搜索更多与其相关的内容来充分理解这样做的最终目的，
+     * 这也是理解zipalign工作原理的关键。 如果不采取对齐的标准，处理器无法准确和快速的在内存地址中定位相关资源。
+     *
+     * 目前的系统中使用 fallback mechanism机制处理那些没有应用DSA标准的应用程序，
+     * 这的确大大的方便了普通开发者无需关注繁琐的内存操作问题。
+     * 但是相反，对于这样的应用程序 将给普通用户带来一定的麻烦，不但影响程序的运行的效率，
+     * 而且使系统的整体执行效率下降和占用大量不必要的内存资源，甚至消耗一定的电池资源 (battery life)。
      *
      *
      * =========360加固后用walle打包==============
