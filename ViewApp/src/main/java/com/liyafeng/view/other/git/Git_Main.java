@@ -521,6 +521,9 @@ public class Git_Main {
      * If you prefer to skip this patch, run "git rebase --skip" instead.
      * To check out the original branch and stop rebasing, run "git rebase --abort".
      *
+     * 可以撤销这次rebase
+     * git rebase --abort
+     *
      * -----------什么情况不能使用rebase-------
      * ???好像不对。。
      * 在同事合并了你的代码以后，并且增加了提交就不能使用git rebase了，这时他已经在你的提交节点上产生了新的提交节点，
