@@ -41,7 +41,7 @@ public class Main_preformance {
      *
      *
      * =================查看cpu占用=========
-     * adb shell top -d 1 | grep com.tal.monkey
+     * adb shell top -d 1 | grep com.xxx.xxx
      *
      * @param savedInstanceState
      */
@@ -188,6 +188,21 @@ public class Main_preformance {
 
 
     /**
+     * ======app问题排查---app关键路径日志埋点========
+     * 目的是为了线上用户出了问题，比如登录失败，方便开发人员通过日志快速定位问题
+     * 要不你本地也复现不了，用户怎么操作的你也不知道，只能通过关键路径日志来排查问题
+     *
+     * 所以埋点的地方很关键，通过日志你必须能定位到，用户的代码走了哪些逻辑，
+     * 用户可能的操作是一个树状结构，你需要在关键的分叉点埋日志
+     *
+     *
+     */
+    void fun2_0(){}
+
+
+    /**
+     * 谷歌性能优化文档
+     * https://developer.android.google.cn/topic/performance
      *
      * -----oom优化----
      *
@@ -210,6 +225,10 @@ public class Main_preformance {
      *
      * 都9102年了，Android 冷启动优化除了老三样还有哪些新招？
      * https://mp.weixin.qq.com/s?__biz=MzAxMTI4MTkwNQ==&mid=2650829097&idx=2&sn=e59841d4b1ed7e12a30e29ec51072d70&chksm=80b7a5b7b7c02ca184e0c06289d90823d589e738c55712318875f51e4aeb8646294b8d426299&mpshare=1&scene=1&srcid=&sharer_sharetime=1571275213308&sharer_shareid=60bd7acea7881a97fbf9a6126d3e88d3#rd
+     *
+     * 应用启动时间 - 谷歌官方建议
+     * https://developer.android.google.cn/topic/performance/vitals/launch-time
+     *
      *
      * ====== 启动优化老三样 ======
      * 1. 将启动页主题背景设置成闪屏页图片   视觉优化，消除启动黑白屏
@@ -241,11 +260,87 @@ public class Main_preformance {
      * 使用合理的启动架构
      * 微信内部使用的 mmkernel
      * 阿里 Alpha
+     * ======启动的内部机制========
+     * https://developer.android.google.cn/topic/performance/vitals/launch-time
+     * 三种启动状态
+     * 冷启动 ：app第一次安装，或者应用进程被系统清理后，需要重新创建进程，叫冷启动
+     * 温启动 ：用户back退出app，此时所有Activity被销毁，但是进程还在，这时启动叫温启动
+     *          还有一种app后台被回收了，此时恢复app ，进程和 Activity 需要重启，但传递到 onCreate() 的已保存的实例 state bundle 对于完成此任务有一定助益。
+     * 热启动 ：用户home键将app退到后台，此时Activity对象还都存在，在热启动中，系统的所有工作就是将您的 Activity 带到前台
+     *
+     * -----冷启动流程-------
+     *
+     * 1.加载并启动应用。
+     * 2.在启动后立即显示应用的空白启动窗口。
+     * 3.创建应用进程。
+     *
+     * 上面流程是系统进程负责的流程，系统一创建应用进程，应用进程就负责后续阶段：
+     *
+     * 创建应用对象。 Application对象
+     * 启动主线程。 MainThread线程
+     * 创建主 Activity。
+     * 扩充视图。 onCreate中 inflate
+     * 布局屏幕。 布局 依附到windowManager上  onResume
+     * 执行初始绘制。measure layout draw 完成第一次绘制，内容展示给用户
      *
      *
-     * =======启动监控日志==============
      *
      *
+     * =======启动时间监控方法==============
+     * -----通过logcat查看-----
+     * 在 Android 4.4（API 级别 19）及更高版本中，logcat 包含一个输出行，其中包含名为 Displayed 的值。
+     * 此值代表从启动进程到在屏幕上完成对应 Activity 的绘制所用的时间。
+     * ActivityManager: Displayed com.android.myexample/.StartupTiming: +3s534ms
+     * //前面是包名，后面是启动的第一个Activity的名称
+     * 关闭过滤器，在logcat过滤 Displayed 即可
+     *
+     * 这个是系统进程来统计的启动时长
+     *
+     * -----通过adb命令查看--------
+     * 您也可以使用 ADB Shell Activity Manager 命令运行应用来测量初步显示所用时间。示例如下：
+     * adb [-d|-e|-s <serialNumber>] shell am start -S -W
+     *     com.example.app/.MainActivity
+     *     -c android.intent.category.LAUNCHER
+     *     -a android.intent.action.MAIN
+     *
+     *  adb shell am start -S -W com.example.app/.MainActivity -c android.intent.category.LAUNCHER -a android.intent.action.MAIN
+     *
+     *  -W: wait for launch to complete
+     *  -S: force stop the target app before starting the activity
+     *
+     *   [-a <ACTION>] [-d <DATA_URI>] [-t <MIME_TYPE>] [-i <IDENTIFIER>]
+     *   [-c <CATEGORY> [-c <CATEGORY>] ...]
+     *
+     * -c 和 -a 为可选参数，可让您为 intent 指定 <category> 和 <action>。
+     *
+     * am start -S -W com.example.app/.MainActivity
+     *
+     * Displayed 指标和以前一样出现在 logcat 输出中
+     *
+     * Stopping: com.xxxx
+     * Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.xxx.xxx/.ui.activity.xxx }
+     * Status: ok
+     * LaunchState: COLD
+     * Activity: com.xxx.xxx/.ui.activity.xxx
+     * TotalTime: 622  这个就是上面 Displayed的值
+     * WaitTime: 624
+     * Complete
+     * 这个时间其实和上面时间一样，
+     *
+     * ---------完全显示所用时间---------
+     * 在有些情况下我们视图都加载出来了，但是有些数据或者图片是网络请求的，我们想看这个总时间
+     * 在代码完成中调用 reportFullyDrawn() ，logcat就会打印时间
+     * system_process I/ActivityManager: Fully drawn {package}/.MainActivity: +1s54ms
+     * 过滤 Fully 即可
+     * 这个就是从进程启动，到调用这个方法时候的时间
+     *
+     *
+     *
+     * ==========启动时间标准========
+     * Android Vitals 在您的应用出现以下情况时将其启动时间视为过长：
+     * 冷启动用了 5 秒或更长时间。
+     * 温启动用了 2 秒或更长时间。
+     * 热启动用了 1.5 秒或更长时间。
      *
      */
     void fun3(){}

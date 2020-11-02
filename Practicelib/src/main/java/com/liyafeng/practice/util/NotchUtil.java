@@ -1,9 +1,8 @@
-package com.tal.utils;
+package com.liyafeng.practice.util;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowInsets;
 
