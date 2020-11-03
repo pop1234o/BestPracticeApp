@@ -106,6 +106,27 @@ public class Main_preformance {
 
     /**
      * ===============Android 瘦身 /包体积优化===================
+     * 缩减应用大小
+     * https://developer.android.google.cn/topic/performance/reduce-apk-size
+     *
+     * ==========了解包结构=======
+     * APK 包含以下目录：
+     *
+     * META-INF/：包含 CERT.SF 和 CERT.RSA 签名文件，以及 MANIFEST.MF 清单文件。
+     * assets/：包含应用的资源；应用可以使用 AssetManager 对象检索这些资源。
+     * res/：包含未编译到 resources.arsc 中的资源。
+     * lib/：包含特定于处理器软件层的已编译代码。此目录包含每种平台类型的子目录，如 armeabi、armeabi-v7a、arm64-v8a、x86、x86_64 和 mips。
+     * APK 还包含以下文件。在这些文件中，只有 AndroidManifest.xml 是必需的。
+     *
+     * resources.arsc：包含已编译的资源。此文件包含 res/values/ 文件夹的所有配置中的 XML 内容。打包工具会提取此 XML 内容，将其编译为二进制文件形式，并压缩内容。此内容包括语言字符串和样式，以及未直接包含在 resources.arsc 文件中的内容（例如布局文件和图片）的路径。
+     * classes.dex：包含以 Dalvik/ART 虚拟机可理解的 DEX 文件格式编译的类。
+     * AndroidManifest.xml：包含核心 Android 清单文件。此文件列出了应用的名称、版本、访问权限和引用的库文件。该文件使用 Android 的二进制 XML 格式。
+     *
+     * ========包结构优化插件=======
+     * studio 安装 Android Size Analyzer 插件，谷歌出品
+     *
+     *
+     * =========示例==========
      * 瘦身前  21.6
      * 1.删除无用资源  20.9
      * 2.删除中文外的其他系统语言资源   20.2
@@ -284,12 +305,11 @@ public class Main_preformance {
      * 执行初始绘制。measure layout draw 完成第一次绘制，内容展示给用户
      *
      *
-     *
-     *
      * =======启动时间监控方法==============
      * -----通过logcat查看-----
      * 在 Android 4.4（API 级别 19）及更高版本中，logcat 包含一个输出行，其中包含名为 Displayed 的值。
      * 此值代表从启动进程到在屏幕上完成对应 Activity 的绘制所用的时间。
+     * （包括了application的oncreate ，到Activity的onResume 后，绘制完成的时间）
      * ActivityManager: Displayed com.android.myexample/.StartupTiming: +3s534ms
      * //前面是包名，后面是启动的第一个Activity的名称
      * 关闭过滤器，在logcat过滤 Displayed 即可
@@ -327,12 +347,19 @@ public class Main_preformance {
      * Complete
      * 这个时间其实和上面时间一样，
      *
-     * ---------完全显示所用时间---------
+     * --完全显示所用时间---------
      * 在有些情况下我们视图都加载出来了，但是有些数据或者图片是网络请求的，我们想看这个总时间
      * 在代码完成中调用 reportFullyDrawn() ，logcat就会打印时间
      * system_process I/ActivityManager: Fully drawn {package}/.MainActivity: +1s54ms
      * 过滤 Fully 即可
      * 这个就是从进程启动，到调用这个方法时候的时间
+     *
+     *
+     * 总结：
+     * 每个应用的启动结束点都不一样，基本不会是闪屏的时候。所以一般都是应用内部自己的启动统计框架
+     * 但是可以用这个来定位闪屏页之前的耗时
+     *
+     * ==========识别瓶颈/定位耗时位置=========
      *
      *
      *
@@ -352,5 +379,11 @@ public class Main_preformance {
      *
      */
     void fun4(){}
+
+    /**
+     * 编译速度优化
+     *
+     */
+    void fun5(){}
 
 }
