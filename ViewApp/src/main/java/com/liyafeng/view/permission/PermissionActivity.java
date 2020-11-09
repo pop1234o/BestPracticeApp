@@ -29,6 +29,8 @@ public class PermissionActivity extends AppCompatActivity {
      * https://github.com/tbruyelle/RxPermissions
      * https://github.com/lypeer/FcPermissions
      *
+     * https://cloud.tencent.com/developer/article/1006326
+     *
      * @param savedInstanceState
      */
     @Override
