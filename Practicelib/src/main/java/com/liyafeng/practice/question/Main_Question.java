@@ -1063,4 +1063,34 @@ public class Main_Question {
      *
      */
     void a45(){}
+
+
+    /**
+     * Android 编程技巧之 ----- 一次追查 DeadObjectException 的总结
+     * https://blog.csdn.net/u012538536/article/details/61423025
+     *
+     *
+     * 突然在某个版本出现这个异常
+     *
+     * 1 java.lang.RuntimeException:android.os.DeadSystemException
+     * 2 android.app.ActivityThread.handleDestroyActivity(ActivityThread.java:4598)
+     * 3 ......
+     * 4 android.os.DeadSystemException:
+     * 5 android.app.ActivityThread.handleDestroyActivity(ActivityThread.java:4598)
+     * 6 android.app.servertransaction.DestroyActivityItem.execute(DestroyActivityItem.java:39)
+     * 7 android.app.servertransaction.TransactionExecutor.executeLifecycleState(TransactionExecutor.java:145)
+     * 8 android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:70)
+     * 9 android.app.ActivityThread$H.handleMessage(ActivityThread.java:1831)
+     * 10 android.os.Handler.dispatchMessage(Handler.java:106)
+     * 11 android.os.Looper.loop(Looper.java:201)
+     * 12 android.app.ActivityThread.main(ActivityThread.java:6826)
+     * 13 java.lang.reflect.Method.invoke(Native Method)
+     * 14 com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:547)
+     * 15 com.android.internal.os.ZygoteInit.main(ZygoteInit.java:873)
+     *
+     * 最后发现有可能是加固导致的，因为在那个版本开始加固，开始有这个异常
+     *
+     *
+     */
+    void a46(){}
 }
