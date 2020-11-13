@@ -234,5 +234,51 @@ public class Gradle_Maven {
      */
     void a6(){}
 
+    /**
+     * ============= mavenLocal() 使用=========
+     * repositories {
+     *     mavenLocal() //直接使用本地maven仓库
+     *     maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+     *     mavenCentral()
+     *
+     * }
+     *
+     * 发现使用mavenLocal() 时Gradle默认会按以下顺序去查找本地的maven仓库：
+     * USER_HOME/.m2/settings.xml >> M2_HOME/conf/settings.xml >> USER_HOME/.m2/repository
+     *
+     * USER_HOME/.m2/settings.xml  找配置的路径，如果没有去下一个找
+     *
+     */
+    void a7(){}
+
+    /**
+     * =========发布aar jar apk到maven仓库==============
+     * Maven Publish Plugin
+     * https://docs.gradle.org/current/userguide/publishing_maven.html
+     *
+     * 使用 Maven Publish 插件
+     * https://developer.android.google.cn/studio/build/maven-publish-plugin
+     *
+     *
+     *
+     *
+     */
+    void a8(){}
+
+
+    /**
+     * 1. Snapshot版本代表不稳定、尚处于开发中的版本2. Release版本则代表稳定的版本
+     * 3. 什么情况下该用SNAPSHOT?协同开发时，如果A依赖构件B，由于B会更新，B应该使用SNAPSHOT来标识自己。
+     * 协同开发依赖的版本
+     *
+     * 作者：搁浅的双鱼
+     * 链接：https://www.jianshu.com/p/559fa91ce176
+     * 来源：简书
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     *
+     */
+    void a9(){}
+
 
 }
