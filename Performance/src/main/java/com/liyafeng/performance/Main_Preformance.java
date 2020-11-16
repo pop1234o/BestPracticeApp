@@ -144,6 +144,27 @@ public class Main_preformance {
      *
      * ----so远程加载------
      *
+     * ----------移除没有的code和资源
+     * 其实依赖的很多库只是用到其中几个类，然而那个库大小却有几百k ，比如 androidx 2m
+     * mertial 700k
+     *
+     * Code shrinking是一个Android Plugin for Gradle，从您的打包的应用程序中删除未使用的资源，
+     * 包括代码库中的未使用的资源。它工作在与代码缩小，这样，一旦未使用的代码已被删除，任何资源不再引用可以安全地删除。
+     *
+     * gradle配置
+     *    release {
+     *             debuggable false
+     *             // 是否进行混淆
+     *             minifyEnabled true
+     *             useProguard true
+     *             // 是否zip对齐
+     *             zipAlignEnabled true
+     *             // 移除无用的resource文件
+     *             shrinkResources true
+     *             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+     *         }
+     *
+     *
     * */
     void fun1(){}
 
