@@ -108,6 +108,8 @@ public class Main_preformance {
      * ===============Android 瘦身 /包体积优化===================
      * 缩减应用大小
      * https://developer.android.google.cn/topic/performance/reduce-apk-size
+     * 缩减资源
+     * https://developer.android.google.cn/studio/build/shrink-code
      *
      * ==========了解包结构=======
      * APK 包含以下目录：
@@ -163,6 +165,11 @@ public class Main_preformance {
      *             shrinkResources true
      *             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
      *         }
+     *
+     * ===========使用proguard=====
+     * 那些你不知道的 APK 瘦身，让你的 APK 更小
+     * https://blog.csdn.net/vfush/article/details/52266843
+     *
      *
      *
     * */
@@ -406,5 +413,89 @@ public class Main_preformance {
      *
      */
     void fun5(){}
+
+
+    /**
+     * ============= ProGuard简介 =============
+     * https://tech.meituan.com/2018/04/27/mt-proguard.html 插件化、热补丁中绕不开的Proguard的坑
+     *
+     * ProGuard是2002年由比利时程序员Eric Lafortune发布的一款优秀的开源代码优化、混淆工具，
+     * 适用于Java和Android应用，目标是让程序更小，运行更快，在Java界处于垄断地位。
+     * 主要分为三个模块：Shrinker（压缩器）、Optimizer（优化器）、Obfuscator（混淆器）、Retrace（堆栈反混淆）。
+     *
+     * Shrinker 通过引用标记算法，将没用到的代码移除掉。
+     * Optimizer 通过复杂的算法（Partial Evaluation &Peephole optimization，这部分算法我们不再展开介绍）
+     * 对字节码进行优化，代码优化会使部分代码块的结构出现变动。
+     * Obfuscator 通过一个混淆名称发生器产生a、b、c的毫无意义名称来替换原来正常的名称，增加逆向的难度。
+     * Retrace 利用mapping还原堆栈信息
+     *
+     *
+     *
+     *
+     *
+     * =============手动反混淆代码的堆栈信息
+     *
+     * https://www.jianshu.com/p/69857a6cb956  （Android 混淆使用入门笔记）
+     *
+     * app构建后
+     * 在 app/build/outputs/mapping/release/目录下生成一些信息日志文件
+     * dump.txt：描述APK文件中所有类的内部结构
+     * mapping.txt：提供混淆前后类、方法、类成员等的对照表
+     * seeds.txt：列出没有被混淆的类和成员
+     * usage.txt：列出被移除的代码
+     * ----------反解工具 retrace ------
+     * 在<SDK_rootDir>/tools/proguard/bin/目录下
+     * 命令行输入./proguardgui.sh  出现一个弹窗，选择retrace
+     * 把崩溃堆栈复制进去
+     * java.lang.ArrayIndexOutOfBoundsException: length=0; index=0
+     * at org.xxx.xxx.c.a.a.a(SourceFile:13)
+     * at android.os.Handler.handleCallback(Handler.java:808)
+     * at android.os.Handler.dispatchMessage(Handler.java:101)
+     * at android.os.Looper.loop(Looper.java:166)
+     * at android.app.ActivityThread.main(ActivityThread.java:7529)
+     * at java.lang.reflect.Method.invoke(Native Method)
+     * at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:245)
+     * at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:921)
+     * 点击retrace就能反解代码了。。。
+     *
+     * =========mapping文件格式介绍=========
+     *
+     *
+     * 类映射,特征：映射以:结束。
+     * 字段映射，特征：映射中没有()。
+     * 方法映射，特征：映射中有()，并且左侧的拥有两个数字，代表方法体的行号范围。
+     * 内联，特征：与方法映射相比，多了两个行号范围，右侧的行号表示原始代码行，左侧表示新的行号。
+     * 闭包，特征：只有三个行号，它与内联成对出现。
+     * 注释，特征：以#开头，通常不会出现在mapping中
+     *
+     * //类名的映射
+     * org.tensorflow.lite.examples.digitclassifier.Xxx -> org.tensorflow.lite.c.a.a:
+     *     org.tensorflow.lite.Interpreter interpreter -> a
+     *     int inputImageHeight -> d
+     *     int modelInputSize -> e
+     *     boolean isInitialized -> b
+     *     int inputImageWidth -> c
+     *     android.content.Context context -> f
+     *     //上面是字段的映射
+     *
+     *
+     *     1:1:void <init>(android.content.Context):14:14 -> <init>
+     *     1:3:java.lang.String recognizeSync(java.lang.String,float[][]):26:28 -> a
+     *     4:5:java.lang.String recognizeSync(java.lang.String,float[][]):31:32 -> a
+     *     6:6:void init():39:39 -> a
+     *     7:12:java.nio.ByteBuffer loadModelFile(android.content.res.AssetManager):66:71 -> a
+     *     13:14:android.graphics.Bitmap getImgFromTrace(float[][]):109:110 -> a
+     *     15:15:android.graphics.Bitmap getImgFromTrace(float[][]):114:114 -> a
+     *     16:18:android.graphics.Bitmap getImgFromTrace(float[][]):116:118 -> a
+     *     19:20:android.graphics.Bitmap getImgFromTrace(float[][]):167:168 -> a
+     *     21:21:android.graphics.Bitmap getImgFromTrace(float[][]):171:171 -> a
+     *      //这里是方法的映射，左侧行号范围是在混淆后的行号范围，右侧的在源文件中的行号范围
+     *      最右侧的a，代表混淆后的方法，有可能源文件中的方法合并成一个方法了
+     *
+     * 比如13:14 对应 109:110 就是源文件的109-110行代码对应混淆后 13-14行代码
+     *
+     *
+     */
+    void fun6(){}
 
 }
