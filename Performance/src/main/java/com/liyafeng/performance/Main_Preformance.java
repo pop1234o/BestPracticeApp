@@ -146,6 +146,9 @@ public class Main_preformance {
      *
      * ----so远程加载------
      *
+     * -------重写控件----
+     * 某些库里你只用了其中一个控件，那么就可以把代码复制出来自己写一个
+     *
      * ----------移除没有的code和资源
      * 其实依赖的很多库只是用到其中几个类，然而那个库大小却有几百k ，比如 androidx 2m
      * mertial 700k
@@ -169,6 +172,9 @@ public class Main_preformance {
      * ===========使用proguard=====
      * 那些你不知道的 APK 瘦身，让你的 APK 更小
      * https://blog.csdn.net/vfush/article/details/52266843
+     *
+     * ==========gradle插件移除指定类/包======
+     * https://blog.csdn.net/ifmvo/article/details/85791614 Android aar或jar中删除某个包或类
      *
      *
      *
@@ -416,8 +422,11 @@ public class Main_preformance {
 
 
     /**
-     * ============= ProGuard简介 =============
+     * ============= ProGuard 简介 =============
      * https://tech.meituan.com/2018/04/27/mt-proguard.html 插件化、热补丁中绕不开的Proguard的坑
+     *
+     * https://www.jianshu.com/p/da5cf53735c9 浅谈Android混淆
+     *
      *
      * ProGuard是2002年由比利时程序员Eric Lafortune发布的一款优秀的开源代码优化、混淆工具，
      * 适用于Java和Android应用，目标是让程序更小，运行更快，在Java界处于垄断地位。
@@ -429,8 +438,18 @@ public class Main_preformance {
      * Obfuscator 通过一个混淆名称发生器产生a、b、c的毫无意义名称来替换原来正常的名称，增加逆向的难度。
      * Retrace 利用mapping还原堆栈信息
      *
+     * ======= Entry Point===
+     * 为了确定哪些代码应该被保留，哪些代码应该被移除或混淆，
+     * 需要确定一个或多个Entry Point。
+     * Entry Point 经常是带有main methods,applets,midlets的classes,它们在混淆过程中会被保留
      *
+     * shrink： Proguard从上述EntryPoints开始遍历搜索哪些类和类成员被使用。其他没有被使用的类和类成员会移除。
      *
+     * optimize: 优化代码，非EntryPoints类会加上private/static/final, 没有用到的参数会被删除，一些方法可能会变成内联代码。
+     *
+     * obfuscate: 使用短又没有语义的名字重命名非EntryPoints的类名，变量名，方法名。EntryPoints的名字保持不变。
+     *
+     * preverify: 预校验代码是否符合Java1.6或者更高的规范(唯一一个与入口类不相关的步骤)
      *
      *
      * =============手动反混淆代码的堆栈信息
@@ -494,6 +513,11 @@ public class Main_preformance {
      *
      * 比如13:14 对应 109:110 就是源文件的109-110行代码对应混淆后 13-14行代码
      *
+     *
+     * =============混淆规则=============
+     * proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+     * proguard-android.txt 这个文件在  Android SDK/tools/proguard/ 中
+     * 我们可以改成  proguard-android-optimize.txt  来开启
      *
      */
     void fun6(){}
