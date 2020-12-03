@@ -519,6 +519,34 @@ public class Main_preformance {
      * proguard-android.txt 这个文件在  Android SDK/tools/proguard/ 中
      * 我们可以改成  proguard-android-optimize.txt  来开启
      *
+     *
+     * =========-assumenosideeffects========
+     * https://cloud.tencent.com/developer/article/1396277 Android/Java 混淆中使用-assumenosideeffects删除日志代码遇到的问题
+     * 全局删除调用的方法
+     * 首先要 确保没有开启 --dontoptimize 选项
+     * proguardFiles getDefaultProguardFile('proguard-android.txt') 改成 proguard-android-optimize.txt
+     * 因为默认的 Android SDK/tools/proguard/proguard-android.txt中 配置了 --dontoptimize
+     *
+     * 然后在 app/proguard-rules.pro 中定义要去除的方法
+     *
+     * -assumenosideeffects class android.webkit.SslErrorHandler {
+     *     public void proceed(...);
+     * }
+     *
+     * -assumenosideeffects class android.util.Log {
+     * public static *** d(...);
+     * public static *** e(...);
+     * public static *** i(...);
+     * public static *** v(...);
+     * public static *** println(...);
+     * public static *** w(...);
+     * public static *** wtf(...);
+     * }
+     *
+     * 其实就是根据这个去匹配要移除的类的调用的方法
+     *
+     * 
+     *
      */
     void fun6(){}
 
