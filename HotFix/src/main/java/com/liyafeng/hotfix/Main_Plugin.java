@@ -31,6 +31,16 @@ public class Main_Plugin {
      * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
      *
      *
+     * =========插件化要解决的问题====
+     * 一个apk要加载网络下载的apk
+     * 要解决
+     * 类加载问题  用 dexClassloader解决
+     * 资源加载问题 （独立式，共享式）
+     * 系统加载资源，都是通过filename 用assetManager 来加载，返回drawable
+     * 通过addAssetPath方式加入资源的目录
+     *
+     * 生命周期管理（因为新的Activity在原来的apk manifest中没有定义，所以系统不会走生命周期）
+     *
      *
      *
      *
