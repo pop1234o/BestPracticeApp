@@ -309,6 +309,16 @@ public class Main_preformance {
      *
      * 降低 IO 的并发，整体的执行时间大幅降低。（防止多个任务同时并发io）
      *
+     * =========黑科技============
+     * 支付宝 App 构建优化解析：通过安装包重排布优化 Android 端启动性能
+     * https://mp.weixin.qq.com/s/79tAFx6zi3JRG-ewoapIVQ
+     *
+     * 08 | 启动优化（下）：优化启动速度的进阶方法 - 张绍文
+     * https://time.geekbang.org/column/article/74044
+     *
+     * 支付宝客户端架构解析：Android 客户端启动速度优化之「垃圾回收」 4.x系统用的，过时了
+     * https://mp.weixin.qq.com/s/ePjxcyF3N1vLYvD5dPIjUw
+     *
      * ===================
      * 控制线程数量 – 线程池
      * 检查线程间的锁 ，防止依赖等待
@@ -342,7 +352,9 @@ public class Main_preformance {
      * =======启动时间监控方法==============
      * -----通过logcat查看-----
      * 在 Android 4.4（API 级别 19）及更高版本中，logcat 包含一个输出行，其中包含名为 Displayed 的值。
+     *
      * 此值代表从启动进程到在屏幕上完成对应 Activity 的绘制所用的时间。
+     *
      * （包括了application的oncreate ，到Activity的onResume 后，绘制完成的时间）
      * ActivityManager: Displayed com.android.myexample/.StartupTiming: +3s534ms
      * //前面是包名，后面是启动的第一个Activity的名称
@@ -367,7 +379,7 @@ public class Main_preformance {
      *
      * -c 和 -a 为可选参数，可让您为 intent 指定 <category> 和 <action>。
      *
-     * am start -S -W com.example.app/.MainActivity
+     * am start -S -W com.example.app/.MainActivity (先进入adb shell状态)
      *
      * Displayed 指标和以前一样出现在 logcat 输出中
      *
@@ -381,6 +393,30 @@ public class Main_preformance {
      * Complete
      * 这个时间其实和上面时间一样，
      *
+     *
+     *
+     * 正常情况下点击桌面图标只启动一个有界面的Activity，此时displayStartTime与mLaunchStartTime便指向同一时间点，
+     * 此时ThisTime=TotalTime。另一种情况是点击桌面图标应用会先启动一个无界面的Activity做逻辑处理，
+     * 接着又启动一个有界面的Activity，在这种启动一连串Activity的情况下（知乎的启动就是属于这种情况），
+     * displayStartTime便指向最后一个Activity的开始启动时间点，mLaunchStartTime指向第一个无界面Activity的开始启动时间点
+     * ，此时ThisTime！=TotalTime
+     *
+     *
+     * WaitTime 就是总的耗时，包括前一个应用Activity pause的时间和新应用启动的时间；（桌面也是一个应用）
+     * ThisTime 表示一连串启动Activity的最后一个Activity的启动耗时；
+     * TotalTime 表示新应用启动的耗时，包括新进程的启动和Activity的启动，但不包括前一个应用Activity pause的耗时。也就是说，
+     * 开发者一般只要关心TotalTime即可，这个时间才是自己应用真正启动的耗时。
+     *
+     * 作者：Groffa
+     * 链接：https://www.zhihu.com/question/35487841/answer/63007551
+     * 来源：知乎
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     * TotalTime = 启动应用创建进程时间到首页渲染出来的时间
+     * WaitTime = TotalTime + 上一个应用的pause时间
+     *
+     *
+     *
      * --完全显示所用时间---------
      * 在有些情况下我们视图都加载出来了，但是有些数据或者图片是网络请求的，我们想看这个总时间
      * 在代码完成中调用 reportFullyDrawn() ，logcat就会打印时间
@@ -392,6 +428,24 @@ public class Main_preformance {
      * 总结：
      * 每个应用的启动结束点都不一样，基本不会是闪屏的时候。所以一般都是应用内部自己的启动统计框架
      * 但是可以用这个来定位闪屏页之前的耗时
+     * ==========代码中启动时间获取==============
+     *
+     * 首先在 Application 的 attachBaseContext 方法记录开始时间
+     *
+     * 在业务的第一个 Activity 的 onWindowFocusChanged 方法记录结束时间
+     * 或者 onResume中post
+     *
+     * onResume 330 此时没有算上draw时间?
+     * onCreate - post 427
+     * onResume - post 434
+     * onWindowFocusChanged - 435
+     *
+     * onWindowFocusChanged onResume view被addView，通过 windowManagerService，然后添加到屏幕上
+     * 添加成功windowManagerService回调onWindowFocusChanged，通过handler发送消息。所以消息是
+     * onResume - post 后执行，所以onWindowFocusChanged在 onResume - post后执行
+     *
+     *
+     *
      *
      * ==========识别瓶颈/定位耗时位置=========
      *
@@ -402,6 +456,17 @@ public class Main_preformance {
      * 冷启动用了 5 秒或更长时间。
      * 温启动用了 2 秒或更长时间。
      * 热启动用了 1.5 秒或更长时间。
+     *
+     * ==============通过视频关键帧统计启动时间============
+     * 怎么计算apk的启动时间？ - 技术性调整的回答 - 知乎
+     * https://www.zhihu.com/question/35487841/answer/1135191974
+     * stagesepx
+     *
+     *
+     * ===========工具=====
+     * Profilo is an Android library for collecting performance traces from production builds of an app.
+     * https://github.com/facebookincubator/profilo
+     *
      *
      */
     void fun3(){}
@@ -545,7 +610,7 @@ public class Main_preformance {
      *
      * 其实就是根据这个去匹配要移除的类的调用的方法
      *
-     * 
+     *
      *
      */
     void fun6(){}
