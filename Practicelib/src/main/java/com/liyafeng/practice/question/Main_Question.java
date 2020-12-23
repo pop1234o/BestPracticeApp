@@ -1093,4 +1093,15 @@ public class Main_Question {
      *
      */
     void a46(){}
+
+
+    /**
+     * =========键盘不能把布局顶起问题/adjustResize无效问题==========
+     * 解决Android软键盘在全屏下设置adjustResize无效的问题
+     * https://cloud.tencent.com/developer/article/1524997
+     * 是因为设置了透明的状态栏，去掉就好了
+     *
+     *
+     */
+    void a47(){}
 }
