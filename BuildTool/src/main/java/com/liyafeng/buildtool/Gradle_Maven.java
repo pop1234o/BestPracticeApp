@@ -281,4 +281,88 @@ public class Gradle_Maven {
     void a9(){}
 
 
+    /**
+     * =======安装maven===========
+     * 可以下载，然后解压，配置环境变量
+     * https://maven.apache.org/download.cgi
+     *
+     * 也可以用brew
+     * brew search maven
+     * brew info maven
+     * brew install maven
+     *
+     * 在路径/usr/local/Cellar/maven/3.5.0/libexec/conf下找到setting.xml，设置
+     * <localRepository>/Users/xxx/maven_repo</localRepository>
+     *
+     * 作者：perfect_jimmy
+     * 链接：https://www.jianshu.com/p/02f17ab0fc74
+     * 来源：简书
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     * 可能需要翻墙，安装完成，
+     * mvn -v 查看
+     * Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+     * Maven home: /usr/local/Cellar/maven/3.6.3/libexec
+     * Java version: 1.8.0_201, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre
+     * Default locale: zh_CN, platform encoding: UTF-8
+     * OS name: "mac os x", version: "10.14.1", arch: "x86_64", family: "mac"
+     *
+     *
+     * ============发布jar到maven===============
+     * Maven使用deploy上传jar包到远程库
+     * https://blog.csdn.net/Roy_70/article/details/75267831
+     *
+     * 在路径/usr/local/Cellar/maven/3.5.0/libexec/conf下找到setting.xml，设置
+     * <servers>
+     *     <server>
+     *       <id>roy_privrepository_snapshots</id>
+     *       <username>roy</username>
+     *       <password>123456</password>
+     *     </server>
+     * </servers>
+     *
+     * 这个是配置仓库访问权限
+     * repository 后的路径就是id， http://182.xx.xx.xx:xx/repository/xxx/
+     *
+     * 配置完成，然后执行
+     * mvn deploy:deploy-file
+     * -Dmaven.test.skip=true  //跳过编译、测试
+     * -Dfile=D:\MvnProject\service-mvn-1.0.0.jar //要上传jar的路径
+     * -DgroupId=pri.roy.mvn.test //上传仓库的目录，可以随意填写，一般是jar中的包名
+     * -DartifactId=bugly //包的名称，
+     * -Dversion=1.0.0-SNAPSHOT //版本名称
+     * -Dpackaging=jar
+     * -DrepositoryId=roy_privrepository_snapshots //仓库id，要和setting.xml配置的一致
+     * -Durl=http://10.4.71.144:9090/repository/roy_privrepository_snapshots/  // 仓库的路径
+     *
+     *
+     * mvn deploy:deploy-file -Dmaven.test.skip=true -Dfile=/Users/xxx/Downloads/bug/class/bugly-3.3.3.jar -DgroupId=com.tencent.bugly -DartifactId=crashreport -Dversion=3.3.3 -Dpackaging=jar -DrepositoryId=maven-releases -Durl=http://xxx:8081/repository/maven-releases/
+     *
+     *
+     * ==========删除jar=======
+     * 可以直接登录，然后选中删除
+     *
+     *
+     *
+     *
+     * ============安装自定义jar包到本地Maven库
+     * 将本地jar安装到maven本地仓库中
+     *
+     * 当出现下列情况时：
+     * 1.要使用的 jar 不存在于 Maven 的中心储存库中。
+     * 2.您创建了一个自定义的 jar ，而另一个 Maven 项目需要使用。
+     * 需要手动将所需要的jar包存放至Maven本地资源库，可以再cmd中输入以下命令：
+     *
+     * mvn install:install-file -Dfile=c:\userdefined-1.0.jar -DgroupId=pers.test.code -DartifactId=userdefined -Dversion={1.0} -Dpackaging=jar
+     * 1
+     * 安装成功后，在pom.xml文件中可以使用了
+     *
+     * <dependency>
+     *       <groupId>pers.test.code</groupId>
+     *       <artifactId>userdefined </artifactId>
+     *       <version>1.0</version>
+     * </dependency>
+     */
+    void a10(){}
+
 }
