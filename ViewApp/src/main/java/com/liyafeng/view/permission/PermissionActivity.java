@@ -31,6 +31,27 @@ public class PermissionActivity extends AppCompatActivity {
      *
      * https://cloud.tencent.com/developer/article/1006326
      *
+     * ========Android查看权限三方包中引入的====
+     * https://www.jianshu.com/p/0dfe7db7ecde
+     * 对于权限的合并，会生成一个相应的Log文件。在 app/build/outputs下，
+     *
+     * 删除权限
+     * 2. tools:node 属性
+     * 这个标签指定了manifest中冲突属性的合并规则或删除不必要的元素和属性，很明显，对于三方中的权限，我们是要进行删除的
+     *
+     * uses-permission
+     *         android:name="android.permission.READ_PHONE_STATE"
+     *         tools:node="remove" />
+     *
+     * tools是一个比较强大的功能，除了指定permission外，对于activity的属性、service以及application等中的属性都可指定，而除了remove,还有replace、strict等，具体可见官网：https://developer.android.com/studio/build/manifest-merge?hl=zh-cn
+     *
+     * 注意：在使用上述tools:node="remove"方式移除危险权限时，一定要保证sdk无此权限也能正常运行且不影响功能，否则的话，还需在应用中申请此权限。
+     *
+     * 作者：baifanger
+     * 链接：https://www.jianshu.com/p/0dfe7db7ecde
+     * 来源：简书
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
      * @param savedInstanceState
      */
     @Override
