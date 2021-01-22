@@ -250,7 +250,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
 
         public void createDialog() {
             setContentView(R.layout.dialog_bottom);
-            show();
+
             Window window = getWindow();
 
             //布局高度是包裹内容的
@@ -265,7 +265,11 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
 
             window.setAttributes(lp);
 
+            //可以设置无黑色背景
+//            getWindow().setDimAmount(0f);
 
+            //这里的show一定要在最后
+            show();
         }
     }
 

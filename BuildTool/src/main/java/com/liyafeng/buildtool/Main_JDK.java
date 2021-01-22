@@ -65,8 +65,21 @@ public class Main_JDK {
      *
      * ==============jar包改代码&重新打包==========
      * 用jd-gui打开，file->save all sources 导出反编译后的java源码
-     * 修改
+     * 修改其中java文件，
+     * （注意，可以用Android studio 查看反编译后的代码，然后复制出来，修改）
      *
+     * 然后javac编译成class文件
+     *
+     * javac -cp /Users/xx/[原来的jar]xx.jar:/Users/xxx/Library/Android/sdk/platforms/android-27/android.jar /Users/xxxx/Report.java
+     * 设置 -classpath是需要依赖的库，一般包括原来的jar中的类，和android.jar，然后指定要编译的类
+     *
+     * 然后把jar，unzip命令解压，解压出来是class的集合
+     * 然后吧编译后的class 替换原来的class
+     *
+     *
+     * 最后打包成jar
+     * jar cvf xx_classes.jar -C foo/ /
+     * foo/这个目录是 com目录的父目录，然后就修改完成了
      *
      * ===============jar命令用法========
      * 用法: jar {ctxui}[vfmn0PMe] [jar-file] [manifest-file] [entry-point] [-C dir] files ...
@@ -227,6 +240,7 @@ public class Main_JDK {
      * Class-Path: bin/fastjson-1.2.37.jar bin/json-20170516.jar bin/org.restlet.ext.json-2.3.10.jar bin/org.restlet-2.3.10.jar
      *
      *
+     * javac -cp /Users/pop/Downloads/bug/bugly_crash_release.jar:/Users/pop/Library/Android/sdk/platforms/android-27/android.jar /Users/pop/Downloads/bug/bugly_crash_release.jar.src/com/tencent/bugly/crashreport/CrashReport.java
      *
      */
     void a4_4(){}

@@ -158,6 +158,17 @@ public class Gradle_Maven {
      *      implementation fileTree(dir: 'libs', include: ['*.jar']) //这个是代表引入lib中的jar包
      *      implementation(name: 'testlibrary-release', ext: 'aar')
      *   }
+     * -----------子模块引入aar包---------------
+     * https://blog.csdn.net/zxc418983651/article/details/83030344  android子module中引入aar包
+     * 子模块引入，依赖这个子模块的其他模块也需要引入，否则会报找不到aar包的编译报错
+     * 解决方案： 在依赖这个子模块的其他模块的build.gradle下，和android{}并列加入下面代码
+     * repositories {
+     *         flatDir {
+     *             dirs 'libs','../xx_module/libs' //这个目录是相对于当前build.gradle的目录
+     *         }
+     * }
+     * 这样其他模块就能依赖到这个aar包了
+     *
      * ===============查看arr内容======
      * 其实想要查看AAR文件里面的内容很简单，只需要将文件名的后缀由".aar" 改为".zip", 然后再解压zip文件即可。
      * 或者用jd-gui也可以查看aar包
@@ -223,5 +234,135 @@ public class Gradle_Maven {
      */
     void a6(){}
 
+    /**
+     * ============= mavenLocal() 使用=========
+     * repositories {
+     *     mavenLocal() //直接使用本地maven仓库
+     *     maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+     *     mavenCentral()
+     *
+     * }
+     *
+     * 发现使用mavenLocal() 时Gradle默认会按以下顺序去查找本地的maven仓库：
+     * USER_HOME/.m2/settings.xml >> M2_HOME/conf/settings.xml >> USER_HOME/.m2/repository
+     *
+     * USER_HOME/.m2/settings.xml  找配置的路径，如果没有去下一个找
+     *
+     */
+    void a7(){}
+
+    /**
+     * =========发布aar jar apk到maven仓库==============
+     * Maven Publish Plugin
+     * https://docs.gradle.org/current/userguide/publishing_maven.html
+     *
+     * 使用 Maven Publish 插件
+     * https://developer.android.google.cn/studio/build/maven-publish-plugin
+     *
+     *
+     *
+     *
+     */
+    void a8(){}
+
+
+    /**
+     * 1. Snapshot版本代表不稳定、尚处于开发中的版本2. Release版本则代表稳定的版本
+     * 3. 什么情况下该用SNAPSHOT?协同开发时，如果A依赖构件B，由于B会更新，B应该使用SNAPSHOT来标识自己。
+     * 协同开发依赖的版本
+     *
+     * 作者：搁浅的双鱼
+     * 链接：https://www.jianshu.com/p/559fa91ce176
+     * 来源：简书
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     *
+     */
+    void a9(){}
+
+
+    /**
+     * =======安装maven===========
+     * 可以下载，然后解压，配置环境变量
+     * https://maven.apache.org/download.cgi
+     *
+     * 也可以用brew
+     * brew search maven
+     * brew info maven
+     * brew install maven
+     *
+     * 在路径/usr/local/Cellar/maven/3.5.0/libexec/conf下找到setting.xml，设置
+     * <localRepository>/Users/xxx/maven_repo</localRepository>
+     *
+     * 作者：perfect_jimmy
+     * 链接：https://www.jianshu.com/p/02f17ab0fc74
+     * 来源：简书
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     * 可能需要翻墙，安装完成，
+     * mvn -v 查看
+     * Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+     * Maven home: /usr/local/Cellar/maven/3.6.3/libexec
+     * Java version: 1.8.0_201, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre
+     * Default locale: zh_CN, platform encoding: UTF-8
+     * OS name: "mac os x", version: "10.14.1", arch: "x86_64", family: "mac"
+     *
+     *
+     * ============发布jar到maven===============
+     * Maven使用deploy上传jar包到远程库
+     * https://blog.csdn.net/Roy_70/article/details/75267831
+     *
+     * 在路径/usr/local/Cellar/maven/3.5.0/libexec/conf下找到setting.xml，设置
+     * <servers>
+     *     <server>
+     *       <id>roy_privrepository_snapshots</id>
+     *       <username>roy</username>
+     *       <password>123456</password>
+     *     </server>
+     * </servers>
+     *
+     * 这个是配置仓库访问权限
+     * repository 后的路径就是id， http://182.xx.xx.xx:xx/repository/xxx/
+     *
+     * 配置完成，然后执行
+     * mvn deploy:deploy-file
+     * -Dmaven.test.skip=true  //跳过编译、测试
+     * -Dfile=D:\MvnProject\service-mvn-1.0.0.jar //要上传jar的路径
+     * -DgroupId=pri.roy.mvn.test //上传仓库的目录，可以随意填写，一般是jar中的包名
+     * -DartifactId=bugly //包的名称，
+     * -Dversion=1.0.0-SNAPSHOT //版本名称
+     * -Dpackaging=jar
+     * -DrepositoryId=roy_privrepository_snapshots //仓库id，要和setting.xml配置的一致
+     * -Durl=http://10.4.71.144:9090/repository/roy_privrepository_snapshots/  // 仓库的路径
+     *
+     *
+     * mvn deploy:deploy-file -Dmaven.test.skip=true -Dfile=/Users/xxx/Downloads/bug/class/bugly-3.3.3.jar -DgroupId=com.tencent.bugly -DartifactId=crashreport -Dversion=3.3.3 -Dpackaging=jar -DrepositoryId=maven-releases -Durl=http://xxx:8081/repository/maven-releases/
+     *
+     *
+     * ==========删除jar=======
+     * 可以直接登录，然后选中删除
+     *
+     *
+     *
+     *
+     * ============安装自定义jar包到本地Maven库
+     * 将本地jar安装到maven本地仓库中
+     *
+     * 当出现下列情况时：
+     * 1.要使用的 jar 不存在于 Maven 的中心储存库中。
+     * 2.您创建了一个自定义的 jar ，而另一个 Maven 项目需要使用。
+     * 需要手动将所需要的jar包存放至Maven本地资源库，可以再cmd中输入以下命令：
+     *
+     * mvn install:install-file -Dfile=c:\userdefined-1.0.jar -DgroupId=pers.test.code -DartifactId=userdefined -Dversion={1.0} -Dpackaging=jar
+     * 1
+     * 安装成功后，在pom.xml文件中可以使用了
+     *
+     * <dependency>
+     *       <groupId>pers.test.code</groupId>
+     *       <artifactId>userdefined </artifactId>
+     *       <version>1.0</version>
+     * </dependency>
+     */
+    void a10(){}
 
 }

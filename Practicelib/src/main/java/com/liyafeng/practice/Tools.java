@@ -198,6 +198,10 @@ public class Tools {
          * ===========dex2jar
          * dex2jar 下载 https://sourceforge.net/projects/dex2jar/files/
          *    d2j-dex2jar.bat filename.dex 转化为jar包
+         * mac用 sh d2j-dex2jar.sh file.dex
+         * 解压后再 file.dex 同级目录下生成转换后的jar
+         *
+         * 然后这个jar就能用 jd-gui打开了，而且能save source 导出源文件
          *
          * 如果执行命令需要权限，那么手动修改权限（MAC）
          *   chmod -R +x [dir]
@@ -415,4 +419,23 @@ public class Tools {
     public void a11() {
 
     }
+
+
+    /**
+     * ============查看二进制文件===========
+     * Sublime Text的插件包里面就有一个很好用的HexViewer，基本能满足需求。
+     * 使用方式：快捷键Command+Shift+P，选择Package Control: Install Package安装插件搜索HexViewer并等待安装成功
+     * 打开要查看的二进制文件，这个时候还是没有以HexViewer模式
+     * 打开的按下快捷键Command+Shift+P，
+     * 搜索并选择HexViewer: Toggle Hex View，回车骚等片刻后即可
+     *
+     * 作者：大熊
+     * 链接：https://www.zhihu.com/question/22281280/answer/853433490
+     * 来源：知乎
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     *
+     *
+     */
+    void a12(){}
 }

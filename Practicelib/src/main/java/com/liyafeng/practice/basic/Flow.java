@@ -524,6 +524,21 @@ public class Flow {
      * at android.os.Handler.handleCallback(Handler.java:754)
      * at android.os.Handler.dispatchMessage(Handler.java:95)
      * at android.os.Looper.loop(Looper.java:163)
+     *
+     * =================== java.lang.IllegalArgumentException: @Body parameters cannot be used with form or multi-part encoding. (parameter #1)
+     *         for method OralService.commitTrackForTest
+     *         at retrofit2.Utils.methodError(Utils.java:52)
+     *         at retrofit2.Utils.methodError(Utils.java:42)
+     *         at retrofit2.Utils.parameterError(Utils.java:61)
+     *         at retrofit2.RequestFactory$Builder.parseParameterAnnotation(RequestFactory.java:723)
+     *         at retrofit2.RequestFactory$Builder.parseParameter(RequestFactory.java:306)
+     *         at retrofit2.RequestFactory$Builder.build(RequestFactory.java:193)
+     *         at retrofit2.RequestFactory.parseAnnotations(RequestFactory.java:67)
+     *         at retrofit2.ServiceMethod.parseAnnotations(ServiceMethod.java:26)
+     *         at retrofit2.Retrofit.loadServiceMethod(Retrofit.java:170)
+     *         at retrofit2.Retrofit$1.invoke(Retrofit.java:149)
+     *         at java.lang.reflect.Proxy.invoke(Proxy.java:1006)
+     *         at $Proxy19.commitTrackForTest(Unknown Source)
      */
     void retrofitFiel() {
 

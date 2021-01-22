@@ -9,6 +9,8 @@ public class adb_command {
      * adb push src.txt /sdcard/dist.txt
      *
      *
+     * 查看当前顶层Activity的信息
+     * adb shell dumpsys activity top
      *
      *
      *

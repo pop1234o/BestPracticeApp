@@ -465,4 +465,156 @@ public class Main_Gradle extends Activity {
      *
      */
     void a8(){}
+
+
+    /**
+     * https://source.android.google.cn/security/apksigning?hl=zh-cn （应用签名）
+     * ========v1 v2 v3签名=============
+     * V1(Jar Signature)  V2(Full APK Signature)
+     *
+     * v1是对jar签名，但是不对元数据进行签名，例如 ZIP 元数据
+     * v2+ 方案会将 APK 文件视为 Blob，并对整个文件进行签名检查。对 APK 进行的任何修改（包括对 ZIP 元数据进行的修改）
+     * 都会使 APK 签名作废。这种形式的 APK 验证不仅速度要快得多，而且能够发现更多种未经授权的修改
+     *
+     * 7.0以下Android系统的手机只验证v1 (源码中只有v1验证)
+     * 7.0以上先验证 apk 中是否有 v2的签名信息在 apk的签名中，如果有就验证，没有就说明apk没有用v2签名，所以Android系统就只会验证
+     * v1签名
+     * （所以v1是必选的，因为在搭载7.0以下手机的Android系统只会验证v1签名， 7.0以上才会优先验证v2）
+     *
+     * 在 Android P 中，v2 方案已更新为 v3 方案，以便在签名分块中包含其他信息，但在其他方面保持相同的工作方式
+     *
+     * build-tools 24.x.x 以上（7.0以上） apksigner 版本的会自动用v1 v2签名
+     * 如果 Android p 以上的 build-tools 会默认进行 v1 v2 v3签名 （如果用命令行）
+     *
+     * ===============apksigner 和 jarsigner=========
+     *  https://blog.csdn.net/qq_32115439/article/details/55520012  Android-APK签名工具-jarsigner和apksigner
+     * jarsigner 是JDK提供的针对jar包签名的通用工具, 是对每个class文件(内容)进行hash计算，然后存入到MATA_INF中
+     * JDK/bin/jarsigner.exe
+     *
+     * V1签名: 来自JDK(jarsigner), 对zip压缩包的每个文件进行验证, 签名后还能对压缩包修改(移动/重新压缩文件)
+     * 对V1签名的apk/jar解压,在META-INF存放签名文件(MANIFEST.MF, CERT.SF, CERT.RSA),
+     * 其中MANIFEST.MF文件保存所有文件的SHA1指纹(除了META-INF文件), 由此可知: V1签名是对压缩包中单个文件签名验证
+     *
+     * V2签名:
+     * 来自Google(apksigner), 对zip压缩包的整个文件验证, 签名后不能修改压缩包(包括zipalign),
+     * 对V2签名的apk解压,没有发现签名文件,重新压缩后V2签名就失效, 由此可知: V2签名是对整个APK签名验证
+     * （V2签名实际上就是将构建后的内容(dex,res 等)压缩成 apk （就是zip压缩包），然后对zip内容进行签名）
+     *
+     * apksigner是Google官方提供的针对Android apk签名及验证的专用工具,
+     * 位于Android SDK/build-tools/SDK版本/apksigner.bat
+     *
+     *
+     *
+     *
+     * 注意: apksigner 工具默认同时使用V1和V2签名,以兼容Android 7.0以下版本
+     * ==============apksigner===========
+     * 进入Android SDK/build-tools/SDK版本, 输入命令 (默认会进行v1 v2签名（低于7.0版本的sdk-tool 24.x.x 只会v1签名）)
+     *      apksigner sign --ks 密钥库名(xx/xx.jks) --ks-key-alias 密钥别名 xxx.apk
+     *
+     *
+     * 若密钥库中有多个密钥对,则必须指定密钥别名
+     *     apksigner sign --ks 密钥库名 --ks-key-alias 密钥别名 xxx.apk
+     *
+     *
+     * 禁用V2签名
+     *     apksigner sign --v2-signing-enabled false --ks 密钥库名 xxx.apk
+     *
+     * 参数:
+     *         --ks-key-alias       密钥别名,若密钥库有一个密钥对,则可省略,反之必选
+     *         --v1-signing-enabled 是否开启V1签名,默认开启
+     *         --v2-signing-enabled 是否开启V2签名,默认开启
+     *
+     * ============签名验证=========
+     * 方法一(keytool,只支持V1签名校验)
+     *     进入JDK/bin, 输入命令
+     *     keytool -printcert -jarfile MyApp.apk (显示签名证书信息)
+     *
+     *     参数:
+     *         -printcert           打印证书内容
+     *         -jarfile <filename>  已签名的jar文件 或apk文件
+     *
+     * 2.方法二(apksigner,支持V1和V2签名校验)
+     *     进入Android SDK/build-tools/SDK版本, 输入命令
+     *     apksigner verify -v --print-certs xxx.apk
+     *
+     *     参数:
+     *         -v, --verbose 显示详情(显示是否使用V1和V2签名)
+     *         --print-certs 显示签名证书信息
+     *
+     *     例如:
+     *         apksigner verify -v MyApp.apk
+     *
+     *         Verifies
+     *         Verified using v1 scheme (JAR signing): true
+     *         Verified using v2 scheme (APK Signature Scheme v2): true
+     *         Number of signers: 1
+     *
+     *
+     * =========== zipalign =====
+     * 对齐使用的是android-sdk/tools目录下的 zipalign 工具，
+     * 主要工作是将apk包中所有的资源文件起始偏移为4字节的整数倍，这样通过内存映射访问apk时的速度会更快(比如home访问应用图标)
+     * 减少运行时所占用的内存
+     *
+     * zipalign是在应用签名之后(如果v2签名后就不能用zipalign了，因为这样改动了zip包内容导致签名会验证失败)
+     * v2签名必须在签名前执行zipalign
+     *
+     * 位于Android SDK/build-tools/SDK版本/zipalign
+     * zipalign 是对zip包对齐的工具,使APK包内未压缩的数据有序排列对齐,从而减少APP运行时内存消耗
+     * zipalign -v 4 in.apk out.apk   //4字节对齐优化
+     * zipalign -c -v 4 in.apk        //检查APK是否对齐
+     *
+     * zipalign可以在V1签名后执行
+     * 但zipalign不能在V2签名后执行,只能在V2签名之前执行！！！
+     *
+     * ----原理
+     * zipalign优化的最根本目的是帮助操作系统更高效率的根据请求索引资源
+     * ，将resource-handling code统一将Data structure alignment（数 据结构对齐标准:DSA）限定为4-byte boundaries。
+     * 如果第一次接触有关Data structure alignment的内容，强烈建议搜索更多与其相关的内容来充分理解这样做的最终目的，
+     * 这也是理解zipalign工作原理的关键。 如果不采取对齐的标准，处理器无法准确和快速的在内存地址中定位相关资源。
+     *
+     * 目前的系统中使用 fallback mechanism机制处理那些没有应用DSA标准的应用程序，
+     * 这的确大大的方便了普通开发者无需关注繁琐的内存操作问题。
+     * 但是相反，对于这样的应用程序 将给普通用户带来一定的麻烦，不但影响程序的运行的效率，
+     * 而且使系统的整体执行效率下降和占用大量不必要的内存资源，甚至消耗一定的电池资源 (battery life)。
+     *
+     *
+     * =========360加固后用walle打包==============
+     * https://jiagu.360.cn/#/global/download 下载mac 版，如果10.15以下版本打不开就复制一下里面的app覆盖外面的
+     *
+     * studio 打包出来的 是签名包
+     * 然后加固（把dex加密后重新打包成 加固包）
+     * 因为改动的apk，然后需要重新签名
+     * 签名后用walle 来重新写入 （写入到 APK Signing Block）
+     *
+     *  failed to install xx.apk: Failure [INSTALL_PARSE_FAILED_NO_CERTIFICATES:
+     *  Failed to collect certificates from /data/app/vmdl417198627.tmp/base.apk using APK Signature Scheme v2:
+     *  Size of APK Signing Block is not a multiple of 4096: 4140]
+     *
+     * 意思是加固后重新签名，然后写入渠道信息，就废了。。。
+     *
+     * 解决方式
+     * Oreo	8.1.0	API 级别 27
+     *
+     * 复现步骤
+     * release apk （Android studio 带签名的）
+     * 360 加固 （不要用自动签名，此时加固完是未签名的包）
+     * 28.0.2 apksigner
+     * walle 写入渠道
+     * 也是安装不了，
+     *
+     * 后来把 apksigner 回退到 27.0.3 就可以了
+     * 因为 build-tools 28.x.x 版本是Android p 加入了v3签名，签名机制变了
+     * 应该是360加固，和walle 写入渠道没有对应上
+     * （或者用新版本1.1.7的tag的walle，解决了4096这个问题，但是没有编译好的包。。）
+     *
+     * apksigner --version 查看版本
+     * 20
+     *
+     * =============360加固 跳过签名校验======
+     * https://bbs.360.cn/thread-15842607-1-1.html （防二次打包问题，是否要勾选跳过签名检验）
+     * 您好，您这个是加固助手，加固的时候不用勾选'跳过签名校验'。若您使用官网加固，请勾选;跳过签名校验'。
+     *
+     *
+     */
+    void a9(){}
 }

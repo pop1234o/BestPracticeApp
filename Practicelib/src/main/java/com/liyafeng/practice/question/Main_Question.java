@@ -1052,4 +1052,56 @@ public class Main_Question {
      *
      */
     void a44(){}
+
+
+    /**
+     * 有个网络请求一直loading，但是第二次就没事了。。
+     * 是因为okhttp在一次发送多个请求的时候，如果域名一样，那么会只建立一个socket链接，第二个请求会等待第一个请求的socket链接建立
+     * 第一个接口挂掉了，一直hang住了，没有响应，那么第二个请求就会一直等待第一个请求的建立链接，然后表现就是很慢，第二次单独请求这个接口
+     * 不依赖第一个有问题的接口了，就很快
+     *
+     *
+     */
+    void a45(){}
+
+
+    /**
+     * Android 编程技巧之 ----- 一次追查 DeadObjectException 的总结
+     * https://blog.csdn.net/u012538536/article/details/61423025
+     *
+     *
+     * 突然在某个版本出现这个异常
+     *
+     * 1 java.lang.RuntimeException:android.os.DeadSystemException
+     * 2 android.app.ActivityThread.handleDestroyActivity(ActivityThread.java:4598)
+     * 3 ......
+     * 4 android.os.DeadSystemException:
+     * 5 android.app.ActivityThread.handleDestroyActivity(ActivityThread.java:4598)
+     * 6 android.app.servertransaction.DestroyActivityItem.execute(DestroyActivityItem.java:39)
+     * 7 android.app.servertransaction.TransactionExecutor.executeLifecycleState(TransactionExecutor.java:145)
+     * 8 android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:70)
+     * 9 android.app.ActivityThread$H.handleMessage(ActivityThread.java:1831)
+     * 10 android.os.Handler.dispatchMessage(Handler.java:106)
+     * 11 android.os.Looper.loop(Looper.java:201)
+     * 12 android.app.ActivityThread.main(ActivityThread.java:6826)
+     * 13 java.lang.reflect.Method.invoke(Native Method)
+     * 14 com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:547)
+     * 15 com.android.internal.os.ZygoteInit.main(ZygoteInit.java:873)
+     *
+     * 最后发现有可能是加固导致的，因为在那个版本开始加固，开始有这个异常
+     *
+     *
+     */
+    void a46(){}
+
+
+    /**
+     * =========键盘不能把布局顶起问题/adjustResize无效问题==========
+     * 解决Android软键盘在全屏下设置adjustResize无效的问题
+     * https://cloud.tencent.com/developer/article/1524997
+     * 是因为设置了透明的状态栏，去掉就好了
+     *
+     *
+     */
+    void a47(){}
 }
