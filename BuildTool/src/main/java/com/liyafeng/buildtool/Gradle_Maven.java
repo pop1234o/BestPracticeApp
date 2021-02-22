@@ -365,4 +365,65 @@ public class Gradle_Maven {
      */
     void a10(){}
 
+
+    /**
+     * Android 上传aar到maven仓库
+     *
+     * 在要上传的模块build.gradle中最下面加入
+     *
+     * apply plugin: 'maven'
+     *
+     * //上传源码
+     * task androidSourcesJar(type: Jar) {
+     *     classifier = 'sources'
+     *     from android.sourceSets.main.java.sourceFiles
+     * }
+     * artifacts {
+     *     archives androidSourcesJar
+     * }
+     * //上传配置
+     * uploadArchives {
+     *     repositories {
+     *         mavenDeployer {
+     *             pom.project {
+     *                 groupId "xx.xxx"
+     *                 artifactId "xxSdk"
+     *                 version  "0.0.4"
+     *                 packaging 'aar'
+     *             }
+     *
+     *             repository(url: "http://xxx/repository/maven-releases/") {
+     *                 authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+     *             }
+     *             snapshotRepository(url: "http://xxx/repository/maven-releases/") {
+     *                 authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+     *             }
+     *         }
+     *     }
+     * }
+     *
+     * 然后执行gradle uploadArchives 任务就能上传了，里面pom.xml中的dependencies都有。
+     *
+     * ==========依赖
+     * 模块build.gradle 中
+     *
+     * configurations.all {
+     *     // check for updates every build
+     *     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+     * }
+     *
+     * dependencies {
+     *      //可以写   changing = true ，也可以加 -SNAPSHOT后缀，
+     *      //默认缓存24小时，上面也可以配置每次都更新。
+     *      //传统的依赖是本地有就不会去更新了，除非变更版本号
+     *      implementation ('com.xx.xx.xxx:xxSdk:0.0.3') { changing = true }
+     *
+     * }
+     *
+     *
+     *
+     *
+     */
+    void a11(){}
+
 }
