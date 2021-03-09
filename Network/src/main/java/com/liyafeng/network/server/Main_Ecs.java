@@ -117,6 +117,17 @@ public class Main_Ecs {
      * ```
      * 这样，我们就可以用ssh liyafeng.net来登录远程服务器了。
      *
+     * ==============gitlab ssh=========
+     * 两种加密算法
+     * ssh-keygen -t ed25519 -C "email@example.com"
+     * ssh-keygen -o -t rsa -b 4096 -C "email@example.com"
+     *
+     * 输入路径，和密码，建议直接回车
+     *
+     * 复制公钥到剪切板
+     * pbcopy < ~/.ssh/id_ed25519.pub
+     * 配置到gitlab上即可
+     *
      */
     void ssh(){}
 
