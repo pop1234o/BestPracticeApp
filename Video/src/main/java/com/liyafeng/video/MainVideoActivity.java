@@ -82,6 +82,17 @@ import com.liyafeng.video.practice.f_opengl_es.OpenGLES20Activity;
  * 缺点
  * 延时高 》10s
  * <p>
+ * ==========m3u8 文件格式详解
+ * https://www.jianshu.com/p/e97f6555a070
+ * M3U8 是 Unicode 版本的 M3U，用 UTF-8 编码。"M3U" 和 "M3U8" 文件都是苹果公司使用的 HTTP Live Streaming（HLS） 协议格式的基础，这种协议格式可以在 iPhone 和 Macbook 等设备播放。
+ *
+ * m3u8 文件其实是 HTTP Live Streaming（缩写为 HLS） 协议的部分内容，
+ *
+ * HLS 的工作原理是把整个流分成一个个小的基于 HTTP 的文件来下载，每次只下载一些。当媒体流正在播放时，客户端可以选择从许多不同的备用源中以不同的速率下载同样的资源，允许流媒体会话适应不同的数据速率。
+ *
+ *
+ *
+ *
  * ========================HTTP-FLV.================
  * TCP 长连接
  * <p>
