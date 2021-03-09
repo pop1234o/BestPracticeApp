@@ -42,7 +42,7 @@ public class Main_Shadow {
      ============qa===========
      1
      manager代码运行在哪个进程？插件代码呢？
-     manager在主进程，插件代码运行在 com.tal.monkey:plugin
+     manager在主进程，插件代码运行在 com.taller.monkey:plugin
 
      2
      插件调用宿主中的类，资源可以共用，还是分开打包，分开打包会有冲突么？
@@ -52,8 +52,8 @@ public class Main_Shadow {
      3
      host和plugin的 sp，getfiles 等等目录是一个么？ 不是一个，sp不能共用
 
-     /data/user/0/com.tal.monkey/files/ShadowPlugin_demo   会创建一个子文件夹
-     /storage/emulated/0/Android/data/com.tal.monkey/cache/ShadowPlugin_demo
+     /data/user/0/com.taller.monkey/files/ShadowPlugin_demo   会创建一个子文件夹
+     /storage/emulated/0/Android/data/com.taller.monkey/cache/ShadowPlugin_demo
 
      4 Application是一个类么？
      不是
@@ -194,13 +194,13 @@ public class Main_Shadow {
 
 
 
-    Caused by: java.lang.ClassNotFoundException: Didn't find class "com.tal.utils.AppUtils" on path: DexPathList[[zip file "/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/b9c7595644df1e0d44e02288bdbaf418/plugin-release.zip/module_plugin_runtime-release.apk"],nativeLibraryDirectories=[/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/lib/0A040A6D-8463-4D50-A56A-0B2E2F8A21F9_lib, /system/lib, /hw_product/lib]]
+    Caused by: java.lang.ClassNotFoundException: Didn't find class "com.taller.utils.AppUtils" on path: DexPathList[[zip file "/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/b9c7595644df1e0d44e02288bdbaf418/plugin-release.zip/module_plugin_runtime-release.apk"],nativeLibraryDirectories=[/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/lib/0A040A6D-8463-4D50-A56A-0B2E2F8A21F9_lib, /system/lib, /hw_product/lib]]
     at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:209)
     at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
     at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
     at com.tencent.shadow.core.loader.classloaders.PluginClassLoader.loadClass(Unknown Source:90)
     at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
-    at com.tal.module_plugin_test.MainActivity.onCreate(MainActivity.java:25) 
+    at com.taller.module_plugin_test.MainActivity.onCreate(MainActivity.java:25) 
     at com.tencent.shadow.core.loader.delegates.ShadowActivityDelegate.onCreate(Unknown Source:371) 
     at com.tencent.shadow.core.runtime.container.PluginContainerActivity.onCreate(PluginContainerActivity.java:84) 
     at android.app.Activity.performCreate(Activity.java:8085) 
@@ -230,13 +230,13 @@ public class Main_Shadow {
     需要在插件的build.gradle脚本中配置
     hostWhiteList = ["com.tencent.shadow.sample.host.lib"]
 
-    Caused by: java.lang.ClassNotFoundException: Didn't find class "com.tal.lib_common.entity.UserInfoEntity" on path: DexPathList[[zip file "/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/c681576ff234082256d4f2bacf692949/plugin-release.zip/module_plugin_runtime-release.apk"],nativeLibraryDirectories=[/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/lib/9EF92971-E6AC-4997-BE45-C6688C50334F_lib, /system/lib, /hw_product/lib]]
+    Caused by: java.lang.ClassNotFoundException: Didn't find class "com.taller.lib_common.entity.UserInfoEntity" on path: DexPathList[[zip file "/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/c681576ff234082256d4f2bacf692949/plugin-release.zip/module_plugin_runtime-release.apk"],nativeLibraryDirectories=[/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/lib/9EF92971-E6AC-4997-BE45-C6688C50334F_lib, /system/lib, /hw_product/lib]]
     at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:209)
     at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
     at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
     at com.tencent.shadow.core.loader.classloaders.PluginClassLoader.loadClass(Unknown Source:90)
     at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
-    at com.tal.module_plugin_test.MainActivity.onCreate(MainActivity.java:36) 
+    at com.taller.module_plugin_test.MainActivity.onCreate(MainActivity.java:36) 
     at com.tencent.shadow.core.loader.delegates.ShadowActivityDelegate.onCreate(Unknown Source:371) 
     at com.tencent.shadow.core.runtime.container.PluginContainerActivity.onCreate(PluginContainerActivity.java:84) 
     at android.app.Activity.performCreate(Activity.java:8085) 
@@ -261,15 +261,15 @@ public class Main_Shadow {
 
 
 =============问题
-    adb: failed to install /Users/pop/Documents/mypro/monkey-homework-android/app/build/outputs/apk/monkey_oral_android/beta/app-monkey_oral_android-beta.apk: Failure [INSTALL_FAILED_CONFLICTING_PROVIDER: Scanning Failed.: Can't install because provider name com.tencent.shadow.contentprovider.authority.dynamic (in package com.tal.monkey) is already used by com.tencent.shadow.sample.host]
+    adb: failed to install /Users/pop/Documents/mypro/monkey-homework-android/app/build/outputs/apk/monkey_oral_android/beta/app-monkey_oral_android-beta.apk: Failure [INSTALL_FAILED_CONFLICTING_PROVIDER: Scanning Failed.: Can't install because provider name com.tencent.shadow.contentprovider.authority.dynamic (in package com.taller.monkey) is already used by com.tencent.shadow.sample.host]
 
     已经有app在用这个了，换个名字
 
 =============bug
-2020-11-14 18:16:40.376 20858-22179/com.tal.monkey E/CrashReport: java.lang.ExceptionInInitializerError
-    at com.tal.module_plugin.manager.Shadow.getPluginManager(Shadow.java:32)
-    at com.tal.module_plugin.process.HostApplication.loadPluginManager(HostApplication.java:96)
-    at com.tal.module_plugin.process.PluginLoadActivity$1.run(PluginLoadActivity.java:56)
+2020-11-14 18:16:40.376 20858-22179/com.taller.monkey E/CrashReport: java.lang.ExceptionInInitializerError
+    at com.taller.module_plugin.manager.Shadow.getPluginManager(Shadow.java:32)
+    at com.taller.module_plugin.process.HostApplication.loadPluginManager(HostApplication.java:96)
+    at com.taller.module_plugin.process.PluginLoadActivity$1.run(PluginLoadActivity.java:56)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
     at java.lang.Thread.run(Thread.java:929)
@@ -277,9 +277,9 @@ public class Main_Shadow {
     at com.tencent.shadow.core.common.LoggerFactory.getILoggerFactory(LoggerFactory.java:39)
     at com.tencent.shadow.core.common.LoggerFactory.getLogger(LoggerFactory.java:33)
     at com.tencent.shadow.dynamic.host.DynamicPluginManager.<clinit>(DynamicPluginManager.java:34)
-    at com.tal.module_plugin.manager.Shadow.getPluginManager(Shadow.java:32) 
-    at com.tal.module_plugin.process.HostApplication.loadPluginManager(HostApplication.java:96) 
-    at com.tal.module_plugin.process.PluginLoadActivity$1.run(PluginLoadActivity.java:56) 
+    at com.taller.module_plugin.manager.Shadow.getPluginManager(Shadow.java:32) 
+    at com.taller.module_plugin.process.HostApplication.loadPluginManager(HostApplication.java:96) 
+    at com.taller.module_plugin.process.PluginLoadActivity$1.run(PluginLoadActivity.java:56) 
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167) 
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641) 
     at java.lang.Thread.run(Thread.java:929) 
@@ -287,8 +287,8 @@ public class Main_Shadow {
     要设置  setILoggerFactory
 
 ============bug
-    Process: com.tal.monkey, PID: 22793
-    java.lang.RuntimeException: Unable to create application com.tal.monkey.MonkeyApplication: java.lang.IllegalStateException: Can't set data directory suffix: WebView already initialized
+    Process: com.taller.monkey, PID: 22793
+    java.lang.RuntimeException: Unable to create application com.taller.monkey.MonkeyApplication: java.lang.IllegalStateException: Can't set data directory suffix: WebView already initialized
     at android.app.ActivityThread.handleBindApplication(ActivityThread.java:7365)
     at android.app.ActivityThread.access$2400(ActivityThread.java:308)
     at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2295)
@@ -301,9 +301,9 @@ public class Main_Shadow {
     Caused by: java.lang.IllegalStateException: Can't set data directory suffix: WebView already initialized
     at android.webkit.WebViewFactory.setDataDirectorySuffix(WebViewFactory.java:136)
     at android.webkit.WebView.setDataDirectorySuffix(WebView.java:2058)
-    at com.tal.module_plugin.process.HostApplication.setWebViewDataDirectorySuffix(HostApplication.java:84)
-    at com.tal.module_plugin.process.HostApplication.init(HostApplication.java:67)
-    at com.tal.monkey.MonkeyApplication.onCreate(MonkeyApplication.java:41)
+    at com.taller.module_plugin.process.HostApplication.setWebViewDataDirectorySuffix(HostApplication.java:84)
+    at com.taller.module_plugin.process.HostApplication.init(HostApplication.java:67)
+    at com.taller.monkey.MonkeyApplication.onCreate(MonkeyApplication.java:41)
     at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1202)
     at android.app.ActivityThread.handleBindApplication(ActivityThread.java:7349)
     at android.app.ActivityThread.access$2400(ActivityThread.java:308) 
@@ -319,9 +319,9 @@ public class Main_Shadow {
 
 
 ========bug
-    Process: com.tal.monkey, PID: 23146
+    Process: com.taller.monkey, PID: 23146
     java.lang.RuntimeException: java.lang.RuntimeException: java.io.FileNotFoundException: /data/local/tmp/plugin-debug.zip: open failed: ENOENT (No such file or directory)
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$2.run(SamplePluginManager.java:161)
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$2.run(SamplePluginManager.java:161)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
     at java.lang.Thread.run(Thread.java:929)
@@ -329,8 +329,8 @@ public class Main_Shadow {
     at com.tencent.shadow.core.manager.installplugin.MinFileUtils.md5File(MinFileUtils.java:79)
     at com.tencent.shadow.core.manager.installplugin.UnpackManager.unpackPlugin(UnpackManager.java:104)
     at com.tencent.shadow.core.manager.BasePluginManager.installPluginFromZip(BasePluginManager.java:98)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.installPlugin(FastPluginManager.java:43)
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$2.run(SamplePluginManager.java:131)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.installPlugin(FastPluginManager.java:43)
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$2.run(SamplePluginManager.java:131)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167) 
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641) 
     at java.lang.Thread.run(Thread.java:929) 
@@ -340,8 +340,8 @@ public class Main_Shadow {
     at com.tencent.shadow.core.manager.installplugin.MinFileUtils.md5File(MinFileUtils.java:72)
     at com.tencent.shadow.core.manager.installplugin.UnpackManager.unpackPlugin(UnpackManager.java:104) 
     at com.tencent.shadow.core.manager.BasePluginManager.installPluginFromZip(BasePluginManager.java:98) 
-    at com.tal.module_plugin_manager.manager.FastPluginManager.installPlugin(FastPluginManager.java:43) 
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$2.run(SamplePluginManager.java:131) 
+    at com.taller.module_plugin_manager.manager.FastPluginManager.installPlugin(FastPluginManager.java:43) 
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$2.run(SamplePluginManager.java:131) 
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167) 
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641) 
     at java.lang.Thread.run(Thread.java:929) 
@@ -356,8 +356,8 @@ public class Main_Shadow {
     at com.tencent.shadow.core.manager.installplugin.MinFileUtils.md5File(MinFileUtils.java:72) 
     at com.tencent.shadow.core.manager.installplugin.UnpackManager.unpackPlugin(UnpackManager.java:104) 
     at com.tencent.shadow.core.manager.BasePluginManager.installPluginFromZip(BasePluginManager.java:98) 
-    at com.tal.module_plugin_manager.manager.FastPluginManager.installPlugin(FastPluginManager.java:43) 
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$2.run(SamplePluginManager.java:131) 
+    at com.taller.module_plugin_manager.manager.FastPluginManager.installPlugin(FastPluginManager.java:43) 
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$2.run(SamplePluginManager.java:131) 
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167) 
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641) 
     at java.lang.Thread.run(Thread.java:929) 
@@ -367,17 +367,17 @@ public class Main_Shadow {
             =========bug
 
     java.lang.RuntimeException: java.lang.IllegalArgumentException: 无法绑定PPS:com.tencent.shadow.sample.introduce_shadow_lib.MainPluginProcessService
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:99)
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:99)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
     at java.lang.Thread.run(Thread.java:929)
     Caused by: java.lang.IllegalArgumentException: 无法绑定PPS:com.tencent.shadow.sample.introduce_shadow_lib.MainPluginProcessService
     at com.tencent.shadow.dynamic.manager.BaseDynamicPluginManager.bindPluginProcessService(BaseDynamicPluginManager.java:109)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.loadPluginLoaderAndRuntime(FastPluginManager.java:113)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.loadPlugin(FastPluginManager.java:121)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.convertActivityIntent(FastPluginManager.java:107)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.startPluginActivity(FastPluginManager.java:99)
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:97)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.loadPluginLoaderAndRuntime(FastPluginManager.java:113)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.loadPlugin(FastPluginManager.java:121)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.convertActivityIntent(FastPluginManager.java:107)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.startPluginActivity(FastPluginManager.java:99)
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:97)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167) 
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641) 
     at java.lang.Thread.run(Thread.java:929) 
@@ -386,9 +386,9 @@ public class Main_Shadow {
     宿主中注册的PluginProcessService实现的类名 ,要在 SamplePluginManager 中写正确
 
 ==========bug
-    Process: com.tal.monkey, PID: 26730
+    Process: com.taller.monkey, PID: 26730
     java.lang.RuntimeException: java.lang.NullPointerException
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:99)
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:99)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
     at java.lang.Thread.run(Thread.java:929)
@@ -397,27 +397,27 @@ public class Main_Shadow {
     at android.os.Parcel.readException(Parcel.java:2039)
     at android.os.Parcel.readException(Parcel.java:1987)
     at com.tencent.shadow.dynamic.manager.BinderPluginLoader.loadPlugin(BinderPluginLoader.java:47)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.loadPlugin(FastPluginManager.java:124)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.convertActivityIntent(FastPluginManager.java:107)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.startPluginActivity(FastPluginManager.java:99)
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:97)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.loadPlugin(FastPluginManager.java:124)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.convertActivityIntent(FastPluginManager.java:107)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.startPluginActivity(FastPluginManager.java:99)
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:97)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167) 
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641) 
     at java.lang.Thread.run(Thread.java:929) 
 
 
 
-    看样子manager中的代码还是在 Process: com.tal.monkey, 中执行？
+    看样子manager中的代码还是在 Process: com.taller.monkey, 中执行？
 
     java.lang.NullPointerException
     at android.os.Parcel.createException(Parcel.java:2077)
     at android.os.Parcel.readException(Parcel.java:2039)
     at android.os.Parcel.readException(Parcel.java:1987)
     at com.tencent.shadow.dynamic.manager.BinderPluginLoader.loadPlugin(BinderPluginLoader.java:47)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.loadPlugin(FastPluginManager.java:124)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.convertActivityIntent(FastPluginManager.java:107)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.startPluginActivity(FastPluginManager.java:99)
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:97)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.loadPlugin(FastPluginManager.java:124)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.convertActivityIntent(FastPluginManager.java:107)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.startPluginActivity(FastPluginManager.java:99)
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:97)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
     at java.lang.Thread.run(Thread.java:929)
@@ -427,21 +427,21 @@ public class Main_Shadow {
 
 
             =============bug
-    Process: com.tal.monkey, PID: 30791
-    java.lang.RuntimeException: android.content.ActivityNotFoundException: Unable to find explicit activity class {com.tal.monkey/com.tencent.shadow.sample.runtime.PluginDefaultProxyActivity}; have you declared this activity in your AndroidManifest.xml?
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:100)
+    Process: com.taller.monkey, PID: 30791
+    java.lang.RuntimeException: android.content.ActivityNotFoundException: Unable to find explicit activity class {com.taller.monkey/com.tencent.shadow.sample.runtime.PluginDefaultProxyActivity}; have you declared this activity in your AndroidManifest.xml?
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:100)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
     at java.lang.Thread.run(Thread.java:929)
-    Caused by: android.content.ActivityNotFoundException: Unable to find explicit activity class {com.tal.monkey/com.tencent.shadow.sample.runtime.PluginDefaultProxyActivity}; have you declared this activity in your AndroidManifest.xml?
+    Caused by: android.content.ActivityNotFoundException: Unable to find explicit activity class {com.taller.monkey/com.tencent.shadow.sample.runtime.PluginDefaultProxyActivity}; have you declared this activity in your AndroidManifest.xml?
     at android.app.Instrumentation.checkStartActivityResult(Instrumentation.java:2118)
     at android.app.Instrumentation.execStartActivity(Instrumentation.java:1746)
     at android.app.Activity.startActivityForResult(Activity.java:5362)
     at android.app.Activity.startActivityForResult(Activity.java:5303)
     at android.app.Activity.startActivity(Activity.java:5733)
     at android.app.Activity.startActivity(Activity.java:5701)
-    at com.tal.module_plugin_manager.manager.FastPluginManager.startPluginActivity(FastPluginManager.java:104)
-    at com.tal.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:97)
+    at com.taller.module_plugin_manager.manager.FastPluginManager.startPluginActivity(FastPluginManager.java:104)
+    at com.taller.module_plugin_manager.manager.SamplePluginManager$1.run(SamplePluginManager.java:97)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167) 
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641) 
     at java.lang.Thread.run(Thread.java:929) 
@@ -527,11 +527,11 @@ public class Main_Shadow {
 
 ========= 插件打不开了。。。卡在manager了
 
-2020-11-14 19:54:33.321 7823-8546/com.tal.monkey W/com.tal.monkey: Unsupported class loader
-2020-11-14 19:54:33.321 7823-7823/com.tal.monkey I/CommonDialogHelper: [MainActivity:onStop:679]: main onStop()
-2020-11-14 19:54:33.321 7823-8550/com.tal.monkey W/com.tal.monkey: Unsupported class loader
-2020-11-14 19:54:33.342 7823-8547/com.tal.monkey W/com.tal.monkey: Unsupported class loader
-2020-11-14 19:54:33.371 7823-8547/com.tal.monkey W/com.tal.monkey: Failed execv(/system/bin/dex2oat --debuggable --instruction-set=arm --instruction-set-features=div,atomic_ldrd_strd,-armv8a --runtime-arg -Xhidden-api-policy:enabled --runtime-arg -Xrelocate --boot-image=/system/framework/boot.art --runtime-arg -Xms64m --runtime-arg -Xmx512m -j4 --instruction-set-variant=cortex-a15 --instruction-set-features=default --generate-mini-debug-info --debuggable --generate-mini-debug-info --dex-file=/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/22ae68addde3fa80119cd991259f652/plugin-release.zip/module_plugin_loader-release.apk --output-vdex-fd=206 --oat-fd=208 --oat-location=/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/22ae68addde3fa80119cd991259f652/plugin-release.zip/oat/arm/module_plugin_loader-release.odex --compiler-filter=quicken --class-loader-context=& --compilation-reason=dynamic-load) because non-0 exit status
+2020-11-14 19:54:33.321 7823-8546/com.taller.monkey W/com.taller.monkey: Unsupported class loader
+2020-11-14 19:54:33.321 7823-7823/com.taller.monkey I/CommonDialogHelper: [MainActivity:onStop:679]: main onStop()
+2020-11-14 19:54:33.321 7823-8550/com.taller.monkey W/com.taller.monkey: Unsupported class loader
+2020-11-14 19:54:33.342 7823-8547/com.taller.monkey W/com.taller.monkey: Unsupported class loader
+2020-11-14 19:54:33.371 7823-8547/com.taller.monkey W/com.taller.monkey: Failed execv(/system/bin/dex2oat --debuggable --instruction-set=arm --instruction-set-features=div,atomic_ldrd_strd,-armv8a --runtime-arg -Xhidden-api-policy:enabled --runtime-arg -Xrelocate --boot-image=/system/framework/boot.art --runtime-arg -Xms64m --runtime-arg -Xmx512m -j4 --instruction-set-variant=cortex-a15 --instruction-set-features=default --generate-mini-debug-info --debuggable --generate-mini-debug-info --dex-file=/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/22ae68addde3fa80119cd991259f652/plugin-release.zip/module_plugin_loader-release.apk --output-vdex-fd=206 --oat-fd=208 --oat-location=/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/22ae68addde3fa80119cd991259f652/plugin-release.zip/oat/arm/module_plugin_loader-release.odex --compiler-filter=quicken --class-loader-context=& --compilation-reason=dynamic-load) because non-0 exit status
 2020
 
     重新创建一个plugin.zip就好了。。。这个不知道啥问题。。。。
@@ -543,8 +543,8 @@ public class Main_Shadow {
 
 =========bug
 
-    Process: com.tal.monkey:plugin, PID: 31357
-    java.lang.RuntimeException: Unable to start activity ComponentInfo{com.tal.monkey/com.tal.module_plugin_runtime.runtime.PluginDefaultProxyActivity}: java.lang.RuntimeException: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+    Process: com.taller.monkey:plugin, PID: 31357
+    java.lang.RuntimeException: Unable to start activity ComponentInfo{com.taller.monkey/com.taller.module_plugin_runtime.runtime.PluginDefaultProxyActivity}: java.lang.RuntimeException: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
     at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3895)
     at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4074)
     at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:91)
@@ -580,7 +580,7 @@ public class Main_Shadow {
     at androidx.appcompat.app.AppCompatDelegateImpl.y(Unknown Source:4)
     at androidx.appcompat.app.AppCompatDelegateImpl.c(Unknown Source:0)
     at androidx.appcompat.app.AppCompatActivity.setContentView(Unknown Source:4)
-    at com.tal.lib_common.ui.activity.BaseActivity.onCreate(Unknown Source:16)
+    at com.taller.lib_common.ui.activity.BaseActivity.onCreate(Unknown Source:16)
     at com.tencent.shadow.core.loader.delegates.ShadowActivityDelegate.onCreate(Unknown Source:371)
     at com.tencent.shadow.core.runtime.container.PluginContainerActivity.onCreate(PluginContainerActivity.java:84) 
     at android.app.Activity.performCreate(Activity.java:8085) 
@@ -606,7 +606,7 @@ public class Main_Shadow {
             ==========bug
     Caused by: d.a.a.a.c.b: ARouter::Init::Invoke init(context) first!
     at d.a.a.a.e.a.b(Unknown Source:34)
-    at com.tal.lib_common.ui.activity.BaseActivity.onCreate(Unknown Source:19)
+    at com.taller.lib_common.ui.activity.BaseActivity.onCreate(Unknown Source:19)
 
     没初始化的要初始化
 
@@ -614,12 +614,12 @@ public class Main_Shadow {
 
 
 ========bug
-    Process: com.tal.monkey:plugin, PID: 7328
+    Process: com.taller.monkey:plugin, PID: 7328
     java.lang.NoClassDefFoundError: Failed resolution of: Lorg/apache/http/conn/scheme/SchemeRegistry;
     at com.tencent.open.utils.HttpUtils.getHttpClient(ProGuard:626)
     at com.tencent.open.utils.HttpUtils.openUrl2(ProGuard:506)
     at com.tencent.open.utils.f$1.run(ProGuard:197)
-    Caused by: java.lang.ClassNotFoundException: Didn't find class "org.apache.http.conn.scheme.SchemeRegistry" on path: DexPathList[[zip file "/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/4ff7737e5647fc0e3b9052567835a976/plugin-release.zip/module_plugin_runtime-release.apk"],nativeLibraryDirectories=[/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/lib/AC1F624B-9493-481B-B81C-97B982CCBD82_lib, /system/lib, /hw_product/lib]]
+    Caused by: java.lang.ClassNotFoundException: Didn't find class "org.apache.http.conn.scheme.SchemeRegistry" on path: DexPathList[[zip file "/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/4ff7737e5647fc0e3b9052567835a976/plugin-release.zip/module_plugin_runtime-release.apk"],nativeLibraryDirectories=[/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/lib/AC1F624B-9493-481B-B81C-97B982CCBD82_lib, /system/lib, /hw_product/lib]]
     at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:209)
     at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
     at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
@@ -628,7 +628,7 @@ public class Main_Shadow {
     at com.tencent.open.utils.HttpUtils.getHttpClient(ProGuard:626) 
     at com.tencent.open.utils.HttpUtils.openUrl2(ProGuard:506) 
     at com.tencent.open.utils.f$1.run(ProGuard:197) 
-    Suppressed: java.lang.ClassNotFoundException: Didn't find class "org.apache.http.conn.scheme.SchemeRegistry" on path: DexPathList[[zip file "/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/4ff7737e5647fc0e3b9052567835a976/plugin-release.zip/lib_printer-release.apk"],nativeLibraryDirectories=[/data/user/0/com.tal.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/lib/AC1F624B-9493-481B-B81C-97B982CCBD82_lib, /system/lib, /hw_product/lib]]
+    Suppressed: java.lang.ClassNotFoundException: Didn't find class "org.apache.http.conn.scheme.SchemeRegistry" on path: DexPathList[[zip file "/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/4ff7737e5647fc0e3b9052567835a976/plugin-release.zip/lib_printer-release.apk"],nativeLibraryDirectories=[/data/user/0/com.taller.monkey/files/ShadowPluginManager/UnpackedPlugin/sample-manager/lib/AC1F624B-9493-481B-B81C-97B982CCBD82_lib, /system/lib, /hw_product/lib]]
     at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:209)
     at com.tencent.shadow.core.loader.classloaders.PluginClassLoader.loadClass(Unknown Source:75)
             ... 4 more
@@ -637,7 +637,7 @@ public class Main_Shadow {
 
 ==========bug
 
-    Process: com.tal.monkey:plugin, PID: 11712
+    Process: com.taller.monkey:plugin, PID: 11712
     java.lang.RuntimeException: An error occurred while executing doInBackground()
     at android.os.AsyncTask$AsyncFutureTask.done(AsyncTask.java:429)
     at java.util.concurrent.FutureTask.finishCompletion(FutureTask.java:383)
@@ -649,9 +649,9 @@ public class Main_Shadow {
     Caused by: java.lang.UnsatisfiedLinkError: No implementation found for long com.shockwave.pdfium.PdfiumCore.nativeOpenDocument(int, java.lang.String) (tried Java_com_shockwave_pdfium_PdfiumCore_nativeOpenDocument and Java_com_shockwave_pdfium_PdfiumCore_nativeOpenDocument__ILjava_lang_String_2)
     at com.shockwave.pdfium.PdfiumCore.nativeOpenDocument(Native Method)
     at com.shockwave.pdfium.PdfiumCore.newDocument(PdfiumCore.java:135)
-    at com.tal.lib_printer.pdfviewer.source.FileSource.createDocument(FileSource.java:38)
-    at com.tal.lib_printer.pdfviewer.DecodingAsyncTask.doInBackground(DecodingAsyncTask.java:53)
-    at com.tal.lib_printer.pdfviewer.DecodingAsyncTask.doInBackground(DecodingAsyncTask.java:27)
+    at com.taller.lib_printer.pdfviewer.source.FileSource.createDocument(FileSource.java:38)
+    at com.taller.lib_printer.pdfviewer.DecodingAsyncTask.doInBackground(DecodingAsyncTask.java:53)
+    at com.taller.lib_printer.pdfviewer.DecodingAsyncTask.doInBackground(DecodingAsyncTask.java:27)
     at android.os.AsyncTask$3.call(AsyncTask.java:389)
     at java.util.concurrent.FutureTask.run(FutureTask.java:266)
     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167) 
@@ -707,8 +707,8 @@ public class Main_Shadow {
      * //                case Constant.PART_KEY_PLUGIN_MAIN_APP:
      * //                case Constant.PART_KEY_PLUGIN_ANOTHER_APP:
      *             //要启动的插件中的Activity
-     *                     intent.putExtra(Constant.KEY_ACTIVITY_CLASSNAME, "com.tal.module_plugin_test.MainActivity");
-     * //                    intent.putExtra(Constant.KEY_ACTIVITY_CLASSNAME, "com.tal.lib_printer.ui.PrinterActivity");
+     *                     intent.putExtra(Constant.KEY_ACTIVITY_CLASSNAME, "com.taller.module_plugin_test.MainActivity");
+     * //                    intent.putExtra(Constant.KEY_ACTIVITY_CLASSNAME, "com.taller.lib_printer.ui.PrinterActivity");
      * //                    break;
      * //
      * //            }
@@ -740,7 +740,7 @@ public class Main_Shadow {
      *     }
      *     宿主中注册的PluginProcessService实现的类名
      * protected String getPluginProcessServiceName() {
-     *         return "com.tal.module_plugin.process.PluginProcessPPS";
+     *         return "com.taller.module_plugin.process.PluginProcessPPS";
      *     }
      *
      * ======== runtime 有宿主中注册的Activity类，用来占位四大组件
@@ -797,7 +797,7 @@ public class Main_Shadow {
      //这里改成插件的模块的名字
      apkName = 'module_plugin_test-debug.apk'
      apkPath = 'module_plugin_test/build/outputs/apk/debug/pmodule_plugin_test-debug.apk'
-     hostWhiteList = ["com.tal.utils","com.tal.lib_common.utils","com.tal.lib_common.entity"]
+     hostWhiteList = ["com.taller.utils","com.taller.lib_common.utils","com.taller.lib_common.entity"]
      }
      }
      }
@@ -813,7 +813,7 @@ public class Main_Shadow {
      apkName = 'module_plugin_test-release.apk'
      apkPath = 'module_plugin_test/build/outputs/apk/release/module_plugin_test-release.apk'
      //这样就可以访问宿主中的类了
-     hostWhiteList = ["com.tal.utils","com.tal.lib_common.utils","com.tal.lib_common.entity"]
+     hostWhiteList = ["com.taller.utils","com.taller.lib_common.utils","com.taller.lib_common.entity"]
      }
      }
      }
