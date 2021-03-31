@@ -617,4 +617,100 @@ public class Main_Gradle extends Activity {
      *
      */
     void a9(){}
+
+    /**
+     * Could not install Gradle distribution from 'https://services.gradle.org/distributions/gradle-4.6-all.zip'.
+     * The cached zip file /Users/xxx/.gradle/wrapper/dists/gradle-4.6-all/bcst21l2brirad8k2ben1letg/gradle-4.6-all.zip may be corrupted.
+     *
+     * Delete file and sync project
+     *
+     *
+     * 意思是gradle版本文件损坏，去上面链接手动下载，
+     * 放到/Users/xxx/.gradle/wrapper/dists/gradle-4.6-all/bcst21l2brirad8k2ben1letg/ 目录下
+     *
+     * 重新sync，会下载gradle tool版本对应的jar
+     *
+     * Starting Gradle Daemon...
+     * Gradle Daemon started in 1 s 351 ms
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/3.2.1/gradle-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/builder/3.2.1/builder-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/androidx/databinding/databinding-compiler-common/3.2.1/databinding-compiler-common-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/bundletool/0.5.0/bundletool-0.5.0.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/analytics-library/shared/26.2.1/shared-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/analytics-library/crash/26.2.1/crash-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle-api/3.2.1/gradle-api-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/lint/lint-gradle-api/26.2.1/lint-gradle-api-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-core/1.0.0-alpha10/jetifier-core-1.0.0-alpha10.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-processor/1.0.0-alpha10/jetifier-processor-1.0.0-alpha10.pom
+     * Download https://jcenter.bintray.com/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.2.71/kotlin-stdlib-jdk8-1.2.71.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/apkzlib/3.2.1/apkzlib-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/sdklib/26.2.1/sdklib-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/manifest-merger/26.2.1/manifest-merger-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/builder-test-api/3.2.1/builder-test-api-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/sdk-common/26.2.1/sdk-common-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/builder-model/3.2.1/builder-model-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/analytics-library/tracker/26.2.1/tracker-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/apksig/3.2.1/apksig-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/analytics-library/protos/26.2.1/protos-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/common/26.2.1/common-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/ddms/ddmlib/26.2.1/ddmlib-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/annotations/26.2.1/annotations-26.2.1.pom
+     * Download https://jcenter.bintray.com/com/google/guava/guava/23.0/guava-23.0.pom
+     * Download https://jcenter.bintray.com/com/google/guava/guava-parent/23.0/guava-parent-23.0.pom
+     * Download https://jcenter.bintray.com/org/apache/httpcomponents/httpcore/4.4.5/httpcore-4.4.5.pom
+     * Download https://jcenter.bintray.com/org/apache/httpcomponents/httpmime/4.5.2/httpmime-4.5.2.pom
+     * Download https://jcenter.bintray.com/org/apache/httpcomponents/httpcomponents-client/4.5.2/httpcomponents-client-4.5.2.pom
+     * Download https://jcenter.bintray.com/org/apache/httpcomponents/httpcomponents-core/4.4.5/httpcomponents-core-4.4.5.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/databinding/baseLibrary/3.2.1/baseLibrary-3.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/androidx/databinding/databinding-common/3.2.1/databinding-common-3.2.1.pom
+     * Download https://jcenter.bintray.com/org/jetbrains/kotlin/kotlin-stdlib/1.2.71/kotlin-stdlib-1.2.71.pom
+     * Download https://jcenter.bintray.com/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.2.71/kotlin-stdlib-jdk7-1.2.71.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/repository/26.2.1/repository-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/layoutlib/layoutlib-api/26.2.1/layoutlib-api-26.2.1.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/dvlib/26.2.1/dvlib-26.2.1.pom
+     * Download https://jcenter.bintray.com/org/apache/commons/commons-parent/32/commons-parent-32.pom
+     * Download https://jcenter.bintray.com/org/jetbrains/kotlin/kotlin-stdlib-common/1.2.71/kotlin-stdlib-common-1.2.71.pom
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/lint/lint-gradle-api/26.2.1/lint-gradle-api-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/analytics-library/shared/26.2.1/shared-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/builder-test-api/3.2.1/builder-test-api-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/androidx/databinding/databinding-compiler-common/3.2.1/databinding-compiler-common-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/sdk-common/26.2.1/sdk-common-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/manifest-merger/26.2.1/manifest-merger-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle-api/3.2.1/gradle-api-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/builder/3.2.1/builder-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/3.2.1/gradle-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/analytics-library/tracker/26.2.1/tracker-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/ddms/ddmlib/26.2.1/ddmlib-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/layoutlib/layoutlib-api/26.2.1/layoutlib-api-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/sdklib/26.2.1/sdklib-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/dvlib/26.2.1/dvlib-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/repository/26.2.1/repository-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/common/26.2.1/common-26.2.1.jar
+     * Download https://jcenter.bintray.com/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.2.71/kotlin-stdlib-jdk8-1.2.71.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-processor/1.0.0-alpha10/jetifier-processor-1.0.0-alpha10.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/jetifier/jetifier-core/1.0.0-alpha10/jetifier-core-1.0.0-alpha10.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/builder-model/3.2.1/builder-model-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/bundletool/0.5.0/bundletool-0.5.0.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/analytics-library/protos/26.2.1/protos-26.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/apksig/3.2.1/apksig-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/build/apkzlib/3.2.1/apkzlib-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/annotations/26.2.1/annotations-26.2.1.jar
+     * Download https://jcenter.bintray.com/com/google/guava/guava/23.0/guava-23.0.jar
+     * Download https://jcenter.bintray.com/org/apache/httpcomponents/httpmime/4.5.2/httpmime-4.5.2.jar
+     * Download https://dl.google.com/dl/android/maven2/androidx/databinding/databinding-common/3.2.1/databinding-common-3.2.1.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/databinding/baseLibrary/3.2.1/baseLibrary-3.2.1.jar
+     * Download https://jcenter.bintray.com/org/apache/httpcomponents/httpcore/4.4.5/httpcore-4.4.5.jar
+     * Download https://jcenter.bintray.com/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.2.71/kotlin-stdlib-jdk7-1.2.71.jar
+     * Download https://jcenter.bintray.com/org/jetbrains/kotlin/kotlin-stdlib/1.2.71/kotlin-stdlib-1.2.71.jar
+     * Download https://dl.google.com/dl/android/maven2/com/android/tools/analytics-library/crash/26.2.1/crash-26.2.1.jar
+     * Download https://jcenter.bintray.com/org/jetbrains/kotlin/kotlin-stdlib-common/1.2.71/kotlin-stdlib-common-1.2.71.jar
+     *
+     * CONFIGURE SUCCESSFUL in 1m 3s
+     * Generating JAR file 'gradle-api-4.6.jar'
+     *
+     * 然后开始下载源码，index，然后编译器不报错
+     *
+     *
+     */
+    void a10(){}
 }
