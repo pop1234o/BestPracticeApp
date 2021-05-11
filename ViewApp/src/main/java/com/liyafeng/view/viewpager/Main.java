@@ -24,6 +24,16 @@ public class Main {
      * 注意在Adapter中记得container.addView，否则显示不出来
      * 而且必须用addView，不能有inflate(R.layout.xxx,container)，否则显示不出来
      *
+     * ============viewpager2缓存机制==============
+     * 内部用recyclerview实现
+     * 设置 offscreenPageLimit 默认值-1，代表使用recycler的缓存策略
+     * 首次展示，只加载当前，当向哪个方向滑动的时候，就加载哪个方向的
+     * 总共在屏幕外的view有三个，  有一方是1个view，有一方是2个view，取决于你滑动的方向的反方向
+     *
+     * 滑动到新的页面，还是左右都不提前缓存，只有即将滑动到屏幕内才缓存
+     *
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {
