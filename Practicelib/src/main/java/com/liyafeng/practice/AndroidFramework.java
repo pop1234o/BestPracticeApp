@@ -79,7 +79,84 @@ public class AndroidFramework {
          * onTouch ,onClick onLongClick
          *
          *
+         **
+         * =====================如何禁止父布局拦截事件？
+         * new ViewGroup().requestDisallowInterceptTouchEvent(true)
+         * getParent().requestDisallowInterceptTouchEvent(true)来阻止父控件调用onInterceptEvent
+         *
+         * 这样父布局就不会调用onInterceptTouchEvent()来判断是否要拦截了
+         * 这个只在Down事件的时候判断(或者是在Down的时候有控件消费了这个事件，导致mFirstTouchTarget不为null)
+         *
+         * new ViewGroup().requestDisallowInterceptTouchEvent(true);
+         *
+         *    if (disallowIntercept) {
+         *  mGroupFlags |= FLAG_DISALLOW_INTERCEPT;
+         *  } else {
+         *  mGroupFlags &= ~FLAG_DISALLOW_INTERCEPT;
+         *  }
+         * 里面实际上就有个标记
+         *
+         * -----
+         * ViewGroup中dispatchTouchEvent
+         *  if (actionMasked == MotionEvent.ACTION_DOWN
+                    || mFirstTouchTarget != null) {
+            判端是否拦截，在down事件，或者已经有子布局消费的情况下，才判断是否拦截事件
+         *
+         * =======cancel事件是move事件被父布局拦截了，然后给你cancel，可以当做up事件处理=====
+         * 本来move事件一直传给子view，然后突然有个move开始拦截了，那么子view会收到cancel事件
+         *
+         *
+         *
+         * 先走viewgroup dispatchtouchevent，然后分发给子viewgroup，直到遇到view，看能不能消费，能消费ontouchevent返回true
+         * 那么当前
+         *
+         * ontouchevent是当前事件能分发到你这，才能调用，而且如果子布局消费了，父布局就不能获得这个事件了
+         *
+         * slidingUpLayout-> viewpager -> nestScrollview-> linearLayout - > webview
+         *
+         * ============down事件==============
+         * 经过dispatch，intercept，ontouch，如果没有拦截则一直穿透到最内侧view，如果view消费了，
+         * 那么上层所有viewgroup，的ontouch都不会收到down事件
+         *
+         *
+         *
+         *
          * */
+        // viewpager滑动，NestScrollView闪现。。
+        // at com.correct.view.NestScrollView.scrollTo(NestScrollView.java:56)
+        // at android.view.View.scrollBy(View.java:17436)
+        // at com.correct.view.NestScrollView.scrollBy(NestScrollView.java:47)
+        // at androidx.core.widget.NestedScrollView.scrollToChild(NestedScrollView.java:1654)
+        // at androidx.core.widget.NestedScrollView.requestChildFocus(NestedScrollView.java:1755)
+        // at com.correct.view.NestScrollView.requestChildFocus(NestScrollView.java:67)
+        // at android.view.ViewGroup.requestChildFocus(ViewGroup.java:857)
+        // at android.view.ViewGroup.requestChildFocus(ViewGroup.java:857)
+        // at android.view.View.handleFocusGainInternal(View.java:7538)
+        // at android.view.ViewGroup.handleFocusGainInternal(ViewGroup.java:833)
+        // at android.view.View.requestFocusNoSearch(View.java:12509)
+        // at android.view.View.requestFocus(View.java:12483)
+        // at android.view.ViewGroup.requestFocus(ViewGroup.java:3287)
+        // at android.webkit.WebView.access$1001(WebView.java:106)
+        // at android.webkit.WebView$PrivateAccess.super_requestFocus(WebView.java:2429)
+        // at com.android.webview.chromium.WebViewChromium.requestFocus(chromium-SystemWebViewGoogle.aab-s
+        // at android.webkit.WebView.requestFocus(WebView.java:2963)
+        // at androidx.core.widget.NestedScrollView.onRequestFocusInDescendants(NestedScrollView.java:1796
+        // at android.view.ViewGroup.requestFocus(ViewGroup.java:3293)
+        // at android.view.View.requestFocus(View.java:12450)
+        // at androidx.viewpager.widget.ViewPager.populate(ViewPager.java:1272)
+        // at androidx.viewpager.widget.ViewPager.populate(ViewPager.java:1092)
+        // at androidx.viewpager.widget.ViewPager$3.run(ViewPager.java:273)
+        // at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1154)
+        // at android.view.Choreographer.doCallbacks(Choreographer.java:977)
+        // at android.view.Choreographer.doFrame(Choreographer.java:885)
+        // at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:1139)
+        // at android.os.Handler.handleCallback(Handler.java:883)
+        // at android.os.Handler.dispatchMessage(Handler.java:100)
+        // at android.os.Looper.loop(Looper.java:214)
+        // at android.app.ActivityThread.main(ActivityThread.java:7682)
+        // at java.lang.reflect.Method.invoke(Native Method)
+        // at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:516)
+        // at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:950)
 
     }
 
@@ -459,19 +536,6 @@ public class AndroidFramework {
          */
     }
 
-    /**
-     * 如何禁止父布局拦截事件？
-     */
-    public void a1_10() {
-        /*
-         * new ViewGroup().requestDisallowInterceptTouchEvent(true)
-         * getParent().requestDisallowInterceptTouchEvent(true)来阻止父控件调用onInterceptEvent
-         *
-         * 这样父布局就不会调用onInterceptTouchEvent()来判断是否要拦截了
-         * 这个只在Down事件的时候判断(或者是在Down的时候有控件消费了这个事件，导致mFirstTouchTarget不为null)
-         */
-//        new ViewGroup().requestDisallowInterceptTouchEvent(true);
-    }
     //endregion
 
     //region Android 内存/虚拟机
