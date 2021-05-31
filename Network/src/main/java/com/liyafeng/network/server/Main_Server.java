@@ -422,6 +422,13 @@ public class Main_Server {
     void snapshot(){}
 
 
+    /**
+     * 修改nginx配置文件，  在安装目录conf/nginx.conf中，保存 .切换到sbin 执行，nginx -s reload 重载配置文件
+     * pm2 start www/bin --name='xxx' 启动
+     *
+     *
+     */
+    void a11(){}
 
 
 }
