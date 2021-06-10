@@ -432,20 +432,35 @@ public class Video {
      * .mp3 .acc .ogg  --封装音频规则
      *
      *
+     */
+    void f6(){}
+
+
+    /**
      * ===========flv封装格式===============
+     * http://www.mamicode.com/info-detail-422904.html  如何实现一个c/s模式的flv视频点播系统
+     * https://www.cnblogs.com/chyingp/p/flv-getting-started.html FLV 5分钟入门浅析
+     * 见flv_box.jpg
+     *
      * FLV (Flash Video) 是 Adobe 公司推出的另一种视频格式，是一种在网络上传输的流媒体数据存储容器格式。
      * 其格式相对简单轻量，不需要很大的媒体头部信息。整个 FLV 由 The FLV Header, The FLV Body 以及其它 Tag 组成。
      * 因此加载速度极快。采用 FLV 格式封装的文件后缀为 .flv。
      *
      * 而我们所说的 HTTP-FLV 即将流媒体数据封装成 FLV 格式，然后通过 HTTP 协议传输给客户端。
      *
+     * 是一种专门用来在网络上传输的视频存储容器格式。
+     * 其格式相对简单，不需要很大的媒体头部信息，因此加载速度极快。国内各大视频网站，均有采用FLV格式作为其点播、甚至直播的视频格式。
+     * FLV容器格式的主要特点是tag，整个FLV由Video Tag, Audio Tag以及其他Tag组成，没有映射表。
+     *
+     *
+     *
      *
      */
-    void f6(){}
-
+    void f6_1(){}
 
     /**
      * ============mp4封装格式===================
+     * https://zhuanlan.zhihu.com/p/52842679  短视频宝贝=慢？阿里巴巴工程师这样秒开短视频。
      * MP4目前被广泛用于封装h.264视频和AAC音频，是高清视频的代表
      *
      *
@@ -462,6 +477,8 @@ public class Video {
      * mp4是由一个个“box”组成的，大box中存放小box，一级嵌套一级来存放媒体信息。box的基本结构如下：
      *
      *
+     * ================具体格式====
+     * 见 mp4_box.jpg
      *
      *
      */
@@ -551,4 +568,67 @@ public class Video {
      */
     void a10(){}
 
+
+    /**
+     * ========Android编码============
+     * https://cloud.tencent.com/developer/article/1006240 微信 Android 视频编码爬过的那些坑
+     * https://blog.csdn.net/u010126792/article/details/86580878 MediaCodec
+     * https://www.jianshu.com/p/343d7e10cf6b Android MediaCodec
+     * 硬编码：
+     * 用设备GPU去实现编解码，这样可以减轻CPU的压力。
+     * 软编码：
+     * 让CPU来进行编解码，在c层代码来进行编解码，因为c/c++有很多好的编解码库。
+     *
+     *
+     * =========== android.media.MediaCodec ==============
+     * 在Android 4.1之前没有提供硬编解码的API，所以基本都是采用开源的那些库，比如著名的FFMpeg实现软编解码。
+     * 在Android4.1出来了一个新的API：MediaCodec可以支持硬编解码,MediaCodec可以支持对音频和视频的编解码.
+     *
+     * MediaCodec支持的视频格式有vp8 、VP9 、H.264、H.265、MPEG4、H.263等。
+     * MediaCodec支持的音频格式有3gpp、amr-wb、amr-wb、amr-wb、g711-A、g711-U 、AAC等。
+     * 类型：
+     * “video/x-vnd.on2.vp8” - VP8 video (i.e. video in .webm)
+     * “video/x-vnd.on2.vp9” - VP9 video (i.e. video in .webm)
+     * “video/avc” - H.264/AVC video
+     * “video/hevc” - H.265/HEVC video
+     * “video/mp4v-es” - MPEG4 video
+     * “video/3gpp” - H.263 video
+     * “audio/3gpp” - AMR narrowband audio
+     * “audio/amr-wb” - AMR wideband audio
+     * “audio/amr-wb” - MPEG1/2 audio layer III
+     * “audio/mp4a-latm” - AAC audio (note, this is raw AAC packets, not packaged in LATM!)
+     * “audio/amr-wb” - vorbis audio
+     * “audio/g711-alaw” - G.711 alaw audio
+     * “audio/g711-mlaw” - G.711 ulaw audio
+     * ————————————————
+     * 版权声明：本文为CSDN博主「lidongxiu0714」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+     * 原文链接：https://blog.csdn.net/u010126792/article/details/86580878
+     *
+     * ====== ffmpeg =============
+     * https://cloud.tencent.com/developer/article/1006240 微信 Android 视频编码爬过的那些坑
+     * 另外一种比较流行的方案就是使用ffmpeg+x264/openh264进行软编码，ffmpeg是用于一些视频帧的预处理。这里主要是使用x264/openh264作为视频的编码器。
+     *
+     *
+     * x264 基本上被认为是当今市面上最快的商用视频编码器，而且基本上所有h264的特性都支持，通过合理配置各种参数还是能够得到较好的压缩率和编码速度的，
+     *
+     * openh264 (https://github.com/cisco/openh264)则是由思科开源的另外一个h264编码器，项目在2013年开源，对比起x264来说略显年轻，不过由于思科支付满了h264的年度专利费，所以对于外部用户来说，相当于可以直接免费使用了，另外，firefox直接内置了openh264，作为其在webRTC中的视频的编解码器使用。
+     *
+     *
+     */
+    void a11(){}
+
+
+    /**
+     * ======android.media.MediaRecorder===
+     * 录制音频，视频。直接输出成文件，
+     * 对于录制视频的需求，不少app都需要对每一帧数据进行单独处理，因此很少会直接用到MediaRecorder来直接录取视频
+     *
+     * =====android.media.MediaMuxer ====
+     * 将 camera输出nv21用 mediacodec 编码为h264后，将audioRecord输出的pcm用mediacodec aac后，用MediaMuxer合并为mp4
+     * 是Android 4.3新增的API
+     * Currently MediaMuxer supports MP4, Webm and 3GP file as the output
+     *
+     *
+     */
+    void a12(){}
 }
