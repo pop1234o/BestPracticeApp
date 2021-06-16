@@ -71,6 +71,8 @@ public class SurfaceView {
      *  surfaceCreated=======
      *  surfaceChanged=======
      *
+     * 页面展示，Surface创建，不展示就销毁
+     *
      *
      * ===============场景问题=============
      * https://blog.csdn.net/junzia/article/details/52704129  Android MediaPlayer+SurfaceView播放视频
@@ -78,7 +80,9 @@ public class SurfaceView {
      * 视频播放有声音没图像也许是在使用MediaPlayer最容易出现的问题，几乎所有使用MediaPlayer的新手都会遇到。视频播放的图像呈现需要一个载体，需要利用MediaPlayer.setDisplay设置一个展示视频画面的SurfaceHolder，最终视频的每一帧图像是要绘制在Surface上面的。通常，设置给MediaPlayer的SurfaceHolder未被创建，视频播放就注定没有图像。
      * * 比如你先调用了setDisplay，但是这个时候holder是没有被创建的。视频就没有图像了。
      * * 或者你在setDisplay的时候holder确保了holder是被创建了，但是当因为一些原因holder被销毁了，视频也就没有图像了。
+     * * 内存占用过高，创建后没有及时展示在屏幕上（比如recycleview 不要在item中加入Surfaceview，否则会被回收？？），然后被回收了
      * * 再者，你没有给展示视频的view设置合适的大小，比如都设置wrap_content，或者都设置0，也会导致SurfaceHolder不能被创建，视频也就没有图像了。
+     * *
      * 2. 视频图像变形
      * Surface展示视频图像的时候，是不会去主动保证和呈现出来的图像和原始图像的宽高比例是一致的，所以我们需要自己去设置展示视频的View的宽高，以保证视频图像展示出来的时候不会变形。我认为比较合适的做法就是利用FrameLayout嵌套一个SurfaceView或者其他拥有Surface的View来作为视频图像播放的载体View，然后再OnVideoSizeChangeListener的监听回调中，对载体View的大小做更改。
      * 3. 切入后台后声音还在继续播放
@@ -127,6 +131,27 @@ public class SurfaceView {
 //                Log.i("test","surfaceDestroyed=======");
 //            }
 //        });
+
+        //
+        //   OnVideoSizeChangedListener
+        //  if (width != 0 && height != 0) {
+        //                    float ratioW = (float) width / (float) mSurfaceWidth;//原本的宽高，一般是屏幕宽高
+        //                    float ratioH = (float) height / (float) mSurfaceHeight;
+        //                    float ratio = Math.max(ratioW, ratioH);
+        //                    width = (int) Math.ceil((float) width / ratio);
+        //                    height = (int) Math.ceil((float) height / ratio);
+        //                    FrameLayout.LayoutParams layout = new FrameLayout.LayoutParams(width, height);
+        //                    layout.gravity = Gravity.CENTER;
+        //                    surfacePlayer.setLayoutParams(layout);
+        //
+        //                    if (surfacePlayer.isAttachedToWindow()) {
+        //                        globalPlayer.setSurface(surfacePlayer.getHolder().getSurface());
+        //                        Log.e(TAG, "isAttachedToWindow setSurface ===" + position);
+        //                        imgThumb.animate().alpha(0).setDuration(100).start();
+        //                    } else {
+        //                        Log.e(TAG, "show ERROR!!! " + position);
+        //                    }
+        //                }
     }
 
 
