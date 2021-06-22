@@ -82,7 +82,17 @@ public class SurfaceView {
      * * 或者你在setDisplay的时候holder确保了holder是被创建了，但是当因为一些原因holder被销毁了，视频也就没有图像了。
      * * 内存占用过高，创建后没有及时展示在屏幕上（比如recycleview 不要在item中加入Surfaceview，否则会被回收？？），然后被回收了
      * * 再者，你没有给展示视频的view设置合适的大小，比如都设置wrap_content，或者都设置0，也会导致SurfaceHolder不能被创建，视频也就没有图像了。
-     * *
+     * * 还有滑动的时候播放错乱问题，可能是1视频surfaceCreate了，然后setVideoPath，prepareAsync了，然后没好的时候有切换到下一个
+     * 然后用新的surface，这个时候pause,stop setVideoPath(新url)，prepareAsync无效加载的还是上个url数据，但是上个的surface已经销毁了
+     * 所以写不了数据，黑屏。
+     * 因为必须是先setdisplay，然后数据才能prepareAsync写入数据，后面你再setDisplay也无效了？？？
+     *   globalPlayer.setDisplay(holder);
+     *   globalPlayer.setDataSource(videoUrl);
+     *   globalPlayer.prepareAsync();
+     *
+     *
+     *
+     *
      * 2. 视频图像变形
      * Surface展示视频图像的时候，是不会去主动保证和呈现出来的图像和原始图像的宽高比例是一致的，所以我们需要自己去设置展示视频的View的宽高，以保证视频图像展示出来的时候不会变形。我认为比较合适的做法就是利用FrameLayout嵌套一个SurfaceView或者其他拥有Surface的View来作为视频图像播放的载体View，然后再OnVideoSizeChangeListener的监听回调中，对载体View的大小做更改。
      * 3. 切入后台后声音还在继续播放
