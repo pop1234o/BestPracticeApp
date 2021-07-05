@@ -240,6 +240,12 @@ public class Main_Plugin {
      * 插件名就是manager中定义的，必须对应。
      * 下载插件的zip路径，然后插件名称，就能开启插件了
      *
+     * ----
+     * shadow相当于把一个能独立运行的apk打包到zip中，zip中还有 manager，loader，runtime
+     * manager是主进程加载的代码，另外是子进程加载的
+     *
+     * ----
+     * 每次插件加载的时候，遍历apk中的AndroidManifest然后绑定对应的Activity。
      *
      */
     void a5(){}
