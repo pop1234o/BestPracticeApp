@@ -268,6 +268,11 @@ public class Main_Plugin {
      *     }
      * }
      *
+     * -----原理
+     * 原理就是打包成 ,plugin.apk，manager.apk,runtime.apk,loader.apk
+     * 主app加载manager.apk，然后根据loader中代码启动子进程service进行插件页面绑定
+     * 然后打开的时候调用 manager中的代码enter即可。
+     *
      *
      *
      */
