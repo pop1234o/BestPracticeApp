@@ -247,6 +247,29 @@ public class Main_Plugin {
      * ----
      * 每次插件加载的时候，遍历apk中的AndroidManifest然后绑定对应的Activity。
      *
+     *
+     * ----- 插件包的内容
+     * 相当于把测试app依赖的库，当成 plugin_build 模块的依赖，然后打包成apk
+     * 测试app 模块的代码并不会打包到插件中。。
+     * 所以你要定义application就要在子模块(非测试app模块)进行一个打包。
+     * shadow会读取apk中的manifest文件，读取出application的类名，进行反射创建。
+     * plugin_build 包名必须和宿主app包名一致，否则抛出异常。
+     *
+     * ModuleInfo business = new ModuleInfo()
+     * business.apkName = "plugin-build-type.apk"
+     * business.buildTask = ":plugin_build:plugin-build:assembletype".toString()
+     * business.projectPath = "lugin_build/plugin-build".toString()
+     * business.apkPath = "plugin_build/plugin-build/build/outputs/apk/type/plugin-build-type.apk"
+     *
+     * apply from: path_apk_gradle//测试app模块的gradle相当于把同步了一下配置，然后改了一下包名
+     * android {
+     *     defaultConfig {
+     *         applicationId "com.主包名"
+     *     }
+     * }
+     *
+     *
+     *
      */
     void a5(){}
 
