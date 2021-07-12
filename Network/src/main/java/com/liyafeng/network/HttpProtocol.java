@@ -800,6 +800,21 @@ public class HttpProtocol {
      *
      */
     void dns(){}
+
+    /**
+     * =====http referer======
+     * 在header ，表示这个请求是从哪个页面发出的
+     * 从别的网页上跳转到你的连接，referer会带上哪个网页的链接，
+     * 服务端会判断，如果不是你的网站就给报403，不让访问。
+     *
+     * 1.防盗链
+     * 2.防止恶意请求
+     *
+     * referer不对就禁止访问！
+     *
+     *
+     */
+    void referer(){}
 }
 
 /**
