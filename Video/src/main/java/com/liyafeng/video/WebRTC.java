@@ -308,6 +308,36 @@ public class WebRTC {
      */
     void f1_1(){}
 
+
+    /**
+     * ======== webrtc架构图 =====
+     * https://webrtc.github.io/webrtc-org/architecture/
+     *
+     *
+     * =======rtc架构图=======
+     * https://blog.csdn.net/vn9PLgZvnPs1522s82g/article/details/97713312
+     *
+     *
+     * ------融云
+     * http://www.fromgeek.com/daily/1044-318205.html
+     * 为开发者提供即时通讯与实时音视频能力融合的PaaS云服务，
+     * 未来将以“IM+RTC+推送”的整体解决方案，满足开发者对于互联网通信能力的需求
+     *
+     *
+     * ----高可靠的IM信令保障
+     * 基于TCP协议的消息通道，把一段数据通过一个长连接的、永远在线的通道从一端推送到另外一端
+     *
+     * 当TCP连接断开时，融云还可将消息通过自有的推送通道或厂商推送通道通知手机客户端，无需额外集成第三方推送平台。
+     * 正是通过这种方式，能够确保在长时间通话及弱网情况下，融云音视频服务依然可靠连通且稳定。
+     *
+     * ---- RTC和IM
+     * 由于RTC和IM在线应用的需求不同，决定了二者对网络传输中的技术要求有所不同。
+     * 区别在于：IM 追求的是消息 100% 到达，不丢、不重、不乱序，低延时不是首要目标。
+     * 但对于RTC而言，保证画面传输的实时性，画面清晰、流畅、无卡顿，保障低延时性才是重中之重
+     *
+     */
+    void f1_2(){}
+
     /**
      * 目前，主流的视频编码器分为3个系列：VPx（VP8，VP9），H.26x（H.264，H.265），AVS（AVS1.0，AVS2.0）
      *
@@ -393,6 +423,10 @@ public class WebRTC {
      *
      * https://docs.agora.io/cn/Video/start_call_android?platform=Android
      *
+     *
+     *
      */
     void f7(){}
+
+
 }
