@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.liyafeng.view.R;
@@ -47,6 +48,22 @@ public class CoordinatorLayoutActivity extends Activity {
      * 这种滑动会不顺畅，https://blog.csdn.net/BIGGGFISH/article/details/53585783
      * //https://www.jianshu.com/p/d0dbbdfa5372
      * 27.0.2b版本已经解决这个问题
+     *
+     * ========AppBarLayout======
+     *  AppBarLayout is a vertical {@link LinearLayout} which implements many of the features of material
+     *  designs app bar concept, namely scrolling gestures.
+     *
+     * ================ CollapsingToolbarLayout ================
+     *  CollapsingToolbarLayout is a wrapper for { Toolbar} which implements a collapsing app bar.
+     *  It is designed to be used as a direct child of a { AppBarLayout}
+     *  一个可折叠的toolbar ，他必须是 AppBarLayout 的子布局
+     *
+     *
+     *
+     * =========== Toolbar ============
+     * A standard toolbar for use within application content.
+     * 就是工具栏
+     *
      * //
      */
 
@@ -94,6 +111,80 @@ public class CoordinatorLayoutActivity extends Activity {
 //            }
 //        });
     }
+
+    /**
+     * com.google.android.material:material:1.2.0
+     *
+     * //title滑动吸顶的效果
+     * <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     *     xmlns:app="http://schemas.android.com/apk/res-auto"
+     *     xmlns:tools="http://schemas.android.com/tools"
+     *     android:layout_width="match_parent"
+     *     android:layout_height="match_parent">
+     *
+     *     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     *         xmlns:app="http://schemas.android.com/apk/res-auto"
+     *         xmlns:tools="http://schemas.android.com/tools"
+     *         android:layout_width="match_parent"
+     *         android:layout_height="match_parent"
+     *         android:background="#F5F7FB"
+     *         tools:context=".ui.ContractActivity">
+     *
+     *
+     *         <com.google.android.material.appbar.AppBarLayout
+     *             android:id="@+id/app_bar_layout"
+     *             android:layout_width="match_parent"
+     *             android:layout_height="140dp">
+     *
+     *             <com.google.android.material.appbar.CollapsingToolbarLayout
+     *                 android:id="@+id/collapsing_toolbar_layout"
+     *                 android:layout_width="match_parent"
+     *                 android:layout_height="match_parent"
+     *                 app:collapsedTitleGravity="center"
+     *                 app:contentInsetEnd="0dp"
+     *                 app:contentInsetStart="0dp"
+     *                 app:expandedTitleGravity="left|bottom"
+     *                 app:expandedTitleMarginStart="20dp"
+     *                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
+     *
+     *                 <androidx.appcompat.widget.Toolbar
+     *                     android:id="@+id/toolbar"
+     *                     android:layout_width="match_parent"
+     *                     android:layout_height="64dp"
+     *                     app:contentInsetEnd="0dp"
+     *                     app:contentInsetStart="0dp"
+     *                     app:contentInsetStartWithNavigation="0dp"
+     *                     app:layout_collapseMode="pin"
+     *                     app:title="家长列表">
+     *
+     *
+     *                 </androidx.appcompat.widget.Toolbar>
+     *
+     *
+     *             </com.google.android.material.appbar.CollapsingToolbarLayout>
+     *         </com.google.android.material.appbar.AppBarLayout>
+     *
+     *
+     *         <androidx.recyclerview.widget.RecyclerView
+     *             android:id="@+id/rvContract"
+     *             android:layout_width="match_parent"
+     *             android:layout_height="match_parent"
+     *             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+     *
+     *
+     *     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+     *
+     *
+     *     <ImageView
+     *         android:layout_width="wrap_content"
+     *         android:layout_height="wrap_content"
+     *         android:layout_marginLeft="20dp"
+     *         android:layout_marginTop="20dp"
+     *         android:src="@drawable/rtc_back" />
+     *
+     * </RelativeLayout>
+     */
+    void a1(){}
 
     public class ListHolder extends RecyclerView.ViewHolder {
 
