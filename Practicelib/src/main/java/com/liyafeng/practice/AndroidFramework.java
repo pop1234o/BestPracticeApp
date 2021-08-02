@@ -2419,6 +2419,9 @@ public class AndroidFramework {
      * binder是什么？
      * Linux进程间通讯机制有哪些？Android为什么用binder?
      * aidl是是什么？如何使用？原理是什么？
+     * Android进程间通讯/进程间通信
+     *
+     * 进程间通信Sdk设计？（主进程，子进程）
      */
     public void a14(Context context) {
         /*
@@ -2459,6 +2462,41 @@ public class AndroidFramework {
          * https://blog.csdn.net/u012203641/article/details/74474664
          * bindService有三种使用方法，其中后两种可以实现进程间通信。底层原理就是binder进行通信
          *
+         * ===========Android进程间通讯/进程间通信======
+         * https://blog.csdn.net/u011240877/article/details/72863432  Android 进阶13：几种进程间通信方式的对比总结
+         *
+         * 1.Bundle 四大组件之间传递数据
+         *
+         * 2.AIDL （基于 Binder）
+         * Android 进阶：进程通信之 AIDL 的使用
+         * Android 进阶：进程通信之 AIDL 解析
+         * 3.Binder
+         * Android 进阶：进程通信之 Binder 机制浅析
+         * 4.Messenger （基于 Binder）
+         * Android 进阶：进程通信之 Messenger 使用与解析
+         * 5.ContentProvider （基于 Binder）
+         * Android 进阶：进程通信之 ContentProvider 内容提供者
+         * 6.Socket
+         * Android 进阶：进程通信之 Socket （顺便回顾 TCP UDP）
+         *
+         * 7.文件 fileProvider
+         *
+         * ————————————————
+         * 版权声明：本文为CSDN博主「拭心」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+         * 原文链接：https://blog.csdn.net/u011240877/article/details/72863432
+         *
+         *
+         * ==========进程间通信Sdk设计？（主进程，子进程）========
+         * 主进程发送广播，通知子进程 执行逻辑（比如主进程登录成功回调）
+         * 主进程启动子进程页面可以用Bundle方式吧数据带过来
+         *
+         * 子进程通过aidl，用bind主进程Service方式来获取主进程的数据。
+         *
+         * common sdk 定义交互接口
+         * server sdk 发送广播，设置 交互接口 实现类
+         * client sdk 绑定获取到 交互接口 的实现实例，调用获取方法
+         *
+         * server 和 client 都要依赖common，common定义公共的交互方法。
          *
          */
 
