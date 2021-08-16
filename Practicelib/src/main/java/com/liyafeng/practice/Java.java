@@ -26,8 +26,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -88,6 +90,8 @@ public class Java {
      * 说说String ，StringBuilder ,StringBuffer的区别
      * -------------------------
      * String如何保证不可变？为什么设计成不可变的？
+     * ----------
+     *
      */
     public void a1_1() {
         /*
@@ -103,12 +107,45 @@ public class Java {
          * 那么会引起数据混乱
          * 线程安全，每个线程取出的字符串是相等的
          * 减少空间占用，相同的字符串可以指向内存中的同一空间。
+         *
+         *
+         *
+         *
          */
         new StringBuffer().append(1);
     }
 
     /**
+     *  =======以下两种创建String方式的区别
+     *  String str = new String("hello");
+     *  String str2 = "hello";
+     *
+     * 内存分区：
+     * 堆：存放示例对象，数组对象，全局(线程)共享（就是不同地方都能引用到这个对象）
+     * 栈：存放基本类型，对象引用，线程私有
+     * 方法区：类被加载后的信息，存放常量，静态变量，全局共享
+     *
+     * 非堆（Non-Heap）包括永生代， 方法区，还有字符串常量池
+     *
+     * 创建String变量的时候，虚拟机就会到字符串常量池里找，看有没有能equals（“Hello”）的String，
+     * 如果找到 就在栈区当前栈帧的局部变量表中创建str变量，然后把字符串常量池的引用复制给str变量。
+     * 如果没找到，会在Heap堆中创建一个对象，然后把引用放到字符串常量池中，再复制到局部变量表。
+     *
+     *
+     *  ========`==`与`equals`的区别
+     *
+     * ==比较引用对象的地址
+     * 看对象有没有复写 equals，如果没有Object就是 ==
+     *
+     *
+     */
+    void a1_1_2(){}
+
+    /**
      * 说说Object类中都有哪些方法？
+     * -------------
+     * 以及Object类中`equals`的原理
+     *
      * @link java.lang.Object
      */
     public void a1_1_1() {
@@ -678,11 +715,43 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 
 
     /**
-     * 如何创建线程池
+     * 如何创建线程池?四种线程池？线程池好处？
+     * 原文链接：https://blog.csdn.net/u011974987/article/details/51027795
+     *
+     * coreSize,maxSize，keepLiveTime
+     *
+     *  newCachedThreadPool //0, Integer.MAX_VALUE, 60L
+     *
+     *  newFixedThreadPool // nThreads nThreads ,0
+     * newSingleThreadExecutor //1 ,1,0
+     * newScheduledThreadPool // corePoolSize  Integer.MAX_VALUE ,10L
+     *
+     * newCachedThreadPool创建一个可缓存线程池，可灵活回收空闲线程 60s保活，若无可复用，则新建线程。
+     * newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+     * newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
+     * newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+     * ————————————————
+     * 版权声明：本文为CSDN博主「徐昊Xiho」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+     *
+     * ========线程池好处
+     * new Thread的弊端如下：
+     * a. 每次new Thread新建对象性能差。
+     * b. 线程缺乏统一管理，可能无限制新建线程，相互之间竞争，及可能占用过多系统资源导致死机或oom。
+     * c. 缺乏更多功能，如定时执行、定期执行、线程中断。
+     *
+     * 相比new Thread，Java提供的四种线程池的好处在于：
+     *
+     * a. 重用存在的线程，减少对象创建、消亡的开销，性能佳。
+     * b. 可有效控制最大并发线程数，提高系统资源的使用率，同时避免过多资源竞争，避免堵塞。
+     * c. 提供定时执行、定期执行、单线程、并发数控制等功能。
+     *
+     *
+     *
      * 线程池的原理？
      */
     public void a2_3() {
         /*
+
          * 线程池会指定核心线程数，和最大线程数，根据这个来创建线程
          * 里面会进行死循环，从任务队列中取任务，如果没有任务就阻塞
          * 有任务就唤醒执行。除了核心线程其他线程有超时时间，超过超时时间
@@ -692,7 +761,12 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          *
          * Executors 创建 ThreadPoolExecutor
          */
+
         Executors.newCachedThreadPool();
+        Executors.newFixedThreadPool(1);
+        Executors.newScheduledThreadPool(3);
+        Executors.newSingleThreadExecutor();
+
     }
 
 
@@ -719,13 +793,16 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
-     * 开启线程的三种方式？各自优缺点？
+     * 开启线程的四种方式？各自优缺点？
      */
     public void a2_6() {
         /*
          * 1.继承Thread
          * 2.实现Runnable接口
          * 3.实现Callable，用FutureTask来实现线程（这个类其实也实现了Runnable）
+         * LockSupport实现等待
+         *
+         * 4.使用线程池创建线程
          *
          * 实现接口的方式优点就是还能够继承其他类，而且可以访问同一个Runnable中的对象
          * 缺点就是如果引用当前线程必须用Thread.currentThread()
@@ -734,6 +811,13 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 缺点就是不能继承其他类了
          */
 
+        FutureTask<String> futureTask = new FutureTask<String>(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return null;
+            }
+        });
+        new Thread(futureTask).start();
 
     }
 
@@ -1989,6 +2073,47 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          */
     }
 
+    /**
+     * new一个对象所经历的步骤
+     * （判断是否加载，内存分配等等等）
+     * https://zhuanlan.zhihu.com/p/86724942
+     *
+     * 1.现根据类名在常量池里面找到有没有这个类的符号引用。（方法区）
+     *
+     * 2.如果有这个符号引用，则需要检查这个类的符号引用有没有被加载、解析、初始化过。
+     *
+     *  2.1 如果没有这个符号引用，则对这个符号进行类的加载过程。（classlaoder）
+     *
+     * 3.虚拟机为对象在堆中分配内存，所需要的内存在类加载之后即可知道。
+     *
+     * 4.将分配到的内存空间都初始化为0，（不包括对象头）。
+     *
+     * 5.对对象头进行设置，对象hash值、GC
+     *
+     * 6.执行对象的init方法
+     *
+     *
+     * 通过classloader来完成 加载、校验、准备、解析、初始化
+     * 把class的二进制内容加载到虚拟机的方法区，在内存中生成一个java.lang.class杜象表示这个class
+     *
+     * 加载一个Class需要完成以下3件事：
+     *
+     * 通过Class的全限定名获取Class的二进制字节流
+     * 将Class的二进制内容加载到虚拟机的方法区
+     * 在内存中生成一个java.lang.Class对象表示这个Class
+     * 获取Class的二进制字节流这个步骤有多种方式：
+     *
+     * 从zip中读取，如：从jar、war、ear等格式的文件中读取Class文件内容
+     * 从网络中获取，如：Applet
+     * 动态生成，如：动态代理、ASM框架等都是基于此方式
+     * 由其他文件生成，典型的是从jsp文件生成相应的Class
+     *
+     * 准备：
+     *
+     * 为static中的变量初始化默认值0或者null
+     *
+     */
+    public void a8_4(){}
 
     //endregion
 
@@ -2168,6 +2293,20 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
 //        new BufferedOutputStream().flush();
     }
 
+    /**
+     * Java IO的结构与区别
+     * https://blog.csdn.net/lexang1/article/details/77647545
+     * 见java_io.jpg
+     *
+     * 以字节为导向的 stream——InputStream/OutputStream
+     * 以字符为导向的 stream Reader/Writer
+     * 表示以 Unicode 字符为单位从 stream 中读取或往 stream 中写入信息
+     *
+     *  Unicode 字符 2 个字节
+     *
+     *
+     */
+    public void a10_3(){}
     //endregion
 
 
