@@ -664,7 +664,22 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
-     * 什么是线程安全？
+     * 什么是线程安全？ java中可以保证多线程安全的方式（包括：字段，多种锁，保证线程安全的数据结构与实现
+     *
+     *
+     * ========线程安全
+     * https://developer.51cto.com/art/201910/605093.htm
+     * 1.synchronized关键字
+     * 保证同一段代码同一时间只能有一个线程在执行。
+     * 2.volatile关键字用来修饰共享变量，保证可见性，防止重排
+     * 3.java提供三种类型的原子类，当某个操作因为不是原子操作导致的线程安全问题的时候，可以使用原子类来替代
+     * 比如：多线程环境下执行a++，可以使用 AtomicInteger 类incrementAndGet()方法实现。相比synchronized，原子类是使用乐观锁来实现线程安全，synchronized使用悲观锁来实现线程安全。
+     *
+     * 4.使用ThreadLocal保存当前线程的变量值
+     *
+     *
+     *
+     *
      */
     public void a2_1() {
         /*
@@ -713,6 +728,19 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          */
     }
 
+    /**
+     * ThreadLocal 原理
+     *
+     * set
+     * t.threadLocals = new ThreadLocalMap(this, firstValue);
+     *
+     *
+     * 而ThreadLocalMap是一个定制化的Hashmap
+     *
+     * get获取 t.threadLocals这个map，然后获取key是
+     * 这个线程，获取value
+     */
+    public void a2_2_1(){}
 
     /**
      * 如何创建线程池?四种线程池？线程池好处？
@@ -1035,7 +1063,7 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
-     * 什么是互斥锁、共享锁？
+     * 什么是互斥锁（悲观锁）、共享锁（乐观锁）？
      * 什么是自旋？
      * 什么是CAS操作？什么是ABA问题？
      * 什么是公平锁？什么是非公平锁？
@@ -1915,16 +1943,41 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
     }
 
     /**
+     * 虚拟机中的内存分配？回收机制
      * 哪些情况下的对象会被垃圾回收机制处理掉? /jvm垃圾回收机制是怎样的?
      * 如果老年代引用了新生代的对象，而此时触发young gc，新生代是否会被回收？
      *
      * <p>
      * https://yunfengsa.github.io/2015/11/12/android-jvm-gc/
      * https://www.cnblogs.com/zhguang/p/3257367.html
+     *
+     * https://blog.csdn.net/CSDN_Terence/article/details/77771429 JVM内存划分、JVM内存分配机制、JVM垃圾回收机制
      */
     public void a8_1() {
         /*
+         * =====java内存划分
          *
+         * 1 堆(Heap)
+         *  用于存储Java对象
+         * 2 Java栈(VM Stack)
+         *  每个线程创建的时候，JVM都会为他分配一个对应的Java栈，这个栈含有多个栈帧；栈帧则是个方法关联，每个方法的运行都会创建一个自己的栈帧，含有内存变量，操作栈、方法返回值
+         * 3 本地方法栈(Native MethodStack)
+         *  是为JVM运行Native方法（本地方法：非java语言编写的方法，被编译成和处理器相关的代码）准备的空间
+         * 4 方法区(Method Area)
+         *  用于存储类结构信息
+         *  class文件加载进JVM时会被解析成JVM识别的几个部分分别存储在不同的数据结构中：
+         * 常量池、域、方法数据、方法体、构造函数，包括类中的方法、实例初始化、接口初始化等
+         *
+         *  1常量池（Constant Pool）：常量池数据编译期被确定，是Class文件中的一部分。存储了类、方法、接口等中的常量，当然也包括字符串常量。
+         *  2运行时常量池（Runtime Constant Pool）：方法区的一部分，所有线程共享
+         *  3字符串常量池（String Pool/String Constant Pool）：是常量池中的一部分，存储编译期类中产生的字符串类型数据。
+         *
+         * 5 程序计数器(ProgramCounter Register)
+         *  用于记录下一条要执行的字节码指令地址和被中断地址
+         *
+         * java栈和PC寄存器（程序计数器）是线程私有，每个执行引擎启动时都会创建自己的java栈和PC寄存器
+         *
+         *  ===============jvm内存回收采用的是基于分代的垃圾收集算法
          * 虚拟机中的内存区域分为新生代和老年代，新分配的对象被存储在新生代中
          * 当需要申请内存而内存空间不足时，就触发Minor GC（或叫Young GC）
          * 来回收新生代的内存，Minor（新生的）
@@ -1932,7 +1985,8 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * （这里指的是最大15，如果新生代满了就会移动到老年代）
          * 老年代占满，会触发Major GC（也叫 Full GC），回收老年代的垃圾对象
          *
-         *
+         * Perm（持久代）
+         * 用于存放类的Class文件或静态文件，如Java类、方法等，垃圾回收是由FullGC触发的
          *
          *
          * ==================标记算法==================
