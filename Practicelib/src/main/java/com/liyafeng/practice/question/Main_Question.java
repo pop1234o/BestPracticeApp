@@ -1110,6 +1110,8 @@ public class Main_Question {
      * 导致崩溃，是因为主题导致冲突。
      * 解决方式是，吧1.3.0去除调就好了。
      *
+     * exclude group: 'com.android.support', module: 'appcompat-v7'
+     *
      *
      */
     void a48(){}

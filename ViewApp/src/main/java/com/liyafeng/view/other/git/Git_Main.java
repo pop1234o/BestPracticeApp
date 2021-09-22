@@ -597,4 +597,22 @@ public class Git_Main {
      */
     void fun13(){}
 
+    /**
+     * https://blog.csdn.net/weixin_41010198/article/details/119698015
+     * github开发人员在七夕搞事情：remote: Support for password authentication was removed on August 13, 2021.
+     * 1用这种方法 (好像不好使)
+     * git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
+     * 2.用token代替密码
+     * 3.用ssh 生成公钥私钥，私钥放本地，公钥配置到git中。 这个好使
+     *
+     *
+     *
+     * .修改命令
+     * git remote origin set-url [url]
+     * 先删后加
+     * git remote rm origin
+     * git remote add origin [url]
+     */
+    void fun14(){}
+
 }

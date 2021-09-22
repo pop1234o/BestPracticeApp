@@ -456,6 +456,7 @@ public class Gradle_Maven {
      * implementation ('com.github.bumptech.glide:glide:4.7.1'){
      *      exclude module:"support-fragment"
      *      或者 exclude group:'com.android.support'
+     *      或者 exclude group: 'com.android.support', module: 'appcompat-v7'
      *  }
      *
      * // project用括号包裹住
