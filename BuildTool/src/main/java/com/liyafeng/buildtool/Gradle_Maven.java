@@ -445,11 +445,23 @@ public class Gradle_Maven {
      *     all*.exclude module: "support-fragment"
      * }
      *
+     * 或者
+     * // 排除掉V4包中引入的android.arch.lifecycle:runtime导致构建失败
+     * configurations.all {
+     *     exclude group: 'android.arch.lifecycle', module: 'runtime'
+     * }
+     *
+     *
      * 排除单个
      * implementation ('com.github.bumptech.glide:glide:4.7.1'){
      *      exclude module:"support-fragment"
      *      或者 exclude group:'com.android.support'
      *  }
+     *
+     * // project用括号包裹住
+     * implementation (project(':uisdk:Library:facebook')) {
+     *     exclude group: 'com.android.support', module: 'appcompat-v7'
+     * }
      *
      * 强制使用
      * configurations.all {
@@ -457,6 +469,7 @@ public class Gradle_Maven {
      *        force 'com.android.support:support-fragment:26.1.0'
      *    }
      * }
+     *
      *
      */
     void a12(){}
