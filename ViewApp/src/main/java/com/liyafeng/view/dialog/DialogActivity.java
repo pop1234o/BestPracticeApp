@@ -110,6 +110,55 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
      *
      *
      *
+     * ===========全屏的Activity==========
+     * v21主题
+     *  <style name="RtcFullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+     *         <item name="android:windowNoTitle">true</item>
+     *         <item name="android:windowContentOverlay">@null</item>
+     *         //不要设置这个，否则上面就是黑条。。。
+     * <!--        <item name="android:windowFullscreen">true</item>-->
+     *         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+     *
+     *     </style>
+     *     通用
+     *         <style name="FullScreen" parent="AppTheme">
+     *         <item name="android:windowNoTitle">true</item>
+     *         <item name="windowActionBar">false</item>
+     *         <item name="android:windowFullscreen">true</item>
+     *     </style>
+     *
+     *
+     /**
+     * 全透状态栏
+     *
+//    protected open fun setStatusBarFullTransparent() {
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            val window = window
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.statusBarColor = Color.TRANSPARENT
+//        } else if (Build.VERSION.SDK_INT >= 19) {
+//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//        }
+//    }
+//    这里传false
+//    protected open fun changeStatusIconColor(setDark: Boolean) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            val decorView = window.decorView
+//            var vis = decorView.systemUiVisibility
+//            vis = if (setDark) {
+//                vis or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//            } else {
+//                vis and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+//            }
+//            decorView.systemUiVisibility = vis
+//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            window.statusBarColor = Color.BLACK
+//        }
+//    }
+     *
      * @param args
      */
     public static void main(String[] args) {
