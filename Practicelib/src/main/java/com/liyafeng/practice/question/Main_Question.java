@@ -1115,4 +1115,41 @@ public class Main_Question {
      *
      */
     void a48(){}
+
+
+    /**
+     * =====透明状态栏变白问题
+     * 这个是沉浸式状态栏，但是显示状态栏文字，好像做不到真正沉浸式而且不展示文字（水滴屏）。
+     *     <style name="RtcFullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+     *         <item name="android:windowNoTitle">true</item>
+     *         <item name="android:windowContentOverlay">@null</item>
+     *         <item name="android:windowFullscreen">false</item>
+     *         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+     *         <item name="android:windowAnimationStyle">@style/share_anim_bottomDialog</item>
+     *         <item name="android:windowIsTranslucent">true</item>
+     *         <item name="android:windowBackground">@color/transparent</item>
+     *         <item name="android:windowTranslucentStatus">false</item>
+     *
+     *     </style>
+     *
+     *
+     *
+     *
+     */
+    void a49(){}
+
+    /**
+     * Could not determine the dependencies of task ':babymonkey_base:base_io:minifyReleaseWithR8'.
+     * 17:48:49  > Cannot query the value of this property because it has no value available.
+     *
+     * 各个项目 compileSdkVersion 版本不一样 30以后才有的 ,要都改成统一的
+     * https://stackoverflow.com/questions/64459937/could-not-create-task-appminifyreleasewithr8-cannot-query-the-value-of-this
+     * android {
+     *     compileSdkVersion 30
+     *     buildToolsVersion "30.0.3"
+     *     ...
+     *     ...}
+     *
+     */
+    void a50(){}
 }
