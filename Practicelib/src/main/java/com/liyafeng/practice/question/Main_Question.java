@@ -1152,4 +1152,51 @@ public class Main_Question {
      *
      */
     void a50(){}
+
+
+    /**
+     *
+     *
+     * 2021-11-09 15:36:41.379 6248-6248/com.tal.genie.rtc E/CrashReport: java.lang.RuntimeException: Unable to start activity ComponentInfo{com.tal.genie.rtc/com.tal.genie.kit_rtc.ui.VideoActivity}: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+     *         at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2944)
+     *         at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3079)
+     *         at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:78)
+     *         at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:108)
+     *         at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:68)
+     *         at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1836)
+     *         at android.os.Handler.dispatchMessage(Handler.java:106)
+     *         at android.os.Looper.loop(Looper.java:193)
+     *         at android.app.ActivityThread.main(ActivityThread.java:6702)
+     *         at java.lang.reflect.Method.invoke(Native Method)
+     *         at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:493)
+     *         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:911)
+     *      Caused by: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+     *         at androidx.appcompat.app.AppCompatDelegateImpl.createSubDecor(AppCompatDelegateImpl.java:843)
+     *         at androidx.appcompat.app.AppCompatDelegateImpl.ensureSubDecor(AppCompatDelegateImpl.java:806)
+     *         at androidx.appcompat.app.AppCompatDelegateImpl.setContentView(AppCompatDelegateImpl.java:693)
+     *         at androidx.appcompat.app.AppCompatActivity.setContentView(AppCompatActivity.java:170)
+     *         at com.tal.genie.kit_rtc.ui.VideoActivity.onCreate(VideoActivity.kt:117)
+     *         at android.app.Activity.performCreate(Activity.java:7136)
+     *         at android.app.Activity.performCreate(Activity.java:7127)
+     *         at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1271)
+     *         at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2924)
+     *         at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3079) 
+     *         at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:78) 
+     *         at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:108) 
+     *         at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:68) 
+     *         at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1836) 
+     *         at android.os.Handler.dispatchMessage(Handler.java:106) 
+     *         at android.os.Looper.loop(Looper.java:193) 
+     *         at android.app.ActivityThread.main(ActivityThread.java:6702) 
+     *         at java.lang.reflect.Method.invoke(Native Method) 
+     *         at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:493) 
+     *         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:911) 
+     *
+     *  ================
+     *  要用1.2.0的，有冲突的话看 gradle task -> help -> dependencies 搜索，看有没有1.3.0的，然后用exclude去除
+     * com.google.android.material:material:1.2.0
+     * minsdk 要改成 21 ，26就不行。改完后重启手机，否则多个进程改完不生效。
+     *
+     */
+    void a51(){}
 }
