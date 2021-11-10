@@ -1199,4 +1199,12 @@ public class Main_Question {
      *
      */
     void a51(){}
+
+    /**
+     * 界面没数据
+     * string 转 bean 失败
+     * 混淆了，混淆，混淆！！！
+     * 
+     */
+    void a52(){}
 }
