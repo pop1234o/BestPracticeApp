@@ -723,6 +723,19 @@ public class Main_preformance {
      * 版权声明：本文为CSDN博主「明潮」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
      * 原文链接：https://blog.csdn.net/u010144805/article/details/79152837
      *
+     *
+     *
+     * NativeHeap：native层的 so 中调用malloc或new创建的内存
+     * Graphics：OpenGL和SurfaceFlinger相关内存
+     * Stack：线程栈
+     * Code：dex+so相关代码占用内存
+     *
+     *
+     *
+     *
+     *
+     *
+     *
      */
     void fun8(){}
 
