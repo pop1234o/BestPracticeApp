@@ -739,4 +739,14 @@ public class Main_preformance {
      */
     void fun8(){}
 
+    /**
+     * https://developer.android.google.cn/studio/profile/cpu-profiler
+     * 查看app cpu消耗和 其他进程消耗
+     * 可以record每个线程的cpu占用，消耗的时间。
+     * 
+     *
+     */
+    void fun9(){
+
+    }
 }
