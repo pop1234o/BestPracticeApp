@@ -62,7 +62,12 @@ public class Main {
      * 各个业务线通过router都能跳转
      *
      *
-     *
+     * =======组件化架构分层1========
+     * app
+     * business 业务分组 + interface （business相互调用的接口）
+     * service（包含自己业务的kit，如果不能给第三方使用的，包含自己业务组件，逻辑的，比如ui，登录态等等）
+     * + kit  (包装的第三方sdk，可以直接提供给其他app使用的)
+     * 第三方sdk
      *
      */
     public static void main(String[] args) {
