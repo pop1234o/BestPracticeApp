@@ -429,4 +429,97 @@ public class WebRTC {
     void f7(){}
 
 
+    /**
+     * =========voip=======
+     * http://www.qzlink.com/voip 启智科技官网
+     * https://zhuanlan.zhihu.com/p/387214280 启智科技VoIP SIP SDK产品
+     *
+     * 基于IP的语音传输（英语：Voice over Internet Protocol，缩写为VoIP）是一种语音通话技术，经由网际协议（IP）来达成语音通话与多媒体会议
+     * ，也就是经由互联网来进行通信。其他非正式的名称有IP电话（IP telephony）、互联网电话（Internet telephony）、
+     * 宽带电话（broadband telephony）以及宽带电话服务（broadband phone service）
+     *
+     * voip使用的协议 https://baike.baidu.com/item/VoIP/110300?fr=aladdin
+     * H.323是一种ITU-T标准，最初用于局域网（LAN）上的多媒体会议，后来扩展至覆盖VoIP。该标准既包括了点对点通信也包括了多点会议。
+     * 会话发起协议（SIP）是建立VOIP连接的IETF标准。SIP是一种应用层控制协议，用于和一个或多个参与者创建、修改和终止会话。SIP的结构与HTTP（客户－服务器协议）相似
+     * 媒体网关控制协议（MGCP）定义了呼叫控制单元（呼叫代理或媒体网关）与电话网关之间的通信服务
+     * 媒体网关控制协议（MEGACO）是IETF和ITU-T（ITU-TH.248建议）共同努力的结果。Megaco/H.248是一种用于控制物理上分开的多媒体网关的协议单元的协议，从而可以从媒体转化中分离呼叫控制。
+     *
+     * 在业界IP电话有两种并列的体系结构，一种是以上介绍的ITU－TH.323协议，另一种是由互联网工程任务组（IETF）提出的SIP协议（RFC2543），SIP协议更适用于智能化终端。
+     *
+     * 人们利用voip双模手机可以通过网络，以超低的价格拨打普通电话和手机，
+     * voip手机之间通过网络互相通话更是免费的，且无需运营商的支持，同时简单通过手机终端就能实现3方通话
+     *
+     *
+     *
+     *
+     * ======rtc与voip ==========
+     *
+     * https://www.vocal.com/webrtc/webrtc-and-voip-compatibility/ 【好文】（WebRTC and VOIP Compatibility）
+     * rtc是一套编码解码，然后音视频帧传输的协议，低延时，高通话质量保证。
+     *
+     *
+     * WebRTC 旨在与传统的 IP 语音 (VoIP) 网络兼容，同时仍留有创新空间。
+     * 因此，WebRTC 指定使用 VoIP 设备中常见的音频和视频编码器和解码器，
+     * 例如用于视频的 H.264 和用于音频的 OPUS 和 G.711。这允许在 WebRTC 浏览器和 VoIP 端点之间进行媒体通信，而无需对流进行转码。
+     *
+     * 即使具有媒体编码器兼容性，WebRTC 也不能与 VoIP 设备完全互操作；
+     * WebRTC 将 WebSockets 定义为用于发送呼叫信号的会话发起协议 (SIP) 的传输。
+     * VoIP 设备倾向于使用用户数据报协议 (UDP) 和传输控制协议 (TCP) 作为信令层中 SIP 的传输。
+     *  （
+     *  WebRTC defines the use of WebSockets as a transport for the Session Initiation Protocol (SIP) used to signal calls.
+     *  VoIP devices tend to use User Datagram Protocol (UDP) and Transmission Control Protocol (TCP) as transports for SIP in the signaling layer.
+     *
+     *  ）
+     *  总结：音视频通话都有sip协议，用于打电话的 signal call（呼叫），只是规定点与点之间如何通信的，而不是具体的实现技术
+     *  webrtc用 websocket 实现的sip协议  SIP over WebSockets
+     *  voip 用 udp+tcp 实现的sip协议 SIP over UDP
+     *
+     * =========webrtc端和voip端通信
+     * 启用 WebRTC 和 VoIP 端点之间通信的一种可能方法是使用网关。
+     * 网关可以放置在信令路径和媒体路径的端点之间。
+     * 信令网关用于将 SIP over WebSockets 转换为 VoIP 设备可以理解的信令协议，例如 SIP over UDP
+     *
+     * （通过网关将 SIP over WebSockets 转换为  SIP over UDP）
+     *
+     * =======SIP协议==========
+     * SIP（Session initialization Protocol，会话初始协议）是由IETF（Internet Engineering Task Force，因特网工程任务组）制定的多媒体通信协议。
+     * 它是一个基于文本的应用层控制协议，用于创建、修改和释放一个或多个参与者的会话。
+     * SIP 是一种源于互联网的IP 语音会话控制协议，具有灵活、易于实现、便于扩展等特点
+     *
+     *
+     * ====H.323协议和SIP协议的比较======
+     * http://www.zcallr.cn/tech/cc/tech-6.html
+     * 都利用RTP作为媒体传输的协议
+     *
+     * h.323标准是itu-t组织 1996年在h.320/h.324的基础上建立起来的，其应用目标是，在基ip的网络环境中，实现可靠的面向音视频和数据的实时应用。如今经过多年的技术发展和标准的不断完善，h.323已经成为被广大的itu成员以及客户所接受的一个成熟标准族。
+     *
+     * sip标准是ietf组织在1999年提出的，其应用目标是在基于internet环境，实现数据、音视频实时通讯，特别是通过internet将视频通讯这种应用大众化，引入到千家万户。由于sip协议相对于h.323而言，相对简单、自由，厂商可以使用相对小的成本就可以构造满足应用的系统。例如仅仅使用微软基于sip协议的msn，和rtc就可以构造一个简单的，基于internet应用环境的视频通讯环境。这样网络运营商就可以在尽量少的成本基础上，利用现有的网络资源开展视音频通讯业务的扩展工作。
+     *
+     * ========  H.323 与 ，SIP协议======
+     * 两者都是信令协议（用于呼叫，接通，挂断）
+     * http://www.zcallr.cn/tech/cc/tech-9.html  VoIP相关技术标准
+     * 在业界IP电话有两种并列的体系结构，一种是以上介绍的ITU－TH.323协议，
+     * 另一种是由互联网工程任务组（IETF）提出的SIP协议（RFC2543），SIP协议更适用于智能化终端。
+     *
+     * =======Android SIP应用============
+     * https://developer.android.google.cn/guide/topics/connectivity/sip
+     * 需要用 SipManager 于sip服务商建立链接，才能发起语音通话。
+     *
+     * android.net.sip.SipManager #isVoipSupported  isVoipSupported()
+     * isApiSupported isApiSupported()
+     *
+     * android.Manifest.permission#INTERNET} and {@link android.Manifest.permission#USE_SIP}
+     *
+     * 用于过滤支持voip的应用，支持才在Google Play 上展示
+     * <uses-feature android:name="android.hardware.sip.voip" />
+     *
+     * 目前国内厂商都不支持SipManager  voip
+     *
+     *
+     *
+     */
+    void f8(){
+
+    }
+
 }
