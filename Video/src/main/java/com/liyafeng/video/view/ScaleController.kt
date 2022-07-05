@@ -1,4 +1,4 @@
-package com.liyafeng.video
+package com.liyafeng.video.view
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
