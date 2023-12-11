@@ -1104,4 +1104,108 @@ public class Main_Question {
      *
      */
     void a47(){}
+
+    /**
+     * com.google.android.material:1.2.0 ->1.3.0
+     * 导致崩溃，是因为主题导致冲突。
+     * 解决方式是，吧1.3.0去除调就好了。
+     *
+     * exclude group: 'com.android.support', module: 'appcompat-v7'
+     *
+     *
+     */
+    void a48(){}
+
+
+    /**
+     * =====透明状态栏变白问题
+     * 这个是沉浸式状态栏，但是显示状态栏文字，好像做不到真正沉浸式而且不展示文字（水滴屏）。
+     *     <style name="RtcFullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+     *         <item name="android:windowNoTitle">true</item>
+     *         <item name="android:windowContentOverlay">@null</item>
+     *         <item name="android:windowFullscreen">false</item>
+     *         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+     *         <item name="android:windowAnimationStyle">@style/share_anim_bottomDialog</item>
+     *         <item name="android:windowIsTranslucent">true</item>
+     *         <item name="android:windowBackground">@color/transparent</item>
+     *         <item name="android:windowTranslucentStatus">false</item>
+     *
+     *     </style>
+     *
+     *
+     *
+     *
+     */
+    void a49(){}
+
+    /**
+     * Could not determine the dependencies of task ':babymonkey_base:base_io:minifyReleaseWithR8'.
+     * 17:48:49  > Cannot query the value of this property because it has no value available.
+     *
+     * 各个项目 compileSdkVersion 版本不一样 30以后才有的 ,要都改成统一的
+     * https://stackoverflow.com/questions/64459937/could-not-create-task-appminifyreleasewithr8-cannot-query-the-value-of-this
+     * android {
+     *     compileSdkVersion 30
+     *     buildToolsVersion "30.0.3"
+     *     ...
+     *     ...}
+     *
+     */
+    void a50(){}
+
+
+    /**
+     *
+     *
+     * 2021-11-09 15:36:41.379 6248-6248/com.tal.genie.rtc E/CrashReport: java.lang.RuntimeException: Unable to start activity ComponentInfo{com.tal.genie.rtc/com.tal.genie.kit_rtc.ui.VideoActivity}: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+     *         at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2944)
+     *         at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3079)
+     *         at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:78)
+     *         at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:108)
+     *         at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:68)
+     *         at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1836)
+     *         at android.os.Handler.dispatchMessage(Handler.java:106)
+     *         at android.os.Looper.loop(Looper.java:193)
+     *         at android.app.ActivityThread.main(ActivityThread.java:6702)
+     *         at java.lang.reflect.Method.invoke(Native Method)
+     *         at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:493)
+     *         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:911)
+     *      Caused by: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+     *         at androidx.appcompat.app.AppCompatDelegateImpl.createSubDecor(AppCompatDelegateImpl.java:843)
+     *         at androidx.appcompat.app.AppCompatDelegateImpl.ensureSubDecor(AppCompatDelegateImpl.java:806)
+     *         at androidx.appcompat.app.AppCompatDelegateImpl.setContentView(AppCompatDelegateImpl.java:693)
+     *         at androidx.appcompat.app.AppCompatActivity.setContentView(AppCompatActivity.java:170)
+     *         at com.tal.genie.kit_rtc.ui.VideoActivity.onCreate(VideoActivity.kt:117)
+     *         at android.app.Activity.performCreate(Activity.java:7136)
+     *         at android.app.Activity.performCreate(Activity.java:7127)
+     *         at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1271)
+     *         at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2924)
+     *         at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3079) 
+     *         at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:78) 
+     *         at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:108) 
+     *         at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:68) 
+     *         at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1836) 
+     *         at android.os.Handler.dispatchMessage(Handler.java:106) 
+     *         at android.os.Looper.loop(Looper.java:193) 
+     *         at android.app.ActivityThread.main(ActivityThread.java:6702) 
+     *         at java.lang.reflect.Method.invoke(Native Method) 
+     *         at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:493) 
+     *         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:911) 
+     *
+     *  ================
+     *  要用1.2.0的，有冲突的话看 gradle task -> help -> dependencies 搜索，看有没有1.3.0的，然后用exclude去除
+     * com.google.android.material:material:1.2.0
+     * minsdk 要改成 21 ，26就不行。改完后重启手机，否则多个进程改完不生效。
+     *
+     *
+     */
+    void a51(){}
+
+    /**
+     * 界面没数据
+     * string 转 bean 失败
+     * 混淆了，混淆，混淆！！！
+     *
+     */
+    void a52(){}
 }

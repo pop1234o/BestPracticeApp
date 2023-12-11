@@ -37,10 +37,59 @@ public class Main {
      * IBinder接口代表一个可以远程传输的对象
      * Binder则实现了RPC(远程进程通信)的一个协议，定义了如何传输和接收对象
      *
+     * =============aidl
+     * 定义一个aidl文件，as自动生成一个java
+     * server：定义service，然后返回这个实现。里面实现了方法
+     *
+     * client：bind这个service，获取到这个示例，调用方法。
      *
      * @param args
      */
     public static void main(String[] args) {
 
     }
+
+
+
+
+    /**
+     * ========进程保活====
+     *
+     *
+     *   boolean success = context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+     *
+     *
+     *     private class XXServiceConnection implements ServiceConnection {
+     *         @Override
+     *         public void onServiceConnected(ComponentName name, IBinder service) {
+     *             try {
+     *                 mRtcKeepAliveBinder = IKeepAliveService.Stub.asInterface(service);
+     *                 service.linkToDeath(mDeathRecipient, 0);//监听binder断开
+     *             } catch (RemoteException e) {
+     *                 e.printStackTrace();
+     *             }
+     *         }
+     *
+     *         @Override
+     *         public void onServiceDisconnected(ComponentName name) {
+     *             weakReference.get().unbindService(mLauncherServiceConnection);
+     *         }
+     *     }
+     *
+     *
+     *   private IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
+     *         @Override
+     *         public void binderDied() {
+     *             KLog.r(TAG,BIND_DIED, "msg","Launcher BinderDied");
+     *             if (mRtcKeepAliveBinder != null) {
+     *                 mRtcKeepAliveBinder.asBinder().unlinkToDeath(mDeathRecipient, 0);
+     *                 mRtcKeepAliveBinder = null;
+     *             }
+     *             //断开重新绑定
+     *             startKeepAliveService(weakReference.get());
+     *         }
+     *     };
+     *
+     */
+    void a30(){}
 }

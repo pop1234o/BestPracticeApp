@@ -101,6 +101,40 @@ public class Camera2Activity extends Activity {
      *         at android.os.Looper.loop(Looper.java:163)
      *         at android.os.HandlerThread.run(HandlerThread.java:61)
      *
+     * ==========
+     * 开启相机，获取cameraDevice对象，
+     *
+     * 创建surface用来承载图像
+     * 创建 ImageReader（拍照） 或者  预览    Surface previewSurface = new Surface(cameraPreview.getSurfaceTexture());
+     *
+     *  创建 CaptureRequest.Builder   camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+     *
+     *  吧surface绑定request
+     *     captureRequestBuild.addTarget(previewSurface);
+     *     Surface surface = mImageReader.getSurface()
+     * captureRequestBuild.addTarget(surface);
+     *
+     *
+     *
+     * camera.createCaptureSession 创建 CameraCaptureSession ，参数是surfaceList，可以是预览的surface，可以是拍照的surface。
+     *
+     *
+     * 有了session有了 request，就能开始预览，或者拍照了！！！
+     * captureRequest = captureRequestBuild.build();
+     * mCameraCaptureSession.capture(captureRequest, null, CameraThreadManager.getInstance().getHandler());
+     *
+     *
+     * CaptureRequest Template type  是帧率和图像质量的妥协，
+     * 见camera_2.jpg
+     *
+     *
+     *
+     * https://blog.csdn.net/afei__/article/details/86108482  CameraCaptureSession.CaptureCallback
+     *
+     * https://stackmirror.com/questions/28960172  预览回调
+     * TotalCaptureResult
+     *
+     *
      * @param savedInstanceState
      */
     @Override

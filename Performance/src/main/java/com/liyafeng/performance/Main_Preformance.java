@@ -250,6 +250,8 @@ public class Main_preformance {
      * 所以埋点的地方很关键，通过日志你必须能定位到，用户的代码走了哪些逻辑，
      * 用户可能的操作是一个树状结构，你需要在关键的分叉点埋日志
      *
+     * 阿里云日志上报
+     * 本地日志存储+日志回捞
      *
      */
     void fun2_0(){}
@@ -627,4 +629,124 @@ public class Main_preformance {
      */
     void fun7(){}
 
+    /**
+     * ========= 查看 app内存 apu 占用情况
+     *
+     * ====== adb shell ps 查看所有进程信息
+     * 原文链接：https://blog.csdn.net/zhangjg_blog/article/details/83537869
+     * https://www.cnblogs.com/mlZhao/p/12435987.html
+     *
+     * USER           PID  PPID     VSZ    RSS WCHAN            ADDR S NAME
+     * root             1     0   43860   3848 SyS_epoll_wait      0 S init
+     * root             2     0       0      0 kthreadd            0 S [kthreadd]
+     * root             4     2       0      0 worker_thread       0 I [kworker/0:0H]
+     * system        6172  2702  964668 128444 SyS_epoll_wait      0 S com.xx.xx.rtc
+     * system        6220  2702  970540 115628 SyS_epoll_wait      0 S com.xx.xx.rtc:core
+     *
+     * 1 . USER：进程uid
+     * 2 . PID：进程pid
+     * 3 . PPID：父进程pid。所有app进程的父进程都是zygote,　所以zygote进程pid肯定是356:
+     * 4 . VSIZE : 进程虚拟地址空间的大小。man ps中对VSIZE的解释
+     * virtual memory size of the process in KiB (1024-byte units).
+     * Device mappings are currently excluded; this is subject to change.
+     * ５．RSS：进程所占的物理内存大小。man ps中对RSS的解释：
+     * resident set size, the non-swapped physical memory that a task has used (in kiloBytes).
+     * ６．PC：program counter，程序计数器。
+     *
+     * ７．Name：进程名
+     *
+     * ８．S　进程状态，常见的状态如下：
+     *
+     * R　正在运行或在运行队列上等待调度
+     * S 正在睡眠，该睡眠可被中断，如可以被信号唤醒
+     * D　正在睡眠，该睡眠不可被中断，不接收信号
+     * Z　zombie僵尸进程。进程死后没有被其父进程回收
+     *
+     * ９ . WCHAN ：当前线程在哪个内核函数上睡眠。man ps 对该字段的解释如下：
+     * name of the kernel function in which the process is sleeping,
+     * a “-” if the process is running, or a “*” if the process is multi-threaded and ps is not displaying threads.
+     * SyS_epoll_ 说明进程的主线程正在消息队列上等待，比如我们分析Android ANR问题时，经常遇到如下日志，
+     * 说明主线程正在内核的epoll上睡眠，也就是说主线程正在消息循环上等待，因为消息循环就是通过epoll实现的。
+     *
+     * adb shell ps | grep com.xxx.xx 过滤包名
+     *
+     * ========== adb shell top
+     * adb shell top -m 5 该命令会打印当前使用 CPU 前5位的进程相关的信息，每隔1s更新一次
+     *
+     * adb shell top -h 查看帮助
+     * Usage: top [ -m max_procs ] [ -n iterations ] [ -d delay ] [ -s sort_column ] [-t ] [ -h ]
+     *     -m num  Maximum number of processes to display. 最多显示多少个进程
+     *     -n num  Updates to show before exiting.  刷新次数
+     *     -d num  Seconds to wait between updates. 刷新间隔时间（默认5秒）
+     *     -s col  Column to sort by (cpu,vss,rss,thr). 按哪列排序
+     *     -t      Show threads instead of processes. 显示线程信息而不是进程
+     *     -h      Display this help screen.  显示帮助文档
+     *
+     *   top -d 1 | grep com.xx.xx 每一秒打印一次内存使用情况
+     * ————————————————
+     * 版权声明：本文为CSDN博主「明潮」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+     * 原文链接：https://blog.csdn.net/u010144805/article/details/79152837
+     *
+     *
+     *  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+     * 17326 root         20   0 6.6M 3.6M 2.9M R  2.6   0.1   0:02.75 top -m 5
+     *  5911 system       20   0 936M 119M 104M S  1.6   6.1  28:14.44 com.tal.genie.p+
+     *  2759 system       18  -2 1.3G 242M 211M S  1.3  12.4  19:15.42 system_server
+     *   439 root         20   0    0    0    0 S  0.6   0.0   8:58.42 [f2fs_discard-2+
+     *  6172 system       10 -10 1.1G 278M 217M S  117  14.3   5:27.22 com.xx.xx.r+
+     *  2708 audioserver  20   0  45M  18M  12M S 46.0   0.9   2:18.29 android.hardwar+
+     *   481 cameraserver 20   0 373M  60M  32M S 39.0   3.1   2:11.20 camerahalserver
+     *
+     * 一般情况：VSS>= RSS >= PSS >= USS。
+     *
+     * PID 进程在系统中的ID
+     * USER 进程uid
+     * PR    优先级
+     * NI — nice值。负值表示高优先级，正值表示低优先级
+     * VIRT — 进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES
+     * RES — 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA
+     * SHR — 共享内存大小，单位kb
+     * S     进程状态:D=不可中断的睡眠状态, R=运行, S=睡眠, T=跟踪/停止, Z=僵尸进程
+     *
+     * %CPU — 上次更新到现在的CPU时间占用百分比
+     * %MEM — 进程使用的物理内存百分比
+     * TIME+ — 进程使用的CPU时间总计，单位1/100秒
+     * COMMAND — 进程名称（命令名/命令行）
+     *
+     * =========
+     * VSS - Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）是单个进程全部可访问的地址空间
+     * RSS - Resident Set Size 实际使用物理内存（包含共享库占用的内存）是单个进程实际占用的内存大小，对于单个共享库， 尽管无论多少个进程使用，实际该共享库只会被装入内存一次。
+     * PSS - Proportional Set Size 实际使用的物理内存（比例分配共享库占用的内存）
+     * USS - Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）USS 是一个非常非常有用的数字， 因为它揭示了运行一个特定进程的真实的内存增量大小。如果进程被终止， USS 就是实际被返还给系统的内存大小。
+     * USS 是针对某个进程开始有可疑内存泄露的情况，进行检测的最佳数字。怀疑某个程序有内存泄露可以查看这个值是否一直有增加
+     * ————————————————
+     * 版权声明：本文为CSDN博主「明潮」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+     * 原文链接：https://blog.csdn.net/u010144805/article/details/79152837
+     *
+     *
+     *
+     * NativeHeap：native层的 so 中调用malloc或new创建的内存
+     * Graphics：OpenGL和SurfaceFlinger相关内存
+     * Stack：线程栈
+     * Code：dex+so相关代码占用内存
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+    void fun8(){}
+
+    /**
+     * https://developer.android.google.cn/studio/profile/cpu-profiler
+     * 查看app cpu消耗和 其他进程消耗
+     * 可以record每个线程的cpu占用，消耗的时间。
+     * 
+     *
+     */
+    void fun9(){
+
+    }
 }

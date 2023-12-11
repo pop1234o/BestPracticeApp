@@ -426,4 +426,53 @@ public class Gradle_Maven {
      */
     void a11(){}
 
+
+    /**
+     * gradle 依赖库 版本冲突问题
+     * https://www.ucloud.cn/yun/14338.html
+     * 高版本会覆盖低版本，
+     * 查看依赖树 ./gradlew app:dependencies --configuration releaseRuntimeClasspath
+     * 符号的含义：
+     * x.x.x (*) 该依赖已经有了，将不再重复依赖。
+     * x.x.x -> x.x.x 该依赖的版本被箭头所指的版本代替。
+     * x.x.x -> x.x.x(*) 该依赖的版本被箭头所指的版本代替，并且该依赖已经有了，不再重复依赖。
+     *
+     * =====解决方法====
+     * // 在build.gradle 中添加下面节点 。
+     * 排除所有
+     * 在 android{}下
+     * configuration{
+     *     all*.exclude module: "support-fragment"
+     * }
+     *
+     * 或者
+     * // 排除掉V4包中引入的android.arch.lifecycle:runtime导致构建失败
+     * configurations.all {
+     *     exclude group: 'android.arch.lifecycle', module: 'runtime'
+     * }
+     *
+     *
+     * 排除单个
+     * implementation ('com.github.bumptech.glide:glide:4.7.1'){
+     *      exclude module:"support-fragment"
+     *      或者 exclude group:'com.android.support'
+     *      或者 exclude group: 'com.android.support', module: 'appcompat-v7'
+     *  }
+     *
+     * // project用括号包裹住
+     * implementation (project(':uisdk:Library:facebook')) {
+     *     exclude group: 'com.android.support', module: 'appcompat-v7'
+     * }
+     *
+     * 强制使用
+     * configurations.all {
+     *    resolutionStrategy {
+     *        force 'com.android.support:support-fragment:26.1.0'
+     *    }
+     * }
+     *
+     *
+     */
+    void a12(){}
+
 }

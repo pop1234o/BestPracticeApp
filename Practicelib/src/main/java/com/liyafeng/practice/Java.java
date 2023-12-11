@@ -44,6 +44,8 @@ public class Java {
         public static int b = 1;
 
         public abstract void aa();
+
+        void b(){}
     }
 
     static abstract class b {
