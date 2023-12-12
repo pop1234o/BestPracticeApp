@@ -2,8 +2,8 @@ package com.liyafeng.practice;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.app.IntentService;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
@@ -663,63 +663,6 @@ public class AndroidFramework {
 
 
     /**
-     * Android的类加载器？
-     * 加载流程是什么？/加载dex源码分析？
-     */
-    public void a2_4() {
-        /*
-         * PathClassLoader：只能加载已经安装到Android系统中的apk文件（/data/app目录），
-         * 是Android默认使用的类加载器。
-         *  PathClassLoader加载系统的类，是在ClassLoader中创建的，因为jvm,dvm不一样，所以
-         *  google修改了ClassLoader的代码
-         *
-         * DexClassLoader：可以加载任意目录下的dex/jar/apk/zip文件，也就是我们一开始提到的补丁。
-         *
-         * ====================加载流程是什么？/加载dex源码分析？===============
-         * https://juejin.im/post/5a0ad2b551882531ba1077a2
-         * 实际上就是将dex文件转换为Element对象，一个dex文件对应一个Element
-         * 首先遍历Element[]，依次调用element.findClass(name)
-         * 里面调用了DexFile.loadClassBinaryName(),里面最终还是调用native方法
-         *
-         */
-    }
-
-
-    /**
-     * Android Dalvik虚拟机和JVM的区别？
-     */
-    public void a2_3() {
-        /*
-         * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
-         * 他是.class文件的压缩，这样占用的内存更少
-         * 2.dvm是基于寄存器的，而jvm是基于栈的
-         * http://rednaxelafx.iteye.com/blog/492667
-         */
-    }
-
-    /**
-     * ART 和 Dalvik的区别？
-     * https://www.zhihu.com/question/29406156
-     */
-    public void a2_5() {
-        /*
-         * 1.使用了AOT(Ahead-of-time)代替了JIT(Just-in-time)
-         * 2.提高了gc的效率,改成并行执行gc，以前gc的时候程序都要中断
-         * 3.提高了内存使用效率和减少了碎片化。
-         *
-         * 1   jit 是dex要在程序运行的时候才转化为可执行的机器代码，
-         * 转化后的dex是oat文件，而AOT是在安装的时候就讲dex转化为oat文件
-         * AOT优点是执行快，不用转化了。缺点是安装时间变长，oat占用多余的内存空间
-         *
-         * 2.使用了并发的gc
-         *
-         * 3.专门分配了large-object-space，用来存放大内存，这样就不用每次都回收碎片内存了
-         *
-         */
-    }
-
-
-    /**
      * 进程的四种状态？内存低的时候Android系统是如何管理进程的？
      * https://developer.android.google.cn/guide/components/activities/process-lifecycle.html
      */
@@ -744,7 +687,7 @@ public class AndroidFramework {
          * 进程中有startService 方式打开的Service，当前两种进程内存不够用时，将回收这个进程
          * 连续运行30分钟以上有可能会被降级，因为这有可能发生了内存泄漏而占用太多内存
          *
-         * 4.缓存进程 cached process（）后台进程
+         * 4.后台进程/缓存进程 cached process（）后台进程
          * 一般这种进程中有1个或者多个onStop的Activity，这个时候当内存不足时会优先回收
          * 一般优先回收的是最久没有用过的进程。
          *
@@ -754,6 +697,107 @@ public class AndroidFramework {
          *
          */
     }
+
+
+    /**
+     * Android的类加载器？
+     * 加载流程是什么？/加载dex源码分析？
+     *
+     * PathClassLoader和DexClassLoader都是Android中用于动态加载类的类加载器。
+     *
+     * 1. PathClassLoader：
+     * - PathClassLoader是Android中的标准类加载器，它用于从已安装的APK文件中加载类和资源。
+     * - 它会在应用程序的安装目录（如/data/app/your.package.name-1/base.apk）中查找并加载类。
+     * - 通常用于加载应用程序自身的类和资源。
+     *
+     * 2. DexClassLoader：
+     * - DexClassLoader是用于从外部存储设备（如SD卡）或其他位置加载类的类加载器。
+     * - 它可以加载未安装的APK文件中的类和资源，以及已经被转换成dex格式的jar文件。
+     * - 通常用于动态加载插件、模块或第三方库中的类和资源。
+     *
+     * 在使用这两个类加载器时，需要注意以下几点：
+     * - PathClassLoader通常用于加载应用程序自身的类和资源，而DexClassLoader通常用于加载外部的类和资源。
+     * - 使用DexClassLoader时，需要注意动态加载的类和资源是否符合应用的安全策略，以避免安全风险。
+     * - 在Android 7.0及以上版本，由于应用的私有目录权限限制，DexClassLoader加载外部dex文件时可能会受到限制，需要使用FileProvider等方式来提供合适的文件访问权限。
+     *
+     * 总之，PathClassLoader和DexClassLoader都是Android中用于动态加载类和资源的重要工具，开发者可以根据具体的需求选择合适的类加载器来加载所需的类和资源。
+     *
+     *
+     */
+    public void a2_4() {
+        /*
+         * PathClassLoader：只能加载已经安装到Android系统中的apk文件（/data/app目录），
+         * 是Android默认使用的类加载器。
+         *  PathClassLoader加载系统的类，是在ClassLoader中创建的，因为jvm,dvm不一样，所以
+         *  google修改了ClassLoader的代码
+         *
+         * DexClassLoader：可以加载任意目录下的dex/jar/apk/zip文件，也就是我们一开始提到的补丁。
+         *
+         * ====================加载流程是什么？/加载dex源码分析？===============
+         * https://juejin.im/post/5a0ad2b551882531ba1077a2
+         * 实际上就是将dex文件转换为Element对象，一个dex文件对应一个Element
+         * 首先遍历Element[]，依次调用element.findClass(name)
+         * 里面调用了DexFile.loadClassBinaryName(),里面最终还是调用native方法
+         *
+         */
+    }
+
+
+    /**
+     * Android Dalvik虚拟机和JVM的区别？
+     *
+
+     *
+     *
+     */
+    public void a2_3() {
+        /*
+         * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
+         * 他是.class文件的压缩，这样占用的内存更少
+         * 2.dvm是基于寄存器的，而jvm是基于栈的
+         * http://rednaxelafx.iteye.com/blog/492667
+         */
+    }
+
+    /**
+     * ART 和 Dalvik的区别？
+     * https://www.zhihu.com/question/29406156
+     * * =======Android虚拟机指的是Android平台上的运行环境，主要包括以下两种虚拟机：
+     *      *
+     *      * 1. Dalvik虚拟机：
+     *      * - Dalvik虚拟机是Android早期使用的虚拟机，用于执行Android应用程序的字节码。
+     *      * - 它使用基于寄存器的架构，每个线程都有自己的寄存器集合，可以并发执行多个线程。
+     *      * - Dalvik虚拟机使用的是.dex格式的字节码文件，这些文件是通过将Java字节码转换而来的。
+     *      * - 由于Dalvik虚拟机的架构设计，它在早期Android设备上的内存和性能方面有一定优势。
+     *      *
+     *      * 2. ART虚拟机：
+     *      * - ART（Android Runtime）虚拟机是Android 5.0及以上版本引入的新一代运行环境。
+     *      * - 与Dalvik虚拟机不同，ART在应用安装时会预先将应用的字节码转换为本地机器码，
+     *      * 存储在设备上，这样在运行时就无需再进行字节码解释，提高了应用的运行效率。
+     *      * - ART还引入了AOT（Ahead-Of-Time）编译，通过预先编译应用的字节码（转换为机器🐴），可以提高应用的启动速度和性能。
+     *      *
+     *      * 总的来说，Android虚拟机是Android应用程序的运行环境，它负责解释和执行应用程序的字节码。
+     *      * 随着Android系统的不断发展，Dalvik虚拟机逐渐被ART虚拟机所取代，ART在性能和效率方面有一定的优势，
+     *      * 因此在Android 5.0及以上版本成为了主流的运行环墋。
+     */
+    public void a2_5() {
+        /*
+         * 1.使用了AOT(Ahead-of-time)代替了JIT(Just-in-time)
+         * 2.提高了gc的效率,改成并行执行gc，以前gc的时候程序都要中断
+         * 3.提高了内存使用效率和减少了碎片化。
+         *
+         * 1   jit 是dex要在程序运行的时候才转化为可执行的机器代码，
+         * 转化后的dex是oat文件，而AOT是在安装的时候就讲dex转化为oat文件
+         * AOT优点是执行快，不用转化了。缺点是安装时间变长，oat占用多余的内存空间
+         *
+         * 2.使用了并发的gc
+         *
+         * 3.专门分配了large-object-space，用来存放大内存，这样就不用每次都回收碎片内存了
+         *
+         */
+    }
+
+
 
     /**
      * Android为每个应用程序分配的内存大小是多少？
@@ -1055,7 +1099,7 @@ public class AndroidFramework {
      * 广播引起anr的时间限制是多少？（10秒）
      * https://developer.android.google.cn/guide/components/broadcasts.html#receiving_broadcasts
      */
-    public void a4() {
+    public void a4(Context context) {
         /*
          *===========广播有几种注册方式？区别？=============
          * 1 AndroidManifest中静态注册 2 代码中动态注册
@@ -1107,6 +1151,8 @@ public class AndroidFramework {
          * 如果为true，那么代表这个组件可以被其他进程调用（唤起）
          * 默认如果有intent-filter 的默认为true，否则为false
          */
+
+        context.sendBroadcast(new Intent(""));
     }
 
     /**
@@ -1160,6 +1206,24 @@ public class AndroidFramework {
     /**
      * 请描述一下Service 的生命周期?
      * start和bind的区别？
+     *
+     * startService()和bindService()是Android中用于启动Service的两种不同方法，它们之间的主要区别在于Service与调用者之间的关联方式和生命周期管理。
+     *
+     * 1. startService()：
+     * - 通过startService()方法启动Service时，Service会独立于调用者而运行，即使调用者被销毁，Service仍然可以继续运行。
+     * - 调用者通过startService()方法启动Service后，Service会调用其onStartCommand()方法进入运行状态，
+     * 直到调用stopService()或者Service自行调用stopSelf()来停止自身。
+     *
+     * 2. bindService()：
+     * - 通过bindService()方法绑定Service时，Service与调用者会建立关联，调用者与Service之间可以进行交互。
+     * - 当调用者与Service绑定后，Service会调用其onBind()方法返回一个IBinder对象，通过该对象可以进行进一步的通信和交互。
+     * - 当所有绑定Service的调用者都解除绑定后，Service会调用其onUnbind()方法，然后根据需要调用onRebind()方法。
+     *
+     * 总的来说，startService()用于启动独立运行的Service，而bindService()用于与调用者建立关联并进行交互的Service。
+     * 通常情况下，如果Service需要长时间在后台运行，可以使用startService()；
+     * 如果需要与Service进行交互或者获取返回结果，可以使用bindService()。
+     *
+     *
      * https://developer.android.google.cn/guide/components/services
      */
     public void a5_1() {
@@ -1843,6 +1907,32 @@ public class AndroidFramework {
     /**
      * 为什么子线程不能更新UI？在什么地方子线程能更新UI?
      * https://blog.csdn.net/xyh269/article/details/52728861
+     *
+     * 子线程不能直接更新UI是因为Android UI框架不是线程安全的，
+     * 即UI组件只能在主线程（也称为UI线程）中进行更新操作。如果在子线程中直接更新UI，
+     * 可能会导致UI状态不一致、界面闪烁、甚至引发异常。
+     *
+     * 子线程能够更新UI的地方包括：
+     *
+     * 1. Handler：
+     * - 通过Handler可以在子线程中发送消息到主线程，从而实现在主线程中更新UI的操作。
+     *
+     * 2. AsyncTask：
+     * - AsyncTask是Android提供的用于在后台线程执行异步任务并在主线程更新UI的工具，
+     * 通过其onPostExecute()方法可以在主线程中更新UI。
+     *
+     * 3. View.post()或View.postDelayed()：
+     * - 在子线程中可以通过View的post()或postDelayed()
+     * 方法来将更新UI的操作post到主线程的消息队列中执行。
+     *
+     * 4. runOnUiThread()：
+     * - 在子线程中可以通过Activity或View的runOnUiThread()
+     * 方法来在主线程中执行更新UI的操作。
+     *
+     * 总的来说，为了保证UI更新的安全性和一致性，Android要求UI更新操作必须在主线程中进行。
+     * 因此，在子线程中进行UI更新时，需要通过上述方式将更新操作切换到主线程中执行。
+     *
+     *
      */
     public void a8_15() {
         /*
@@ -2197,6 +2287,7 @@ public class AndroidFramework {
          */
 
 //        ObjectAnimator.ofFloat().start();
+//        ObjectAnimator.ofPropertyValuesHolder()
     }
 
     /**
@@ -2247,6 +2338,32 @@ public class AndroidFramework {
 
     /**
      * Android网络优化方案？
+     *
+     * Android网络优化是提高应用网络性能和用户体验的重要手段，主要包括以下几个方面：
+     *
+     * 1. 减少网络请求：
+     * - 合并和减少不必要的网络请求，避免频繁的网络通信，减少网络开销。
+     *
+     * 2. 使用缓存：
+     * - 合理使用内存缓存和磁盘缓存，减少重复的网络请求，提高数据加载速度。
+     *
+     * 3. 合理选择网络库：
+     * - 使用高性能的网络库，如OkHttp和Volley，来进行网络请求，提高网络通信效率。
+     *
+     * 4. 优化数据传输：
+     * - 使用GZIP压缩和图片压缩等技术，减小数据传输量，提高网络传输速度。
+     *
+     * 5. 使用连接池：
+     * - 合理使用连接池，减少网络连接的建立和关闭开销，提高网络通信效率。
+     *
+     * 6. 合理使用网络请求策略：
+     * - 根据业务需求和网络环境，选择合适的网络请求策略，如重试机制、超时设置等，提高网络通信的稳定性和可靠性。
+     *
+     * 7. 使用性能分析工具：
+     * - 使用Android Studio提供的性能分析工具，如Network Profiler，来检测和优化网络请求的性能和效率。
+     *
+     * 通过以上网络优化手段，可以有效提高应用的网络性能和响应速度，从而提升用户体验。
+     *
      */
     public void a12_1() {
         /*
@@ -2261,6 +2378,32 @@ public class AndroidFramework {
 
     /**
      * 说说Android内存优化？
+     *
+     * Android内存优化是提高应用性能和用户体验的重要手段，主要包括以下几个方面：
+     *
+     * 1. 减少内存占用：
+     * - 使用轻量级数据结构和算法，避免不必要的内存占用。
+     * - 及时释放不再需要的对象和资源，避免内存泄漏。
+     *
+     * 2. 优化图片和资源：
+     * - 使用适当的图片压缩和格式，避免过大的图片资源占用过多内存。
+     * - 使用矢量图形资源替代位图，减少内存占用。
+     *
+     * 3. 合理管理生命周期：
+     * - 在Activity和Fragment中及时释放资源和取消不必要的操作，避免因生命周期管理不当导致的内存泄漏。
+     *
+     * 4. 使用内存缓存：
+     * - 使用内存缓存来存储频繁使用的数据，减少重复加载和提高性能。
+     *
+     * 5. 优化布局和视图：
+     * - 避免过深的视图层级和复杂的布局结构，减少视图的嵌套和渲染开销。
+     *
+     * 6. 使用性能分析工具：
+     * - 使用Android Studio提供的性能分析工具，如Profiler和Memory Profiler，来检测和优化内存占用。
+     *
+     * 通过以上内存优化手段，可以有效减少应用的内存占用，提高应用的性能和稳定性，从而提升用户体验。
+     *
+     *
      */
     public void a12_2() {
         /*
@@ -2277,6 +2420,28 @@ public class AndroidFramework {
 
     /**
      * 说说CPU优化？（如何使程序更流畅）
+     * CPU优化是提高应用程序流畅性和性能的关键，主要包括以下几个方面：
+     *
+     * 1. 减少计算量：
+     * - 优化算法和数据结构，减少不必要的计算和循环，提高代码执行效率。
+     *
+     * 2. 异步处理：
+     * - 将耗时的操作和网络请求放入后台线程或使用异步任务，避免阻塞主线程，提高程序的响应速度。
+     *
+     * 3. 合理使用多线程：
+     * - 使用线程池和合适的线程数量来并发处理任务，充分利用多核CPU的性能。
+     *
+     * 4. 避免频繁的IO操作：
+     * - 减少频繁的文件读写和网络IO操作，合理使用缓存和批量处理，减少IO开销。
+     *
+     * 5. 优化布局和绘制：
+     * - 避免过于复杂的布局和绘制操作，减少视图层级和绘制开销，提高界面渲染速度。
+     *
+     * 6. 使用性能分析工具：
+     * - 使用Android Studio提供的性能分析工具，如Profiler和CPU Profiler，来检测和优化CPU占用。
+     *
+     * 通过以上CPU优化手段，可以有效减少程序的计算和处理开销，提高程序的流畅性和性能，从而提升用户体验。
+     *
      */
     public void a12_3() {
         /*
@@ -2417,11 +2582,74 @@ public class AndroidFramework {
 
     /**
      * binder是什么？
-     * Linux进程间通讯机制有哪些？Android为什么用binder?
-     * aidl是是什么？如何使用？原理是什么？
-     * Android进程间通讯/进程间通信
+     * ========Linux进程间通讯机制有哪些？Android为什么用binder?
+     *
+     * Linux进程间通信（IPC）机制包括以下几种：
+     *
+     * 1. 管道（Pipe）：允许一个进程的输出直接作为另一个进程的输入，通常用于父子进程或者兄弟进程之间的通信。
+     *
+     * 2. 消息队列（Message Queue）：允许进程通过消息传递进行通信，可以实现多对多的通信模式。
+     *
+     * 3. 信号量（Semaphore）：用于进程间的同步和互斥，可以控制对共享资源的访问。
+     *
+     * 4. 共享内存（Shared Memory）：允许多个进程共享同一块物理内存，可以实现高效的数据共享。
+     *
+     * 5. 套接字（Socket）：用于不同主机或同一主机上不同进程之间的通信，可以实现跨网络的进程通信。
+     *
+     * Android选择使用Binder作为进程间通信机制的原因包括以下几点：
+     *
+     * 1. 高性能：Binder是一种轻量级的、高性能的进程间通信机制，适合于Android系统对性能要求较高的场景。
+     *
+     * 2. 安全性：Binder提供了基于权限的进程间通信机制，可以确保通信双方的安全性和可靠性。
+     *
+     * 3. 跨进程调用：Binder支持跨进程的远程过程调用（RPC），可以方便地实现不同进程之间的方法调用和数据传输。
+     *
+     * 4. 系统集成：Android系统本身就广泛使用了Binder机制，包括Activity与Service之间的通信、系统服务的调用等，因此选择Binder作为进程间通信机制可以更好地与系统集成。
+     *
+     * 总的来说，Android选择使用Binder作为进程间通信机制是基于其高性能、安全性和系统集成等方面的考虑，能够满足Android系统对进程间通信的需求。
+     *
+     *
+     * =====aidl是是什么？如何使用？原理是什么？
+     *
+     * AIDL（Android Interface Definition Language）是一种用于定义Android系统中跨进程通信接口的语言。它允许不同进程之间的组件（如Activity、Service等）通过Binder机制进行通信。
+     *
+     * 使用AIDL的基本步骤如下：
+     *
+     * 1. 定义接口：创建一个.aidl文件，定义需要跨进程通信的接口和数据类型。
+     *
+     * 2. 编译AIDL文件：使用AIDL工具将.aidl文件编译成对应的Java接口文件。
+     *
+     * 3. 实现接口：在服务端实现AIDL接口定义的方法，并将其注册到ServiceManager中。
+     *
+     * 4. 调用接口：在客户端通过Binder机制获取AIDL接口的代理对象，并调用其中定义的方法。
+     *
+     * AIDL的原理是基于Binder机制实现的。当一个组件需要与另一个进程通信时，它会通过Binder机制获取到对方进程的Binder对象，然后通过Binder对象进行数据传输和方法调用。AIDL定义的接口和数据类型会被转换成Binder对象的方法和参数，从而实现跨进程通信。
+     *
+     * 总的来说，AIDL是一种用于定义Android系统中跨进程通信接口的语言，通过Binder机制实现跨进程通信，能够方便地实现不同进程之间的数据传输和方法调用。
+     *
+     *
+     *
+     * =====Android进程间通讯/进程间通信
      *
      * 进程间通信Sdk设计？（主进程，子进程）
+     *
+     * =======ServiceManager和SystemService是Android系统中的两个重要概念，它们之间存在密切的关系。
+     *
+     * 1. ServiceManager：
+     * - ServiceManager是Android系统中的一个系统服务，用于管理其他系统服务的注册和获取。
+     * - 它允许系统中的不同进程通过Binder机制注册和获取系统服务的引用，实现了进程间的通信和服务管理。
+     *
+     * 2. SystemService：
+     * - SystemService是Android系统中的各种系统服务的统称，
+     * 包括ActivityManagerService、WindowManagerService、PackageManagerService等。
+     * - 这些系统服务通过ServiceManager进行注册和管理，其他应用或系统组件可以通过ServiceManager获取这些系统服务的引用，
+     * 从而使用它们提供的功能。
+     *
+     * 因此，ServiceManager和SystemService之间的关系是，ServiceManager作为系统服务的管理者，
+     * 负责系统服务的注册和获取，而SystemService则是被ServiceManager管理的各种系统服务的集合。
+     * 通过ServiceManager，应用和系统组件可以获取到需要的SystemService的引用，从而使用系统服务提供的功能。
+     *
+     *
      */
     public void a14(Context context) {
         /*
@@ -2512,6 +2740,48 @@ public class AndroidFramework {
      * 区别？
      *
      * @link android.view.SurfaceView}
+     * SurfaceView和TextureView都是用于在Android中进行图像渲染的视图组件，它们之间有一些区别和适用场景。
+     *
+     * SurfaceView：
+     * - SurfaceView是一个基于Surface的视图组件，它在View层级的上面拥有一个独立的Surface用于绘制。
+     * - 适用于需要在UI线程之外进行绘制的场景，比如视频播放、相机预览等。
+     * - 可以通过SurfaceHolder来控制Surface的绘制和生命周期。
+     *
+     * TextureView：
+     * - TextureView是一个基于Texture的视图组件，它可以直接在View层级中进行硬件加速的渲染。
+     * - 适用于需要在UI线程内进行动态变换和渲染的场景，比如实时滤镜、动态变换等。
+     * - 可以通过SurfaceTexture来控制Texture的绘制和更新。
+     *
+     * 总的来说，SurfaceView适用于需要在UI线程之外进行绘制的场景，而TextureView适用于需要在UI线程内进行动态变换和渲染的场景。
+     * 选择合适的视图组件可以提高图像渲染的效率和性能。
+     *
+     * ====什么是硬件加速
+     * 硬件加速渲染是指利用图形处理器（GPU）来加速图形渲染和处理的技术。通过将图形处理任务交给GPU来执行，可以提高图形渲染的效率和性能。
+     *
+     * 在Android中，硬件加速渲染可以通过以下方式实现：
+     *
+     * 1. OpenGL ES：利用OpenGL ES图形库进行硬件加速渲染，可以实现高性能的2D和3D图形渲染。
+     *
+     * 2. 硬件加速绘制：Android系统提供了硬件加速绘制功能，可以加速View的绘制过程，提高UI渲染的效率。
+     *
+     * 3. GPU渲染：利用GPU进行图形渲染，可以实现更流畅的动画效果、更快速的图形处理和更高效的图像渲染。
+     *
+     * 总的来说，硬件加速渲染利用GPU来加速图形渲染和处理，可以提高图形渲染的效率和性能，适用于需要高性能图形渲染的应用场景。
+     *
+     *
+     * ====如何开启 关闭
+     * 这将会开启整个应用的硬件加速。
+     * android:hardwareAccelerated="true"
+     *
+     * 在Activity中开启硬件加速：
+     * getWindow().setFlags(
+     *     WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+     *     WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
+     * );
+     *
+     * 在View中开启硬件加速：
+     * setLayerType(View.LAYER_TYPE_HARDWARE, null);
+     *
      */
     public void a15() {
         /*
