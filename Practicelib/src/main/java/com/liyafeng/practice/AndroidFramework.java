@@ -194,6 +194,29 @@ public class AndroidFramework {
      * http://www.liyafeng.com/c/Android_APIsetContentView流程分析
      * https://blog.csdn.net/qq_30379689/article/details/54588736 (Android进阶——Android视图工作机制之measure、layout、draw)
      * https://developer.android.google.cn/guide/topics/ui/how-android-draws ( how-android-draws)
+     *
+     * View的测量和绘制流程在Android中遵循以下步骤：
+     *
+     * 1. 测量阶段：
+     * - 父容器调用每个子视图的measure()方法，传递父容器的测量规格（MeasureSpec）。
+     * - 子视图根据测量规格计算自身的尺寸，并调用setMeasuredDimension()保存测量结果。
+     *
+     * 2. 布局阶段：
+     * - 父容器根据子视图的测量结果，确定子视图的位置和尺寸，并调用每个子视图的layout()方法。
+     *
+     * 3. 绘制阶段：
+     * - 父容器调用每个子视图的draw()方法，子视图在Canvas上绘制自身的内容。
+     *
+     * 在测量和绘制阶段中，涉及到以下几个重要的方法和概念：
+     *
+     * - onMeasure()：View的测量方法，用于计算视图的尺寸。
+     * - onLayout()：ViewGroup的布局方法，用于确定子视图的位置和尺寸。
+     * - onDraw()：View的绘制方法，用于在Canvas上绘制视图的内容。
+     * - MeasureSpec：测量规格，包括测量模式和测量大小，用于确定视图的测量规格。
+     *
+     * 总的来说，View的测量和绘制流程是通过测量、布局和绘制三个阶段来完成的，开发者可以通过重写相应的方法来实现自定义的测量和绘制逻辑，实现各种各样的自定义视图。
+     *
+     *
      */
     public void a1_2() {
         /*
@@ -254,6 +277,21 @@ public class AndroidFramework {
     /**
      * 说说onMeasure,onLayout，onDraw都发生了什么？
      * MeasureSpec三种模式的理解？UNSPECIFIED、EXACTLY、AT_MOST
+     *
+     * MeasureSpec在Android中有三种模式，分别是：
+     *
+     * 1. UNSPECIFIED（未指定）：
+     * - 表示父容器对子视图的尺寸没有任何限制，子视图可以设置为任意大小。
+     *
+     * 2. EXACTLY（精确）：
+     * - 表示父容器对子视图的尺寸有精确的要求，子视图的大小应该精确地按照提供的尺寸来设置。
+     *
+     * 3. AT_MOST（至多）：
+     * - 表示父容器对子视图的尺寸有上限要求，子视图的大小可以设置为任意小于等于提供的尺寸。
+     *
+     * 这三种模式分别代表了父容器对子视图尺寸的限制情况，开发者在编写自定义视图时需要根据这些模式来正确处理视图的测量逻辑，
+     * 以保证视图在各种布局情况下都能正确显示和布局。
+     *
      */
     public void a1_3() {
         /*
@@ -272,7 +310,9 @@ public class AndroidFramework {
          *
          *
          *  MeasureSpec.AT_MOST：使用measureSpec中size的值作为最大值，采用不超过这个值的最大允许值
-         *  当控件的layout_width或layout_height指定为WRAP_CONTENT时，控件大小一般随着控件的子空间或内容进行变化，此时控件尺寸只要不超过父控件允许的最大尺寸即可。因此，此时的mode是AT_MOST，size给出了父控件允许的最大尺寸。
+         *  当控件的layout_width或layout_height指定为WRAP_CONTENT时，
+         * 控件大小一般随着控件的子空间或内容进行变化，此时控件尺寸只要不超过父控件允许的最大尺寸即可。
+         * 因此，此时的mode是AT_MOST，size给出了父控件允许的最大尺寸。
          *
          *
          *
@@ -506,6 +546,23 @@ public class AndroidFramework {
      * 1 如何自定义View?
      * 2 自定义View如何考虑机型适配?
      * 3 自定义View的事件如何处理？
+     *
+     *
+     * Android自定义控件是指开发者可以根据自己的需求和设计，创建符合特定功能和外观的UI组件。自定义控件通常包括以下几个步骤：
+     *
+     * 1. 继承现有控件：可以通过继承现有的View或ViewGroup来创建自定义控件的基础。
+     *
+     * 2. 重写绘制：通过重写onDraw方法来实现自定义控件的绘制逻辑，包括绘制形状、文本、图像等。
+     *
+     * 3. 处理触摸事件：可以通过重写onTouchEvent方法来处理触摸事件，实现自定义控件的交互逻辑。
+     *
+     * 4. 自定义属性：可以通过在attrs.xml中定义自定义属性，来实现对自定义控件外观和行为的定制。
+     *
+     * 5. 测量和布局：可以通过重写onMeasure和onLayout方法来实现自定义控件的测量和布局逻辑，以适应不同的屏幕尺寸和布局需求。
+     *
+     * 通过以上步骤，开发者可以创建符合特定需求的自定义控件，以丰富和定制Android应用的UI界面。
+     *
+     *
      */
     public void a1_8() {
         /*
@@ -746,9 +803,35 @@ public class AndroidFramework {
     /**
      * Android Dalvik虚拟机和JVM的区别？
      *
-
+     *Dalvik 虚拟机和 JVM（Java 虚拟机）的主要区别在于它们所针对的平台和运行的字节码格式：
      *
+     * 1. 针对平台：
+     * - Dalvik 虚拟机是针对 Android 平台设计的虚拟机，用于在 Android 设备上运行应用程序。
+     * - JVM 是针对 Java 平台设计的虚拟机，用于在各种支持 Java 的平台上运行 Java 程序。
      *
+     * 2. 字节码格式：
+     * - Dalvik 虚拟机使用的是基于寄存器的字节码格式（DEX 文件），这种格式针对移动设备和资源受限的环境做了优化。
+     * - JVM 使用的是基于栈的字节码格式（class 文件），这种格式适用于通用的计算机平台。
+     *
+     * 3. 优化策略：
+     * - Dalvik 虚拟机针对移动设备的特点进行了优化，如内存占用、启动速度等方面。
+     * - JVM 则更侧重于通用计算机平台上的性能优化。
+     *
+     * 总的来说，Dalvik 虚拟机和 JVM 在针对的平台、字节码格式和优化策略上有所不同，分别适用于 Android 平台和 Java 平台的应用程序运行环境。
+     *
+     *=========基于寄存器和基于栈是两种不同的字节码执行模型，它们在虚拟机中处理字节码指令时有所不同：
+     *
+     * 1. 基于寄存器：
+     * - 基于寄存器的字节码执行模型将操作数存储在虚拟机的寄存器中。
+     * - 指令通常直接操作寄存器中的值，因此执行速度较快。
+     * - 适用于对寄存器数量有限制的环境，如移动设备等。
+     *
+     * 2. 基于栈：
+     * - 基于栈的字节码执行模型将操作数存储在虚拟机的操作数栈中。
+     * - 指令通常从栈中弹出操作数、执行操作、将结果压入栈中，因此指令较为简单。
+     * - 适用于对寄存器数量没有限制的环境，如通用计算机平台等。
+     *
+     * 总的来说，基于寄存器和基于栈的字节码执行模型在操作数存储和指令执行方式上有所不同，适用于不同的计算环境和优化策略。
      */
     public void a2_3() {
         /*
@@ -774,7 +857,7 @@ public class AndroidFramework {
      *      * - ART（Android Runtime）虚拟机是Android 5.0及以上版本引入的新一代运行环境。
      *      * - 与Dalvik虚拟机不同，ART在应用安装时会预先将应用的字节码转换为本地机器码，
      *      * 存储在设备上，这样在运行时就无需再进行字节码解释，提高了应用的运行效率。
-     *      * - ART还引入了AOT（Ahead-Of-Time）编译，通过预先编译应用的字节码（转换为机器🐴），可以提高应用的启动速度和性能。
+     *      * - ART还引入了AOT（Ahead-Of-Time）编译，通过预先编译应用的字节码（解释为机器码），可以提高应用的启动速度和性能。
      *      *
      *      * 总的来说，Android虚拟机是Android应用程序的运行环境，它负责解释和执行应用程序的字节码。
      *      * 随着Android系统的不断发展，Dalvik虚拟机逐渐被ART虚拟机所取代，ART在性能和效率方面有一定的优势，
@@ -786,7 +869,7 @@ public class AndroidFramework {
          * 2.提高了gc的效率,改成并行执行gc，以前gc的时候程序都要中断
          * 3.提高了内存使用效率和减少了碎片化。
          *
-         * 1   jit 是dex要在程序运行的时候才转化为可执行的机器代码，
+         * 1   jit 是dex要在程序运行的时候才解释（转化）为可执行的机器代码，
          * 转化后的dex是oat文件，而AOT是在安装的时候就讲dex转化为oat文件
          * AOT优点是执行快，不用转化了。缺点是安装时间变长，oat占用多余的内存空间
          *
@@ -1683,7 +1766,7 @@ public class AndroidFramework {
          * 用的是线性探测法的散列表形式来找到对应的Entry.
          * 计算hash值得方法就是 threadLocal.threadLocalHashCode & (len-1)
          * threadLocalHashCode是用ThreadLocal中的一个静态的AtomicInteger.getAndAdd(HASH_INCREMENT)
-         * 每次创建都赋给TheadLoacl对象不同的 hashcode
+         * 每次创建都赋给ThreadLocal对象不同的 hashcode
          *
          */
         ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
@@ -2223,6 +2306,66 @@ public class AndroidFramework {
         context.getResources().getDrawable(R.drawable.mvc_mvp);
     }
 
+    /**
+     * 说说Android系统架构
+     *Android系统架构主要包括以下几个关键组件：
+     *
+     * 1. Linux内核：提供底层硬件驱动、进程管理、内存管理等功能。
+     *
+     * 2. 硬件抽象层（HAL）：提供硬件相关的接口和库，使上层应用可以与各种硬件设备进行交互。
+     *
+     * 3. 运行时环境（ART/Dalvik）：负责应用程序的执行和管理，包括应用的编译、优化和运行。
+     *
+     * 4. 核心库（Core Libraries）：包括Java核心库、C/C++核心库等，提供了Android应用开发所需的基本功能和类库。
+     *
+     * 5. 应用框架（Application Framework）：提供了各种API和服务，包括Activity管理、资源管理、通知系统、内容提供者等。
+     *
+     * 6. 应用程序：包括系统预装的应用程序和用户安装的应用程序，通过应用框架和核心库来实现各种功能和服务。
+     *
+     * 这些组件共同构成了Android系统的架构，通过各个层级的交互和协作，实现了Android系统的功能和特性。
+     **/
+    public void a10_1(Context context) {
+
+
+        context.getResources().getDrawable(R.drawable.android_architecture);
+    }
+
+
+    /**
+     * 说说项目架构
+     * app
+     * business 独立业务
+     * lib 独立模块，比如音频播放器，歌词模块，分享，push，
+     * base base activity 网络，图片加载， | 监控 ：log，bugly，leakcanary
+     *
+     *
+     *
+     */
+    public void a10_2(Context context) {
+
+    }
+
+    /**
+     * apk结构
+     * APK 文件（Android 应用程序包）是 Android 应用程序的安装文件，它包含了应用程序的所有组件和资源，包括但不限于：
+     * <p>
+     * 1. AndroidManifest.xml：应用程序清单文件，包含应用程序的配置信息、权限声明、组件声明等。
+     * <p>
+     * 2. classes.dex：编译后的 Dalvik 字节码文件，包含了应用程序的 Java 代码。
+     * <p>
+     * 3. 资源文件：包括布局文件、图片、字符串、样式等应用程序所需的资源。
+     * <p>
+     * 4. META-INF 目录：包含应用程序的签名信息和证书。
+     * <p>
+     * 5. lib 目录：包含应用程序的本地库文件，如 C/C++ 编写的库文件。
+     * <p>
+     * 6. assets 目录：包含应用程序需要的原始文件，如音频、视频等。
+     * <p>
+     * 7. Android 资源目录：包含了应用程序的布局文件、字符串资源、图片资源等。
+     * <p>
+     * APK 文件是 Android 应用程序的打包文件，通过安装 APK 文件，用户可以将应用程序安装到 Android 设备上运行。
+     */
+    public void a10_3(){}
     //endregion
 
     //region Android动画
@@ -2321,6 +2464,23 @@ public class AndroidFramework {
      * 基础：https://developer.android.google.cn/topic/performance/vitals/anr.html#detect_and_diagnose_problems
      * <p>
      * 深入源码：http://www.bijishequ.com/detail/569457?p=
+     *
+     * ====
+     * 要排查 Android 应用程序的 ANR（Application Not Responding）问题，可以按照以下步骤进行：
+     *
+     * 1. 查看 ANR 日志：在 Android 设备的 /data/anr/ 目录下可以找到 ANR 日志文件，通常以 traces.txt 的形式存在。查看该文件可以获取 ANR 发生时的堆栈信息和线程状态。
+     *
+     * 2. 分析堆栈信息：分析 ANR 日志中的堆栈信息，特别关注发生 ANR 时的主线程（通常是 "main" 线程）的堆栈信息，找出导致阻塞的原因。
+     *
+     * 3. 使用工具分析：可以使用 Android Studio 提供的 Profiler 工具或者第三方工具来分析应用程序的性能和线程状态，找出可能导致 ANR 的性能瓶颈。
+     *
+     * 4. 检查耗时操作：检查应用程序中的耗时操作，包括网络请求、数据库操作、文件操作等，确保这些操作都在后台线程中进行，避免在主线程中执行耗时操作。
+     *
+     * 5. 优化代码：根据分析结果对应用程序进行优化，包括优化性能瓶颈、减少主线程的工作量、使用异步操作等方式来避免 ANR 问题的发生。
+     *
+     * 通过以上步骤，可以排查和解决 Android 应用程序的 ANR 问题，提升应用程序的响应性和用户体验。
+     *
+     *
      */
     public void a12() {
         /*
