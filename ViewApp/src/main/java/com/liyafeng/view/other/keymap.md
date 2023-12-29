@@ -35,6 +35,9 @@ ctrl f
 replace 文件内替换
 ctrl r
 
+file structure 展示文件结构。
+ctrl o 
+
 #####移动代码
 <action id="MoveLineDown">
 <keyboard-shortcut first-keystroke="alt down" />
