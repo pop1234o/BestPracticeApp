@@ -787,4 +787,15 @@ public class Other {
     void a29(){}
 
 
+    /**
+     * 打包成aar
+     * 用 ./gradlew 执行 assembleRelease就行了，在build/output下
+     *
+     * =======
+     *  git rm --cached keystore.properties 从缓存中清除
+     *
+     * ===============leakcanary
+     *
+     * */
+    void a30(){}
 }
