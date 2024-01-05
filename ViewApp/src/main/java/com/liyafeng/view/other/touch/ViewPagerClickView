@@ -1,0 +1,40 @@
+
+
+
+ClickReadView
+
+  private var downX = 0f
+    private var downY = 0f
+
+//这是自定义控件，点击事件的判断， 父布局是个可滑动的布局，比如viewpager
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+            //按下的时候请求不要拦截
+                downX = event.x
+                downY = event.y
+                parent.requestDisallowInterceptTouchEvent(true)
+                return true
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+            //如何移动距离小于50就还是不拦截，消费了，大于50就是滑动了，告诉父布局拦截把，返回false代表不消费，后面的move up事件
+            //就再也不会传进来了。
+                val moveX = event.x
+                val moveY = event.y
+                if (Math.abs(moveX - downX) > 50 || Math.abs(moveY - downY) > 50) {
+                    parent.requestDisallowInterceptTouchEvent(false)
+                    return false
+                }
+                return true
+            }
+
+            MotionEvent.ACTION_UP -> {
+            //
+                val upX = event.x
+                val upY = event.y
+                if (judgeHit(upX, upY)) return true
+            }
+        }
+        return super.onTouchEvent(event)
+    }

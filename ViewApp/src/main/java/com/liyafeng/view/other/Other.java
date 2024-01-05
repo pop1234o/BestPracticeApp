@@ -795,6 +795,9 @@ public class Other {
      *  git rm --cached keystore.properties 从缓存中清除
      *
      * ===============leakcanary
+     * leak是no的说明这个对象不应该被回收，比如单例的类中的static
+     * 被static类对象，引用的变量，leak是unknow
+     *
      *
      * */
     void a30(){}
