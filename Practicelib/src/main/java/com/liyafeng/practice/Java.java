@@ -32,6 +32,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -1418,6 +1419,18 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      *
      *
      *
+     * =========乐观锁和悲观锁是在并发编程中用于处理共享资源的两种不同策略。
+     *
+     * 1. 乐观锁：
+     * - 乐观锁的核心思想是假设在并发情况下不会发生冲突，因此在读取数据时不加锁，在更新数据时会先检查数据是否被其他线程修改过，通常使用版本号或时间戳等方式进行检查。
+     * - 如果数据未被修改，则执行更新操作；如果数据已被修改，则根据具体业务需求选择合适的处理方式，如放弃更新、重试等。
+     * - 乐观锁适用于读多写少的场景，可以提高并发性能，但需要处理冲突的情况。
+     *
+     * 2. 悲观锁：
+     * - 悲观锁的核心思想是假设在并发情况下会发生冲突，因此在读取和更新数据时都会加锁，以确保同一时间只有一个线程可以访问共享资源。
+     * - 悲观锁适用于写多的场景，可以保证数据的一致性和安全性，但可能会降低并发性能。
+     *
+     * 在实际应用中，选择乐观锁还是悲观锁取决于具体的业务场景和性能需求。乐观锁适用于并发量不高、冲突发生概率低的场景，而悲观锁适用于对数据一致性和安全性要求较高的场景。
      *
      */
     public void a2_13_1() {
@@ -1662,6 +1675,21 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
          * 内部用AQS实现了公平锁和非公平锁，重写的tryAcquire 和tryRelease
          * 来实现公平和非公平
          */
+
+        ReentrantLock reentrantLock = new ReentrantLock(true);
+        reentrantLock.lock();
+        boolean b = reentrantLock.tryLock();
+        if(b){
+            reentrantLock.unlock();
+
+        }
+
+        try {
+            reentrantLock.newCondition().await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -1849,6 +1877,30 @@ ht      * https://www.zhihu.com/question/24401191/answer/37601385
      * 如何处理hash碰撞？
      * hashmap比较key相等的依据是什么？
      * SparseArray 和 ArrayMap 区别
+     *
+     *
+     * =====TreeMap区别
+     * TreeMap 和HashMap是Java中常用的两种Map实现，它们之间的主要区别在于以下几点：
+     *
+     * 1. 内部实现：
+     * - HashMap基于哈希表实现，使用哈希算法来存储和检索键值对，具有O(1)的平均时间复杂度。
+     * - TreeMap基于红黑树实现，使用树结构来存储和检索键值对，具有O(log n)的时间复杂度。
+     *
+     * 2. 顺序性：
+     * - HashMap不保证键值对的顺序，即遍历结果可能是无序的。
+     * - TreeMap能够保持键值对的有序性，根据键的自然顺序或自定义比较器进行排序。
+     *
+     * 3. 性能：
+     * - HashMap在大多数情况下具有更好的性能，因为它的查找、插入和删除操作的时间复杂度是常数级别的。
+     * - TreeMap在维护有序性的同时，对于查找、插入和删除操作的性能略低于HashMap，因为它的时间复杂度是对数级别的。
+     *
+     * 4. 适用场景：
+     * - 如果对键值对的顺序没有特殊要求，且需要高效的查找、插入和删除操作，通常选择HashMap。
+     * - 如果需要对键值对进行有序遍历，或者需要按照键的顺序进行操作，可以选择TreeMap。
+     *
+     * 综上所述，HashMap适用于大多数情况下的键值对存储和检索，而TreeMap适用于需要有序性的情况。
+     * 从Java 8开始，HashMap在处理哈希冲突时引入了红黑树。当哈希桶中的链表长度超过阈值（默认为8）时，
+     * 链表会转换为红黑树，以提高查找、插入和删除操作的性能。
      *
      *
      */

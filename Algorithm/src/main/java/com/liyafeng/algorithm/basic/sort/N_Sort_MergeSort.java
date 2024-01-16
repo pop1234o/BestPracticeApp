@@ -38,14 +38,27 @@ public class N_Sort_MergeSort {
 
         public static void mergeSort(int[] array) {
             int length = array.length;
+            //复制一个数组
             aux = new int[length];
+
+            //这个是来控制有序子数组长度的
             for (int i = 1; i < length; i *= 2) {//外循环是1 2 4 6 8，代表是各个归并的子数组的长度
+                //这个就是 子数组的长度的2倍进行一个个排序
                 for (int j = 0; j < length - i; j += i * 2) {
                     merge(array, j, j + i - 1, Math.min(j + i * 2 - 1, length - 1));
                 }
             }
         }
 
+        /**
+         * 两个有序数组，合并为一个有序数组
+         * mid 是两个有序数组的分解。 mid是前面数组的最后一个数，
+         * 后面数组开始是mid+1
+         * @param array
+         * @param low
+         * @param mid
+         * @param high
+         */
         private static void merge(int[] array, int low, int mid, int high) {
             for (int i = low; i <= high; i++) {
                 aux[i] = array[i];
@@ -58,8 +71,10 @@ public class N_Sort_MergeSort {
                 } else if (j > high) {
                     array[k] = aux[i++];
                 } else if (aux[i] > aux[j]) {
+                    // j指针的数小，插入新数组，j++后移
                     array[k] = aux[j++];
                 } else {
+                    // i指针的数小，插入新数组，i++后移
                     array[k] = aux[i++];
                 }
             }

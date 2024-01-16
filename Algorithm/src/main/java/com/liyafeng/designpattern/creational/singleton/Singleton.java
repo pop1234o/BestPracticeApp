@@ -33,7 +33,7 @@ public class Singleton {
 //    }
 
 //    /**
-//     * 静态内部类
+//     * 静态内部类，懒汉式。
 //     */
 //    public static class Singleton {
 //

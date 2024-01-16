@@ -11,6 +11,13 @@ public class N9_Fibonacci {
      * f8 = f(7)+f(6) 后面代表两种解决办法，括号中是剩下问题的规模
      *
      * f(n) =f(n-1)+f(n-2)
+     *
+     * Fibonacci指的是一个数列，该数列的前两个数字为0和1，之后的每个数字都是前两个数字之和。
+     * 因此，Fibonacci数列的前几个数字为0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...依此类推。
+     *
+     * Fibonacci数列在数学和计算机科学中都有广泛的应用，例如在递归算法、动态规划、金融学、自然科学等领域都有相关的应用。
+     *
+     *
      * @param args
      */
     public static void main(String[] args) {

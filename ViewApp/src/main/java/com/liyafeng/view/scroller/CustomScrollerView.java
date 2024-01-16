@@ -1,6 +1,7 @@
 package com.liyafeng.view.scroller;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -101,5 +102,11 @@ public class CustomScrollerView extends FrameLayout {
         if (scroller.computeScrollOffset()) {
             scrollTo(-scroller.getCurrX(), -scroller.getCurrY());
         }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.save()
     }
 }

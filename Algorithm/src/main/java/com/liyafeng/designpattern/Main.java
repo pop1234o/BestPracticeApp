@@ -39,7 +39,7 @@ public class Main {
      * ==========uml图/UML图==============
      * ===========什么是uml===============
      * https://www.visual-paradigm.com/cn/guide/uml-unified-modeling-language/what-is-uml/
-     * UML 是统一建模语言的简称，它是一种由一整套图表组成的标准化建模语言。
+     * UML 是统一建模语言（unified-modeling-language）的简称，它是一种由一整套图表组成的标准化建模语言。
      * 用图表当语音来描述软件系统，不同的图（图表）要描述的内容不同
      * UML主要使用图形符号来表示软件项目的设计，使用UML可以帮助项目团队沟通、探索潜在的设计和验证软件的架构设计
      *
@@ -90,7 +90,9 @@ public class Main {
      * 2.虚线箭头，(realize)实现，小汽车--->车 实现的是接口 。抽象类应该用继承
      *
      * 3.空心菱形：(aggregation)聚合关系 A<-<>B  A是B的一部分 不是强依赖的，B不存在了，A还可以在  （员工-<>部门）
+     * （对象是传入类内部的）
      * 4.实心菱形：(composition)组合关系 A<-</>B  强依赖，B不存在了，A也不存在了（部门-</>公司）
+     * （对象是内部new的）
      *  有的类图菱形另一侧有箭头
      * 组合和聚合关系都是(可能)以成员变量的形式存在
      * 组合的成员变量对象是类内new出来的，聚合的成员变量是构造参数传过来的。
@@ -98,9 +100,10 @@ public class Main {
      * 雁群<>->大雁  大雁离了雁群还可以存在
      * 大雁</>->翅膀  翅膀离了大雁就不能单独存在
      *
-     * （带箭头的线）
+     * （带箭头的线，非空心箭头）
      * 5.实线箭头：关联关系(association) 成员变量 A->B B是A的成员变量，表示A知道B，但 B不知道A；
      * 6.虚线箭头：依赖关系(dependency) 参数 A--->B B是A的构造方法或者普通方法的参数，或者是方法中new出来的参数
+     * A中的方法返回B,这就是依赖
      *
      *
      * 聚合 和 关联的关系类似。
@@ -132,6 +135,42 @@ public class Main {
 
     }
 
+
+    /**
+     * 常见的设计模式包括但不限于以下几种：22个
+     *
+     * 1. 创建型模式：
+     * - 工厂模式（Factory Pattern）
+     * - 抽象工厂模式（Abstract Factory Pattern）
+     * - 单例模式（Singleton Pattern）
+     * - 建造者模式（Builder Pattern）
+     * - 原型模式（Prototype Pattern）
+     *
+     * 2. 结构型模式：(解耦类与类之间的关联)
+     * - 适配器模式（Adapter Pattern）
+     * - 桥接模式（Bridge Pattern）
+     * - 组合模式（Composite Pattern）
+     * - 装饰器模式（Decorator Pattern）
+     * - 外观模式（Facade Pattern）
+     * - 享元模式（Flyweight Pattern）
+     * - 代理模式（Proxy Pattern）
+     *
+     * 3. 行为型模式：（调用者和被调用者之间解耦）
+     * - 策略模式（Strategy Pattern）
+     * - 模板方法模式（Template Method Pattern）
+     * - 观察者模式（Observer Pattern）
+     * - 迭代器模式（Iterator Pattern）
+     * - 命令模式（Command Pattern）
+     * - 备忘录模式（Memento Pattern）
+     * - 状态模式（State Pattern）
+     * - 责任链模式（Chain of Responsibility Pattern）
+     * - 访问者模式（Visitor Pattern）
+     * - 中介者模式（Mediator Pattern）
+     *
+     *
+     * 这些设计模式可以帮助开发人员解决特定类型的问题，并提供了一种经过验证的解决方案。选择合适的设计模式可以提高代码的可维护性、可扩展性和可重用性。
+     */
+    void a1(){}
 
 
 }

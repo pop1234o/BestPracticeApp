@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.util.LruCache;
@@ -562,6 +563,11 @@ public class AndroidFramework {
      *
      * 通过以上步骤，开发者可以创建符合特定需求的自定义控件，以丰富和定制Android应用的UI界面。
      *
+     * =====
+     * 1.分为两种，1自定义View, 参考尺子控件  2 自定义viewgroup 参考tagflowlayout
+     * 自定义view一般是 ondraw ，ontouch + scroller +velocityTracker ，
+     * 自定义ViewGroup，onMeasure，onLayout来测量子控件，和自己的宽高，然后确定子控件的 l t r b
+     *
      *
      */
     public void a1_8() {
@@ -644,6 +650,8 @@ public class AndroidFramework {
          *
          * 6.网络请求在页面关闭时没有被取消
          * 解决方法：关闭时取消
+         *
+         * 7.Activity context赋值给某个全局的第三方库
          *
          * ==============如何检测内存泄露？==========
          * 1.使用Android Profiler中的Memory，打开多个页面，再关闭，Gc一下，然后dump head
@@ -1308,11 +1316,23 @@ public class AndroidFramework {
      *
      *
      * https://developer.android.google.cn/guide/components/services
+     *
+     * ====如果一个 Activity bind 了一个 Service，然后关闭了 Activity，但是没有调用 unbindService() 方法，那么以下情况会发生：
+     *
+     * 1. Service 仍然连接：尽管 Activity 已经被销毁，但是 Service 仍然会保持与 Activity 的连接状态。这意味着 Service 不会被销毁，会继续运行。
+     *
+     * 2. 可能导致内存泄漏：如果 Service 持有了 Activity 的引用，那么即使 Activity 被销毁，由于 Service 仍然持有 Activity 的引用，Activity 的内存无法被回收，从而可能导致内存泄漏。
+     *
+     * 3. 无法接收 Service 的回调：由于 Activity 已经被销毁，如果 Service 发送了任何回调，Activity 是无法接收的。
+     *
+     * 因此，通常建议在 Activity 的 onDestroy() 方法中，调用 unbindService() 方法来解除与 Service 的绑定，以避免可能的内存泄漏和其他问题。
+     *
+     *
      */
     public void a5_1() {
         /*
          * start方式，onCreate ,onStartCommand ,onDestroy
-         * bind方式，onCreate,onBind  onUnBind ,
+         * bind 方式，onCreate,onBind  onUnBind ,
          *
          *  * 多次start 会调用多次startCommand()
          * bind只能调用一次，否则抛异常
@@ -1334,8 +1354,16 @@ public class AndroidFramework {
     //region ContentProvider
 
     /**
-     * 谈谈你对ContentProvider的理解?
+     * 谈谈你对 ContentProvider 的理解?
      * https://developer.android.google.cn/guide/topics/providers/content-providers.html
+     *
+     * ContentProvider 是 Android 中用于在不同的应用程序之间共享数据的一种方式。以下是如何使用 ContentProvider 的基本步骤：
+     *
+     * 1. 定义 ContentProvider：首先需要创建一个类继承自 ContentProvider，并实现其抽象方法，如 onCreate、query、insert、delete、update 等。
+     * <provider
+     *     android:name=".MyContentProvider"
+     *     android:authorities="com.example.mycontentprovider" />
+     *
      */
     public void a6_1() {
         /*
@@ -1408,12 +1436,13 @@ public class AndroidFramework {
 
     /**
      * looper架构?
+     * 在 Android 中，Handler 和 Looper 是实现线程间通信的重要机制。
      *
      * @link android.os.Handler}
      */
     public void a8_1() {
         /*
-         * Handler=》{Looper } Handler只能在有Looper的线程创建（主线程已经在初始化的时候就已经创建Looper了）
+         * Handler =》{Looper } Handler只能在有Looper的线程创建（主线程已经在初始化的时候就已经创建Looper了）
          * Looper=>{MessageQueue}
          * 在创建Handler是，获取 Looper.myLooper();里面用的ThreadLocal来保证每个线程取出各自的Looper
          *
@@ -1425,7 +1454,18 @@ public class AndroidFramework {
          * dispatchMessage 内部调用handleMessage方法
          *
          * sendMessage();将msg加入到MessageQueue中（这是一个链表的形式存储）,
+         * (new Handler时候，把Looper的队列获取到了  mQueue = mLooper.mQueue;)
          * 存储后调用nativeWake(如果Looper.loop中的queue.next()被阻塞的话)
+         * ----为啥队列要用native方法
+         * nativePollOnce
+         * nativeWake
+         * 因为这样更高效，毕竟handler在Android中很重要，很多地方都用到，使用了Linux
+         * 主要是因为它使用了 Linux 的 epoll 机制。
+         * epoll 是 Linux 提供的一种高效的 I/O 事件通知机制，
+         * 它可以让线程在没有事件发生时进入阻塞状态，当有事件发生时自动唤醒线程。
+         * 这种机制比 Java 层面的轮询和等待唤醒机制更加高效，因此 nativePollOnce 使用了 native 方法来实现。
+         *
+         *
          * ----------------------------------------
          * 这个Handler思想还是一个线程中的轮训器去取 消息队列中的Message
          * 没有就阻塞。Handler绑定这个Looper，然后向他的MessageQueue中插入消息
@@ -1433,6 +1473,7 @@ public class AndroidFramework {
          * 一个线程只能有一个Looper,否则抛出异常
          *
          */
+        new Handler().sendEmptyMessage(0);
     }
 
 
@@ -1442,6 +1483,21 @@ public class AndroidFramework {
      * 为什么点击home app退到后台，再次点击图标，不会再次启动app？
      * https://www.jianshu.com/p/a5532ecc8377
      * https://blog.csdn.net/luoshengyang/article/details/6689748
+     * 当我们点击 App 图标后，到界面显示，主要经历了以下几个步骤：
+     *
+     * 1. 启动应用：当我们点击 App 图标时，Launcher（启动器）会通过 startActivity() 方法启动应用的主 Activity。
+     *
+     * 2. 创建进程：如果应用的进程还没有创建，系统会创建一个新的进程来承载应用。系统会启动一个叫做 Zygote 的进程，
+     * 然后通过 fork() 方法复制出一个新的进程。
+     *
+     * 3. 加载应用：新的进程会加载应用的代码和资源，然后创建 Application 对象，并调用其 onCreate() 方法。
+     *
+     * 4. 启动 Activity：系统会创建主 Activity 的实例，并调用其 onCreate()、onStart() 和 onResume() 方法，这样主 Activity 的界面就显示出来了。
+     *
+     * 5. 加载和显示界面：在 Activity 的 onCreate() 方法中，通常会加载布局文件并初始化界面。当 onResume() 方法返回后，Activity 的界面就会显示到屏幕上。
+     *
+     * 以上就是从点击 App 图标到界面显示的基本流程。在这个过程中，涉及到进程的创建、应用的加载、Activity 的启动和界面的显示等步骤，每个步骤都可能影响到应用的启动速度。因此，优化应用的启动速度是 Android 开发中的一个重要任务。
+     *
      */
     public void a8_2(Context context) {
         /*
@@ -2300,6 +2356,7 @@ public class AndroidFramework {
          * 当数据源发生改变，所绑定的ui也发生改变，使用的观察者模式
          *
          *
+         * mvvm更简洁，观察者模式，而且是生命周期自动管理，控件后就不再继续发消息
          *
          */
 
@@ -2333,10 +2390,25 @@ public class AndroidFramework {
 
     /**
      * 说说项目架构
-     * app
-     * business 独立业务
-     * lib 独立模块，比如音频播放器，歌词模块，分享，push，
-     * base base activity 网络，图片加载， | 监控 ：log，bugly，leakcanary
+     * ---app
+     * Application 启动相关
+     * MainActivity ，SplashActivity
+     *
+     * ---business 独立业务组件（module） -interface 进行依赖注入，使得模块间可以调用方法
+     *
+     *
+     * ---service 独立服务组件（带一些通用业务逻辑的），
+     * 比如音频播放器，分享，push，oss上传
+     *
+     * ---base/kit 独立基础组件（对于基础库的封装，解耦） ，
+     * -- 基类
+     * base_activity
+     * --基础库
+     * http网络，图片加载，
+     *
+     * --监控 ：
+     * log，bugly，leakcanary，神策
+     *
      *
      *
      *
@@ -2465,6 +2537,8 @@ public class AndroidFramework {
      * <p>
      * 深入源码：http://www.bijishequ.com/detail/569457?p=
      *
+     * 怎么分析
+     * https://www.cnblogs.com/huansky/p/13944132.html
      * ====
      * 要排查 Android 应用程序的 ANR（Application Not Responding）问题，可以按照以下步骤进行：
      *
@@ -2479,6 +2553,31 @@ public class AndroidFramework {
      * 5. 优化代码：根据分析结果对应用程序进行优化，包括优化性能瓶颈、减少主线程的工作量、使用异步操作等方式来避免 ANR 问题的发生。
      *
      * 通过以上步骤，可以排查和解决 Android 应用程序的 ANR 问题，提升应用程序的响应性和用户体验。
+     *
+     *
+     * =========data/anr/traces.txt
+     * ANRManager会打印出anr 前后的 cpu 使用情况，这个可以反映出当时系统的Performance状态：
+     *
+     * 如果 CPU 使用量接近 100%，说明当前设备很忙，有可能是CPU饥饿导致了ANR。
+     *
+     * 如果 CPU 使用量很少，说明主线程被BLOCK了
+     *
+     * 如果 IOwait 很高，说明ANR有可能是主线程在进行 I/O 操作造成的
+     *
+     * 那么这个时候，我们就要看看 anr 发生的时候，主线程在做什么了。
+     *
+     *
+     * ====常见anr
+     * 应用在主线程上非常缓慢地执行涉及 I/O 的操作。
+     * 应用在主线程上进行长时间的计算。(比如布局操作，new很多布局，滑动中进行io，)
+     * 主线程在对另一个进程进行同步 binder 调用，而后者需要很长时间才能返回。
+     * 主线程处于阻塞状态，等待发生在另一个线程上的长操作同步的块。
+     * 主线程在进程中或通过 binder 调用与另一个线程之间发生死锁。主线程不只是在等待长操作执行完毕，而且处于死锁状态。如需了解详情，请参阅维基百科上的死锁。
+     *
+     * ====adb bugreport
+     *
+     *
+     *
      *
      *
      */
@@ -2572,7 +2671,14 @@ public class AndroidFramework {
          * 1.问题定位，找出哪些地方申请内存过多，我们用AS自带的Android Profiler(分析器)
          * 我们先强制GC一下，然后操作app，在内存占用突然过高或者持续增长的地方，record
          * 然后生成分析报告，会显示出哪个方法中申请内存的数量，我们找到过高的地方，进行优化
-         * 2.问题解决，优化的手段有：改变数据结构，使用缓存池，改变业务逻辑（比如使用观察者代替轮询）
+         * 2.问题解决，优化的手段有：
+         * 改变数据结构，
+         * 使用缓存池，
+         * 改变业务逻辑（比如使用观察者代替轮询）
+         * 优化布局，减少复杂布局带来的内存开销
+         * 检测是否有内存泄漏
+         * 不用的资源及时释放
+         * 压缩图片，webp，按需加载。
          *
          * ------------------降低内存使用---------------------
          */
@@ -2600,12 +2706,53 @@ public class AndroidFramework {
      * 6. 使用性能分析工具：
      * - 使用Android Studio提供的性能分析工具，如Profiler和CPU Profiler，来检测和优化CPU占用。
      *
+     * 合理使用缓存
+     *
      * 通过以上CPU优化手段，可以有效减少程序的计算和处理开销，提高程序的流畅性和性能，从而提升用户体验。
+     *
+     *
+     * ====systrace
+     * adb shell systrace --time=10 -o mytrace.html sched freq idle am wm gfx view
+     * $ANDROID_HOME/platform-tools/systrace/systrace.py gfx view wm am pm ss dalvik app sched  -a com.tal.monkey  -o monkey_trace.log.html
+     *
+     * 生成html文件，查看耗时堆栈。
+     *
+     * ===说说app启动优化
+     * 对启动类型进行分类
+     * 主线程
+     * 子线程
+     * 阻塞子线程，
+     *
+     * 日志，网络，分享 oss，bugly，RxJava
+     *
+     *
+     * 对于Android应用的启动优化，可以采取以下措施：
+     *
+     * 1. 延迟初始化：将应用中的一些初始化操作延迟到应用真正需要时再进行，避免在应用启动时进行过多的初始化操作。
+     *
+     * 2. 冷启动优化：通过减少应用的启动时间，可以提高用户体验。可以采取一些措施，如减少启动时的I/O操作、延迟加载资源等。
+     *
+     * 3. 启动屏幕优化：在应用启动时，可以显示一个启动屏幕，提供一种良好的用户体验。启动屏幕可以包含应用的logo、加载进度等信息。
+     *
+     * 4. 使用启动器图标：为应用设置合适的启动器图标，可以提高应用的启动体验。
+     *
+     * 5. 应用冷热启动优化：对于一些常用的页面或功能，可以进行预加载或预初始化，以提高应用的响应速度。
+     *
+     * 6. 代码优化：优化应用的代码结构和逻辑，减少不必要的初始化操作和资源加载。
+     *
+     * 7. 使用启动优化工具：使用Android Studio中的启动器分析工具，可以帮助开发者分析应用的启动性能，并进行优化。
+     *
+     * 通过以上措施，可以对Android应用的启动进行优化，提高应用的启动速度和用户体验
+     *
+     *
+     *
      *
      */
     public void a12_3() {
         /*
-         * 我们用Android Monitor可以捕获cpu执行的时间耗时（精确到方法）
+         * 1定位
+         * 我们用Android Profiler可以捕获cpu执行的时间耗时（精确到方法）
+         * start trace  end trace ,打印出此时间段方法栈耗时
          * 找出耗时的那个方法，加以优化
          *
          * 当然我们可以用sdk中的SysTrace工具来检测，这样更灵活，我们可以指定它
@@ -2613,6 +2760,7 @@ public class AndroidFramework {
          *  Trace.beginSection("lll");
          *  Trace.endSection();
          *
+         * 2.优化手段
          * 我们可以通过修改数据结构和算法来提升计算效率，减少cpu占用时间，从而减少耗电
          * 比如我们用散列表代替数组存储数据，或者用二叉树代替链表，提升查找效率
          * 比如用SparseArray代替Map，从而减少装箱拆箱所申请的内存，减少gc次数
@@ -2620,6 +2768,89 @@ public class AndroidFramework {
          * */
     }
 
+    /**
+     * 包大小优化
+     * dex
+     * res
+     * assets
+     * native
+     * 每个部分做减法
+     * 能压缩压缩，
+     *
+     * 能去掉去掉，能网络加载就网络加载（懒加载），能用h5用h5，能插件化插件化
+     *
+     * ====能去掉去掉
+     * 使用Android Lint 排查无用资源和类 （500k）
+     * 指定resConfigs "zh" ，删除三方库非中文语言（600k）
+     * 重写三方控件，去除android-material库 （570k）
+     *
+     * ====能压缩压缩
+     * webp代替png （1.2M）
+     * lottie动画资源压缩 （300k）
+     * 开始系统混淆
+     * 使用 AndResGuard 混淆资源id长度 （700k）
+     *
+     * =====能用h5用h5
+     * letax渲染改为h5渲染（1.3M）
+     *
+     * =====能网络加载就网络加载（懒加载）
+     * pdf预览库 so文件动态加载 （2.7M）
+     * 大图网络加载
+     *
+     * ====插件化
+     *
+     *
+     */
+    public void a12_4(){}
+
+
+    /**
+     * 安全性
+     */
+    void a12_5(){}
+
+    /**
+     * 稳定性
+     * 在Android应用开发中，提高稳定性可以通过以下方式实现：
+     *
+     * 1. 异常处理：合理处理各种异常情况，包括网络异常、数据异常、内存溢出等，避免因异常情况导致应用崩溃或失效。
+     *
+     * 2. 内存管理：合理管理应用的内存使用，避免内存泄漏和内存溢出问题，确保应用在长时间运行时不会因内存问题导致崩溃。
+     *
+     * 3. 性能优化：优化应用的性能，包括启动速度、响应速度、资源占用等方面，提高应用的稳定性和用户体验。
+     *
+     * 4. 兼容性测试：在不同的设备和系统版本上进行充分的兼容性测试，确保应用在各种环境下都能稳定运行。
+     *
+     * 5. 持续监控：建立监控系统，对应用的运行状态进行持续监控和分析，及时发现和解决稳定性问题。
+     * bugly，日志打点监控，客户端报警，bugly日报。
+     *
+     * 单元测试，集成测试，
+     * 通过以上方式，可以提高Android应用的稳定性，确保应用在各种条件下都能持续稳定地运行，提供良好的用户体验。
+     *
+     *
+     * ============要保证代码的健壮性、易用性和易维护性，可以采取以下方法：
+     *
+     * 1. 良好的架构设计：采用清晰、模块化的架构设计，如MVC、MVVM等，以便于代码的组织和管理。
+     *
+     * 2. 单元测试：编写全面的单元测试，覆盖代码的各个功能和边界情况，确保代码的健壮性和稳定性。
+     *
+     * 3. 代码规范：遵循统一的代码规范和风格，提高代码的可读性和可维护性，减少潜在的错误和问题。
+     * 阿里 移动端(Android)编码规范
+     *
+     * 4. 文档和注释：编写清晰的文档和注释，解释代码的设计思路和逻辑，方便他人理解和维护代码。
+     *
+     * 5. 错误处理：合理处理各种异常情况，提供友好的错误提示和处理机制，增强代码的健壮性和用户体验。
+     *
+     * 6. 易用的API设计：设计简洁、易用的API接口，提供清晰的功能和参数说明，降低使用门槛。
+     *
+     * 7. 版本控制：使用版本控制系统（如Git），合理管理代码的版本和变更，方便团队协作和代码维护。
+     *
+     * 8. 持续集成：建立持续集成系统，自动化测试和构建过程，及时发现和解决代码问题。
+     *
+     * 通过以上方法，可以提高代码的健壮性、易用性和易维护性，确保代码质量和开发效率。
+     *
+     */
+    void a12_6(){}
 
     //endregion
 
@@ -2809,6 +3040,33 @@ public class AndroidFramework {
      * 负责系统服务的注册和获取，而SystemService则是被ServiceManager管理的各种系统服务的集合。
      * 通过ServiceManager，应用和系统组件可以获取到需要的SystemService的引用，从而使用系统服务提供的功能。
      *
+     *
+     * ====Binder实现原理
+     * Binder 是 Android 中的一种跨进程通信（IPC）机制。它基于 Linux 的设备驱动模型，通过共享内存和进程间通信来实现数据的传输。
+     *
+     * 以下是 Binder 机制的基本实现原理：
+     *
+     * 1. Binder 驱动：Binder 机制的核心是 Binder 驱动，它是一个设备驱动，运行在内核空间。
+     * Binder 驱动负责管理 Binder 实体和引用，以及进程间的通信。
+     *
+     * 2. Binder 实体和引用：
+     * Binder 实体是一个服务，它存在于服务端进程中；
+     * Binder 引用是一个代理，它存在于客户端进程中。
+     * 客户端通过 Binder 引用可以访问服务端的 Binder 实体。
+     *
+     * 3. 数据传输：当客户端调用服务端的方法时，会将调用的方法和参数打包成一个 Parcel 对象，
+     * 然后通过 Binder 驱动发送给服务端。服务端接收到 Parcel 对象后，解包得到方法和参数，
+     * 然后执行方法并将结果返回给客户端。
+     *
+     * 4. 进程间通信：Binder 驱动通过进程间通信（IPC）来传输数据。
+     * 当一个进程需要发送数据时，会将数据写入到共享内存，然后通知接收进程。
+     * 接收进程从共享内存中读取数据，从而实现数据的传输。
+     *
+     * 以上就是 Binder 机制的基本实现原理。通过 Binder 机制，
+     * Android 可以实现高效的跨进程通信，从而支持服务的共享和远程调用。
+     *
+     * 而binder是安全（他使用Uid来标识进程，这个uid是android在，使得服务端可以判断请求是否安全），
+     * 高效的（只拷贝数据一次）
      *
      */
     public void a14(Context context) {

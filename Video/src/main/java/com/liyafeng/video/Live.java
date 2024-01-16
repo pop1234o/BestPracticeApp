@@ -92,7 +92,7 @@ public class Live {
 
     /**
      * ==========推流/拉流
-     * 对于推流端推流，目前主要使用的是RTMP协议，播放可以使用RTMP、HTTP FLV和HLS协议
+     * 对于推流端推流，目前主要使用的是RTMP协议，播放可以使用RTMP、HTTP-FLV和HLS协议
      * 推流协议还有 rtsp ,rtp .弱网推流协议 QUIC
      *
      * 一般推流都是rtmp，然后服务端接收rtmp实时流

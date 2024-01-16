@@ -1,7 +1,5 @@
 package com.liyafeng.algorithm.basic.sort;
 
-import java.util.Arrays;
-
 public class N_Sort_QuickSort {
 
     /**
@@ -15,7 +13,7 @@ public class N_Sort_QuickSort {
      * i向右扫描，直到遇到第一个比它大的数，并指向它
      * j向左扫描，遇到第一个比它小的数
      * <p>
-     * 交换i和j ,直到 i>=j ，这个时候 j 一定会指向比 k 小的数，所以 j和 k 交换，
+     * 交换i和j  ，这个时候 j 一定会指向比 k 小的数，所以 j和 k 交换，
      * 这样就变成 [比k小的数][k][比k大的数]
      * <p>
      * 交换i和j,反复如此，直到 i>=j  (j有可能比i前一位，如果遇到这个情况，就是 [k][小于的数][大于的数]这种情况)
@@ -233,4 +231,6 @@ public class N_Sort_QuickSort {
         }
 
     }
+
+
 }

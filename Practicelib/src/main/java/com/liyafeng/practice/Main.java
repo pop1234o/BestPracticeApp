@@ -18,21 +18,39 @@ public class Main {
         //先把github 原来的知识点看完，包括算法题，然后根据面试点来复习
         //
         //***项目架构（mvc,mvp，mvvm）,android架构 （4层）
-        //数据结构 （list map set  tree 红黑树，二叉树， 堆，）
-        //设计模式
-        //算法
+        //***数据结构 （list map set  tree 红黑树，二叉树， 堆（大根堆，小根堆），）
+        //设计模式（21个）
+        //***算法（查找算法，排序算法，各种算法题）
         //***性能优化（内存，cpu，网络）
         //***jvm（类加载机制，内存管理）
         //***通信机制（handler，binder，aidl）
-        //kotlin熟悉。
+        //***kotlin熟悉。
         //***多线程(创建，线程池，线程安全，锁)
-        //***自定义控件 ，绘制
         //***网络 socket ace（网络协议，socket，https，tcp udp，三次握手四次挥手，）
-        //***自定义控件
+        //***自定义控件 ，绘制，事件冲突
         //***第三方库 okhttp， retrofit ，glide ，rxjava，eventbus
         //*** 数据库  Sqlite Greendao
-        //***linux系统知识，操作系统，cpu
+        //***linux系统知识，操作系统，cpu(见jni库)
         //*** ndk jni (是什么，怎么使用)
+
+
+        //***架构 组件化，mvp ,mvvm
+        //***性能优化（内存优化，内存泄漏，cpu优化， anr排查，卡顿优化，启动优化，网络优化，包大小优化，构建速度优化）
+        //***安全性，（签名，混淆，加固，key so加密，秘钥动态下法）
+        //***稳定性 （异常处理，性能优化，兼容性测试，监控告警）
+        //***ui，自定义控件，开源控件（SmartRefreshLayout，pannellayout，齿轮选择控件，自定义尺子控件，标签控件，转轮控件，banner）
+        //滑动冲突（）
+        // RulerView（onDraw，onTouch，Scroller，VoleCityTracker，）
+        // TagFlowLayout（onMeasure测量子控件 加起来和 warp_content ，onLayout测量子控件 left，）。
+        //
+        // ***多线程（开启，线程池，线程安全，锁，）
+        // ***网络，json，http，http2.0，https，tcp ip
+        // ***sql数据库
+        // ***视频列表（RecycleView+单播放器） Exoplayer IjkPlayer
+        // ***视频播放，横竖屏切换，抖音视频切换，图片分享，自定义手势
+        // ***视频秒开，surface texture区别，
+        //基本算法
+
 
     }
 
