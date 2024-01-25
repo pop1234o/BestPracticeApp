@@ -791,7 +791,7 @@ public class Other {
      * 打包成aar
      * 用 ./gradlew 执行 assembleRelease就行了，在build/output下
      *
-     * =======
+     * ======= 如何不提交
      *  git rm --cached keystore.properties 从缓存中清除
      *
      * ===============leakcanary
@@ -801,4 +801,43 @@ public class Other {
      *
      * */
     void a30(){}
+
+
+    /**
+    * 一个 text+ img 横向排列，text变长，但是不把img寄出去
+     <RelativeLayout
+     android:layout_width="wrap_content"
+     android:layout_marginRight="30dp"
+     android:layout_marginTop="10dp"
+     android:layout_height="wrap_content">
+     <TextView
+     android:id="@+id/tvEnglish"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginLeft="10dp"
+
+     android:layout_marginRight="30dp"
+     android:textColor="#333"
+     android:textSize="18dp"
+     app:layout_constraintLeft_toLeftOf="parent"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toTopOf="parent"
+     tools:text="adsfasdfasd" />
+
+     <ImageView
+     android:id="@+id/iv_uk"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignRight="@+id/tvEnglish"
+     android:layout_centerVertical="true"
+     android:layout_marginRight="-25dp"
+     android:layout_gravity="center_vertical"
+     android:src="@drawable/play_animations_1" />
+
+     </RelativeLayout>
+
+
+     *
+    * */
+    void a31(){}
 }
