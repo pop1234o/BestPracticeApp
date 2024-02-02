@@ -490,6 +490,19 @@ public class Video {
      *
      * https://blog.csdn.net/leixiaohua1020/article/details/15811977 ([总结]FFMPEG视音频编解码零基础学习方法)
      *
+     *FFmpeg是一个开源的跨平台音视频处理工具，它包含了一系列用于处理多媒体数据的库和工具，可以用于录制、转换和流式传输音视频内容。FFmpeg具有以下特点：
+     *
+     * 1. 功能丰富：FFmpeg支持多种音视频格式的编解码、转换和处理，包括但不限于MP4、AVI、FLV、MP3、AAC等。
+     *
+     * 2. 跨平台：FFmpeg可以在多种操作系统上运行，包括Windows、macOS和Linux等。
+     *
+     * 3. 灵活性：FFmpeg提供了丰富的命令行工具和API，可以满足各种音视频处理需求，如剪辑、合并、转码、添加水印等。
+     *
+     * 4. 广泛应用：FFmpeg被广泛应用于音视频处理、流媒体服务、视频编辑软件、转码工具等领域。
+     *
+     * 5. 开源：FFmpeg是一个开源项目，可以免费获取并在遵循其许可协议的情况下进行使用和修改。
+     *
+     * 总的来说，FFmpeg是一个功能强大、灵活且广泛应用的音视频处理工具，为开发者和用户提供了丰富的多媒体处理能力。
      *
      *
      *
@@ -503,9 +516,14 @@ public class Video {
      *
      * AndroidMediaPlayer：即安卓系统自带的播放器 MediaPlayer，基于 MediaCodec、AudioTrack 等安卓系统 API.
      * IjkExoMediaPlayer：即谷歌新推出的 ExoPlayer，同样是基于 MediaCodec、AudioTrack 等安卓系统 API，但相比 MediaPlayer 具有支持 DASH、高级 HLS、自定义扩展等优点。
-     * IjkMediaPlayer：基于 FFmpeg 的 ffplay，集成了 MediaCodec 硬解码器、Opengl 渲染方式等。
+     * IjkMediaPlayer：IjkPlayer 基于 FFmpeg 的 ffplay，集成了 MediaCodec 硬解码器、Opengl 渲染方式等。
      *
      *
+     * ===MediaCodec
+     * MediaCodec 是一个用于音视频编解码的API，它允许开发者在Android设备上进行低延迟的音视频编解码操作
+     *
+     * 如果你想使用 MediaCodec 来解码 MP4 文件，你需要使用 MediaExtractor 从 MP4 文件中提取音视频数据，
+     * 然后使用 MediaCodec 进行解码。但这种方式相对复杂，一般情况下更推荐使用成熟的播放器来处理视频播放。
      *
      * ==============ijkplayer播放流程========
      *
@@ -534,6 +552,43 @@ public class Video {
      * ==============秒开优化==========
      * https://cloud.tencent.com/developer/article/1357997 （IjkPlayer起播速度优化）
      * https://www.jianshu.com/p/843c86a9e9ad （IjkPlayer播放器秒开优化以及常用Option设置）
+     *
+     * 要实现网络视频的“秒开”优化，可以考虑以下几个方面的优化策略：
+     *
+     * 1. 视频编码格式：选择适合网络传输和快速解码的视频编码格式，如H.264。这样可以减小视频文件大小，提高网络传输速度，并且在解码时能够更快地展示视频画面。
+     *
+     * 2. 视频预加载：在用户观看视频之前，可以提前加载视频的关键帧或部分视频数据，以便在用户点击播放时能够快速展示视频画面，从而实现“秒开”的效果。
+     *
+     * 3. 视频流优化：使用适当的视频码率和分辨率，以确保视频能够在较低的网络带宽下也能够快速加载和播放。
+     *
+     * 4. CDN 加速：利用内容分发网络（CDN）来加速视频的传输，将视频内容缓存在离用户较近的节点上，减小视频加载时间。
+     *
+     * 5. 视频预缓存：在用户观看视频时，可以预先缓存一段时间的视频数据，以确保用户在观看过程中不会遇到卡顿和加载延迟。
+     *
+     * 6. 逐帧渐进式加载：使用逐帧渐进式加载的方式，先加载视频的低清晰度画面，然后逐渐加载高清晰度画面，以实现快速展示视频画面。
+     *
+     * 通过以上优化策略，可以有效提高网络视频的加载速度，实现“秒开”的效果，提升用户的观看体验。
+     *
+     * ======surface texture
+     * https://developer.android.google.cn/guide/topics/media/ui/playerview?hl=zh-cn
+     *
+     * 与 TextureView 相比，SurfaceView 在视频播放方面具有多项优势：
+     *
+     * 在许多设备上显著降低功耗。
+     * 更准确的帧时间，带来更流畅的视频播放。
+     * 在符合条件的设备上支持更高质量的 HDR 视频输出。
+     * 支持播放受 DRM 保护的内容时的安全输出。
+     * 在提高界面层的 Android TV 设备上以完整显示屏分辨率呈现视频内容。
+     * 因此，应尽可能优先使用 SurfaceView，而非 TextureView。仅当 SurfaceView 无法满足您的需求时，
+     * 才应使用 TextureView。
+     * 例如，在 Android 7.0（API 级别 24）之前，需要流畅的动画或视频界面滚动，
+     * 如以下说明中所述。在这种情况下，最好仅在 SDK_INT 小于 24 (Android 7.0) 时使用 TextureView，否则使用 SurfaceView。
+     *
+     * 在 Android 7.0（API 级别 24）之前，SurfaceView 渲染无法与视图动画正确同步。
+     * 在早期版本中，当 SurfaceView 被放入滚动容器或对其进行动画处理时，这可能会导致不必要的效果。
+     * 此类效果包括视图的内容显示稍微滞后于应显示的位置，以及在受到动画处理后视图变为黑色。
+     * 在 Android 7.0 之前，为了实现流畅的视频动画或滚动，需要使用 TextureView，而不是 SurfaceView。
+     *
      *
      *
      * ==============ijkplayer切换后台黑屏问题===========

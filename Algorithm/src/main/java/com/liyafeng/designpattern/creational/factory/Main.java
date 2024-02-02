@@ -7,7 +7,7 @@ package com.liyafeng.designpattern.creational.factory;
 public class Main {
 
     /**
-     * 简单工厂是一个工厂对象产生多种产品，这些产品都有共同的父类
+     * 简单工厂是一个工厂对象产生多种产品，这些产品都有共同的父类（工厂没有接口类）
      * 普通工厂是一个工厂产生一类产品，这个工厂有个抽象父类
      * 抽象工厂是多个工厂产生多类产品
      *

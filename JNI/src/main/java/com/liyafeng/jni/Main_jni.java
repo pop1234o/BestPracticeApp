@@ -126,6 +126,46 @@ public class Main_jni {
      * 来源：简书
      * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
      *
+     *
+     * ======
+     *
+     * 当在 Android 应用中使用 NDK 和 JNI 时，具体的步骤如下：
+     *
+     * 1. 配置 NDK：在项目的 build.gradle 文件中，指定 NDK 的路径和版本，例如：
+     *    android {
+     *        ...
+     *        externalNativeBuild {
+     *            cmake {
+     *                path "CMakeLists.txt"
+     *            }
+     *        }
+     *        ...
+     *    }
+     *
+     * 2. 编写本地代码：在项目中创建 cpp 目录，并编写 C/C++ 代码，例如 native-lib.cpp 文件。
+     *    #include <jni.h>
+     *    #include <string>
+     *
+     *    extern "C" JNIEXPORT jstring JNICALL
+     *    Java_com_example_myapplication_MainActivity_stringFromJNI(JNIEnv *env, jobject /* this )
+     *      std::string hello = "Hello from C++";
+     *      return env -> NewStringUTF(hello.c_str());
+     *      }
+     *
+     * 3. 声明本地方法：在 Java 代码中声明 native 方法，例如：
+     * public native String stringFromJNI();
+     *
+     * 4. 实现本地方法：在本地代码中实现声明的本地方法，例如：
+     *
+     * 5. 构建和集成：使用 CMake 或 ndk-build 构建本地代码，并将生成的动态链接库集成到 Android 应用中。在 Java 代码中加载本地库，并调用本地方法，例如：
+     *  static {
+     *        System.loadLibrary("native-lib");
+     *    }
+     *
+     *    public native String stringFromJNI();
+     *
+     * 通过以上步骤，可以在 Android 应用中成功使用 NDK 和 JNI，实现 Java 与本地代码之间的交互和功能扩展。
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -165,4 +205,6 @@ public class Main_jni {
      *
      */
     void a2(){}
+
+
 }

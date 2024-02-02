@@ -1,7 +1,5 @@
 package com.liyafeng.algorithm.basic.search;
 
-import java.util.Arrays;
-
 /**
  * Created by liyafeng on 2018/2/23.
  */
@@ -70,6 +68,9 @@ public class N_Search_BinarySearch {
             }
         }
         return ~start;//相当于 -(start+1)
+
     }
+
+
 
 }

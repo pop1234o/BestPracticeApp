@@ -23,7 +23,7 @@ public class N_Sort_BubbleSort {
 
     private static void sort(int[] array) {
         int length = array.length;
-        for (int i = 0; i < length - 1; i++) {
+        for (int i = 0; i < length - 1; i++) {//控制次数
             for (int j = 0; j < length - i - 1; j++) {
                 if (Util.less(array, j + 1, j)) {
                     Util.exchange(array, j, j + 1);

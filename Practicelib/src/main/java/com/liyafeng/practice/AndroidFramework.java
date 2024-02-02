@@ -2,11 +2,12 @@ package com.liyafeng.practice;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.app.IntentService;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.util.LruCache;
@@ -194,6 +195,29 @@ public class AndroidFramework {
      * http://www.liyafeng.com/c/Android_APIsetContentView流程分析
      * https://blog.csdn.net/qq_30379689/article/details/54588736 (Android进阶——Android视图工作机制之measure、layout、draw)
      * https://developer.android.google.cn/guide/topics/ui/how-android-draws ( how-android-draws)
+     *
+     * View的测量和绘制流程在Android中遵循以下步骤：
+     *
+     * 1. 测量阶段：
+     * - 父容器调用每个子视图的measure()方法，传递父容器的测量规格（MeasureSpec）。
+     * - 子视图根据测量规格计算自身的尺寸，并调用setMeasuredDimension()保存测量结果。
+     *
+     * 2. 布局阶段：
+     * - 父容器根据子视图的测量结果，确定子视图的位置和尺寸，并调用每个子视图的layout()方法。
+     *
+     * 3. 绘制阶段：
+     * - 父容器调用每个子视图的draw()方法，子视图在Canvas上绘制自身的内容。
+     *
+     * 在测量和绘制阶段中，涉及到以下几个重要的方法和概念：
+     *
+     * - onMeasure()：View的测量方法，用于计算视图的尺寸。
+     * - onLayout()：ViewGroup的布局方法，用于确定子视图的位置和尺寸。
+     * - onDraw()：View的绘制方法，用于在Canvas上绘制视图的内容。
+     * - MeasureSpec：测量规格，包括测量模式和测量大小，用于确定视图的测量规格。
+     *
+     * 总的来说，View的测量和绘制流程是通过测量、布局和绘制三个阶段来完成的，开发者可以通过重写相应的方法来实现自定义的测量和绘制逻辑，实现各种各样的自定义视图。
+     *
+     *
      */
     public void a1_2() {
         /*
@@ -254,6 +278,21 @@ public class AndroidFramework {
     /**
      * 说说onMeasure,onLayout，onDraw都发生了什么？
      * MeasureSpec三种模式的理解？UNSPECIFIED、EXACTLY、AT_MOST
+     *
+     * MeasureSpec在Android中有三种模式，分别是：
+     *
+     * 1. UNSPECIFIED（未指定）：
+     * - 表示父容器对子视图的尺寸没有任何限制，子视图可以设置为任意大小。
+     *
+     * 2. EXACTLY（精确）：
+     * - 表示父容器对子视图的尺寸有精确的要求，子视图的大小应该精确地按照提供的尺寸来设置。
+     *
+     * 3. AT_MOST（至多）：
+     * - 表示父容器对子视图的尺寸有上限要求，子视图的大小可以设置为任意小于等于提供的尺寸。
+     *
+     * 这三种模式分别代表了父容器对子视图尺寸的限制情况，开发者在编写自定义视图时需要根据这些模式来正确处理视图的测量逻辑，
+     * 以保证视图在各种布局情况下都能正确显示和布局。
+     *
      */
     public void a1_3() {
         /*
@@ -272,7 +311,9 @@ public class AndroidFramework {
          *
          *
          *  MeasureSpec.AT_MOST：使用measureSpec中size的值作为最大值，采用不超过这个值的最大允许值
-         *  当控件的layout_width或layout_height指定为WRAP_CONTENT时，控件大小一般随着控件的子空间或内容进行变化，此时控件尺寸只要不超过父控件允许的最大尺寸即可。因此，此时的mode是AT_MOST，size给出了父控件允许的最大尺寸。
+         *  当控件的layout_width或layout_height指定为WRAP_CONTENT时，
+         * 控件大小一般随着控件的子空间或内容进行变化，此时控件尺寸只要不超过父控件允许的最大尺寸即可。
+         * 因此，此时的mode是AT_MOST，size给出了父控件允许的最大尺寸。
          *
          *
          *
@@ -506,6 +547,28 @@ public class AndroidFramework {
      * 1 如何自定义View?
      * 2 自定义View如何考虑机型适配?
      * 3 自定义View的事件如何处理？
+     *
+     *
+     * Android自定义控件是指开发者可以根据自己的需求和设计，创建符合特定功能和外观的UI组件。自定义控件通常包括以下几个步骤：
+     *
+     * 1. 继承现有控件：可以通过继承现有的View或ViewGroup来创建自定义控件的基础。
+     *
+     * 2. 重写绘制：通过重写onDraw方法来实现自定义控件的绘制逻辑，包括绘制形状、文本、图像等。
+     *
+     * 3. 处理触摸事件：可以通过重写onTouchEvent方法来处理触摸事件，实现自定义控件的交互逻辑。
+     *
+     * 4. 自定义属性：可以通过在attrs.xml中定义自定义属性，来实现对自定义控件外观和行为的定制。
+     *
+     * 5. 测量和布局：可以通过重写onMeasure和onLayout方法来实现自定义控件的测量和布局逻辑，以适应不同的屏幕尺寸和布局需求。
+     *
+     * 通过以上步骤，开发者可以创建符合特定需求的自定义控件，以丰富和定制Android应用的UI界面。
+     *
+     * =====
+     * 1.分为两种，1自定义View, 参考尺子控件  2 自定义viewgroup 参考tagflowlayout
+     * 自定义view一般是 ondraw ，ontouch + scroller +velocityTracker ，
+     * 自定义ViewGroup，onMeasure，onLayout来测量子控件，和自己的宽高，然后确定子控件的 l t r b
+     *
+     *
      */
     public void a1_8() {
         /*
@@ -588,6 +651,8 @@ public class AndroidFramework {
          * 6.网络请求在页面关闭时没有被取消
          * 解决方法：关闭时取消
          *
+         * 7.Activity context赋值给某个全局的第三方库
+         *
          * ==============如何检测内存泄露？==========
          * 1.使用Android Profiler中的Memory，打开多个页面，再关闭，Gc一下，然后dump head
          * 查看是否有Activity没有被回收
@@ -663,63 +728,6 @@ public class AndroidFramework {
 
 
     /**
-     * Android的类加载器？
-     * 加载流程是什么？/加载dex源码分析？
-     */
-    public void a2_4() {
-        /*
-         * PathClassLoader：只能加载已经安装到Android系统中的apk文件（/data/app目录），
-         * 是Android默认使用的类加载器。
-         *  PathClassLoader加载系统的类，是在ClassLoader中创建的，因为jvm,dvm不一样，所以
-         *  google修改了ClassLoader的代码
-         *
-         * DexClassLoader：可以加载任意目录下的dex/jar/apk/zip文件，也就是我们一开始提到的补丁。
-         *
-         * ====================加载流程是什么？/加载dex源码分析？===============
-         * https://juejin.im/post/5a0ad2b551882531ba1077a2
-         * 实际上就是将dex文件转换为Element对象，一个dex文件对应一个Element
-         * 首先遍历Element[]，依次调用element.findClass(name)
-         * 里面调用了DexFile.loadClassBinaryName(),里面最终还是调用native方法
-         *
-         */
-    }
-
-
-    /**
-     * Android Dalvik虚拟机和JVM的区别？
-     */
-    public void a2_3() {
-        /*
-         * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
-         * 他是.class文件的压缩，这样占用的内存更少
-         * 2.dvm是基于寄存器的，而jvm是基于栈的
-         * http://rednaxelafx.iteye.com/blog/492667
-         */
-    }
-
-    /**
-     * ART 和 Dalvik的区别？
-     * https://www.zhihu.com/question/29406156
-     */
-    public void a2_5() {
-        /*
-         * 1.使用了AOT(Ahead-of-time)代替了JIT(Just-in-time)
-         * 2.提高了gc的效率,改成并行执行gc，以前gc的时候程序都要中断
-         * 3.提高了内存使用效率和减少了碎片化。
-         *
-         * 1   jit 是dex要在程序运行的时候才转化为可执行的机器代码，
-         * 转化后的dex是oat文件，而AOT是在安装的时候就讲dex转化为oat文件
-         * AOT优点是执行快，不用转化了。缺点是安装时间变长，oat占用多余的内存空间
-         *
-         * 2.使用了并发的gc
-         *
-         * 3.专门分配了large-object-space，用来存放大内存，这样就不用每次都回收碎片内存了
-         *
-         */
-    }
-
-
-    /**
      * 进程的四种状态？内存低的时候Android系统是如何管理进程的？
      * https://developer.android.google.cn/guide/components/activities/process-lifecycle.html
      */
@@ -744,7 +752,7 @@ public class AndroidFramework {
          * 进程中有startService 方式打开的Service，当前两种进程内存不够用时，将回收这个进程
          * 连续运行30分钟以上有可能会被降级，因为这有可能发生了内存泄漏而占用太多内存
          *
-         * 4.缓存进程 cached process（）后台进程
+         * 4.后台进程/缓存进程 cached process（）后台进程
          * 一般这种进程中有1个或者多个onStop的Activity，这个时候当内存不足时会优先回收
          * 一般优先回收的是最久没有用过的进程。
          *
@@ -754,6 +762,133 @@ public class AndroidFramework {
          *
          */
     }
+
+
+    /**
+     * Android的类加载器？
+     * 加载流程是什么？/加载dex源码分析？
+     *
+     * PathClassLoader和DexClassLoader都是Android中用于动态加载类的类加载器。
+     *
+     * 1. PathClassLoader：
+     * - PathClassLoader是Android中的标准类加载器，它用于从已安装的APK文件中加载类和资源。
+     * - 它会在应用程序的安装目录（如/data/app/your.package.name-1/base.apk）中查找并加载类。
+     * - 通常用于加载应用程序自身的类和资源。
+     *
+     * 2. DexClassLoader：
+     * - DexClassLoader是用于从外部存储设备（如SD卡）或其他位置加载类的类加载器。
+     * - 它可以加载未安装的APK文件中的类和资源，以及已经被转换成dex格式的jar文件。
+     * - 通常用于动态加载插件、模块或第三方库中的类和资源。
+     *
+     * 在使用这两个类加载器时，需要注意以下几点：
+     * - PathClassLoader通常用于加载应用程序自身的类和资源，而DexClassLoader通常用于加载外部的类和资源。
+     * - 使用DexClassLoader时，需要注意动态加载的类和资源是否符合应用的安全策略，以避免安全风险。
+     * - 在Android 7.0及以上版本，由于应用的私有目录权限限制，DexClassLoader加载外部dex文件时可能会受到限制，需要使用FileProvider等方式来提供合适的文件访问权限。
+     *
+     * 总之，PathClassLoader和DexClassLoader都是Android中用于动态加载类和资源的重要工具，开发者可以根据具体的需求选择合适的类加载器来加载所需的类和资源。
+     *
+     *
+     */
+    public void a2_4() {
+        /*
+         * PathClassLoader：只能加载已经安装到Android系统中的apk文件（/data/app目录），
+         * 是Android默认使用的类加载器。
+         *  PathClassLoader加载系统的类，是在ClassLoader中创建的，因为jvm,dvm不一样，所以
+         *  google修改了ClassLoader的代码
+         *
+         * DexClassLoader：可以加载任意目录下的dex/jar/apk/zip文件，也就是我们一开始提到的补丁。
+         *
+         * ====================加载流程是什么？/加载dex源码分析？===============
+         * https://juejin.im/post/5a0ad2b551882531ba1077a2
+         * 实际上就是将dex文件转换为Element对象，一个dex文件对应一个Element
+         * 首先遍历Element[]，依次调用element.findClass(name)
+         * 里面调用了DexFile.loadClassBinaryName(),里面最终还是调用native方法
+         *
+         */
+    }
+
+
+    /**
+     * Android Dalvik虚拟机和JVM的区别？
+     *
+     *Dalvik 虚拟机和 JVM（Java 虚拟机）的主要区别在于它们所针对的平台和运行的字节码格式：
+     *
+     * 1. 针对平台：
+     * - Dalvik 虚拟机是针对 Android 平台设计的虚拟机，用于在 Android 设备上运行应用程序。
+     * - JVM 是针对 Java 平台设计的虚拟机，用于在各种支持 Java 的平台上运行 Java 程序。
+     *
+     * 2. 字节码格式：
+     * - Dalvik 虚拟机使用的是基于寄存器的字节码格式（DEX 文件），这种格式针对移动设备和资源受限的环境做了优化。
+     * - JVM 使用的是基于栈的字节码格式（class 文件），这种格式适用于通用的计算机平台。
+     *
+     * 3. 优化策略：
+     * - Dalvik 虚拟机针对移动设备的特点进行了优化，如内存占用、启动速度等方面。
+     * - JVM 则更侧重于通用计算机平台上的性能优化。
+     *
+     * 总的来说，Dalvik 虚拟机和 JVM 在针对的平台、字节码格式和优化策略上有所不同，分别适用于 Android 平台和 Java 平台的应用程序运行环境。
+     *
+     *=========基于寄存器和基于栈是两种不同的字节码执行模型，它们在虚拟机中处理字节码指令时有所不同：
+     *
+     * 1. 基于寄存器：
+     * - 基于寄存器的字节码执行模型将操作数存储在虚拟机的寄存器中。
+     * - 指令通常直接操作寄存器中的值，因此执行速度较快。
+     * - 适用于对寄存器数量有限制的环境，如移动设备等。
+     *
+     * 2. 基于栈：
+     * - 基于栈的字节码执行模型将操作数存储在虚拟机的操作数栈中。
+     * - 指令通常从栈中弹出操作数、执行操作、将结果压入栈中，因此指令较为简单。
+     * - 适用于对寄存器数量没有限制的环境，如通用计算机平台等。
+     *
+     * 总的来说，基于寄存器和基于栈的字节码执行模型在操作数存储和指令执行方式上有所不同，适用于不同的计算环境和优化策略。
+     */
+    public void a2_3() {
+        /*
+         * 1.Android Dalvik 运行的是.dex 即Dalvik Executable,
+         * 他是.class文件的压缩，这样占用的内存更少
+         * 2.dvm是基于寄存器的，而jvm是基于栈的
+         * http://rednaxelafx.iteye.com/blog/492667
+         */
+    }
+
+    /**
+     * ART 和 Dalvik的区别？
+     * https://www.zhihu.com/question/29406156
+     * * =======Android虚拟机指的是Android平台上的运行环境，主要包括以下两种虚拟机：
+     *      *
+     *      * 1. Dalvik虚拟机：
+     *      * - Dalvik虚拟机是Android早期使用的虚拟机，用于执行Android应用程序的字节码。
+     *      * - 它使用基于寄存器的架构，每个线程都有自己的寄存器集合，可以并发执行多个线程。
+     *      * - Dalvik虚拟机使用的是.dex格式的字节码文件，这些文件是通过将Java字节码转换而来的。
+     *      * - 由于Dalvik虚拟机的架构设计，它在早期Android设备上的内存和性能方面有一定优势。
+     *      *
+     *      * 2. ART虚拟机：
+     *      * - ART（Android Runtime）虚拟机是Android 5.0及以上版本引入的新一代运行环境。
+     *      * - 与Dalvik虚拟机不同，ART在应用安装时会预先将应用的字节码转换为本地机器码，
+     *      * 存储在设备上，这样在运行时就无需再进行字节码解释，提高了应用的运行效率。
+     *      * - ART还引入了AOT（Ahead-Of-Time）编译，通过预先编译应用的字节码（解释为机器码），可以提高应用的启动速度和性能。
+     *      *
+     *      * 总的来说，Android虚拟机是Android应用程序的运行环境，它负责解释和执行应用程序的字节码。
+     *      * 随着Android系统的不断发展，Dalvik虚拟机逐渐被ART虚拟机所取代，ART在性能和效率方面有一定的优势，
+     *      * 因此在Android 5.0及以上版本成为了主流的运行环墋。
+     */
+    public void a2_5() {
+        /*
+         * 1.使用了AOT(Ahead-of-time)代替了JIT(Just-in-time)
+         * 2.提高了gc的效率,改成并行执行gc，以前gc的时候程序都要中断
+         * 3.提高了内存使用效率和减少了碎片化。
+         *
+         * 1   jit 是dex要在程序运行的时候才解释（转化）为可执行的机器代码，
+         * 转化后的dex是oat文件，而AOT是在安装的时候就讲dex转化为oat文件
+         * AOT优点是执行快，不用转化了。缺点是安装时间变长，oat占用多余的内存空间
+         *
+         * 2.使用了并发的gc
+         *
+         * 3.专门分配了large-object-space，用来存放大内存，这样就不用每次都回收碎片内存了
+         *
+         */
+    }
+
+
 
     /**
      * Android为每个应用程序分配的内存大小是多少？
@@ -1055,7 +1190,7 @@ public class AndroidFramework {
      * 广播引起anr的时间限制是多少？（10秒）
      * https://developer.android.google.cn/guide/components/broadcasts.html#receiving_broadcasts
      */
-    public void a4() {
+    public void a4(Context context) {
         /*
          *===========广播有几种注册方式？区别？=============
          * 1 AndroidManifest中静态注册 2 代码中动态注册
@@ -1107,6 +1242,8 @@ public class AndroidFramework {
          * 如果为true，那么代表这个组件可以被其他进程调用（唤起）
          * 默认如果有intent-filter 的默认为true，否则为false
          */
+
+        context.sendBroadcast(new Intent(""));
     }
 
     /**
@@ -1160,12 +1297,42 @@ public class AndroidFramework {
     /**
      * 请描述一下Service 的生命周期?
      * start和bind的区别？
+     *
+     * startService()和bindService()是Android中用于启动Service的两种不同方法，它们之间的主要区别在于Service与调用者之间的关联方式和生命周期管理。
+     *
+     * 1. startService()：
+     * - 通过startService()方法启动Service时，Service会独立于调用者而运行，即使调用者被销毁，Service仍然可以继续运行。
+     * - 调用者通过startService()方法启动Service后，Service会调用其onStartCommand()方法进入运行状态，
+     * 直到调用stopService()或者Service自行调用stopSelf()来停止自身。
+     *
+     * 2. bindService()：
+     * - 通过bindService()方法绑定Service时，Service与调用者会建立关联，调用者与Service之间可以进行交互。
+     * - 当调用者与Service绑定后，Service会调用其onBind()方法返回一个IBinder对象，通过该对象可以进行进一步的通信和交互。
+     * - 当所有绑定Service的调用者都解除绑定后，Service会调用其onUnbind()方法，然后根据需要调用onRebind()方法。
+     *
+     * 总的来说，startService()用于启动独立运行的Service，而bindService()用于与调用者建立关联并进行交互的Service。
+     * 通常情况下，如果Service需要长时间在后台运行，可以使用startService()；
+     * 如果需要与Service进行交互或者获取返回结果，可以使用bindService()。
+     *
+     *
      * https://developer.android.google.cn/guide/components/services
+     *
+     * ====如果一个 Activity bind 了一个 Service，然后关闭了 Activity，但是没有调用 unbindService() 方法，那么以下情况会发生：
+     *
+     * 1. Service 仍然连接：尽管 Activity 已经被销毁，但是 Service 仍然会保持与 Activity 的连接状态。这意味着 Service 不会被销毁，会继续运行。
+     *
+     * 2. 可能导致内存泄漏：如果 Service 持有了 Activity 的引用，那么即使 Activity 被销毁，由于 Service 仍然持有 Activity 的引用，Activity 的内存无法被回收，从而可能导致内存泄漏。
+     *
+     * 3. 无法接收 Service 的回调：由于 Activity 已经被销毁，如果 Service 发送了任何回调，Activity 是无法接收的。
+     *
+     * 因此，通常建议在 Activity 的 onDestroy() 方法中，调用 unbindService() 方法来解除与 Service 的绑定，以避免可能的内存泄漏和其他问题。
+     *
+     *
      */
     public void a5_1() {
         /*
          * start方式，onCreate ,onStartCommand ,onDestroy
-         * bind方式，onCreate,onBind  onUnBind ,
+         * bind 方式，onCreate,onBind  onUnBind ,
          *
          *  * 多次start 会调用多次startCommand()
          * bind只能调用一次，否则抛异常
@@ -1187,8 +1354,16 @@ public class AndroidFramework {
     //region ContentProvider
 
     /**
-     * 谈谈你对ContentProvider的理解?
+     * 谈谈你对 ContentProvider 的理解?
      * https://developer.android.google.cn/guide/topics/providers/content-providers.html
+     *
+     * ContentProvider 是 Android 中用于在不同的应用程序之间共享数据的一种方式。以下是如何使用 ContentProvider 的基本步骤：
+     *
+     * 1. 定义 ContentProvider：首先需要创建一个类继承自 ContentProvider，并实现其抽象方法，如 onCreate、query、insert、delete、update 等。
+     * <provider
+     *     android:name=".MyContentProvider"
+     *     android:authorities="com.example.mycontentprovider" />
+     *
      */
     public void a6_1() {
         /*
@@ -1261,12 +1436,13 @@ public class AndroidFramework {
 
     /**
      * looper架构?
+     * 在 Android 中，Handler 和 Looper 是实现线程间通信的重要机制。
      *
      * @link android.os.Handler}
      */
     public void a8_1() {
         /*
-         * Handler=》{Looper } Handler只能在有Looper的线程创建（主线程已经在初始化的时候就已经创建Looper了）
+         * Handler =》{Looper } Handler只能在有Looper的线程创建（主线程已经在初始化的时候就已经创建Looper了）
          * Looper=>{MessageQueue}
          * 在创建Handler是，获取 Looper.myLooper();里面用的ThreadLocal来保证每个线程取出各自的Looper
          *
@@ -1278,7 +1454,18 @@ public class AndroidFramework {
          * dispatchMessage 内部调用handleMessage方法
          *
          * sendMessage();将msg加入到MessageQueue中（这是一个链表的形式存储）,
+         * (new Handler时候，把Looper的队列获取到了  mQueue = mLooper.mQueue;)
          * 存储后调用nativeWake(如果Looper.loop中的queue.next()被阻塞的话)
+         * ----为啥队列要用native方法
+         * nativePollOnce
+         * nativeWake
+         * 因为这样更高效，毕竟handler在Android中很重要，很多地方都用到，使用了Linux
+         * 主要是因为它使用了 Linux 的 epoll 机制。
+         * epoll 是 Linux 提供的一种高效的 I/O 事件通知机制，
+         * 它可以让线程在没有事件发生时进入阻塞状态，当有事件发生时自动唤醒线程。
+         * 这种机制比 Java 层面的轮询和等待唤醒机制更加高效，因此 nativePollOnce 使用了 native 方法来实现。
+         *
+         *
          * ----------------------------------------
          * 这个Handler思想还是一个线程中的轮训器去取 消息队列中的Message
          * 没有就阻塞。Handler绑定这个Looper，然后向他的MessageQueue中插入消息
@@ -1286,6 +1473,7 @@ public class AndroidFramework {
          * 一个线程只能有一个Looper,否则抛出异常
          *
          */
+        new Handler().sendEmptyMessage(0);
     }
 
 
@@ -1295,6 +1483,21 @@ public class AndroidFramework {
      * 为什么点击home app退到后台，再次点击图标，不会再次启动app？
      * https://www.jianshu.com/p/a5532ecc8377
      * https://blog.csdn.net/luoshengyang/article/details/6689748
+     * 当我们点击 App 图标后，到界面显示，主要经历了以下几个步骤：
+     *
+     * 1. 启动应用：当我们点击 App 图标时，Launcher（启动器）会通过 startActivity() 方法启动应用的主 Activity。
+     *
+     * 2. 创建进程：如果应用的进程还没有创建，系统会创建一个新的进程来承载应用。系统会启动一个叫做 Zygote 的进程，
+     * 然后通过 fork() 方法复制出一个新的进程。
+     *
+     * 3. 加载应用：新的进程会加载应用的代码和资源，然后创建 Application 对象，并调用其 onCreate() 方法。
+     *
+     * 4. 启动 Activity：系统会创建主 Activity 的实例，并调用其 onCreate()、onStart() 和 onResume() 方法，这样主 Activity 的界面就显示出来了。
+     *
+     * 5. 加载和显示界面：在 Activity 的 onCreate() 方法中，通常会加载布局文件并初始化界面。当 onResume() 方法返回后，Activity 的界面就会显示到屏幕上。
+     *
+     * 以上就是从点击 App 图标到界面显示的基本流程。在这个过程中，涉及到进程的创建、应用的加载、Activity 的启动和界面的显示等步骤，每个步骤都可能影响到应用的启动速度。因此，优化应用的启动速度是 Android 开发中的一个重要任务。
+     *
      */
     public void a8_2(Context context) {
         /*
@@ -1619,7 +1822,7 @@ public class AndroidFramework {
          * 用的是线性探测法的散列表形式来找到对应的Entry.
          * 计算hash值得方法就是 threadLocal.threadLocalHashCode & (len-1)
          * threadLocalHashCode是用ThreadLocal中的一个静态的AtomicInteger.getAndAdd(HASH_INCREMENT)
-         * 每次创建都赋给TheadLoacl对象不同的 hashcode
+         * 每次创建都赋给ThreadLocal对象不同的 hashcode
          *
          */
         ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
@@ -1843,6 +2046,32 @@ public class AndroidFramework {
     /**
      * 为什么子线程不能更新UI？在什么地方子线程能更新UI?
      * https://blog.csdn.net/xyh269/article/details/52728861
+     *
+     * 子线程不能直接更新UI是因为Android UI框架不是线程安全的，
+     * 即UI组件只能在主线程（也称为UI线程）中进行更新操作。如果在子线程中直接更新UI，
+     * 可能会导致UI状态不一致、界面闪烁、甚至引发异常。
+     *
+     * 子线程能够更新UI的地方包括：
+     *
+     * 1. Handler：
+     * - 通过Handler可以在子线程中发送消息到主线程，从而实现在主线程中更新UI的操作。
+     *
+     * 2. AsyncTask：
+     * - AsyncTask是Android提供的用于在后台线程执行异步任务并在主线程更新UI的工具，
+     * 通过其onPostExecute()方法可以在主线程中更新UI。
+     *
+     * 3. View.post()或View.postDelayed()：
+     * - 在子线程中可以通过View的post()或postDelayed()
+     * 方法来将更新UI的操作post到主线程的消息队列中执行。
+     *
+     * 4. runOnUiThread()：
+     * - 在子线程中可以通过Activity或View的runOnUiThread()
+     * 方法来在主线程中执行更新UI的操作。
+     *
+     * 总的来说，为了保证UI更新的安全性和一致性，Android要求UI更新操作必须在主线程中进行。
+     * 因此，在子线程中进行UI更新时，需要通过上述方式将更新操作切换到主线程中执行。
+     *
+     *
      */
     public void a8_15() {
         /*
@@ -2127,12 +2356,88 @@ public class AndroidFramework {
          * 当数据源发生改变，所绑定的ui也发生改变，使用的观察者模式
          *
          *
+         * mvvm更简洁，观察者模式，而且是生命周期自动管理，控件后就不再继续发消息
          *
          */
 
         context.getResources().getDrawable(R.drawable.mvc_mvp);
     }
 
+    /**
+     * 说说Android系统架构
+     *Android系统架构主要包括以下几个关键组件：
+     *
+     * 1. Linux内核：提供底层硬件驱动、进程管理、内存管理等功能。
+     *
+     * 2. 硬件抽象层（HAL）：提供硬件相关的接口和库，使上层应用可以与各种硬件设备进行交互。
+     *
+     * 3. 运行时环境（ART/Dalvik）：负责应用程序的执行和管理，包括应用的编译、优化和运行。
+     *
+     * 4. 核心库（Core Libraries）：包括Java核心库、C/C++核心库等，提供了Android应用开发所需的基本功能和类库。
+     *
+     * 5. 应用框架（Application Framework）：提供了各种API和服务，包括Activity管理、资源管理、通知系统、内容提供者等。
+     *
+     * 6. 应用程序：包括系统预装的应用程序和用户安装的应用程序，通过应用框架和核心库来实现各种功能和服务。
+     *
+     * 这些组件共同构成了Android系统的架构，通过各个层级的交互和协作，实现了Android系统的功能和特性。
+     **/
+    public void a10_1(Context context) {
+
+
+        context.getResources().getDrawable(R.drawable.android_architecture);
+    }
+
+
+    /**
+     * 说说项目架构
+     * ---app
+     * Application 启动相关
+     * MainActivity ，SplashActivity
+     *
+     * ---business 独立业务组件（module） -interface 进行依赖注入，使得模块间可以调用方法
+     *
+     *
+     * ---service 独立服务组件（带一些通用业务逻辑的），
+     * 比如音频播放器，分享，push，oss上传
+     *
+     * ---base/kit 独立基础组件（对于基础库的封装，解耦） ，
+     * -- 基类
+     * base_activity
+     * --基础库
+     * http网络，图片加载，
+     *
+     * --监控 ：
+     * log，bugly，leakcanary，神策
+     *
+     *
+     *
+     *
+     */
+    public void a10_2(Context context) {
+
+    }
+
+    /**
+     * apk结构
+     * APK 文件（Android 应用程序包）是 Android 应用程序的安装文件，它包含了应用程序的所有组件和资源，包括但不限于：
+     * <p>
+     * 1. AndroidManifest.xml：应用程序清单文件，包含应用程序的配置信息、权限声明、组件声明等。
+     * <p>
+     * 2. classes.dex：编译后的 Dalvik 字节码文件，包含了应用程序的 Java 代码。
+     * <p>
+     * 3. 资源文件：包括布局文件、图片、字符串、样式等应用程序所需的资源。
+     * <p>
+     * 4. META-INF 目录：包含应用程序的签名信息和证书。
+     * <p>
+     * 5. lib 目录：包含应用程序的本地库文件，如 C/C++ 编写的库文件。
+     * <p>
+     * 6. assets 目录：包含应用程序需要的原始文件，如音频、视频等。
+     * <p>
+     * 7. Android 资源目录：包含了应用程序的布局文件、字符串资源、图片资源等。
+     * <p>
+     * APK 文件是 Android 应用程序的打包文件，通过安装 APK 文件，用户可以将应用程序安装到 Android 设备上运行。
+     */
+    public void a10_3(){}
     //endregion
 
     //region Android动画
@@ -2197,6 +2502,7 @@ public class AndroidFramework {
          */
 
 //        ObjectAnimator.ofFloat().start();
+//        ObjectAnimator.ofPropertyValuesHolder()
     }
 
     /**
@@ -2230,6 +2536,50 @@ public class AndroidFramework {
      * 基础：https://developer.android.google.cn/topic/performance/vitals/anr.html#detect_and_diagnose_problems
      * <p>
      * 深入源码：http://www.bijishequ.com/detail/569457?p=
+     *
+     * 怎么分析
+     * https://www.cnblogs.com/huansky/p/13944132.html
+     * ====
+     * 要排查 Android 应用程序的 ANR（Application Not Responding）问题，可以按照以下步骤进行：
+     *
+     * 1. 查看 ANR 日志：在 Android 设备的 /data/anr/ 目录下可以找到 ANR 日志文件，通常以 traces.txt 的形式存在。查看该文件可以获取 ANR 发生时的堆栈信息和线程状态。
+     *
+     * 2. 分析堆栈信息：分析 ANR 日志中的堆栈信息，特别关注发生 ANR 时的主线程（通常是 "main" 线程）的堆栈信息，找出导致阻塞的原因。
+     *
+     * 3. 使用工具分析：可以使用 Android Studio 提供的 Profiler 工具或者第三方工具来分析应用程序的性能和线程状态，找出可能导致 ANR 的性能瓶颈。
+     *
+     * 4. 检查耗时操作：检查应用程序中的耗时操作，包括网络请求、数据库操作、文件操作等，确保这些操作都在后台线程中进行，避免在主线程中执行耗时操作。
+     *
+     * 5. 优化代码：根据分析结果对应用程序进行优化，包括优化性能瓶颈、减少主线程的工作量、使用异步操作等方式来避免 ANR 问题的发生。
+     *
+     * 通过以上步骤，可以排查和解决 Android 应用程序的 ANR 问题，提升应用程序的响应性和用户体验。
+     *
+     *
+     * =========data/anr/traces.txt
+     * ANRManager会打印出anr 前后的 cpu 使用情况，这个可以反映出当时系统的Performance状态：
+     *
+     * 如果 CPU 使用量接近 100%，说明当前设备很忙，有可能是CPU饥饿导致了ANR。
+     *
+     * 如果 CPU 使用量很少，说明主线程被BLOCK了
+     *
+     * 如果 IOwait 很高，说明ANR有可能是主线程在进行 I/O 操作造成的
+     *
+     * 那么这个时候，我们就要看看 anr 发生的时候，主线程在做什么了。
+     *
+     *
+     * ====常见anr
+     * 应用在主线程上非常缓慢地执行涉及 I/O 的操作。
+     * 应用在主线程上进行长时间的计算。(比如布局操作，new很多布局，滑动中进行io，)
+     * 主线程在对另一个进程进行同步 binder 调用，而后者需要很长时间才能返回。
+     * 主线程处于阻塞状态，等待发生在另一个线程上的长操作同步的块。
+     * 主线程在进程中或通过 binder 调用与另一个线程之间发生死锁。主线程不只是在等待长操作执行完毕，而且处于死锁状态。如需了解详情，请参阅维基百科上的死锁。
+     *
+     * ====adb bugreport
+     *
+     *
+     *
+     *
+     *
      */
     public void a12() {
         /*
@@ -2247,6 +2597,32 @@ public class AndroidFramework {
 
     /**
      * Android网络优化方案？
+     *
+     * Android网络优化是提高应用网络性能和用户体验的重要手段，主要包括以下几个方面：
+     *
+     * 1. 减少网络请求：
+     * - 合并和减少不必要的网络请求，避免频繁的网络通信，减少网络开销。
+     *
+     * 2. 使用缓存：
+     * - 合理使用内存缓存和磁盘缓存，减少重复的网络请求，提高数据加载速度。
+     *
+     * 3. 合理选择网络库：
+     * - 使用高性能的网络库，如OkHttp和Volley，来进行网络请求，提高网络通信效率。
+     *
+     * 4. 优化数据传输：
+     * - 使用GZIP压缩和图片压缩等技术，减小数据传输量，提高网络传输速度。
+     *
+     * 5. 使用连接池：
+     * - 合理使用连接池，减少网络连接的建立和关闭开销，提高网络通信效率。
+     *
+     * 6. 合理使用网络请求策略：
+     * - 根据业务需求和网络环境，选择合适的网络请求策略，如重试机制、超时设置等，提高网络通信的稳定性和可靠性。
+     *
+     * 7. 使用性能分析工具：
+     * - 使用Android Studio提供的性能分析工具，如Network Profiler，来检测和优化网络请求的性能和效率。
+     *
+     * 通过以上网络优化手段，可以有效提高应用的网络性能和响应速度，从而提升用户体验。
+     *
      */
     public void a12_1() {
         /*
@@ -2261,6 +2637,32 @@ public class AndroidFramework {
 
     /**
      * 说说Android内存优化？
+     *
+     * Android内存优化是提高应用性能和用户体验的重要手段，主要包括以下几个方面：
+     *
+     * 1. 减少内存占用：
+     * - 使用轻量级数据结构和算法，避免不必要的内存占用。
+     * - 及时释放不再需要的对象和资源，避免内存泄漏。
+     *
+     * 2. 优化图片和资源：
+     * - 使用适当的图片压缩和格式，避免过大的图片资源占用过多内存。
+     * - 使用矢量图形资源替代位图，减少内存占用。
+     *
+     * 3. 合理管理生命周期：
+     * - 在Activity和Fragment中及时释放资源和取消不必要的操作，避免因生命周期管理不当导致的内存泄漏。
+     *
+     * 4. 使用内存缓存：
+     * - 使用内存缓存来存储频繁使用的数据，减少重复加载和提高性能。
+     *
+     * 5. 优化布局和视图：
+     * - 避免过深的视图层级和复杂的布局结构，减少视图的嵌套和渲染开销。
+     *
+     * 6. 使用性能分析工具：
+     * - 使用Android Studio提供的性能分析工具，如Profiler和Memory Profiler，来检测和优化内存占用。
+     *
+     * 通过以上内存优化手段，可以有效减少应用的内存占用，提高应用的性能和稳定性，从而提升用户体验。
+     *
+     *
      */
     public void a12_2() {
         /*
@@ -2269,7 +2671,14 @@ public class AndroidFramework {
          * 1.问题定位，找出哪些地方申请内存过多，我们用AS自带的Android Profiler(分析器)
          * 我们先强制GC一下，然后操作app，在内存占用突然过高或者持续增长的地方，record
          * 然后生成分析报告，会显示出哪个方法中申请内存的数量，我们找到过高的地方，进行优化
-         * 2.问题解决，优化的手段有：改变数据结构，使用缓存池，改变业务逻辑（比如使用观察者代替轮询）
+         * 2.问题解决，优化的手段有：
+         * 改变数据结构，
+         * 使用缓存池，
+         * 改变业务逻辑（比如使用观察者代替轮询）
+         * 优化布局，减少复杂布局带来的内存开销
+         * 检测是否有内存泄漏
+         * 不用的资源及时释放
+         * 压缩图片，webp，按需加载。
          *
          * ------------------降低内存使用---------------------
          */
@@ -2277,10 +2686,73 @@ public class AndroidFramework {
 
     /**
      * 说说CPU优化？（如何使程序更流畅）
+     * CPU优化是提高应用程序流畅性和性能的关键，主要包括以下几个方面：
+     *
+     * 1. 减少计算量：
+     * - 优化算法和数据结构，减少不必要的计算和循环，提高代码执行效率。
+     *
+     * 2. 异步处理：
+     * - 将耗时的操作和网络请求放入后台线程或使用异步任务，避免阻塞主线程，提高程序的响应速度。
+     *
+     * 3. 合理使用多线程：
+     * - 使用线程池和合适的线程数量来并发处理任务，充分利用多核CPU的性能。
+     *
+     * 4. 避免频繁的IO操作：
+     * - 减少频繁的文件读写和网络IO操作，合理使用缓存和批量处理，减少IO开销。
+     *
+     * 5. 优化布局和绘制：
+     * - 避免过于复杂的布局和绘制操作，减少视图层级和绘制开销，提高界面渲染速度。
+     *
+     * 6. 使用性能分析工具：
+     * - 使用Android Studio提供的性能分析工具，如Profiler和CPU Profiler，来检测和优化CPU占用。
+     *
+     * 合理使用缓存
+     *
+     * 通过以上CPU优化手段，可以有效减少程序的计算和处理开销，提高程序的流畅性和性能，从而提升用户体验。
+     *
+     *
+     * ====systrace
+     * adb shell systrace --time=10 -o mytrace.html sched freq idle am wm gfx view
+     * $ANDROID_HOME/platform-tools/systrace/systrace.py gfx view wm am pm ss dalvik app sched  -a com.tal.monkey  -o monkey_trace.log.html
+     *
+     * 生成html文件，查看耗时堆栈。
+     *
+     * ===说说app启动优化
+     * 对启动类型进行分类
+     * 主线程
+     * 子线程
+     * 阻塞子线程，
+     *
+     * 日志，网络，分享 oss，bugly，RxJava
+     *
+     *
+     * 对于Android应用的启动优化，可以采取以下措施：
+     *
+     * 1. 延迟初始化：将应用中的一些初始化操作延迟到应用真正需要时再进行，避免在应用启动时进行过多的初始化操作。
+     *
+     * 2. 冷启动优化：通过减少应用的启动时间，可以提高用户体验。可以采取一些措施，如减少启动时的I/O操作、延迟加载资源等。
+     *
+     * 3. 启动屏幕优化：在应用启动时，可以显示一个启动屏幕，提供一种良好的用户体验。启动屏幕可以包含应用的logo、加载进度等信息。
+     *
+     * 4. 使用启动器图标：为应用设置合适的启动器图标，可以提高应用的启动体验。
+     *
+     * 5. 应用冷热启动优化：对于一些常用的页面或功能，可以进行预加载或预初始化，以提高应用的响应速度。
+     *
+     * 6. 代码优化：优化应用的代码结构和逻辑，减少不必要的初始化操作和资源加载。
+     *
+     * 7. 使用启动优化工具：使用Android Studio中的启动器分析工具，可以帮助开发者分析应用的启动性能，并进行优化。
+     *
+     * 通过以上措施，可以对Android应用的启动进行优化，提高应用的启动速度和用户体验
+     *
+     *
+     *
+     *
      */
     public void a12_3() {
         /*
-         * 我们用Android Monitor可以捕获cpu执行的时间耗时（精确到方法）
+         * 1定位
+         * 我们用Android Profiler可以捕获cpu执行的时间耗时（精确到方法）
+         * start trace  end trace ,打印出此时间段方法栈耗时
          * 找出耗时的那个方法，加以优化
          *
          * 当然我们可以用sdk中的SysTrace工具来检测，这样更灵活，我们可以指定它
@@ -2288,6 +2760,7 @@ public class AndroidFramework {
          *  Trace.beginSection("lll");
          *  Trace.endSection();
          *
+         * 2.优化手段
          * 我们可以通过修改数据结构和算法来提升计算效率，减少cpu占用时间，从而减少耗电
          * 比如我们用散列表代替数组存储数据，或者用二叉树代替链表，提升查找效率
          * 比如用SparseArray代替Map，从而减少装箱拆箱所申请的内存，减少gc次数
@@ -2295,6 +2768,89 @@ public class AndroidFramework {
          * */
     }
 
+    /**
+     * 包大小优化
+     * dex
+     * res
+     * assets
+     * native
+     * 每个部分做减法
+     * 能压缩压缩，
+     *
+     * 能去掉去掉，能网络加载就网络加载（懒加载），能用h5用h5，能插件化插件化
+     *
+     * ====能去掉去掉
+     * 使用Android Lint 排查无用资源和类 （500k）
+     * 指定resConfigs "zh" ，删除三方库非中文语言（600k）
+     * 重写三方控件，去除android-material库 （570k）
+     *
+     * ====能压缩压缩
+     * webp代替png （1.2M）
+     * lottie动画资源压缩 （300k）
+     * 开始系统混淆
+     * 使用 AndResGuard 混淆资源id长度 （700k）
+     *
+     * =====能用h5用h5
+     * letax渲染改为h5渲染（1.3M）
+     *
+     * =====能网络加载就网络加载（懒加载）
+     * pdf预览库 so文件动态加载 （2.7M）
+     * 大图网络加载
+     *
+     * ====插件化
+     *
+     *
+     */
+    public void a12_4(){}
+
+
+    /**
+     * 安全性
+     */
+    void a12_5(){}
+
+    /**
+     * 稳定性
+     * 在Android应用开发中，提高稳定性可以通过以下方式实现：
+     *
+     * 1. 异常处理：合理处理各种异常情况，包括网络异常、数据异常、内存溢出等，避免因异常情况导致应用崩溃或失效。
+     *
+     * 2. 内存管理：合理管理应用的内存使用，避免内存泄漏和内存溢出问题，确保应用在长时间运行时不会因内存问题导致崩溃。
+     *
+     * 3. 性能优化：优化应用的性能，包括启动速度、响应速度、资源占用等方面，提高应用的稳定性和用户体验。
+     *
+     * 4. 兼容性测试：在不同的设备和系统版本上进行充分的兼容性测试，确保应用在各种环境下都能稳定运行。
+     *
+     * 5. 持续监控：建立监控系统，对应用的运行状态进行持续监控和分析，及时发现和解决稳定性问题。
+     * bugly，日志打点监控，客户端报警，bugly日报。
+     *
+     * 单元测试，集成测试，
+     * 通过以上方式，可以提高Android应用的稳定性，确保应用在各种条件下都能持续稳定地运行，提供良好的用户体验。
+     *
+     *
+     * ============要保证代码的健壮性、易用性和易维护性，可以采取以下方法：
+     *
+     * 1. 良好的架构设计：采用清晰、模块化的架构设计，如MVC、MVVM等，以便于代码的组织和管理。
+     *
+     * 2. 单元测试：编写全面的单元测试，覆盖代码的各个功能和边界情况，确保代码的健壮性和稳定性。
+     *
+     * 3. 代码规范：遵循统一的代码规范和风格，提高代码的可读性和可维护性，减少潜在的错误和问题。
+     * 阿里 移动端(Android)编码规范
+     *
+     * 4. 文档和注释：编写清晰的文档和注释，解释代码的设计思路和逻辑，方便他人理解和维护代码。
+     *
+     * 5. 错误处理：合理处理各种异常情况，提供友好的错误提示和处理机制，增强代码的健壮性和用户体验。
+     *
+     * 6. 易用的API设计：设计简洁、易用的API接口，提供清晰的功能和参数说明，降低使用门槛。
+     *
+     * 7. 版本控制：使用版本控制系统（如Git），合理管理代码的版本和变更，方便团队协作和代码维护。
+     *
+     * 8. 持续集成：建立持续集成系统，自动化测试和构建过程，及时发现和解决代码问题。
+     *
+     * 通过以上方法，可以提高代码的健壮性、易用性和易维护性，确保代码质量和开发效率。
+     *
+     */
+    void a12_6(){}
 
     //endregion
 
@@ -2417,11 +2973,101 @@ public class AndroidFramework {
 
     /**
      * binder是什么？
-     * Linux进程间通讯机制有哪些？Android为什么用binder?
-     * aidl是是什么？如何使用？原理是什么？
-     * Android进程间通讯/进程间通信
+     * ========Linux进程间通讯机制有哪些？Android为什么用binder?
+     *
+     * Linux进程间通信（IPC）机制包括以下几种：
+     *
+     * 1. 管道（Pipe）：允许一个进程的输出直接作为另一个进程的输入，通常用于父子进程或者兄弟进程之间的通信。
+     *
+     * 2. 消息队列（Message Queue）：允许进程通过消息传递进行通信，可以实现多对多的通信模式。
+     *
+     * 3. 信号量（Semaphore）：用于进程间的同步和互斥，可以控制对共享资源的访问。
+     *
+     * 4. 共享内存（Shared Memory）：允许多个进程共享同一块物理内存，可以实现高效的数据共享。
+     *
+     * 5. 套接字（Socket）：用于不同主机或同一主机上不同进程之间的通信，可以实现跨网络的进程通信。
+     *
+     * Android选择使用Binder作为进程间通信机制的原因包括以下几点：
+     *
+     * 1. 高性能：Binder是一种轻量级的、高性能的进程间通信机制，适合于Android系统对性能要求较高的场景。
+     *
+     * 2. 安全性：Binder提供了基于权限的进程间通信机制，可以确保通信双方的安全性和可靠性。
+     *
+     * 3. 跨进程调用：Binder支持跨进程的远程过程调用（RPC），可以方便地实现不同进程之间的方法调用和数据传输。
+     *
+     * 4. 系统集成：Android系统本身就广泛使用了Binder机制，包括Activity与Service之间的通信、系统服务的调用等，因此选择Binder作为进程间通信机制可以更好地与系统集成。
+     *
+     * 总的来说，Android选择使用Binder作为进程间通信机制是基于其高性能、安全性和系统集成等方面的考虑，能够满足Android系统对进程间通信的需求。
+     *
+     *
+     * =====aidl是是什么？如何使用？原理是什么？
+     *
+     * AIDL（Android Interface Definition Language）是一种用于定义Android系统中跨进程通信接口的语言。它允许不同进程之间的组件（如Activity、Service等）通过Binder机制进行通信。
+     *
+     * 使用AIDL的基本步骤如下：
+     *
+     * 1. 定义接口：创建一个.aidl文件，定义需要跨进程通信的接口和数据类型。
+     *
+     * 2. 编译AIDL文件：使用AIDL工具将.aidl文件编译成对应的Java接口文件。
+     *
+     * 3. 实现接口：在服务端实现AIDL接口定义的方法，并将其注册到ServiceManager中。
+     *
+     * 4. 调用接口：在客户端通过Binder机制获取AIDL接口的代理对象，并调用其中定义的方法。
+     *
+     * AIDL的原理是基于Binder机制实现的。当一个组件需要与另一个进程通信时，它会通过Binder机制获取到对方进程的Binder对象，然后通过Binder对象进行数据传输和方法调用。AIDL定义的接口和数据类型会被转换成Binder对象的方法和参数，从而实现跨进程通信。
+     *
+     * 总的来说，AIDL是一种用于定义Android系统中跨进程通信接口的语言，通过Binder机制实现跨进程通信，能够方便地实现不同进程之间的数据传输和方法调用。
+     *
+     *
+     *
+     * =====Android进程间通讯/进程间通信
      *
      * 进程间通信Sdk设计？（主进程，子进程）
+     *
+     * =======ServiceManager和SystemService是Android系统中的两个重要概念，它们之间存在密切的关系。
+     *
+     * 1. ServiceManager：
+     * - ServiceManager是Android系统中的一个系统服务，用于管理其他系统服务的注册和获取。
+     * - 它允许系统中的不同进程通过Binder机制注册和获取系统服务的引用，实现了进程间的通信和服务管理。
+     *
+     * 2. SystemService：
+     * - SystemService是Android系统中的各种系统服务的统称，
+     * 包括ActivityManagerService、WindowManagerService、PackageManagerService等。
+     * - 这些系统服务通过ServiceManager进行注册和管理，其他应用或系统组件可以通过ServiceManager获取这些系统服务的引用，
+     * 从而使用它们提供的功能。
+     *
+     * 因此，ServiceManager和SystemService之间的关系是，ServiceManager作为系统服务的管理者，
+     * 负责系统服务的注册和获取，而SystemService则是被ServiceManager管理的各种系统服务的集合。
+     * 通过ServiceManager，应用和系统组件可以获取到需要的SystemService的引用，从而使用系统服务提供的功能。
+     *
+     *
+     * ====Binder实现原理
+     * Binder 是 Android 中的一种跨进程通信（IPC）机制。它基于 Linux 的设备驱动模型，通过共享内存和进程间通信来实现数据的传输。
+     *
+     * 以下是 Binder 机制的基本实现原理：
+     *
+     * 1. Binder 驱动：Binder 机制的核心是 Binder 驱动，它是一个设备驱动，运行在内核空间。
+     * Binder 驱动负责管理 Binder 实体和引用，以及进程间的通信。
+     *
+     * 2. Binder 实体和引用：
+     * Binder 实体是一个服务，它存在于服务端进程中；
+     * Binder 引用是一个代理，它存在于客户端进程中。
+     * 客户端通过 Binder 引用可以访问服务端的 Binder 实体。
+     *
+     * 3. 数据传输：当客户端调用服务端的方法时，会将调用的方法和参数打包成一个 Parcel 对象，
+     * 然后通过 Binder 驱动发送给服务端。服务端接收到 Parcel 对象后，解包得到方法和参数，
+     * 然后执行方法并将结果返回给客户端。
+     *
+     * 4. 进程间通信：Binder 驱动通过进程间通信（IPC）来传输数据。
+     * 当一个进程需要发送数据时，会将数据写入到共享内存，然后通知接收进程。
+     * 接收进程从共享内存中读取数据，从而实现数据的传输。
+     *
+     * 以上就是 Binder 机制的基本实现原理。通过 Binder 机制，
+     * Android 可以实现高效的跨进程通信，从而支持服务的共享和远程调用。
+     *
+     * 而binder是安全（他使用Uid来标识进程，这个uid是android在，使得服务端可以判断请求是否安全），
+     * 高效的（只拷贝数据一次）
+     *
      */
     public void a14(Context context) {
         /*
@@ -2512,6 +3158,48 @@ public class AndroidFramework {
      * 区别？
      *
      * @link android.view.SurfaceView}
+     * SurfaceView和TextureView都是用于在Android中进行图像渲染的视图组件，它们之间有一些区别和适用场景。
+     *
+     * SurfaceView：
+     * - SurfaceView是一个基于Surface的视图组件，它在View层级的上面拥有一个独立的Surface用于绘制。
+     * - 适用于需要在UI线程之外进行绘制的场景，比如视频播放、相机预览等。
+     * - 可以通过SurfaceHolder来控制Surface的绘制和生命周期。
+     *
+     * TextureView：
+     * - TextureView是一个基于Texture的视图组件，它可以直接在View层级中进行硬件加速的渲染。
+     * - 适用于需要在UI线程内进行动态变换和渲染的场景，比如实时滤镜、动态变换等。
+     * - 可以通过SurfaceTexture来控制Texture的绘制和更新。
+     *
+     * 总的来说，SurfaceView适用于需要在UI线程之外进行绘制的场景，而TextureView适用于需要在UI线程内进行动态变换和渲染的场景。
+     * 选择合适的视图组件可以提高图像渲染的效率和性能。
+     *
+     * ====什么是硬件加速
+     * 硬件加速渲染是指利用图形处理器（GPU）来加速图形渲染和处理的技术。通过将图形处理任务交给GPU来执行，可以提高图形渲染的效率和性能。
+     *
+     * 在Android中，硬件加速渲染可以通过以下方式实现：
+     *
+     * 1. OpenGL ES：利用OpenGL ES图形库进行硬件加速渲染，可以实现高性能的2D和3D图形渲染。
+     *
+     * 2. 硬件加速绘制：Android系统提供了硬件加速绘制功能，可以加速View的绘制过程，提高UI渲染的效率。
+     *
+     * 3. GPU渲染：利用GPU进行图形渲染，可以实现更流畅的动画效果、更快速的图形处理和更高效的图像渲染。
+     *
+     * 总的来说，硬件加速渲染利用GPU来加速图形渲染和处理，可以提高图形渲染的效率和性能，适用于需要高性能图形渲染的应用场景。
+     *
+     *
+     * ====如何开启 关闭
+     * 这将会开启整个应用的硬件加速。
+     * android:hardwareAccelerated="true"
+     *
+     * 在Activity中开启硬件加速：
+     * getWindow().setFlags(
+     *     WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+     *     WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
+     * );
+     *
+     * 在View中开启硬件加速：
+     * setLayerType(View.LAYER_TYPE_HARDWARE, null);
+     *
      */
     public void a15() {
         /*

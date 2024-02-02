@@ -3,14 +3,13 @@ package com.liyafeng.algorithm.sword2offer;
 public class N16_ReverseList {
 
     /**
-     *
      * 反转链表
-     *
+     * <p>
      * 我们可以用循环，用缓存next的方式来反转
-     *
+     * <p>
      * 也可以用 递归 的方式来反转
      * 因为递归天生就有参数缓存
-     *
+     * <p>
      * 但是递归会有内存开销，不适合长的链表
      * 但是递归代码简洁
      *
@@ -48,18 +47,18 @@ public class N16_ReverseList {
      * 然后指针 pre->node node->next 移动
      * <p>
      * 先缓存，后操作，然后读缓存
-     *=============================
+     * =============================
      * 1->2->3
      * currentNode = 1;//这个用来缓存当前的node
      * pre =null;//之个缓存上一个node，一遍我们的next指向他
      * while(node!=null){
-     *   next = node.next; //缓存当前节点的next
-     *   if(next==null){//这里是遍历完成
-     *       head = node;
-     *   }
-     *   currentNode.next = pre;//当前节点的next重写指向
-     *   pre = currentNode;//向后移动，当前节点变为pre
-     *   node = next;//当前节点变为下一个
+     * next = node.next; //缓存当前节点的next
+     * if(next==null){//这里是遍历完成
+     * head = node;
+     * }
+     * currentNode.next = pre;//当前节点的next重写指向
+     * pre = currentNode;//向后移动，当前节点变为pre
+     * node = next;//当前节点变为下一个
      * }
      *
      * @param list

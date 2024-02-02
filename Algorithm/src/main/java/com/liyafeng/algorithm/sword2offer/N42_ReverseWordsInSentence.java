@@ -23,7 +23,9 @@ public class N42_ReverseWordsInSentence {
         s = s.trim();
         int end = s.length() - 1;
         int count = 0;
+
         StringBuilder builder = new StringBuilder();
+        //指针从后往前遍历，找到空白格，然后这个位置往后遍历，加入新的数组中。
         for (int i = end; i >= 0; i--) {
             if (s.charAt(i) != ' ') {
                 count++;
