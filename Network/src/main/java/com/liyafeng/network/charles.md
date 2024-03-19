@@ -22,17 +22,25 @@
 2.安装charles
 https://www.charlesproxy.com/
 
-给电脑安装证书
-在Charles中，选择Help > SSL Proxying > Install Charles Root Certificate。安装后
-给手机安装证书。
-在Charles中，选择Help > SSL Proxying > Install Charles Root Certificate。安装后
-
-配置启用https监听
-为了能够查看HTTPS通信，需要启用SSL代理设置。进入Proxy > SSL Proxying Settings，勾选Enable SSL Proxying，并添加你需要监控的域名和端口，通常端口是443
 
 3.手机设置代理到电脑
 打开wifi高级设置，开启代理。输入电脑ip，和charles端口8888
 （电脑ip，可以通过ipconfig命令看到，是wifi分配的ip）
+
+
+
+给电脑安装证书
+在Charles中，选择Help > SSL Proxying > Install Charles Root Certificate。安装后
+给手机安装证书。
+在Charles中，选择Help > SSL Proxying > Install Charles Root Certificate。安装后
+(这个一定要打开链接到代理，才能下载。（而且每个电脑的证书都是不一样的，所以要链接其他电脑，要重新安装下载证书） 
+下载后，打开设置-》wifi设置=》高级设置，安装证书。)
+（设置中可以看到用户安装的证书，也可以看到预置的根证书。）
+
+配置启用https监听
+为了能够查看HTTPS通信，需要启用SSL代理设置。进入Proxy > SSL Proxying Settings，勾选Enable SSL Proxying，
+并添加你需要监控的域名（不用加https://）和端口，通常端口是443（不添加是监听不到的）
+
 
 
 34.打开app
