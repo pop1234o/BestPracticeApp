@@ -840,4 +840,8 @@ public class Other {
      *
     * */
     void a31(){}
+
+
+    //android .9 阴影图片， shadow http://inloop.github.io/shadow4android/
+    void a32(){}
 }
