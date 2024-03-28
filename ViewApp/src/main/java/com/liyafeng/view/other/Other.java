@@ -844,5 +844,6 @@ public class Other {
 
     //android .9 阴影图片， shadow http://inloop.github.io/shadow4android/
     //https://www.enablecopy.com/  supercopy 网站
+    //https://www.aconvert.com/cn/analyze.html  分析文件格式网站。
     void a32(){}
 }
